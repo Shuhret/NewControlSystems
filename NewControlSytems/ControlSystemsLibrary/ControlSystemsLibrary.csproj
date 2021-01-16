@@ -49,6 +49,35 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\ConnectionRB.xaml.cs">
+      <DependentUpon>ConnectionRB.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\LoaderCubes.xaml.cs">
+      <DependentUpon>LoaderCubes.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Services\Cryption.cs" />
+    <Compile Include="Services\DataBaseRequest.cs" />
+    <Compile Include="Services\GetColor.cs" />
+    <Compile Include="Services\GetIcons.cs" />
+    <Compile Include="Services\Strings.cs" />
+    <Compile Include="Services\XmlClass.cs" />
+    <Compile Include="Views\Administrator.xaml.cs">
+      <DependentUpon>Administrator.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Authorization.xaml.cs">
+      <DependentUpon>Authorization.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserInterfaceSelection.xaml.cs">
+      <DependentUpon>UserInterfaceSelection.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Controls\ConnectionRB.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\LoaderCubes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Resources\AllResources.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -90,6 +119,18 @@
       <SubType>Designer</SubType>
     </Page>
     <Compile Include="Resources\Styles\WindowStyle\VS2012WindowStyle.cs" />
+    <Page Include="Views\Administrator.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Authorization.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserInterfaceSelection.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -131,6 +172,9 @@
     <Resource Include="Resources\Fonts\RobotoCondensed-Light.ttf" />
     <Resource Include="Resources\Fonts\RobotoCondensed-LightItalic.ttf" />
     <Resource Include="Resources\Fonts\RobotoCondensed-Regular.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Classes\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

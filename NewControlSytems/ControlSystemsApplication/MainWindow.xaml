@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ControlSystemsApplication"
         mc:Ignorable="d"
+        x:Name="MW"
         Style="{DynamicResource VS2012WindowStyle}"
         Title="MainWindow" Width="1200" Height="700" WindowStartupLocation="CenterScreen" MinWidth="1040" MinHeight="600" >
 
@@ -12,5 +13,7 @@
         <Grid.Background>
             <SolidColorBrush Color="{DynamicResource Light-002}"/>
         </Grid.Background>
+        
+        <ContentControl x:Name="CC" Content="{Binding CurrentUserInterface, ElementName=MW, UpdateSourceTrigger=PropertyChanged}"/>
     </Grid>
 </Window>

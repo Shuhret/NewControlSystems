@@ -1,0 +1,118 @@
+﻿<RadioButton x:Class="ControlSystemsLibrary.Controls.ConnectionRB"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ControlSystemsLibrary.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="42" d:DesignWidth="428" Height="40" OverridesDefaultStyle="True" SnapsToDevicePixels="True"  Style="{DynamicResource RBS}" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" FontSize="13">
+    <RadioButton.Resources>
+
+        <Style x:Key="ButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid>
+                            <Border Background="Transparent">
+                                <Grid>
+                                    <Rectangle x:Name="rectangle" Fill="White" Margin="0" RadiusY="15" RadiusX="15" Visibility="Hidden"/>
+                                    <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                </Grid>
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsFocused" Value="True"/>
+                            <Trigger Property="IsDefaulted" Value="True"/>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Visibility" TargetName="rectangle" Value="Visible"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True"/>
+                            <Trigger Property="IsEnabled" Value="False"/>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+        <Style x:Key="RBS" TargetType="{x:Type RadioButton}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type RadioButton}">
+
+                        <Grid>
+                            <Border x:Name="border1" Background="Transparent" CornerRadius="0" Margin="0" Opacity="1" Cursor="Hand" BorderThickness="0">
+                                <Border.BorderBrush>
+                                    <LinearGradientBrush EndPoint="1,0.983" StartPoint="0,0.983">
+                                        <GradientStop Color="#FFF9FAFC" Offset="0"/>
+                                        <GradientStop Color="#FFF9FAFC" Offset="1"/>
+                                        <GradientStop Color="#FF00AEFF" Offset="0.5"/>
+                                    </LinearGradientBrush>
+                                </Border.BorderBrush>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="40"/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Rectangle x:Name="rectangle1" RadiusX="0" RadiusY="0" Grid.ColumnSpan="4" Opacity="0" StrokeThickness="0" Stroke="{x:Null}">
+                                        <Rectangle.Fill>
+                                            <LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
+                                                <GradientStop Color="#FFF9FAFC" Offset="0"/>
+                                                <GradientStop Color="#FFF9FAFC" Offset="1"/>
+                                                <GradientStop Color="White" Offset="0.15"/>
+                                                <GradientStop Color="White" Offset="0.85"/>
+                                            </LinearGradientBrush>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                    <Border x:Name="border" HorizontalAlignment="Center" VerticalAlignment="Center" Width="17" Height="17" BorderThickness="1" BorderBrush="#FFD3D9E6" CornerRadius="10" Background="White">
+                                        <Rectangle x:Name="rectangle" Margin="3" RadiusY="4.5" RadiusX="4.5" Fill="#FF1697FC" Visibility="Hidden"/>
+                                    </Border>
+                                    <ContentPresenter x:Name="contentPresenter" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" Grid.Column="1" VerticalAlignment="Center" Opacity="0.85"/>
+                                    <Button x:Name="PART_DeleteButton" Grid.Column="3" Style="{DynamicResource ButtonStyle}" Visibility="Hidden" Width="30" Height="30" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <Viewbox x:Name="viewbox" Margin="0" Width="16" Height="16">
+                                            <Canvas HorizontalAlignment="Left" Height="50" UseLayoutRounding="False" VerticalAlignment="Top" Width="50">
+                                                <Canvas Height="50" Canvas.Left="4.688" Canvas.Top="0" Width="40.624">
+                                                    <Path Data="F1M21.875,3.125L28.125,3.125C28.988,3.125,29.687,3.825,29.687,4.687L29.687,6.25L20.313,6.25L20.313,4.687C20.313,3.825,21.012,3.125,21.875,3.125 M42.857,6.25L32.813,6.25L32.813,4.687C32.813,2.099,30.714,0,28.125,0L21.875,0C19.286,0,17.188,2.099,17.188,4.687L17.188,6.25L7.143,6.25C5.787,6.25,4.688,7.349,4.688,8.706L4.688,13.862C4.688,14.404,5.127,14.844,5.669,14.844L44.33,14.844C44.873,14.844,45.312,14.404,45.312,13.862L45.312,8.706C45.312,7.349,44.213,6.25,42.857,6.25" Height="14.844" Canvas.Left="0" Stretch="Fill" Canvas.Top="0" Width="40.624">
+                                                        <Path.Fill>
+                                                            <SolidColorBrush Color="#FFC1C9DA"/>
+                                                        </Path.Fill>
+                                                    </Path>
+                                                    <Path Data="F1M15.625,21.8662C15.625,20.9452,16.422,20.2102,17.364,20.3132C18.162,20.4012,18.75,21.1052,18.75,21.9072L18.75,42.1372C18.75,42.9402,18.162,43.6442,17.364,43.7312C16.422,43.8352,15.625,43.1002,15.625,42.1782z M23.437,21.8662C23.437,20.9452,24.234,20.2102,25.177,20.3132C25.974,20.4012,26.563,21.1052,26.563,21.9072L26.563,42.1372C26.563,42.9402,25.974,43.6442,25.177,43.7312C24.234,43.8352,23.437,43.1002,23.437,42.1782z M31.25,21.8662C31.25,20.9452,32.047,20.2102,32.989,20.3132C33.787,20.4012,34.375,21.1052,34.375,21.9072L34.375,42.1372C34.375,42.9402,33.787,43.6442,32.989,43.7312C32.047,43.8352,31.25,43.1002,31.25,42.1782z M7.613,17.9692C7.334,17.9692,7.112,18.2012,7.125,18.4802L8.415,45.5352C8.534,48.0392,10.59,50.0002,13.096,50.0002L36.824,50.0002C39.33,50.0002,41.387,48.0392,41.506,45.5352L42.795,18.4802C42.809,18.2012,42.586,17.9692,42.308,17.9692z" Height="32.031" Canvas.Left="2.436" Stretch="Fill" Canvas.Top="17.969" Width="35.671">
+                                                        <Path.Fill>
+                                                            <SolidColorBrush Color="#FFC1C9DA"/>
+                                                        </Path.Fill>
+                                                    </Path>
+                                                </Canvas>
+                                            </Canvas>
+                                        </Viewbox>
+                                    </Button>
+                                </Grid>
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Opacity" TargetName="rectangle1" Value="0.50"/>
+                                <Setter Property="Visibility" TargetName="PART_DeleteButton" Value="Visible"/>
+                                <Setter Property="Opacity" TargetName="contentPresenter" Value="0.9"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter Property="Opacity" TargetName="rectangle1" Value="0.6"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="#FF1697FC"/>
+                                <Setter Property="Visibility" TargetName="rectangle" Value="Visible"/>
+                                <Setter Property="Opacity" TargetName="contentPresenter" Value="1"/>
+                                <Setter Property="BorderThickness" Value="0,1,0,1" TargetName="border1"/>
+                                <Setter Property="Margin" TargetName="viewbox" Value="0,5"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </RadioButton.Resources>
+    <RadioButton.Foreground>
+        <SolidColorBrush Color="#FF4C566E"/>
+    </RadioButton.Foreground>
+</RadioButton>
