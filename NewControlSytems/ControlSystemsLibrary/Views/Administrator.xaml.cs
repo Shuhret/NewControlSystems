@@ -1,4 +1,5 @@
 ﻿using ControlSystemsLibrary.Controls;
+using ControlSystemsLibrary.Controls.AdminTabItemContents;
 using ControlSystemsLibrary.Services;
 using System;
 using System.Collections.Generic;
@@ -125,23 +126,6 @@ namespace ControlSystemsLibrary.Views
             }
         }
 
-
-        void AddItems()
-        {
-            for (int i = 0; i < 5; i++)
-            {
-                AdminTabItem ATI = new AdminTabItem();
-                ATI.Width = 150;
-                ATI.HeaderText = "Header - " + i.ToString();
-                ATI.Foreground = GetColor.Get("Dark-003");
-                ATI.Icon = GetIcons.GetIcon("Папка");
-                ATI.IconSize = 18;
-
-                ATI.Closed += ATI_Closed;
-                TabItemsCollection.Add(ATI);
-            }
-        }
-
         private void ATI_Closed(object sender, EventArgs e)
         {
             AdminTabItem ATI = sender as AdminTabItem;
@@ -207,7 +191,6 @@ namespace ControlSystemsLibrary.Views
 
         private void AdminTabControlLoaded(object sender, RoutedEventArgs e)
         {
-            AddItems();
             AdminTabControlActualWidth = (sender as TabControl).ActualWidth;
             
         }
@@ -244,17 +227,28 @@ namespace ControlSystemsLibrary.Views
             AdminTabItem adminTabItem = new AdminTabItem();
             adminTabItem.Name = GetAdminTabItemName(ButtonName);
             adminTabItem.HeaderText = GetAdminTabItemHeaderText(ButtonName);
+            adminTabItem.Content = GetTabItemContent(ButtonName);
             adminTabItem.Icon = GetAdminTabItemIcon(ButtonName);
+            adminTabItem.IconSize = 17;
+
             adminTabItem.Foreground = GetColor.Get("Dark-003");
             adminTabItem.Closed += ATI_Closed;
             return adminTabItem;
         }
+
 
         string GetAdminTabItemName(string ButtonName)
         {
             switch(ButtonName)
             {
                 case "MenuButtonAllDocuments": return "MenuButtonAllDocuments";
+
+                case "MenuButtonZayavkapostavshiku": return "MenuButtonZayavkapostavshiku";
+                case "MenuButtonPostuplenie": return "MenuButtonPostuplenie";
+                case "MenuButtonVozvratpostavshiku": return "MenuButtonVozvratpostavshiku";
+                case "MenuButtonOtchetPostavshiku": return "MenuButtonOtchetPostavshiku";
+
+                case "MenuButtonNomenclatura": return "Номенклатура";
 
                 default: return "";
 
@@ -266,6 +260,13 @@ namespace ControlSystemsLibrary.Views
             switch (ButtonName)
             {
                 case "MenuButtonAllDocuments": return "Журнал документов";
+
+                case "MenuButtonZayavkapostavshiku": return "Заявка поставщику";
+                case "MenuButtonPostuplenie": return "Поступление";
+                case "MenuButtonVozvratpostavshiku": return "Возврат поставщику";
+                case "MenuButtonOtchetPostavshiku": return "Отчет поставщику";
+
+                case "MenuButtonNomenclatura": return "Номенклатура";
                 default: return "";
 
             }
@@ -276,11 +277,34 @@ namespace ControlSystemsLibrary.Views
             switch (ButtonName)
             {
                 case "MenuButtonAllDocuments": return GetIcons.GetIcon("DocumentsJournal");
+
+                case "MenuButtonZayavkapostavshiku": return GetIcons.GetIcon("Заявка поставщику"); 
+                case "MenuButtonPostuplenie": return GetIcons.GetIcon("Поступление");
+                case "MenuButtonVozvratpostavshiku": return GetIcons.GetIcon("Возврат поставщику");
+                case "MenuButtonOtchetPostavshiku": return GetIcons.GetIcon("Отчет поставщику");
+
+                case "MenuButtonNomenclatura": return GetIcons.GetIcon("Номенклатура");
                 default: return "";
 
             }
         }
 
+        UserControl GetTabItemContent(string ButtonName)
+        {
+            switch (ButtonName)
+            {
+                case "MenuButtonAllDocuments": return null;
+
+                case "MenuButtonZayavkapostavshiku": return null;
+                case "MenuButtonPostuplenie": return null;
+                case "MenuButtonVozvratpostavshiku": return null;
+                case "MenuButtonOtchetPostavshiku": return null;
+
+                case "MenuButtonNomenclatura": return new NomenclatureATI();
+                default: return null;
+
+            }
+        }
 
         bool CheckTabItems(string AdminTabItemName)
         {

@@ -1,6 +1,8 @@
-﻿using System;
+﻿using ControlSystemsLibrary.Classes;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
@@ -481,191 +483,186 @@ namespace ControlSystemsLibrary.Services
         //}
 
 
-        ////---Метод: Вырезать/Вставить (ХП)---------------------------------------------------------------------
-        //public static bool UpdateGroupID(Guid ID, Guid GroupID)
-        //{
-        //    bool ok = false;
-        //    using (SqlConnection connect = new SqlConnection(Crypt.Decrypt(XmlClass.GetSelectedConnectionString())))
-        //    {
-        //        try
-        //        {
-        //            connect.Open();
-        //            SqlCommand command = new SqlCommand("UpdateGroupID", connect);
-        //            command.CommandType = CommandType.StoredProcedure;
+        //---Метод: Вырезать/Вставить (ХП)---------------------------------------------------------------------
+        public static bool UpdateGroupID(Guid ID, Guid GroupID)
+        {
+            bool ok = false;
+            using (SqlConnection connect = new SqlConnection(Cryption.Decrypt(XmlClass.GetSelectedConnectionString())))
+            {
+                try
+                {
+                    connect.Open();
+                    SqlCommand command = new SqlCommand("UpdateGroupID", connect);
+                    command.CommandType = CommandType.StoredProcedure;
 
-        //            SqlParameter Param0 = new SqlParameter { ParameterName = "@ID", Value = ID };
-        //            command.Parameters.Add(Param0);
-        //            SqlParameter Param1 = new SqlParameter { ParameterName = "@GroupID", Value = GroupID };
-        //            command.Parameters.Add(Param1);
+                    SqlParameter Param0 = new SqlParameter { ParameterName = "@ID", Value = ID };
+                    command.Parameters.Add(Param0);
+                    SqlParameter Param1 = new SqlParameter { ParameterName = "@GroupID", Value = GroupID };
+                    command.Parameters.Add(Param1);
 
-        //            command.Parameters.Add("@Result", SqlDbType.Bit).Direction = ParameterDirection.Output;
+                    command.Parameters.Add("@Result", SqlDbType.Bit).Direction = ParameterDirection.Output;
 
-        //            command.ExecuteNonQuery();
+                    command.ExecuteNonQuery();
 
-        //            ok = (bool)command.Parameters["@Result"].Value;
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            MessageBox.Show(ex.Message, "DataBaseRequest.UpdateGroupID");
-        //        }
-        //        return ok;
-        //    }
-        //}
-
-
+                    ok = (bool)command.Parameters["@Result"].Value;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "DataBaseRequest.UpdateGroupID");
+                }
+                return ok;
+            }
+        }
 
 
-        //public static BindingList<NomenclatureClass> GetAllNomenclatures()
-        //{
-        //    BindingList<NomenclatureClass> list = new BindingList<NomenclatureClass>();
-        //    using (SqlConnection connect = new SqlConnection(Crypt.Decrypt(XmlClass.GetSelectedConnectionString())))
-        //    {
-        //        try
-        //        {
-        //            connect.Open();
-        //            SqlCommand command = new SqlCommand("GetAllNomenclatures", connect);
-        //            command.CommandType = CommandType.StoredProcedure;
 
-        //            SqlDataReader reading = command.ExecuteReader();
 
-        //            while (reading.Read())
-        //            {
-        //                NomenclatureClass NC = new NomenclatureClass();
-        //                NC.ID = (Guid)reading.GetValue(0);
-        //                NC.GroupID = (Guid)reading.GetValue(1);
-        //                NC.GroupNomen = (bool)reading.GetValue(2);
+        public static ObservableCollection<NomenclatureClass> GetAllNomenclatures()
+        {
+            ObservableCollection<NomenclatureClass> list = new ObservableCollection<NomenclatureClass>();
+            using (SqlConnection connect = new SqlConnection(Cryption.Decrypt(XmlClass.GetSelectedConnectionString())))
+            {
+                try
+                {
+                    connect.Open();
+                    SqlCommand command = new SqlCommand("GetAllNomenclatures", connect);
+                    command.CommandType = CommandType.StoredProcedure;
 
-        //                NC.Name = reading.GetValue(4).ToString();
+                    SqlDataReader reading = command.ExecuteReader();
 
-        //                if (NC.GroupNomen == true)
-        //                {
-        //                    NC.Article = reading.GetValue(3).ToString();
-        //                    NC.BaseUnit = reading.GetValue(5).ToString();
-        //                    NC.WeightBaseUnit = Convert.ToDouble(reading.GetValue(6));
-        //                    NC.BarcodeType = reading.GetValue(7).ToString();
-        //                    NC.Barcode = reading.GetValue(8).ToString();
-        //                    NC.CountryOfOrigin = reading.GetValue(9).ToString();
-        //                    NC.Description = reading.GetValue(10).ToString();
-        //                    NC.Aksia = (bool)reading.GetValue(11);
-        //                    NC.Focus = (bool)reading.GetValue(12);
-        //                    NC.New = (bool)reading.GetValue(13);
-        //                }
-        //                list.Add(NC);
-        //            }
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            MessageBox.Show("Ошибка в методе: DataBaseRequest.GetAllNomenclatures" + "\n" + ex.Message, "Хуёво!");
-        //        }
-        //    }
-        //    return list;
-        //}
+                    while (reading.Read())
+                    {
+                        NomenclatureClass NC = new NomenclatureClass();
+                        NC.ID = (Guid)reading.GetValue(0);
+                        NC.GroupID = (Guid)reading.GetValue(1);
+                        NC.GroupNomen = (bool)reading.GetValue(2);
 
-        //public static BindingList<NomenclatureClass> GetAllMainNomenclatures(Guid GroupID)
-        //{
-        //    BindingList<NomenclatureClass> list = new BindingList<NomenclatureClass>();
-        //    using (SqlConnection connect = new SqlConnection(Crypt.Decrypt(XmlClass.GetSelectedConnectionString())))
-        //    {
-        //        try
-        //        {
-        //            connect.Open();
-        //            SqlCommand command = new SqlCommand("GetAllMainNomenclatures", connect);
-        //            command.CommandType = CommandType.StoredProcedure;
+                        NC.Name = reading.GetValue(4).ToString();
 
-        //            SqlParameter Param0 = new SqlParameter { ParameterName = "@GroupID", Value = GroupID }; //---Передаваемый параметр
-        //            command.Parameters.Add(Param0);
+                        if (NC.GroupNomen == true)
+                        {
+                            NC.Article = reading.GetValue(3).ToString();
+                            NC.BaseUnit = reading.GetValue(5).ToString();
+                            NC.WeightBaseUnit = Convert.ToDouble(reading.GetValue(6));
+                            NC.BarcodeType = reading.GetValue(7).ToString();
+                            NC.Barcode = reading.GetValue(8).ToString();
+                            NC.CountryOfOrigin = reading.GetValue(9).ToString();
+                            NC.Description = reading.GetValue(10).ToString();
+                            NC.Aksia = (bool)reading.GetValue(11);
+                            NC.Focus = (bool)reading.GetValue(12);
+                            NC.New = (bool)reading.GetValue(13);
+                        }
+                        list.Add(NC);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Ошибка в методе: DataBaseRequest.GetAllNomenclatures" + "\n" + ex.Message, "Хуёво!");
+                }
+            }
+            return list;
+        }
 
-        //            SqlDataReader reading = command.ExecuteReader();
+        public static ObservableCollection<NomenclatureClass> GetAllMainNomenclatures(Guid GroupID)
+        {
+            ObservableCollection<NomenclatureClass> list = new ObservableCollection<NomenclatureClass>();
+            using (SqlConnection connect = new SqlConnection(Cryption.Decrypt(XmlClass.GetSelectedConnectionString())))
+            {
+                try
+                {
+                    connect.Open();
+                    SqlCommand command = new SqlCommand("GetAllMainNomenclatures", connect);
+                    command.CommandType = CommandType.StoredProcedure;
 
-        //            while (reading.Read())
-        //            {
-        //                NomenclatureClass NC = new NomenclatureClass();
-        //                NC.ID = (Guid)reading.GetValue(0);
-        //                NC.GroupID = (Guid)reading.GetValue(1);
-        //                NC.GroupNomen = (bool)reading.GetValue(2);
+                    SqlParameter Param0 = new SqlParameter { ParameterName = "@GroupID", Value = GroupID }; //---Передаваемый параметр
+                    command.Parameters.Add(Param0);
 
-        //                NC.Name = reading.GetValue(4).ToString();
+                    SqlDataReader reading = command.ExecuteReader();
 
-        //                if (NC.GroupNomen == true)
-        //                {
-        //                    NC.Article = reading.GetValue(3).ToString();
-        //                    NC.BaseUnit = reading.GetValue(5).ToString();
-        //                    NC.WeightBaseUnit = Convert.ToDouble(reading.GetValue(6));
-        //                    NC.BarcodeType = reading.GetValue(7).ToString();
-        //                    NC.Barcode = reading.GetValue(8).ToString();
-        //                    NC.CountryOfOrigin = reading.GetValue(9).ToString();
-        //                    NC.Description = reading.GetValue(10).ToString();
-        //                    NC.Aksia = (bool)reading.GetValue(11);
-        //                    NC.Focus = (bool)reading.GetValue(12);
-        //                    NC.New = (bool)reading.GetValue(13);
-        //                    try
-        //                    {
-        //                        NC.ImageData = (byte[])reading.GetValue(14);
-        //                    }
-        //                    catch { }
-        //                }
+                    while (reading.Read())
+                    {
+                        NomenclatureClass NC = new NomenclatureClass();
+                        NC.ID = (Guid)reading.GetValue(0);
+                        NC.GroupID = (Guid)reading.GetValue(1);
+                        NC.GroupNomen = (bool)reading.GetValue(2);
 
-        //                list.Add(NC);
-        //            }
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            MessageBox.Show("Ошибка в методе: DataBaseRequest.GetAllMainNomenclatures" + "\n" + ex.Message, "Хуёво!");
-        //        }
-        //    }
-        //    return list;
-        //}
+                        NC.Name = reading.GetValue(4).ToString();
 
-        //public static BindingList<NomenclatureClass> GetAllNomenclaturesBack(ref Guid GroupID, ref Guid ID)
-        //{
-        //    BindingList<NomenclatureClass> list = new BindingList<NomenclatureClass>();
-        //    using (SqlConnection connect = new SqlConnection(Crypt.Decrypt(XmlClass.GetSelectedConnectionString())))
-        //    {
-        //        //try
-        //        //{
-        //        connect.Open();
-        //        SqlCommand command = new SqlCommand("GetAllNomenclaturesBack", connect);
-        //        command.CommandType = CommandType.StoredProcedure;
+                        if (NC.GroupNomen == true)
+                        {
+                            NC.Article = reading.GetValue(3).ToString();
+                            NC.BaseUnit = reading.GetValue(5).ToString();
+                            NC.WeightBaseUnit = Convert.ToDouble(reading.GetValue(6));
+                            NC.BarcodeType = reading.GetValue(7).ToString();
+                            NC.Barcode = reading.GetValue(8).ToString();
+                            NC.CountryOfOrigin = reading.GetValue(9).ToString();
+                            NC.Description = reading.GetValue(10).ToString();
+                            NC.Aksia = (bool)reading.GetValue(11);
+                            NC.Focus = (bool)reading.GetValue(12);
+                            NC.New = (bool)reading.GetValue(13);
+                        }
 
-        //        SqlParameter Param0 = new SqlParameter { ParameterName = "@GroupID", Value = GroupID }; //---Передаваемый параметр
-        //        command.Parameters.Add(Param0);
+                        list.Add(NC);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Ошибка в методе: DataBaseRequest.GetAllMainNomenclatures" + "\n" + ex.Message, "Хуёво!");
+                }
+            }
+            return list;
+        }
 
-        //        SqlDataReader reading = command.ExecuteReader();
+        public static ObservableCollection<NomenclatureClass> GetAllNomenclaturesBack(ref Guid GroupID, ref Guid ID)
+        {
+            ObservableCollection<NomenclatureClass> list = new ObservableCollection<NomenclatureClass>();
+            using (SqlConnection connect = new SqlConnection(Cryption.Decrypt(XmlClass.GetSelectedConnectionString())))
+            {
+                try
+                {
+                    connect.Open();
+                    SqlCommand command = new SqlCommand("GetAllNomenclaturesBack", connect);
+                    command.CommandType = CommandType.StoredProcedure;
 
-        //        while (reading.Read())
-        //        {
-        //            NomenclatureClass NC = new NomenclatureClass();
-        //            NC.ID = (Guid)reading.GetValue(0);
-        //            NC.GroupID = (Guid)reading.GetValue(1);
-        //            NC.GroupNomen = (bool)reading.GetValue(2);
+                    SqlParameter Param0 = new SqlParameter { ParameterName = "@GroupID", Value = GroupID }; //---Передаваемый параметр
+                    command.Parameters.Add(Param0);
 
-        //            NC.Name = reading.GetValue(4).ToString();
+                    SqlDataReader reading = command.ExecuteReader();
 
-        //            if (NC.GroupNomen == true)
-        //            {
-        //                NC.Article = reading.GetValue(3).ToString();
-        //                NC.BaseUnit = reading.GetValue(5).ToString();
-        //                NC.WeightBaseUnit = Convert.ToDouble(reading.GetValue(6));
-        //                NC.BarcodeType = reading.GetValue(7).ToString();
-        //                NC.Barcode = reading.GetValue(8).ToString();
-        //                NC.CountryOfOrigin = reading.GetValue(9).ToString();
-        //                NC.Description = reading.GetValue(10).ToString();
-        //                NC.Aksia = (bool)reading.GetValue(11);
-        //                NC.Focus = (bool)reading.GetValue(12);
-        //                NC.New = (bool)reading.GetValue(13);
-        //            }
-        //            list.Add(NC);
-        //            GroupID = (Guid)reading.GetValue(14);
-        //            ID = (Guid)reading.GetValue(15);
-        //        }
-        //        //}
-        //        //catch (Exception ex)
-        //        //{
-        //        //    MessageBox.Show("Ошибка в методе: DataBaseRequest.GetAllNomenclatures" + "\n" + ex.Message, "Хуёво!");
-        //        //}
-        //    }
-        //    return list;
-        //}
+                    while (reading.Read())
+                    {
+                        NomenclatureClass NC = new NomenclatureClass();
+                        NC.ID = (Guid)reading.GetValue(0);
+                        NC.GroupID = (Guid)reading.GetValue(1);
+                        NC.GroupNomen = (bool)reading.GetValue(2);
+
+                        NC.Name = reading.GetValue(4).ToString();
+
+                        if (NC.GroupNomen == true)
+                        {
+                            NC.Article = reading.GetValue(3).ToString();
+                            NC.BaseUnit = reading.GetValue(5).ToString();
+                            NC.WeightBaseUnit = Convert.ToDouble(reading.GetValue(6));
+                            NC.BarcodeType = reading.GetValue(7).ToString();
+                            NC.Barcode = reading.GetValue(8).ToString();
+                            NC.CountryOfOrigin = reading.GetValue(9).ToString();
+                            NC.Description = reading.GetValue(10).ToString();
+                            NC.Aksia = (bool)reading.GetValue(11);
+                            NC.Focus = (bool)reading.GetValue(12);
+                            NC.New = (bool)reading.GetValue(13);
+                        }
+                        list.Add(NC);
+                        GroupID = (Guid)reading.GetValue(14);
+                        ID = (Guid)reading.GetValue(15);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Ошибка в методе: DataBaseRequest.GetAllNomenclatures" + "\n" + ex.Message, "Хуёво!");
+                }
+            }
+            return list;
+        }
 
         //public static BindingList<AdditionalUnitsClass> GetEditableNomenclatureAddedUnits(Guid EditableNomenclatureID)
         //{
@@ -818,104 +815,104 @@ namespace ControlSystemsLibrary.Services
 
 
 
-        ////---Метод: Создание новой номенклатуры (ХП)---------------------------------------------------------------------
-        //public static bool UpdateTagAksia(NomenclatureClass Nomen)
-        //{
-        //    bool ok = false;
-        //    using (SqlConnection connect = new SqlConnection(Crypt.Decrypt(XmlClass.GetSelectedConnectionString())))
-        //    {
-        //        try
-        //        {
-        //            connect.Open();
-        //            SqlCommand command = new SqlCommand("UpdateTagAksia", connect);
-        //            command.CommandType = CommandType.StoredProcedure;
+        //---Метод: Создание новой номенклатуры (ХП)---------------------------------------------------------------------
+        public static bool UpdateTagAksia(NomenclatureClass Nomen)
+        {
+            bool ok = false;
+            using (SqlConnection connect = new SqlConnection(Cryption.Decrypt(XmlClass.GetSelectedConnectionString())))
+            {
+                try
+                {
+                    connect.Open();
+                    SqlCommand command = new SqlCommand("UpdateTagAksia", connect);
+                    command.CommandType = CommandType.StoredProcedure;
 
-        //            SqlParameter Param0 = new SqlParameter { ParameterName = "@NomenID", Value = Nomen.ID };// Новый ID //---Передаваемый параметр
-        //            command.Parameters.Add(Param0);
+                    SqlParameter Param0 = new SqlParameter { ParameterName = "@NomenID", Value = Nomen.ID };// Новый ID //---Передаваемый параметр
+                    command.Parameters.Add(Param0);
 
-        //            SqlParameter Param1 = new SqlParameter { ParameterName = "@Checked", Value = Nomen.Aksia }; //---Передаваемый параметр
-        //            command.Parameters.Add(Param1);
+                    SqlParameter Param1 = new SqlParameter { ParameterName = "@Checked", Value = Nomen.Aksia }; //---Передаваемый параметр
+                    command.Parameters.Add(Param1);
 
 
-        //            command.Parameters.Add("@Result", SqlDbType.Bit).Direction = ParameterDirection.Output; // Выходной параметр
+                    command.Parameters.Add("@Result", SqlDbType.Bit).Direction = ParameterDirection.Output; // Выходной параметр
 
-        //            command.ExecuteNonQuery();
+                    command.ExecuteNonQuery();
 
-        //            ok = (bool)command.Parameters["@Result"].Value;
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            MessageBox.Show(ex.Message, "DataBaseRequest.UpdateTagAksia");
-        //        }
-        //        return ok;
-        //    }
-        //}
+                    ok = (bool)command.Parameters["@Result"].Value;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "DataBaseRequest.UpdateTagAksia");
+                }
+                return ok;
+            }
+        }
 
-        ////---Метод: Создание новой номенклатуры (ХП)---------------------------------------------------------------------
-        //public static bool UpdateTagFocus(NomenclatureClass Nomen)
-        //{
-        //    bool ok = false;
-        //    using (SqlConnection connect = new SqlConnection(Crypt.Decrypt(XmlClass.GetSelectedConnectionString())))
-        //    {
-        //        try
-        //        {
-        //            connect.Open();
-        //            SqlCommand command = new SqlCommand("UpdateTagFocus", connect);
-        //            command.CommandType = CommandType.StoredProcedure;
+        //---Метод: Создание новой номенклатуры (ХП)---------------------------------------------------------------------
+        public static bool UpdateTagFocus(NomenclatureClass Nomen)
+        {
+            bool ok = false;
+            using (SqlConnection connect = new SqlConnection(Cryption.Decrypt(XmlClass.GetSelectedConnectionString())))
+            {
+                try
+                {
+                    connect.Open();
+                    SqlCommand command = new SqlCommand("UpdateTagFocus", connect);
+                    command.CommandType = CommandType.StoredProcedure;
 
-        //            SqlParameter Param0 = new SqlParameter { ParameterName = "@NomenID", Value = Nomen.ID };// Новый ID //---Передаваемый параметр
-        //            command.Parameters.Add(Param0);
+                    SqlParameter Param0 = new SqlParameter { ParameterName = "@NomenID", Value = Nomen.ID };// Новый ID //---Передаваемый параметр
+                    command.Parameters.Add(Param0);
 
-        //            SqlParameter Param1 = new SqlParameter { ParameterName = "@Checked", Value = Nomen.Focus }; //---Передаваемый параметр
-        //            command.Parameters.Add(Param1);
+                    SqlParameter Param1 = new SqlParameter { ParameterName = "@Checked", Value = Nomen.Focus }; //---Передаваемый параметр
+                    command.Parameters.Add(Param1);
 
 
-        //            command.Parameters.Add("@Result", SqlDbType.Bit).Direction = ParameterDirection.Output; // Выходной параметр
+                    command.Parameters.Add("@Result", SqlDbType.Bit).Direction = ParameterDirection.Output; // Выходной параметр
 
-        //            command.ExecuteNonQuery();
+                    command.ExecuteNonQuery();
 
-        //            ok = (bool)command.Parameters["@Result"].Value;
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            MessageBox.Show(ex.Message, "DataBaseRequest.UpdateTagAksia");
-        //        }
-        //        return ok;
-        //    }
-        //}
+                    ok = (bool)command.Parameters["@Result"].Value;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "DataBaseRequest.UpdateTagAksia");
+                }
+                return ok;
+            }
+        }
 
-        ////---Метод: Создание новой номенклатуры (ХП)---------------------------------------------------------------------
-        //public static bool UpdateTagNew(NomenclatureClass Nomen)
-        //{
-        //    bool ok = false;
-        //    using (SqlConnection connect = new SqlConnection(Crypt.Decrypt(XmlClass.GetSelectedConnectionString())))
-        //    {
-        //        try
-        //        {
-        //            connect.Open();
-        //            SqlCommand command = new SqlCommand("UpdateTagNew", connect);
-        //            command.CommandType = CommandType.StoredProcedure;
+        //---Метод: Создание новой номенклатуры (ХП)---------------------------------------------------------------------
+        public static bool UpdateTagNew(NomenclatureClass Nomen)
+        {
+            bool ok = false;
+            using (SqlConnection connect = new SqlConnection(Cryption.Decrypt(XmlClass.GetSelectedConnectionString())))
+            {
+                try
+                {
+                    connect.Open();
+                    SqlCommand command = new SqlCommand("UpdateTagNew", connect);
+                    command.CommandType = CommandType.StoredProcedure;
 
-        //            SqlParameter Param0 = new SqlParameter { ParameterName = "@NomenID", Value = Nomen.ID };// Новый ID //---Передаваемый параметр
-        //            command.Parameters.Add(Param0);
+                    SqlParameter Param0 = new SqlParameter { ParameterName = "@NomenID", Value = Nomen.ID };// Новый ID //---Передаваемый параметр
+                    command.Parameters.Add(Param0);
 
-        //            SqlParameter Param1 = new SqlParameter { ParameterName = "@Checked", Value = Nomen.New }; //---Передаваемый параметр
-        //            command.Parameters.Add(Param1);
+                    SqlParameter Param1 = new SqlParameter { ParameterName = "@Checked", Value = Nomen.New }; //---Передаваемый параметр
+                    command.Parameters.Add(Param1);
 
 
-        //            command.Parameters.Add("@Result", SqlDbType.Bit).Direction = ParameterDirection.Output; // Выходной параметр
+                    command.Parameters.Add("@Result", SqlDbType.Bit).Direction = ParameterDirection.Output; // Выходной параметр
 
-        //            command.ExecuteNonQuery();
+                    command.ExecuteNonQuery();
 
-        //            ok = (bool)command.Parameters["@Result"].Value;
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            MessageBox.Show(ex.Message, "DataBaseRequest.UpdateTagAksia");
-        //        }
-        //        return ok;
-        //    }
-        //}
+                    ok = (bool)command.Parameters["@Result"].Value;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "DataBaseRequest.UpdateTagAksia");
+                }
+                return ok;
+            }
+        }
 
 
 
@@ -962,25 +959,25 @@ namespace ControlSystemsLibrary.Services
 
 
 
-        ////---Метод: Создает Самую базовую группу для номенклатуры если такаго еще нет -----------------------------------
-        //public static void CheckAndCreateMainNomenGroup()
-        //{
-        //    using (SqlConnection connect = new SqlConnection(XmlClass.GetSelectedConnectionString()))
-        //    {
-        //        try
-        //        {
-        //            connect.Open();
-        //            SqlCommand command = new SqlCommand("CheckAndCreateMainNomenGroup", connect);
-        //            command.CommandType = CommandType.StoredProcedure;
+        //---Метод: Создает Самую базовую группу для номенклатуры если такаго еще нет -----------------------------------
+        public static void CheckAndCreateMainNomenGroup()
+        {
+            using (SqlConnection connect = new SqlConnection(XmlClass.GetSelectedConnectionString()))
+            {
+                try
+                {
+                    connect.Open();
+                    SqlCommand command = new SqlCommand("CheckAndCreateMainNomenGroup", connect);
+                    command.CommandType = CommandType.StoredProcedure;
 
-        //            command.ExecuteNonQuery();
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            MessageBox.Show(ex.Message, "DataBaseRequest.GetMainNomenGroupID");
-        //        }
-        //    }
-        //}
+                    command.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "DataBaseRequest.GetMainNomenGroupID");
+                }
+            }
+        }
 
 
 
@@ -992,98 +989,98 @@ namespace ControlSystemsLibrary.Services
 
 
 
-        ////---Метод: Создание новой номенклатуры (ХП)---------------------------------------------------------------------
-        //public static bool CreateNomenPropValue(Guid NomenklatureID, string ValueName)
-        //{
-        //    bool ok = false;
-        //    using (SqlConnection connect = new SqlConnection(XmlClass.GetSelectedConnectionString()))
-        //    {
-        //        try
-        //        {
-        //            connect.Open();
-        //            SqlCommand command = new SqlCommand("CreateNomenPropretyValue", connect);
-        //            command.CommandType = CommandType.StoredProcedure;
+        //---Метод: Создание новой номенклатуры (ХП)---------------------------------------------------------------------
+        public static bool CreateNomenPropValue(Guid NomenklatureID, string ValueName)
+        {
+            bool ok = false;
+            using (SqlConnection connect = new SqlConnection(XmlClass.GetSelectedConnectionString()))
+            {
+                try
+                {
+                    connect.Open();
+                    SqlCommand command = new SqlCommand("CreateNomenPropretyValue", connect);
+                    command.CommandType = CommandType.StoredProcedure;
 
 
-        //            SqlParameter Param0 = new SqlParameter { ParameterName = "@NomenID", Value = NomenklatureID.ToString() };// Новый ID //---Передаваемый параметр
-        //            command.Parameters.Add(Param0);
+                    SqlParameter Param0 = new SqlParameter { ParameterName = "@NomenID", Value = NomenklatureID.ToString() };// Новый ID //---Передаваемый параметр
+                    command.Parameters.Add(Param0);
 
-        //            SqlParameter Param1 = new SqlParameter { ParameterName = "@PropertyValueName", Value = ValueName }; //---Передаваемый параметр
-        //            command.Parameters.Add(Param1);
+                    SqlParameter Param1 = new SqlParameter { ParameterName = "@PropertyValueName", Value = ValueName }; //---Передаваемый параметр
+                    command.Parameters.Add(Param1);
 
-        //            command.Parameters.Add("@Result", SqlDbType.Bit).Direction = ParameterDirection.Output; // Выходной параметр
+                    command.Parameters.Add("@Result", SqlDbType.Bit).Direction = ParameterDirection.Output; // Выходной параметр
 
-        //            command.ExecuteNonQuery();
+                    command.ExecuteNonQuery();
 
-        //            ok = (bool)command.Parameters["@Result"].Value;
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            MessageBox.Show(ex.Message, "DataBaseRequest.CreateNomenPropValue");
-        //        }
-        //        return ok;
-        //    }
-        //}
+                    ok = (bool)command.Parameters["@Result"].Value;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "DataBaseRequest.CreateNomenPropValue");
+                }
+                return ok;
+            }
+        }
 
-        ////---Метод: Создание дополнительной единицы измерения номенклатуры (ХП)------------------------------------------
-        //public static bool CreateAdditionalUnits(Guid NomenklatureID, string UnitName, double RecountAmount, double Weight)
-        //{
-        //    bool ok = false;
-        //    using (SqlConnection connect = new SqlConnection(XmlClass.GetSelectedConnectionString()))
-        //    {
-        //        try
-        //        {
-        //            connect.Open();
-        //            SqlCommand command = new SqlCommand("CreateAdditionalUnits", connect);
-        //            command.CommandType = CommandType.StoredProcedure;
+        //---Метод: Создание дополнительной единицы измерения номенклатуры (ХП)------------------------------------------
+        public static bool CreateAdditionalUnits(Guid NomenklatureID, string UnitName, double RecountAmount, double Weight)
+        {
+            bool ok = false;
+            using (SqlConnection connect = new SqlConnection(XmlClass.GetSelectedConnectionString()))
+            {
+                try
+                {
+                    connect.Open();
+                    SqlCommand command = new SqlCommand("CreateAdditionalUnits", connect);
+                    command.CommandType = CommandType.StoredProcedure;
 
-        //            SqlParameter Param0 = new SqlParameter { ParameterName = "@NomenclatureID", Value = NomenklatureID.ToString() };// Новый ID //---Передаваемый параметр
-        //            command.Parameters.Add(Param0);
+                    SqlParameter Param0 = new SqlParameter { ParameterName = "@NomenclatureID", Value = NomenklatureID.ToString() };// Новый ID //---Передаваемый параметр
+                    command.Parameters.Add(Param0);
 
-        //            SqlParameter Param1 = new SqlParameter { ParameterName = "@UnitName", Value = UnitName }; //---Передаваемый параметр
-        //            command.Parameters.Add(Param1);
+                    SqlParameter Param1 = new SqlParameter { ParameterName = "@UnitName", Value = UnitName }; //---Передаваемый параметр
+                    command.Parameters.Add(Param1);
 
-        //            SqlParameter Param2 = new SqlParameter { ParameterName = "@RecountAmount", Value = RecountAmount }; //---Передаваемый параметр
-        //            command.Parameters.Add(Param2);
+                    SqlParameter Param2 = new SqlParameter { ParameterName = "@RecountAmount", Value = RecountAmount }; //---Передаваемый параметр
+                    command.Parameters.Add(Param2);
 
-        //            SqlParameter Param3 = new SqlParameter { ParameterName = "@Weight", Value = Weight }; //---Передаваемый параметр
-        //            command.Parameters.Add(Param3);
+                    SqlParameter Param3 = new SqlParameter { ParameterName = "@Weight", Value = Weight }; //---Передаваемый параметр
+                    command.Parameters.Add(Param3);
 
-        //            command.Parameters.Add("@Result", SqlDbType.Bit).Direction = ParameterDirection.Output; // Выходной параметр
+                    command.Parameters.Add("@Result", SqlDbType.Bit).Direction = ParameterDirection.Output; // Выходной параметр
 
-        //            command.ExecuteNonQuery();
+                    command.ExecuteNonQuery();
 
-        //            ok = (bool)command.Parameters["@Result"].Value;
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            MessageBox.Show(ex.Message, "DataBaseRequest.CreateDopEdin");
-        //        }
-        //        return ok;
-        //    }
-        //}
+                    ok = (bool)command.Parameters["@Result"].Value;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "DataBaseRequest.CreateDopEdin");
+                }
+                return ok;
+            }
+        }
 
 
 
-        //private static Viewbox GetNomenTag(string TagName, bool TagValue)
-        //{
-        //    Viewbox vb = new Viewbox() { Width=18,Height=18};
-        //    if(TagName == "TagNew" && TagValue == true)
-        //        vb.Child = Icons.GetIcon("Новинка") as UIElement;
-        //    if (TagName == "TagNew" && TagValue == false)
-        //        vb.Child = Icons.GetIcon("НовинкаНет") as UIElement;
+        private static Viewbox GetNomenTag(string TagName, bool TagValue)
+        {
+            Viewbox vb = new Viewbox() { Width = 18, Height = 18 };
+            if (TagName == "TagNew" && TagValue == true)
+                vb.Child = GetIcons.GetIcon("Новинка") as UIElement;
+            if (TagName == "TagNew" && TagValue == false)
+                vb.Child = GetIcons.GetIcon("НовинкаНет") as UIElement;
 
-        //    if (TagName == "TagFocus" && TagValue == true)
-        //        vb.Child = Icons.GetIcon("Фокус") as UIElement;
-        //    if (TagName == "TagFocus" && TagValue == false)
-        //        vb.Child = Icons.GetIcon("ФокусНет") as UIElement;
+            if (TagName == "TagFocus" && TagValue == true)
+                vb.Child = GetIcons.GetIcon("Фокус") as UIElement;
+            if (TagName == "TagFocus" && TagValue == false)
+                vb.Child = GetIcons.GetIcon("ФокусНет") as UIElement;
 
-        //    if (TagName == "TagAksia" && TagValue == true)
-        //        vb.Child = Icons.GetIcon("Акция") as UIElement;
-        //    if (TagName == "TagAksia" && TagValue == false)
-        //        vb.Child = Icons.GetIcon("АкцияНет") as UIElement;
-        //    return vb;
-        //}
+            if (TagName == "TagAksia" && TagValue == true)
+                vb.Child = GetIcons.GetIcon("Акция") as UIElement;
+            if (TagName == "TagAksia" && TagValue == false)
+                vb.Child = GetIcons.GetIcon("АкцияНет") as UIElement;
+            return vb;
+        }
 
     }
 

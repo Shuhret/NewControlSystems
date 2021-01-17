@@ -381,14 +381,16 @@ namespace ControlSystemsLibrary.Views
                     UIC.UserInterfaceControl = UC;
                     UserInterfacesCollection.Add(UIC);
                     CurrentUserInterfaceParent.Content = UIC.UserInterfaceControl;
-                    ShowMessage(false);
+
+                    ShowMessage("Сохранение имени пользователя", "Blue-003", true);
+                    await Task.Run(() => XmlClass.WriteCurrentUserName(CurrentUserName));
                 }
                 else
                 {
                     CurrentUserInterfaceParent.Content = GetUserInterfaceFromCollection(UserInterfaceFullName).UserInterfaceControl;
-                    ShowMessage(false);
                 }
-                
+
+                ShowMessage(false);
                 AuthorizationEnabled = true;
             }
             else

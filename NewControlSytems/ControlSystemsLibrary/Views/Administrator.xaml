@@ -410,7 +410,7 @@
                                         <SolidColorBrush Color="{DynamicResource Dark-004}"/>
                                     </Expander.Foreground>
                                     <StackPanel Margin="0,5,0,0">
-                                        <controls:CheckBoxButton BcContent="Заявка поставщику" Height="28" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.2" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed">
+                                        <controls:CheckBoxButton x:Name="MenuButtonZayavkapostavshiku" ClickButton="MenuButton_Click" BcContent="Заявка поставщику" Height="28" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.5" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed">
                                             <controls:CheckBoxButton.StarUnCheckColor>
                                                 <SolidColorBrush Color="{DynamicResource Light-004}"/>
                                             </controls:CheckBoxButton.StarUnCheckColor>
@@ -418,7 +418,7 @@
                                                 <SolidColorBrush Color="{DynamicResource Dark-002}"/>
                                             </controls:CheckBoxButton.Foreground>
                                         </controls:CheckBoxButton>
-                                        <controls:CheckBoxButton BcContent="Поступление" Height="28" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.2" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed">
+                                        <controls:CheckBoxButton x:Name="MenuButtonPostuplenie" ClickButton="MenuButton_Click" BcContent="Поступление" Height="28" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.5" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed">
                                             <controls:CheckBoxButton.StarUnCheckColor>
                                                 <SolidColorBrush Color="{DynamicResource Light-004}"/>
                                             </controls:CheckBoxButton.StarUnCheckColor>
@@ -426,7 +426,7 @@
                                                 <SolidColorBrush Color="{DynamicResource Dark-002}"/>
                                             </controls:CheckBoxButton.Foreground>
                                         </controls:CheckBoxButton>
-                                        <controls:CheckBoxButton BcContent="Возврат поставщику" Height="28" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.2" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed">
+                                        <controls:CheckBoxButton x:Name="MenuButtonVozvratpostavshiku" ClickButton="MenuButton_Click" BcContent="Возврат поставщику" Height="28" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.5" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed">
                                             <controls:CheckBoxButton.StarUnCheckColor>
                                                 <SolidColorBrush Color="{DynamicResource Light-004}"/>
                                             </controls:CheckBoxButton.StarUnCheckColor>
@@ -434,7 +434,7 @@
                                                 <SolidColorBrush Color="{DynamicResource Dark-002}"/>
                                             </controls:CheckBoxButton.Foreground>
                                         </controls:CheckBoxButton>
-                                        <controls:CheckBoxButton BcContent="Отчет поставщику" Height="28" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.2" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed">
+                                        <controls:CheckBoxButton x:Name="MenuButtonOtchetPostavshiku" ClickButton="MenuButton_Click" BcContent="Отчет поставщику" Height="28" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.5" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed">
                                             <controls:CheckBoxButton.StarUnCheckColor>
                                                 <SolidColorBrush Color="{DynamicResource Light-004}"/>
                                             </controls:CheckBoxButton.StarUnCheckColor>
@@ -449,7 +449,7 @@
                                         <SolidColorBrush Color="{DynamicResource Dark-004}"/>
                                     </Expander.Foreground>
                                     <StackPanel Margin="0,5,0,0">
-                                        <controls:CheckBoxButton BcContent="Заявка на производство" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.2">
+                                        <controls:CheckBoxButton BcContent="Заявка на производство" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.5">
                                             <controls:CheckBoxButton.StarUnCheckColor>
                                                 <SolidColorBrush Color="{DynamicResource Light-004}"/>
                                             </controls:CheckBoxButton.StarUnCheckColor>
@@ -457,7 +457,7 @@
                                                 <SolidColorBrush Color="{DynamicResource Dark-002}"/>
                                             </controls:CheckBoxButton.Foreground>
                                         </controls:CheckBoxButton>
-                                        <controls:CheckBoxButton BcContent="Выход готовой продукции" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.2">
+                                        <controls:CheckBoxButton BcContent="Выход готовой продукции" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.5">
                                             <controls:CheckBoxButton.StarUnCheckColor>
                                                 <SolidColorBrush Color="{DynamicResource Light-004}"/>
                                             </controls:CheckBoxButton.StarUnCheckColor>
@@ -465,7 +465,7 @@
                                                 <SolidColorBrush Color="{DynamicResource Dark-002}"/>
                                             </controls:CheckBoxButton.Foreground>
                                         </controls:CheckBoxButton>
-                                        <controls:CheckBoxButton BcContent="Рецепты" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.2">
+                                        <controls:CheckBoxButton BcContent="Рецепты" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.5">
                                             <controls:CheckBoxButton.StarUnCheckColor>
                                                 <SolidColorBrush Color="{DynamicResource Light-004}"/>
                                             </controls:CheckBoxButton.StarUnCheckColor>
@@ -473,7 +473,7 @@
                                                 <SolidColorBrush Color="{DynamicResource Dark-002}"/>
                                             </controls:CheckBoxButton.Foreground>
                                         </controls:CheckBoxButton>
-                                        <controls:CheckBoxButton BcContent="Отчет о производстве" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.2">
+                                        <controls:CheckBoxButton BcContent="Отчет о производстве" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.5">
                                             <controls:CheckBoxButton.StarUnCheckColor>
                                                 <SolidColorBrush Color="{DynamicResource Light-004}"/>
                                             </controls:CheckBoxButton.StarUnCheckColor>
@@ -488,7 +488,7 @@
                                         <SolidColorBrush Color="{DynamicResource Dark-004}"/>
                                     </Expander.Foreground>
                                     <StackPanel Margin="0,5,0,0">
-                                        <controls:CheckBoxButton BcContent="Заявка на перемещение" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.2">
+                                        <controls:CheckBoxButton BcContent="Заявка на перемещение" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.5">
                                             <controls:CheckBoxButton.StarUnCheckColor>
                                                 <SolidColorBrush Color="{DynamicResource Light-004}"/>
                                             </controls:CheckBoxButton.StarUnCheckColor>
@@ -496,7 +496,7 @@
                                                 <SolidColorBrush Color="{DynamicResource Dark-002}"/>
                                             </controls:CheckBoxButton.Foreground>
                                         </controls:CheckBoxButton>
-                                        <controls:CheckBoxButton BcContent="Перемещение" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.2">
+                                        <controls:CheckBoxButton BcContent="Перемещение" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.5">
                                             <controls:CheckBoxButton.StarUnCheckColor>
                                                 <SolidColorBrush Color="{DynamicResource Light-004}"/>
                                             </controls:CheckBoxButton.StarUnCheckColor>
@@ -504,7 +504,7 @@
                                                 <SolidColorBrush Color="{DynamicResource Dark-002}"/>
                                             </controls:CheckBoxButton.Foreground>
                                         </controls:CheckBoxButton>
-                                        <controls:CheckBoxButton BcContent="Сверка склада" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.2">
+                                        <controls:CheckBoxButton BcContent="Сверка склада" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.5">
                                             <controls:CheckBoxButton.StarUnCheckColor>
                                                 <SolidColorBrush Color="{DynamicResource Light-004}"/>
                                             </controls:CheckBoxButton.StarUnCheckColor>
@@ -512,7 +512,7 @@
                                                 <SolidColorBrush Color="{DynamicResource Dark-002}"/>
                                             </controls:CheckBoxButton.Foreground>
                                         </controls:CheckBoxButton>
-                                        <controls:CheckBoxButton BcContent="Списание браков" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.2">
+                                        <controls:CheckBoxButton BcContent="Списание браков" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.5">
                                             <controls:CheckBoxButton.StarUnCheckColor>
                                                 <SolidColorBrush Color="{DynamicResource Light-004}"/>
                                             </controls:CheckBoxButton.StarUnCheckColor>
@@ -527,7 +527,7 @@
                                         <SolidColorBrush Color="{DynamicResource Dark-004}"/>
                                     </Expander.Foreground>
                                     <StackPanel Margin="0,5,0,0">
-                                        <controls:CheckBoxButton BcContent="Заявка на перемещение" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.2">
+                                        <controls:CheckBoxButton BcContent="Заявка на перемещение" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.5">
                                             <controls:CheckBoxButton.StarUnCheckColor>
                                                 <SolidColorBrush Color="{DynamicResource Light-004}"/>
                                             </controls:CheckBoxButton.StarUnCheckColor>
@@ -535,7 +535,7 @@
                                                 <SolidColorBrush Color="{DynamicResource Dark-002}"/>
                                             </controls:CheckBoxButton.Foreground>
                                         </controls:CheckBoxButton>
-                                        <controls:CheckBoxButton BcContent="Перемещение" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.2">
+                                        <controls:CheckBoxButton BcContent="Перемещение" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.5">
                                             <controls:CheckBoxButton.StarUnCheckColor>
                                                 <SolidColorBrush Color="{DynamicResource Light-004}"/>
                                             </controls:CheckBoxButton.StarUnCheckColor>
@@ -543,7 +543,7 @@
                                                 <SolidColorBrush Color="{DynamicResource Dark-002}"/>
                                             </controls:CheckBoxButton.Foreground>
                                         </controls:CheckBoxButton>
-                                        <controls:CheckBoxButton BcContent="Сверка склада" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.2">
+                                        <controls:CheckBoxButton BcContent="Сверка склада" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.5">
                                             <controls:CheckBoxButton.StarUnCheckColor>
                                                 <SolidColorBrush Color="{DynamicResource Light-004}"/>
                                             </controls:CheckBoxButton.StarUnCheckColor>
@@ -551,7 +551,7 @@
                                                 <SolidColorBrush Color="{DynamicResource Dark-002}"/>
                                             </controls:CheckBoxButton.Foreground>
                                         </controls:CheckBoxButton>
-                                        <controls:CheckBoxButton BcContent="Списание браков" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.2">
+                                        <controls:CheckBoxButton BcContent="Списание браков" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.5">
                                             <controls:CheckBoxButton.StarUnCheckColor>
                                                 <SolidColorBrush Color="{DynamicResource Light-004}"/>
                                             </controls:CheckBoxButton.StarUnCheckColor>
@@ -566,7 +566,7 @@
                                         <SolidColorBrush Color="{DynamicResource Dark-004}"/>
                                     </Expander.Foreground>
                                     <StackPanel Margin="0,5,0,0">
-                                        <controls:CheckBoxButton BcContent="Новая анкета" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.2">
+                                        <controls:CheckBoxButton BcContent="Новая анкета" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.5">
                                             <controls:CheckBoxButton.StarUnCheckColor>
                                                 <SolidColorBrush Color="{DynamicResource Light-004}"/>
                                             </controls:CheckBoxButton.StarUnCheckColor>
@@ -574,7 +574,7 @@
                                                 <SolidColorBrush Color="{DynamicResource Dark-002}"/>
                                             </controls:CheckBoxButton.Foreground>
                                         </controls:CheckBoxButton>
-                                        <controls:CheckBoxButton BcContent="Новая должность" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.2">
+                                        <controls:CheckBoxButton BcContent="Новая должность" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.5">
                                             <controls:CheckBoxButton.StarUnCheckColor>
                                                 <SolidColorBrush Color="{DynamicResource Light-004}"/>
                                             </controls:CheckBoxButton.StarUnCheckColor>
@@ -582,7 +582,7 @@
                                                 <SolidColorBrush Color="{DynamicResource Dark-002}"/>
                                             </controls:CheckBoxButton.Foreground>
                                         </controls:CheckBoxButton>
-                                        <controls:CheckBoxButton BcContent="Договор оплаты труда" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.2">
+                                        <controls:CheckBoxButton BcContent="Договор оплаты труда" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.5">
                                             <controls:CheckBoxButton.StarUnCheckColor>
                                                 <SolidColorBrush Color="{DynamicResource Light-004}"/>
                                             </controls:CheckBoxButton.StarUnCheckColor>
@@ -590,7 +590,7 @@
                                                 <SolidColorBrush Color="{DynamicResource Dark-002}"/>
                                             </controls:CheckBoxButton.Foreground>
                                         </controls:CheckBoxButton>
-                                        <controls:CheckBoxButton BcContent="Оплата труда" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.2">
+                                        <controls:CheckBoxButton BcContent="Оплата труда" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.5">
                                             <controls:CheckBoxButton.StarUnCheckColor>
                                                 <SolidColorBrush Color="{DynamicResource Light-004}"/>
                                             </controls:CheckBoxButton.StarUnCheckColor>
@@ -598,7 +598,7 @@
                                                 <SolidColorBrush Color="{DynamicResource Dark-002}"/>
                                             </controls:CheckBoxButton.Foreground>
                                         </controls:CheckBoxButton>
-                                        <controls:CheckBoxButton BcContent="Достижения" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.2">
+                                        <controls:CheckBoxButton BcContent="Достижения" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.5">
                                             <controls:CheckBoxButton.StarUnCheckColor>
                                                 <SolidColorBrush Color="{DynamicResource Light-004}"/>
                                             </controls:CheckBoxButton.StarUnCheckColor>
@@ -606,7 +606,7 @@
                                                 <SolidColorBrush Color="{DynamicResource Dark-002}"/>
                                             </controls:CheckBoxButton.Foreground>
                                         </controls:CheckBoxButton>
-                                        <controls:CheckBoxButton BcContent="Уволнение" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.2">
+                                        <controls:CheckBoxButton BcContent="Уволнение" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.5">
                                             <controls:CheckBoxButton.StarUnCheckColor>
                                                 <SolidColorBrush Color="{DynamicResource Light-004}"/>
                                             </controls:CheckBoxButton.StarUnCheckColor>
@@ -621,7 +621,7 @@
                                         <SolidColorBrush Color="{DynamicResource Dark-004}"/>
                                     </Expander.Foreground>
                                     <StackPanel Margin="0,5,0,0">
-                                        <controls:CheckBoxButton BcContent="Заявка на оплату" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.2">
+                                        <controls:CheckBoxButton BcContent="Заявка на оплату" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.5">
                                             <controls:CheckBoxButton.StarUnCheckColor>
                                                 <SolidColorBrush Color="{DynamicResource Light-004}"/>
                                             </controls:CheckBoxButton.StarUnCheckColor>
@@ -629,7 +629,7 @@
                                                 <SolidColorBrush Color="{DynamicResource Dark-002}"/>
                                             </controls:CheckBoxButton.Foreground>
                                         </controls:CheckBoxButton>
-                                        <controls:CheckBoxButton BcContent="Приходный кассовый ордер" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.2">
+                                        <controls:CheckBoxButton BcContent="Приходный кассовый ордер" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.5">
                                             <controls:CheckBoxButton.StarUnCheckColor>
                                                 <SolidColorBrush Color="{DynamicResource Light-004}"/>
                                             </controls:CheckBoxButton.StarUnCheckColor>
@@ -637,7 +637,7 @@
                                                 <SolidColorBrush Color="{DynamicResource Dark-002}"/>
                                             </controls:CheckBoxButton.Foreground>
                                         </controls:CheckBoxButton>
-                                        <controls:CheckBoxButton BcContent="Расходный кассовый ордер" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.2">
+                                        <controls:CheckBoxButton BcContent="Расходный кассовый ордер" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.5">
                                             <controls:CheckBoxButton.StarUnCheckColor>
                                                 <SolidColorBrush Color="{DynamicResource Light-004}"/>
                                             </controls:CheckBoxButton.StarUnCheckColor>
@@ -645,7 +645,7 @@
                                                 <SolidColorBrush Color="{DynamicResource Dark-002}"/>
                                             </controls:CheckBoxButton.Foreground>
                                         </controls:CheckBoxButton>
-                                        <controls:CheckBoxButton BcContent="Перемещение денежных средств" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.2">
+                                        <controls:CheckBoxButton BcContent="Перемещение денежных средств" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.5">
                                             <controls:CheckBoxButton.StarUnCheckColor>
                                                 <SolidColorBrush Color="{DynamicResource Light-004}"/>
                                             </controls:CheckBoxButton.StarUnCheckColor>
@@ -653,7 +653,7 @@
                                                 <SolidColorBrush Color="{DynamicResource Dark-002}"/>
                                             </controls:CheckBoxButton.Foreground>
                                         </controls:CheckBoxButton>
-                                        <controls:CheckBoxButton BcContent="Закрытие кассы" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.2">
+                                        <controls:CheckBoxButton BcContent="Закрытие кассы" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.5">
                                             <controls:CheckBoxButton.StarUnCheckColor>
                                                 <SolidColorBrush Color="{DynamicResource Light-004}"/>
                                             </controls:CheckBoxButton.StarUnCheckColor>
@@ -661,7 +661,7 @@
                                                 <SolidColorBrush Color="{DynamicResource Dark-002}"/>
                                             </controls:CheckBoxButton.Foreground>
                                         </controls:CheckBoxButton>
-                                        <controls:CheckBoxButton BcContent="Уволнение" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.2">
+                                        <controls:CheckBoxButton BcContent="Уволнение" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.5">
                                             <controls:CheckBoxButton.StarUnCheckColor>
                                                 <SolidColorBrush Color="{DynamicResource Light-004}"/>
                                             </controls:CheckBoxButton.StarUnCheckColor>
@@ -717,7 +717,7 @@
                                         <SolidColorBrush Color="{DynamicResource Dark-004}"/>
                                     </Expander.Foreground>
                                     <StackPanel Margin="0,5,0,0">
-                                        <controls:CheckBoxButton BcContent="Номенклатура" Height="28" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.2" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed">
+                                        <controls:CheckBoxButton x:Name="MenuButtonNomenclatura" ClickButton="MenuButton_Click" BcContent="Номенклатура" Height="28" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.5" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed">
                                             <controls:CheckBoxButton.StarUnCheckColor>
                                                 <SolidColorBrush Color="{DynamicResource Light-004}"/>
                                             </controls:CheckBoxButton.StarUnCheckColor>

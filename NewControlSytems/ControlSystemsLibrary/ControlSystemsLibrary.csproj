@@ -49,9 +49,13 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\NomenclatureClass.cs" />
     <Compile Include="Classes\UserInterfacesClass.cs" />
     <Compile Include="Controls\AdminTabItem.xaml.cs">
       <DependentUpon>AdminTabItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\AdminTabItemContents\NomenclatureATI.xaml.cs">
+      <DependentUpon>NomenclatureATI.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\CheckBoxButton.xaml.cs">
       <DependentUpon>CheckBoxButton.xaml</DependentUpon>
@@ -78,6 +82,10 @@
       <DependentUpon>UserInterfaceSelection.xaml</DependentUpon>
     </Compile>
     <Page Include="Controls\AdminTabItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\AdminTabItemContents\NomenclatureATI.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

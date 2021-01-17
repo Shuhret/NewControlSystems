@@ -77,7 +77,9 @@
                             <Border x:Name="border" Background="{TemplateBinding Background}" Cursor="Hand" SnapsToDevicePixels="True" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Margin="0"/>
                             <Rectangle x:Name="rectangle1" Fill="White" Opacity="0"/>
                             <Rectangle x:Name="rectangle2" Fill="White" Opacity="0"/>
-                            <ContentPresenter RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" Height="Auto" Width="Auto" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/>
+                            <Border Height="Auto" Width="Auto" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Padding="{TemplateBinding Padding}">
+                                <ContentPresenter RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                            </Border>
                         </Grid>
                     </Grid>
                     <ControlTemplate.Triggers>

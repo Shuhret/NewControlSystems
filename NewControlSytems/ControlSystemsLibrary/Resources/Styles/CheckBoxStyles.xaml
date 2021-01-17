@@ -2,6 +2,135 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:ControlSystemsLibrary.Resources.Styles">
 
+    <Style x:Key="NoTextCircleCheckBoxStyle" TargetType="{x:Type CheckBox}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type CheckBox}">
+                    <Grid Background="White" Margin="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="0" Height="Auto" Width="Auto">
+                            <Grid>
+                                <Rectangle x:Name="rct2" Visibility="Hidden" Margin="-1" >
+                                    <Rectangle.Stroke>
+                                        <SolidColorBrush Color="#FF1697FC"/>
+                                    </Rectangle.Stroke>
+                                </Rectangle>
+                                <Rectangle x:Name="rct" Visibility="Hidden" Margin="3" >
+                                    <Rectangle.Fill>
+                                        <SolidColorBrush Color="#FF1697FC"/>
+                                    </Rectangle.Fill>
+                                </Rectangle>
+                                <Viewbox x:Name="vb" Margin="1,1,1,1" Visibility="Hidden">
+                                    <Canvas HorizontalAlignment="Left" Height="30" UseLayoutRounding="False" VerticalAlignment="Top" Width="30">
+                                        <Canvas Height="16.547" Canvas.Left="2.5" Canvas.Top="6.727" Width="25">
+                                            <Path Data="M2.5,14.8188L10.954,23.2738L27.5,6.7268" Height="17.547" Canvas.Left="-0.5" StrokeStartLineCap="Round" Stretch="Fill" StrokeEndLineCap="Round" StrokeThickness="7" StrokeLineJoin="Round" Canvas.Top="-0.5" Width="26">
+                                                <Path.Stroke>
+                                                    <SolidColorBrush Color="#FF1697FC"/>
+                                                </Path.Stroke>
+                                            </Path>
+                                        </Canvas>
+                                    </Canvas>
+                                </Viewbox>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter Property="Visibility" TargetName="rct2" Value="Visible"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="{x:Null}">
+                            <Setter Property="Visibility" TargetName="rct" Value="Visible"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter Property="Visibility" TargetName="vb" Value="Visible"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="GiftCheckBoxStyle" TargetType="{x:Type CheckBox}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type CheckBox}">
+                    <Grid>
+                        <Border Background="Transparent">
+                            <Viewbox Width="18">
+                                <Canvas Height="50" UseLayoutRounding="False" VerticalAlignment="Top" Width="50">
+                                    <Canvas Height="49.924" Canvas.Left="0" Canvas.Top="0.038" Width="50">
+                                        <Path x:Name="path" Data="F1M35.2988,4.2075C36.1628,3.4995,37.3428,3.1065,38.4438,3.4215C39.9378,3.8935,40.8808,5.2295,40.8018,6.8015C40.6448,8.5315,39.1518,9.7105,37.4208,9.7105L29.8738,9.7105L29.8738,9.2395L29.8738,9.1605C31.1318,7.9805,33.8838,5.5435,35.2988,4.2075 M37.5788,0.0405000000000033L37.4998,0.0405000000000033C35.9278,0.0405000000000033,34.4338,0.669500000000003,33.2548,1.7705L28.6158,5.9365C27.7518,4.9155,26.4148,4.2865,24.9998,4.2865C23.5848,4.2865,22.3268,4.9155,21.3838,5.9365L16.8238,1.7705C14.8588,-0.037499999999997,12.1858,-0.430499999999997,9.8268,0.591500000000003C7.2328,1.7705,5.7388,4.3645,5.9748,7.1945C6.1318,8.1385,6.4468,9.0035,6.9188,9.7105L3.3018,9.7105C1.4938,9.7105,-0.000199999999999534,11.2045,-0.000199999999999534,13.0125L-0.000199999999999534,17.8865C-0.000199999999999534,18.8305,0.707799999999999,19.5375,1.6508,19.5375L48.3488,19.5375C49.2918,19.5375,49.9998,18.8305,49.9998,17.8865L49.9998,13.0125C49.9998,11.2045,48.5848,9.7105,46.7768,9.7105L43.0818,9.7105C43.6318,9.0035,43.9458,8.1385,44.0258,7.1945C44.2608,4.3645,42.7678,1.7705,40.1728,0.591500000000003C39.3088,0.276500000000003,38.4438,0.0405000000000033,37.5788,0.0405000000000033 M3.3018,46.7395C3.3018,48.5465,4.7168,49.9615,6.5258,49.9615L21.7768,49.9615L21.7768,22.7615L3.3018,22.7615z M28.3018,49.9615L43.4748,49.9615C45.2828,49.9615,46.7768,48.5465,46.7768,46.7395L46.7768,22.7615L28.3018,22.7615z M9.3558,5.7795C9.5908,4.8365,10.2198,4.0505,11.0848,3.6575C12.2638,3.1065,13.6008,3.2645,14.6228,4.1285L20.1258,9.1605L20.1258,9.2395L20.1258,9.7105L12.4218,9.7105C10.4558,9.7105,8.8048,7.8235,9.3558,5.7795" Height="49.924" Canvas.Left="0" Stretch="Fill" Canvas.Top="0" Width="50" Fill="#FFDFE1E4"/>
+                                    </Canvas>
+                                </Canvas>
+                            </Viewbox>
+                        </Border>
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Visibility="Collapsed"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter Property="Fill" TargetName="path" Value="#FFFF7881"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="FocusCheckBoxStyle" TargetType="{x:Type CheckBox}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type CheckBox}">
+                    <Grid>
+                        <Border Background="Transparent">
+                            <Viewbox Width="17">
+                                <Canvas Height="50" UseLayoutRounding="False" VerticalAlignment="Top" Width="50">
+                                    <Canvas Height="50" Canvas.Left="0" Canvas.Top="0" Width="50">
+                                        <Path x:Name="path" Data="M48.5449,20.6191L42.6619,20.6191C41.8579,20.6191,41.2069,19.9381,41.2069,19.1331L41.2069,8.7921L30.8669,8.7921C30.0619,8.7921,29.3809,8.1421,29.3809,7.3371L29.3809,1.4551C29.3809,0.650099999999998,30.0619,9.99999999997669E-05,30.8669,9.99999999997669E-05L48.5449,9.99999999997669E-05C49.3499,9.99999999997669E-05,49.9999,0.650099999999998,49.9999,1.4551L49.9999,19.1331C49.9999,19.9381,49.3499,20.6191,48.5449,20.6191 M7.3369,20.6191L1.45489999999999,20.6191C0.649899999999995,20.6191,-0.00010000000000332,19.9381,-0.00010000000000332,19.1331L-0.00010000000000332,1.4551C-0.00010000000000332,0.650099999999998,0.649899999999995,9.99999999997669E-05,1.45489999999999,9.99999999997669E-05L19.1329,9.99999999997669E-05C19.9379,9.99999999997669E-05,20.6189,0.650099999999998,20.6189,1.4551L20.6189,7.3371C20.6189,8.1421,19.9379,8.7921,19.1329,8.7921L8.7929,8.7921L8.7929,19.1331C8.7929,19.9381,8.1429,20.6191,7.3369,20.6191 M19.1329,50.0001L1.45489999999999,50.0001C0.649899999999995,50.0001,-0.00010000000000332,49.3491,-0.00010000000000332,48.5451L-0.00010000000000332,30.8671C-0.00010000000000332,30.0611,0.649899999999995,29.3811,1.45489999999999,29.3811L7.3369,29.3811C8.1429,29.3811,8.7929,30.0611,8.7929,30.8671L8.7929,41.2071L19.1329,41.2071C19.9379,41.2071,20.6189,41.8571,20.6189,42.6621L20.6189,48.5451C20.6189,49.3491,19.9379,50.0001,19.1329,50.0001 M48.5449,50.0001L30.8669,50.0001C30.0619,50.0001,29.3809,49.3491,29.3809,48.5451L29.3809,42.6621C29.3809,41.8571,30.0619,41.2071,30.8669,41.2071L41.2069,41.2071L41.2069,30.8671C41.2069,30.0611,41.8579,29.3811,42.6619,29.3811L48.5449,29.3811C49.3499,29.3811,49.9999,30.0611,49.9999,30.8671L49.9999,48.5451C49.9999,49.3491,49.3499,50.0001,48.5449,50.0001" Height="50" Canvas.Left="0" Stretch="Fill" Canvas.Top="0" Width="50" Fill="#FFDFE1E4"/>
+                                    </Canvas>
+                                </Canvas>
+
+                            </Viewbox>
+                        </Border>
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Visibility="Collapsed"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter Property="Fill" TargetName="path" Value="#FF1697FC"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="NewCheckBoxStyle" TargetType="{x:Type CheckBox}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type CheckBox}">
+                    <Grid>
+                        <Border Background="Transparent">
+                            <Viewbox Width="18">
+                                <Canvas Height="50" UseLayoutRounding="False" VerticalAlignment="Top" Width="50">
+                                    <Canvas Height="50" Canvas.Left="0" Canvas.Top="0" Width="50">
+                                        <Path x:Name="path" Data="M47.1641,21.2974C46.3761,20.7454,45.4041,20.0364,45.3001,19.5644C45.3521,18.6714,45.6141,17.8044,46.0341,17.0164C46.7181,15.4674,47.4271,13.8394,46.6391,12.5004C45.8771,11.1604,44.0921,10.9504,42.3851,10.7664C41.5181,10.7664,40.6511,10.5564,39.8631,10.1624C39.4701,9.3754,39.2601,8.5084,39.2601,7.6154C39.0501,5.9084,38.8651,4.1494,37.5001,3.3614C36.1611,2.5734,34.5591,3.2564,32.9831,3.9394C32.2221,4.3854,31.3291,4.6484,30.4351,4.7004C29.9631,4.5694,29.2541,3.6244,28.7031,2.8364C27.7051,1.5234,26.6021,0.000399999999999068,25.0001,0.000399999999999068C23.3981,0.000399999999999068,22.2951,1.5234,21.2971,2.8364C20.7461,3.6244,20.0371,4.5694,19.5641,4.7004C18.6711,4.6484,17.8051,4.3854,17.0171,3.9394C15.4411,3.2564,13.8391,2.5734,12.5001,3.3614C11.1611,4.1234,10.9511,5.9084,10.7411,7.6154C10.7411,8.4824,10.5301,9.3484,10.1371,10.1624C9.3491,10.5304,8.4821,10.7404,7.6161,10.7404C5.9091,10.9504,4.1491,11.1344,3.3611,12.4734C2.57409999999999,13.8394,3.2561,15.4414,3.9391,17.0164C4.3861,17.7784,4.6481,18.6714,4.7011,19.5644C4.5691,20.0364,3.5981,20.7454,2.83609999999999,21.2974C1.5231,22.2954,9.99999999962142E-05,23.3984,9.99999999962142E-05,25.0004C9.99999999962142E-05,26.6014,1.5231,27.7054,2.83609999999999,28.7034C3.6241,29.2544,4.5961,29.9634,4.7011,30.4354C4.6481,31.3294,4.3861,32.1954,3.9391,32.9834C3.2831,34.5324,2.57409999999999,36.1614,3.3611,37.5004C4.1231,38.8394,5.9091,39.0494,7.58909999999999,39.2334C8.4821,39.2334,9.3491,39.4434,10.1371,39.8374C10.5301,40.6254,10.7411,41.4914,10.7411,42.3844C10.9511,44.0914,11.1341,45.8504,12.4741,46.6384C13.8391,47.4264,15.4411,46.7174,16.9911,46.0344C17.7781,45.5884,18.6711,45.3514,19.5641,45.2994C20.0371,45.4304,20.7461,46.3764,21.2971,47.1644C22.2951,48.4764,23.3981,50.0004,25.0001,50.0004C26.6021,50.0004,27.7051,48.4764,28.7031,47.1644C29.2541,46.3764,29.9631,45.4044,30.4351,45.2994C31.3291,45.3514,32.1951,45.6144,32.9831,46.0344C34.5321,46.7174,36.1611,47.4264,37.5001,46.6384C38.8391,45.8774,39.0501,44.0914,39.2331,42.3844C39.2601,41.5174,39.4701,40.6514,39.8371,39.8634C40.6511,39.4694,41.5181,39.2594,42.3851,39.2594C44.0921,39.0494,45.8511,38.8654,46.6391,37.5264C47.4271,36.1614,46.7181,34.5584,46.0341,33.0094C45.5881,32.2214,45.3521,31.3294,45.3001,30.4354C45.4311,29.9634,46.3761,29.2544,47.1641,28.7034C48.4761,27.7054,50.0001,26.6014,50.0001,25.0004C50.0001,23.3984,48.4761,22.2954,47.1641,21.2974" Height="50" Canvas.Left="0" Stretch="Fill" Canvas.Top="0" Width="50" Fill="#FFDFE1E4"/>
+                                        <Path Data="M26.2344,26.2344L22.5314,26.2344L22.5314,28.6764L26.2344,28.6764C26.8904,28.6764,27.4424,29.2274,27.4424,29.9114C27.4424,30.5934,26.8904,31.1444,26.2344,31.1444L21.3234,31.1444C20.6404,31.1444,20.0894,30.5934,20.0894,29.9114L20.0894,25.0004L20.0894,20.0894C20.0894,19.4064,20.6404,18.8554,21.3234,18.8554L26.2344,18.8554C26.8904,18.8554,27.4424,19.4064,27.4424,20.0894C27.4424,20.7724,26.8904,21.3234,26.2344,21.3234L22.5314,21.3234L22.5314,23.7654L26.2344,23.7654C26.8904,23.7654,27.4424,24.3174,27.4424,25.0004C27.4424,25.6824,26.8904,26.2344,26.2344,26.2344 M38.4984,31.1444C37.9724,31.1444,37.5004,30.8034,37.3424,30.3044L36.0554,26.4184L34.7684,30.3044C34.6114,30.8304,34.0864,31.1714,33.5344,31.1444C33.0094,31.1194,32.5374,30.7244,32.4054,30.1994L29.9364,20.3784C29.7794,19.7214,30.1724,19.0654,30.8304,18.9074C31.4864,18.7234,32.1694,19.1444,32.3274,19.8004L33.7714,25.5254L34.8744,22.1644C35.1634,21.5074,35.9244,21.2184,36.5814,21.5074C36.8434,21.6384,37.0804,21.8754,37.2114,22.1644L38.3404,25.5254L39.7584,19.8004C39.9164,19.1444,40.5984,18.7234,41.2554,18.9074C41.9124,19.0654,42.3054,19.7214,42.1484,20.3784L39.6794,30.1994C39.5474,30.7244,39.1014,31.1194,38.5504,31.1444z M16.4124,31.1444C16.0194,31.1444,15.6514,30.9614,15.4154,30.6464L10.2684,23.7654L10.2684,29.9114C10.2684,30.5934,9.7164,31.1444,9.0334,31.1444C8.3774,31.1444,7.8254,30.5934,7.8254,29.9114L7.8254,20.0894C7.8254,19.4064,8.3774,18.8554,9.0334,18.8554C9.4274,18.8554,9.7954,19.0394,10.0314,19.3544L15.1784,26.2344L15.1784,20.0894C15.1784,19.4064,15.7304,18.8554,16.4124,18.8554C17.0954,18.8554,17.6474,19.4064,17.6474,20.0894L17.6474,29.9114C17.6474,30.4354,17.3054,30.9084,16.8064,31.0664C16.6754,31.1194,16.5444,31.1444,16.4124,31.1444" Fill="White" Height="12.29" Canvas.Left="7.825" Stretch="Fill" Canvas.Top="18.855" Width="34.357"/>
+                                    </Canvas>
+                                </Canvas>
+                            </Viewbox>
+                        </Border>
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Visibility="Collapsed"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter Property="Fill" TargetName="path" Value="#FFFFC107"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+
     <Style x:Key="CheckBoxStyle-001" TargetType="{x:Type CheckBox}">
         <Setter Property="Template">
             <Setter.Value>

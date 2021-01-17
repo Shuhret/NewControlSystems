@@ -5,6 +5,7 @@ using System.Windows.Markup;
 using System.Threading;
 using System.Xml;
 using System.Windows.Threading;
+using System.Windows.Controls;
 
 namespace ControlSystemsLibrary.Services
 {
