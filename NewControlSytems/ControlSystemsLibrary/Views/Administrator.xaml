@@ -4,9 +4,774 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ControlSystemsLibrary.Views"
+             xmlns:controls="clr-namespace:ControlSystemsLibrary.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
+             x:Name="Admin"
+             d:DesignHeight="900" d:DesignWidth="1440">
+
+    <UserControl.Resources>
+
+        <Style x:Key="AdminTabControlStyle" TargetType="{x:Type TabControl}">
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="Padding" Value="4,4,4,4"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="Gray"/>
+            <Setter Property="Background" Value="#F9F9F9"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TabControl}">
+                        <Grid ClipToBounds="true" SnapsToDevicePixels="true" KeyboardNavigation.TabNavigation="Local">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition x:Name="ColumnDefinition0"/>
+                                <ColumnDefinition x:Name="ColumnDefinition1" Width="0"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition x:Name="RowDefinition0" Height="Auto"/>
+                                <RowDefinition x:Name="RowDefinition1" Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Border x:Name="ContentPanel" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Grid.Column="0" KeyboardNavigation.DirectionalNavigation="Contained" Grid.Row="1" KeyboardNavigation.TabIndex="2" KeyboardNavigation.TabNavigation="Local">
+                                <ContentPresenter x:Name="PART_SelectedContentHost" ContentSource="SelectedContent" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                            </Border>
+                            <TabPanel x:Name="HeaderPanel" Grid.Column="0" IsItemsHost="true" Margin="0" Grid.Row="0" KeyboardNavigation.TabIndex="1" Panel.ZIndex="1"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+
+
+        <SolidColorBrush x:Key="TabControlNormalBorderBrush" Color="#8C8E94"/>
+        <Style x:Key="MenuTabControlStyle" TargetType="{x:Type TabControl}">
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="Padding" Value="4,4,4,4"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="{StaticResource TabControlNormalBorderBrush}"/>
+            <Setter Property="Background" Value="#F9F9F9"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TabControl}">
+                        <Grid ClipToBounds="true" SnapsToDevicePixels="true" KeyboardNavigation.TabNavigation="Local">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition x:Name="ColumnDefinition0"/>
+                                <ColumnDefinition x:Name="ColumnDefinition1" Width="0"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition x:Name="RowDefinition0" Height="Auto"/>
+                                <RowDefinition x:Name="RowDefinition1" Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Border x:Name="ContentPanel" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Grid.Column="0" KeyboardNavigation.DirectionalNavigation="Contained" Grid.Row="1" KeyboardNavigation.TabIndex="2" KeyboardNavigation.TabNavigation="Local">
+                                <ContentPresenter x:Name="PART_SelectedContentHost" ContentSource="SelectedContent" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                            </Border>
+                            <TabPanel x:Name="HeaderPanel" Grid.Column="0" IsItemsHost="true" Margin="5,32,0,0" Grid.Row="0" KeyboardNavigation.TabIndex="1" Panel.ZIndex="1"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="TabStripPlacement" Value="Left">
+                                <Setter Property="Grid.Row" TargetName="HeaderPanel" Value="0"/>
+                                <Setter Property="Grid.Row" TargetName="ContentPanel" Value="0"/>
+                                <Setter Property="Grid.Column" TargetName="HeaderPanel" Value="0"/>
+                                <Setter Property="Grid.Column" TargetName="ContentPanel" Value="1"/>
+                                <Setter Property="Width" TargetName="ColumnDefinition0" Value="Auto"/>
+                                <Setter Property="Width" TargetName="ColumnDefinition1" Value="*"/>
+                                <Setter Property="Height" TargetName="RowDefinition0" Value="*"/>
+                                <Setter Property="Height" TargetName="RowDefinition1" Value="0"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="TabItemFocusVisual">
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Rectangle Margin="3,3,3,1" SnapsToDevicePixels="true" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <LinearGradientBrush x:Key="ButtonNormalBackground" EndPoint="0,1" StartPoint="0,0">
+            <GradientStop Color="#F3F3F3" Offset="0"/>
+            <GradientStop Color="#EBEBEB" Offset="0.5"/>
+            <GradientStop Color="#DDDDDD" Offset="0.5"/>
+            <GradientStop Color="#CDCDCD" Offset="1"/>
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="TabItemHotBackground" EndPoint="0,1" StartPoint="0,0">
+            <GradientStop Color="#EAF6FD" Offset="0.15"/>
+            <GradientStop Color="#D9F0FC" Offset=".5"/>
+            <GradientStop Color="#BEE6FD" Offset=".5"/>
+            <GradientStop Color="#A7D9F5" Offset="1"/>
+        </LinearGradientBrush>
+        <SolidColorBrush x:Key="TabItemSelectedBackground" Color="#F9F9F9"/>
+        <SolidColorBrush x:Key="TabItemHotBorderBrush" Color="#3C7FB1"/>
+        <SolidColorBrush x:Key="TabItemDisabledBackground" Color="#F4F4F4"/>
+        <SolidColorBrush x:Key="TabItemDisabledBorderBrush" Color="#FFC9C7BA"/>
+
+
+        <Style x:Key="MenuTabItemStyle" TargetType="{x:Type TabItem}">
+            <Setter Property="FocusVisualStyle" Value="{StaticResource TabItemFocusVisual}"/>
+            <Setter Property="Foreground">
+                <Setter.Value>
+                    <SolidColorBrush Color="{StaticResource Dark-004}"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Padding" Value="6,1,6,1"/>
+            <Setter Property="BorderBrush" Value="{StaticResource TabControlNormalBorderBrush}"/>
+            <Setter Property="Background" Value="{StaticResource ButtonNormalBackground}"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TabItem}">
+                        <Grid SnapsToDevicePixels="true">
+                            <Border x:Name="Bd" BorderThickness="0" CornerRadius="1.5,0,0,1.5" Background="Transparent">
+                                <Border.BorderBrush>
+                                    <SolidColorBrush Color="#FFD3D9E6"/>
+                                </Border.BorderBrush>
+                                <Grid Height="Auto" Margin="0,0,5,0" Width="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                    <Border x:Name="border" Width="50" Height="50" CornerRadius="1" Visibility="Hidden" BorderThickness="1,1,1.5,1.5" SnapsToDevicePixels="True">
+                                        <Border.Background>
+                                            <SolidColorBrush Color="{DynamicResource Light-003}"/>
+                                        </Border.Background>
+                                        <Border.BorderBrush>
+                                            <LinearGradientBrush EndPoint="0.979,0.979" StartPoint="0.044,0.044">
+                                                <GradientStop Color="{DynamicResource Light-005}" Offset="0.48"/>
+                                                <GradientStop Color="White" Offset="0.52"/>
+                                            </LinearGradientBrush>
+                                        </Border.BorderBrush>
+                                    </Border>
+                                    <ContentPresenter x:Name="Content" SnapsToDevicePixels="True" ContentSource="Header" RecognizesAccessKey="True" Focusable="True"/>
+                                </Grid>
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="true">
+                                <Setter Property="Panel.ZIndex" Value="1"/>
+                                <Setter Property="Foreground">
+                                    <Setter.Value>
+                                        <SolidColorBrush Color="#FF268AE8"/>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="Background" TargetName="Bd" Value="#FFF9FAFC"/>
+                                <Setter Property="Visibility" TargetName="border" Value="Visible"/>
+                            </Trigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsSelected" Value="false"/>
+                                    <Condition Property="IsMouseOver" Value="true"/>
+                                </MultiTrigger.Conditions>
+                            </MultiTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Storyboard x:Key="CloseMenu">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="MenuGrid">
+                <EasingDoubleKeyFrame KeyTime="0" Value="310">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <CubicEase EasingMode="EaseOut"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="66">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <CubicEase EasingMode="EaseOut"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+
+        <Storyboard x:Key="OpenMenu">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="MenuGrid">
+                <EasingDoubleKeyFrame KeyTime="0" Value="66">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <CubicEase EasingMode="EaseOut"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="310">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <CubicEase EasingMode="EaseOut"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="OpenMenuState">
+            <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="WorkGrid">
+                <EasingThicknessKeyFrame KeyTime="0" Value="66,0,0,0">
+                    <EasingThicknessKeyFrame.EasingFunction>
+                        <CubicEase EasingMode="EaseOut"/>
+                    </EasingThicknessKeyFrame.EasingFunction>
+                </EasingThicknessKeyFrame>
+                <EasingThicknessKeyFrame KeyTime="0:0:0.4" Value="310,0,0,0">
+                    <EasingThicknessKeyFrame.EasingFunction>
+                        <CubicEase EasingMode="EaseOut"/>
+                    </EasingThicknessKeyFrame.EasingFunction>
+                </EasingThicknessKeyFrame>
+            </ThicknessAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="CloseMenuState">
+            <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="WorkGrid">
+                <EasingThicknessKeyFrame KeyTime="0" Value="310,0,0,0">
+                    <EasingThicknessKeyFrame.EasingFunction>
+                        <CubicEase EasingMode="EaseOut"/>
+                    </EasingThicknessKeyFrame.EasingFunction>
+                </EasingThicknessKeyFrame>
+                <EasingThicknessKeyFrame KeyTime="0:0:0.4" Value="66,0,0,0">
+                    <EasingThicknessKeyFrame.EasingFunction>
+                        <CubicEase EasingMode="EaseOut"/>
+                    </EasingThicknessKeyFrame.EasingFunction>
+                </EasingThicknessKeyFrame>
+            </ThicknessAnimationUsingKeyFrames>
+        </Storyboard>
+
+    </UserControl.Resources>
+    <UserControl.Triggers>
+        <EventTrigger RoutedEvent="ToggleButton.Checked" SourceName="MenuStateCheckBox">
+            <BeginStoryboard x:Name="OpenMenuState_BeginStoryboard" Storyboard="{StaticResource OpenMenuState}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="ToggleButton.Unchecked" SourceName="MenuStateCheckBox">
+            <BeginStoryboard x:Name="CloseMenuState_BeginStoryboard" Storyboard="{StaticResource CloseMenuState}"/>
+        </EventTrigger>
+    </UserControl.Triggers>
+    <UserControl.Background>
+        <SolidColorBrush Color="{DynamicResource Light-002}"/>
+    </UserControl.Background>
+
+
+
+    <Grid x:Name="MainGrid">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.Background>
+            <SolidColorBrush Color="{DynamicResource Light-002}"/>
+        </Grid.Background>
+        <Button Style="{DynamicResource ButtonStyle-000}" Height="32" VerticalAlignment="Top" WindowChrome.IsHitTestVisibleInChrome="True" BorderBrush="{x:Null}" BorderThickness="0" HorizontalAlignment="Right" Cursor="Hand" Background="Transparent" Margin="0,-33,127,0" Grid.Column="1" Click="ClickTopLockButton">
+            <StackPanel Orientation="Horizontal" Margin="10,0">
+                <Viewbox Width="20">
+                    <Canvas HorizontalAlignment="Left" Height="70" UseLayoutRounding="False" VerticalAlignment="Top" Width="70">
+                        <Canvas Height="70.001" Canvas.Left="0.014" Canvas.Top="0.014" Width="70.001">
+                            <Path Data="F1M36.1357,35.0732L36.1357,24.4492L33.8927,24.4492L33.8927,35.0732L12.0547,35.0732L12.0547,45.5792L1.5487,45.5792C0.722700000000003,45.5792,0.0137,46.2872,0.0137,47.1132L0.0137,61.8692L26.2197,61.8692L26.2197,47.1132C26.2197,46.2872,25.5117,45.5792,24.5677,45.5792L14.1787,45.5792L14.1787,37.1982L55.8487,37.1982L55.8487,45.5792L45.4607,45.5792C44.5167,45.5792,43.8087,46.2872,43.8087,47.1132L43.8087,61.8692L70.0147,61.8692L70.0147,47.1132C70.0147,46.2872,69.3057,45.5792,68.3617,45.5792L57.9737,45.5792L57.9737,35.0732z" Fill="#FF4D4D4D" Height="37.42" Canvas.Left="0" Stretch="Fill" Canvas.Top="24.435" Width="70.001"/>
+                            <Path Data="F1M53.1338,68.4795L60.6888,68.4795L60.2168,64.5835L53.6068,64.5835z M9.3398,68.4795L16.8948,68.4795L16.4228,64.5835L9.8118,64.5835z M31.1778,22.9145L38.8508,22.9145L38.2608,19.1375L31.7678,19.1375z" Fill="#FFB4AFAF" Height="49.342" Canvas.Left="9.326" Stretch="Fill" Canvas.Top="19.123" Width="51.349"/>
+                            <Path Data="F1M48.0576,16.4224L48.0576,1.5484C48.0576,0.722400000000004,47.3496,0.014400000000002,46.5236,0.014400000000002L23.5046,0.014400000000002C22.6786,0.014400000000002,21.9706,0.722400000000004,21.9706,1.5484L21.9706,16.4224z" Fill="#FFFC2413" Height="16.408" Canvas.Left="21.957" Stretch="Fill" Canvas.Top="0" Width="26.087"/>
+                            <Path Data="F1M7.333,70.015L18.783,70.015L18.783,68.48L7.333,68.48z M51.245,70.015L62.577,70.015L62.577,68.48L51.245,68.48z M43.809,61.869L43.809,63.286C43.809,64.112,44.517,64.82,45.461,64.82L68.361,64.82C69.306,64.82,70.015,64.112,70.015,63.286L70.015,61.869z M29.289,24.449L40.739,24.449L40.739,22.914L29.289,22.914z M21.97,16.422L21.97,17.721C21.97,18.547,22.679,19.255,23.505,19.255L46.523,19.255C47.35,19.255,48.058,18.547,48.058,17.721L48.058,16.422z M0.014,61.869L0.014,63.286C0.014,64.112,0.723,64.82,1.549,64.82L24.567,64.82C25.512,64.82,26.22,64.112,26.22,63.286L26.22,61.869z" Fill="#FFDFDEDE" Height="53.593" Canvas.Left="0" Stretch="Fill" Canvas.Top="16.408" Width="70.001"/>
+                        </Canvas>
+                    </Canvas>
+                </Viewbox>
+                <StackPanel Orientation="Horizontal" Margin="10,0,0,0">
+                    <TextBlock Text="{Binding CurrentUserName, ElementName=Admin, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" FontSize="13">
+                        <TextBlock.Foreground>
+                            <SolidColorBrush Color="{DynamicResource Dark-003}"/>
+                        </TextBlock.Foreground>
+                    </TextBlock>
+                    <TextBlock Text=" - " VerticalAlignment="Center" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" FontSize="13">
+                        <TextBlock.Foreground>
+                            <SolidColorBrush Color="{DynamicResource Dark-003}"/>
+                        </TextBlock.Foreground>
+                    </TextBlock>
+                    <TextBlock Text="{Binding CurrentConnectionName, ElementName=Admin, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" FontSize="13">
+                        <TextBlock.Foreground>
+                            <SolidColorBrush Color="{DynamicResource Dark-003}"/>
+                        </TextBlock.Foreground>
+                    </TextBlock>
+                </StackPanel>
+            </StackPanel>
+        </Button>
+        <Grid x:Name="WorkGrid" MouseMove="MainGrid_MouseMove" Margin="66,0,0,0" Grid.ColumnSpan="2">
+            <TabControl x:Name="AdminTabControl" BorderThickness="{Binding TabControlBorderThickness, ElementName=Admin, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding TabItemsCollection, ElementName=Admin, UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource AdminTabControlStyle}" Padding="0" SizeChanged="AdminTabControlSizeChanged" Loaded="AdminTabControlLoaded">
+                <TabControl.BorderBrush>
+                    <SolidColorBrush Color="{DynamicResource Light-005}"/>
+                </TabControl.BorderBrush>
+                <TabControl.Background>
+                    <SolidColorBrush Color="{DynamicResource Light-002}"/>
+                </TabControl.Background>
+            </TabControl>
+        </Grid>
+
+        <Grid x:Name="MenuGrid" HorizontalAlignment="Left" Width="310" Margin="0" MouseEnter="Menu_MouseEnter" MouseLeave="Menu_MouseLeave" MouseMove="MenuMouseMove" SizeChanged="Menu_SizeChanged">
+            <Grid.Background>
+                <SolidColorBrush Color="{DynamicResource Light-001}"/>
+            </Grid.Background>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="65"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Rectangle Grid.Column="1" HorizontalAlignment="Right" Width="1" Visibility="Hidden">
+                <Rectangle.Fill>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="{DynamicResource Light-002}" Offset="0"/>
+                        <GradientStop Color="{DynamicResource Light-002}" Offset="1"/>
+                        <GradientStop Color="{DynamicResource Blue-003}" Offset="0.5"/>
+                    </LinearGradientBrush>
+                </Rectangle.Fill>
+            </Rectangle>
+            <Border>
+                <Border.Background>
+                    <SolidColorBrush Color="{DynamicResource Light-001}"/>
+                </Border.Background>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="32"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <CheckBox x:Name="MenuStateCheckBox" Style="{DynamicResource CheckBoxStyle2}" SnapsToDevicePixels="True" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" Background="Transparent" Margin="4,0,0,0">
+                        <CheckBox.BorderBrush>
+                            <SolidColorBrush Color="{DynamicResource Light-005}"/>
+                        </CheckBox.BorderBrush>
+                    </CheckBox>
+                </Grid>
+            </Border>
+            <TabControl x:Name="MenuTC" Grid.ColumnSpan="2" TabStripPlacement="Left" BorderThickness="0,0,1,0" Style="{DynamicResource MenuTabControlStyle}" Margin="0" Padding="0">
+                <TabControl.Background>
+                    <SolidColorBrush Color="{DynamicResource Light-001}"/>
+                </TabControl.Background>
+                <TabControl.BorderBrush>
+                    <SolidColorBrush Color="{DynamicResource Light-005}"/>
+                </TabControl.BorderBrush>
+                <TabItem x:Name="FavoriteTabItem" Width="60" Height="60" Margin="0" Style="{DynamicResource MenuTabItemStyle}" Background="Black" SnapsToDevicePixels="True">
+                    <TabItem.Header>
+                        <Grid>
+                            <Viewbox Margin="3,3,0,0" Width="18" Height="18" Opacity="0.25" Visibility="Hidden">
+                                <Canvas HorizontalAlignment="Left" Height="70" UseLayoutRounding="False" VerticalAlignment="Top" Width="70">
+                                    <Canvas Height="66.835" Canvas.Left="0" Canvas.Top="1.582" Width="70">
+                                        <Path Data="M29.9316,11.4819C29.7216,10.8819,29.1816,10.4619,28.5516,10.4019L19.8826,9.5919 16.4636,1.5839C16.2236,1.0139 15.6236,0.623899999999999 14.9936,0.623899999999999 14.3646,0.623899999999999 13.7946,1.0139 13.5246,1.5839L10.1046,9.5919 1.4366,10.4019C0.8066,10.4619 0.2666,10.8819 0.0866000000000007,11.4819 -0.1234,12.0819 0.0565999999999995,12.7719 0.5366,13.1919L7.0756,18.9209 5.1556,27.4089C5.0056,28.0389 5.2456,28.6989 5.7856,29.0599 6.0556,29.2699 6.3856,29.3589 6.7156,29.3589 6.9856,29.3589 7.2856,29.2989 7.5256,29.1489L14.9936,24.6799 22.4626,29.1489C23.0026,29.4799 23.6926,29.4489 24.2026,29.0599 24.7426,28.6989 24.9826,28.0389 24.8316,27.4089L22.9126,18.9209 29.4516,13.1919C29.9316,12.7719,30.1116,12.1119,29.9316,11.4819" Height="66.835" Canvas.Left="0" Stretch="Fill" Canvas.Top="0" Width="70" StrokeThickness="2" Fill="#FF566283"/>
+                                    </Canvas>
+                                </Canvas>
+                            </Viewbox>
+                            <Viewbox Width="18" Height="18">
+                                <Canvas HorizontalAlignment="Left" Height="70" UseLayoutRounding="False" VerticalAlignment="Top" Width="70">
+                                    <Canvas Height="66.835" Canvas.Left="0" Canvas.Top="1.582" Width="70">
+                                        <Path Data="M29.9316,11.4819C29.7216,10.8819,29.1816,10.4619,28.5516,10.4019L19.8826,9.5919 16.4636,1.5839C16.2236,1.0139 15.6236,0.623899999999999 14.9936,0.623899999999999 14.3646,0.623899999999999 13.7946,1.0139 13.5246,1.5839L10.1046,9.5919 1.4366,10.4019C0.8066,10.4619 0.2666,10.8819 0.0866000000000007,11.4819 -0.1234,12.0819 0.0565999999999995,12.7719 0.5366,13.1919L7.0756,18.9209 5.1556,27.4089C5.0056,28.0389 5.2456,28.6989 5.7856,29.0599 6.0556,29.2699 6.3856,29.3589 6.7156,29.3589 6.9856,29.3589 7.2856,29.2989 7.5256,29.1489L14.9936,24.6799 22.4626,29.1489C23.0026,29.4799 23.6926,29.4489 24.2026,29.0599 24.7426,28.6989 24.9826,28.0389 24.8316,27.4089L22.9126,18.9209 29.4516,13.1919C29.9316,12.7719,30.1116,12.1119,29.9316,11.4819" Height="66.835" Canvas.Left="0" Stretch="Fill" Canvas.Top="0" Width="70" StrokeThickness="2" Fill="{Binding Foreground, ElementName=FavoriteTabItem}"/>
+                                    </Canvas>
+                                </Canvas>
+                            </Viewbox>
+                        </Grid>
+                    </TabItem.Header>
+                </TabItem>
+                <TabItem x:Name="DocumentsTabItem" Width="60" Height="60" Margin="0" Style="{DynamicResource MenuTabItemStyle}" Background="Black">
+                    <TabItem.Header>
+                        <Grid>
+                            <Viewbox Margin="3,3,0,0" Width="17" Height="17" Opacity="0.25" Visibility="Hidden">
+                                <Canvas HorizontalAlignment="Left" Height="70" UseLayoutRounding="False" VerticalAlignment="Top" Width="70">
+                                    <Canvas Height="70" Canvas.Left="5.689" Canvas.Top="0" Width="58.622">
+                                        <Path Canvas.Top="0" Data="M25.642001,0.083000064 L54.995004,0.083000064 C57.055005,0.083000004 58.622002,1.649 58.622002,3.6280005 L58.622002,66.372002 C58.622002,68.350998 57.055005,70 54.995004,70 L3.9570008,70 C1.8960002,70 1.4901161E-07,68.350998 0,66.372002 L0,23.333 25.477002,23.416 z M22.097001,0 L22.014001,19.871 0.49400017,19.788 z" Height="70" Stretch="Fill" Width="58.622">
+                                            <Path.Fill>
+                                                <SolidColorBrush Color="#FF566283"/>
+                                            </Path.Fill>
+                                        </Path>
+                                    </Canvas>
+                                </Canvas>
+                            </Viewbox>
+                            <Viewbox Margin="0" Width="17" Height="17">
+                                <Canvas HorizontalAlignment="Left" Height="70" UseLayoutRounding="False" VerticalAlignment="Top" Width="70">
+                                    <Canvas Height="70" Canvas.Left="5.689" Canvas.Top="0" Width="58.622">
+                                        <Path Canvas.Top="0" Data="M25.642001,0.083000064 L54.995004,0.083000064 C57.055005,0.083000004 58.622002,1.649 58.622002,3.6280005 L58.622002,66.372002 C58.622002,68.350998 57.055005,70 54.995004,70 L3.9570008,70 C1.8960002,70 1.4901161E-07,68.350998 0,66.372002 L0,23.333 25.477002,23.416 z M22.097001,0 L22.014001,19.871 0.49400017,19.788 z" Height="70" Stretch="Fill" Width="58.622" Fill="{Binding Foreground, ElementName=DocumentsTabItem}"/>
+                                    </Canvas>
+                                </Canvas>
+                            </Viewbox>
+                        </Grid>
+                    </TabItem.Header>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="32"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Border BorderThickness="0" Margin="10,5,10,0">
+                            <TextBlock Text="ДОКУМЕНТЫ" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto">
+                                <TextBlock.Foreground>
+                                    <SolidColorBrush Color="{DynamicResource Blue-003}"/>
+                                </TextBlock.Foreground>
+                            </TextBlock>
+                        </Border>
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="1">
+                            <StackPanel Margin="10,0,10,10">
+                                <controls:CheckBoxButton x:Name="MenuButtonAllDocuments" ClickButton="MenuButton_Click" BcContent="Журнал документов" Height="28" VerticalContentAlignment="Center" Padding="2,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.5" Margin="0,10,1,15">
+                                    <controls:CheckBoxButton.StarUnCheckColor>
+                                        <SolidColorBrush Color="{DynamicResource Light-004}"/>
+                                    </controls:CheckBoxButton.StarUnCheckColor>
+                                    <controls:CheckBoxButton.Foreground>
+                                        <SolidColorBrush Color="{DynamicResource Dark-002}"/>
+                                    </controls:CheckBoxButton.Foreground>
+                                </controls:CheckBoxButton>
+                                <Expander Header="Поставщики" Style="{DynamicResource MenuExpanderStyle}" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" FontSize="13.5" Margin="0">
+                                    <Expander.Foreground>
+                                        <SolidColorBrush Color="{DynamicResource Dark-004}"/>
+                                    </Expander.Foreground>
+                                    <StackPanel Margin="0,5,0,0">
+                                        <controls:CheckBoxButton BcContent="Заявка поставщику" Height="28" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.2" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed">
+                                            <controls:CheckBoxButton.StarUnCheckColor>
+                                                <SolidColorBrush Color="{DynamicResource Light-004}"/>
+                                            </controls:CheckBoxButton.StarUnCheckColor>
+                                            <controls:CheckBoxButton.Foreground>
+                                                <SolidColorBrush Color="{DynamicResource Dark-002}"/>
+                                            </controls:CheckBoxButton.Foreground>
+                                        </controls:CheckBoxButton>
+                                        <controls:CheckBoxButton BcContent="Поступление" Height="28" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.2" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed">
+                                            <controls:CheckBoxButton.StarUnCheckColor>
+                                                <SolidColorBrush Color="{DynamicResource Light-004}"/>
+                                            </controls:CheckBoxButton.StarUnCheckColor>
+                                            <controls:CheckBoxButton.Foreground>
+                                                <SolidColorBrush Color="{DynamicResource Dark-002}"/>
+                                            </controls:CheckBoxButton.Foreground>
+                                        </controls:CheckBoxButton>
+                                        <controls:CheckBoxButton BcContent="Возврат поставщику" Height="28" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.2" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed">
+                                            <controls:CheckBoxButton.StarUnCheckColor>
+                                                <SolidColorBrush Color="{DynamicResource Light-004}"/>
+                                            </controls:CheckBoxButton.StarUnCheckColor>
+                                            <controls:CheckBoxButton.Foreground>
+                                                <SolidColorBrush Color="{DynamicResource Dark-002}"/>
+                                            </controls:CheckBoxButton.Foreground>
+                                        </controls:CheckBoxButton>
+                                        <controls:CheckBoxButton BcContent="Отчет поставщику" Height="28" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.2" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed">
+                                            <controls:CheckBoxButton.StarUnCheckColor>
+                                                <SolidColorBrush Color="{DynamicResource Light-004}"/>
+                                            </controls:CheckBoxButton.StarUnCheckColor>
+                                            <controls:CheckBoxButton.Foreground>
+                                                <SolidColorBrush Color="{DynamicResource Dark-002}"/>
+                                            </controls:CheckBoxButton.Foreground>
+                                        </controls:CheckBoxButton>
+                                    </StackPanel>
+                                </Expander>
+                                <Expander Header="Производство" Style="{DynamicResource MenuExpanderStyle}" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" FontSize="13.5" Margin="0,17,0,0">
+                                    <Expander.Foreground>
+                                        <SolidColorBrush Color="{DynamicResource Dark-004}"/>
+                                    </Expander.Foreground>
+                                    <StackPanel Margin="0,5,0,0">
+                                        <controls:CheckBoxButton BcContent="Заявка на производство" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.2">
+                                            <controls:CheckBoxButton.StarUnCheckColor>
+                                                <SolidColorBrush Color="{DynamicResource Light-004}"/>
+                                            </controls:CheckBoxButton.StarUnCheckColor>
+                                            <controls:CheckBoxButton.Foreground>
+                                                <SolidColorBrush Color="{DynamicResource Dark-002}"/>
+                                            </controls:CheckBoxButton.Foreground>
+                                        </controls:CheckBoxButton>
+                                        <controls:CheckBoxButton BcContent="Выход готовой продукции" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.2">
+                                            <controls:CheckBoxButton.StarUnCheckColor>
+                                                <SolidColorBrush Color="{DynamicResource Light-004}"/>
+                                            </controls:CheckBoxButton.StarUnCheckColor>
+                                            <controls:CheckBoxButton.Foreground>
+                                                <SolidColorBrush Color="{DynamicResource Dark-002}"/>
+                                            </controls:CheckBoxButton.Foreground>
+                                        </controls:CheckBoxButton>
+                                        <controls:CheckBoxButton BcContent="Рецепты" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.2">
+                                            <controls:CheckBoxButton.StarUnCheckColor>
+                                                <SolidColorBrush Color="{DynamicResource Light-004}"/>
+                                            </controls:CheckBoxButton.StarUnCheckColor>
+                                            <controls:CheckBoxButton.Foreground>
+                                                <SolidColorBrush Color="{DynamicResource Dark-002}"/>
+                                            </controls:CheckBoxButton.Foreground>
+                                        </controls:CheckBoxButton>
+                                        <controls:CheckBoxButton BcContent="Отчет о производстве" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.2">
+                                            <controls:CheckBoxButton.StarUnCheckColor>
+                                                <SolidColorBrush Color="{DynamicResource Light-004}"/>
+                                            </controls:CheckBoxButton.StarUnCheckColor>
+                                            <controls:CheckBoxButton.Foreground>
+                                                <SolidColorBrush Color="{DynamicResource Dark-002}"/>
+                                            </controls:CheckBoxButton.Foreground>
+                                        </controls:CheckBoxButton>
+                                    </StackPanel>
+                                </Expander>
+                                <Expander Header="Склады" Style="{DynamicResource MenuExpanderStyle}" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" FontSize="13.5" Margin="0,17,0,0">
+                                    <Expander.Foreground>
+                                        <SolidColorBrush Color="{DynamicResource Dark-004}"/>
+                                    </Expander.Foreground>
+                                    <StackPanel Margin="0,5,0,0">
+                                        <controls:CheckBoxButton BcContent="Заявка на перемещение" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.2">
+                                            <controls:CheckBoxButton.StarUnCheckColor>
+                                                <SolidColorBrush Color="{DynamicResource Light-004}"/>
+                                            </controls:CheckBoxButton.StarUnCheckColor>
+                                            <controls:CheckBoxButton.Foreground>
+                                                <SolidColorBrush Color="{DynamicResource Dark-002}"/>
+                                            </controls:CheckBoxButton.Foreground>
+                                        </controls:CheckBoxButton>
+                                        <controls:CheckBoxButton BcContent="Перемещение" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.2">
+                                            <controls:CheckBoxButton.StarUnCheckColor>
+                                                <SolidColorBrush Color="{DynamicResource Light-004}"/>
+                                            </controls:CheckBoxButton.StarUnCheckColor>
+                                            <controls:CheckBoxButton.Foreground>
+                                                <SolidColorBrush Color="{DynamicResource Dark-002}"/>
+                                            </controls:CheckBoxButton.Foreground>
+                                        </controls:CheckBoxButton>
+                                        <controls:CheckBoxButton BcContent="Сверка склада" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.2">
+                                            <controls:CheckBoxButton.StarUnCheckColor>
+                                                <SolidColorBrush Color="{DynamicResource Light-004}"/>
+                                            </controls:CheckBoxButton.StarUnCheckColor>
+                                            <controls:CheckBoxButton.Foreground>
+                                                <SolidColorBrush Color="{DynamicResource Dark-002}"/>
+                                            </controls:CheckBoxButton.Foreground>
+                                        </controls:CheckBoxButton>
+                                        <controls:CheckBoxButton BcContent="Списание браков" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.2">
+                                            <controls:CheckBoxButton.StarUnCheckColor>
+                                                <SolidColorBrush Color="{DynamicResource Light-004}"/>
+                                            </controls:CheckBoxButton.StarUnCheckColor>
+                                            <controls:CheckBoxButton.Foreground>
+                                                <SolidColorBrush Color="{DynamicResource Dark-002}"/>
+                                            </controls:CheckBoxButton.Foreground>
+                                        </controls:CheckBoxButton>
+                                    </StackPanel>
+                                </Expander>
+                                <Expander Header="Маркетинг" Style="{DynamicResource MenuExpanderStyle}" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" FontSize="13.5" Margin="0,17,0,0">
+                                    <Expander.Foreground>
+                                        <SolidColorBrush Color="{DynamicResource Dark-004}"/>
+                                    </Expander.Foreground>
+                                    <StackPanel Margin="0,5,0,0">
+                                        <controls:CheckBoxButton BcContent="Заявка на перемещение" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.2">
+                                            <controls:CheckBoxButton.StarUnCheckColor>
+                                                <SolidColorBrush Color="{DynamicResource Light-004}"/>
+                                            </controls:CheckBoxButton.StarUnCheckColor>
+                                            <controls:CheckBoxButton.Foreground>
+                                                <SolidColorBrush Color="{DynamicResource Dark-002}"/>
+                                            </controls:CheckBoxButton.Foreground>
+                                        </controls:CheckBoxButton>
+                                        <controls:CheckBoxButton BcContent="Перемещение" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.2">
+                                            <controls:CheckBoxButton.StarUnCheckColor>
+                                                <SolidColorBrush Color="{DynamicResource Light-004}"/>
+                                            </controls:CheckBoxButton.StarUnCheckColor>
+                                            <controls:CheckBoxButton.Foreground>
+                                                <SolidColorBrush Color="{DynamicResource Dark-002}"/>
+                                            </controls:CheckBoxButton.Foreground>
+                                        </controls:CheckBoxButton>
+                                        <controls:CheckBoxButton BcContent="Сверка склада" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.2">
+                                            <controls:CheckBoxButton.StarUnCheckColor>
+                                                <SolidColorBrush Color="{DynamicResource Light-004}"/>
+                                            </controls:CheckBoxButton.StarUnCheckColor>
+                                            <controls:CheckBoxButton.Foreground>
+                                                <SolidColorBrush Color="{DynamicResource Dark-002}"/>
+                                            </controls:CheckBoxButton.Foreground>
+                                        </controls:CheckBoxButton>
+                                        <controls:CheckBoxButton BcContent="Списание браков" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.2">
+                                            <controls:CheckBoxButton.StarUnCheckColor>
+                                                <SolidColorBrush Color="{DynamicResource Light-004}"/>
+                                            </controls:CheckBoxButton.StarUnCheckColor>
+                                            <controls:CheckBoxButton.Foreground>
+                                                <SolidColorBrush Color="{DynamicResource Dark-002}"/>
+                                            </controls:CheckBoxButton.Foreground>
+                                        </controls:CheckBoxButton>
+                                    </StackPanel>
+                                </Expander>
+                                <Expander Header="Сотрудники" Style="{DynamicResource MenuExpanderStyle}" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" FontSize="13.5" Margin="0,17,0,0">
+                                    <Expander.Foreground>
+                                        <SolidColorBrush Color="{DynamicResource Dark-004}"/>
+                                    </Expander.Foreground>
+                                    <StackPanel Margin="0,5,0,0">
+                                        <controls:CheckBoxButton BcContent="Новая анкета" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.2">
+                                            <controls:CheckBoxButton.StarUnCheckColor>
+                                                <SolidColorBrush Color="{DynamicResource Light-004}"/>
+                                            </controls:CheckBoxButton.StarUnCheckColor>
+                                            <controls:CheckBoxButton.Foreground>
+                                                <SolidColorBrush Color="{DynamicResource Dark-002}"/>
+                                            </controls:CheckBoxButton.Foreground>
+                                        </controls:CheckBoxButton>
+                                        <controls:CheckBoxButton BcContent="Новая должность" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.2">
+                                            <controls:CheckBoxButton.StarUnCheckColor>
+                                                <SolidColorBrush Color="{DynamicResource Light-004}"/>
+                                            </controls:CheckBoxButton.StarUnCheckColor>
+                                            <controls:CheckBoxButton.Foreground>
+                                                <SolidColorBrush Color="{DynamicResource Dark-002}"/>
+                                            </controls:CheckBoxButton.Foreground>
+                                        </controls:CheckBoxButton>
+                                        <controls:CheckBoxButton BcContent="Договор оплаты труда" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.2">
+                                            <controls:CheckBoxButton.StarUnCheckColor>
+                                                <SolidColorBrush Color="{DynamicResource Light-004}"/>
+                                            </controls:CheckBoxButton.StarUnCheckColor>
+                                            <controls:CheckBoxButton.Foreground>
+                                                <SolidColorBrush Color="{DynamicResource Dark-002}"/>
+                                            </controls:CheckBoxButton.Foreground>
+                                        </controls:CheckBoxButton>
+                                        <controls:CheckBoxButton BcContent="Оплата труда" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.2">
+                                            <controls:CheckBoxButton.StarUnCheckColor>
+                                                <SolidColorBrush Color="{DynamicResource Light-004}"/>
+                                            </controls:CheckBoxButton.StarUnCheckColor>
+                                            <controls:CheckBoxButton.Foreground>
+                                                <SolidColorBrush Color="{DynamicResource Dark-002}"/>
+                                            </controls:CheckBoxButton.Foreground>
+                                        </controls:CheckBoxButton>
+                                        <controls:CheckBoxButton BcContent="Достижения" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.2">
+                                            <controls:CheckBoxButton.StarUnCheckColor>
+                                                <SolidColorBrush Color="{DynamicResource Light-004}"/>
+                                            </controls:CheckBoxButton.StarUnCheckColor>
+                                            <controls:CheckBoxButton.Foreground>
+                                                <SolidColorBrush Color="{DynamicResource Dark-002}"/>
+                                            </controls:CheckBoxButton.Foreground>
+                                        </controls:CheckBoxButton>
+                                        <controls:CheckBoxButton BcContent="Уволнение" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.2">
+                                            <controls:CheckBoxButton.StarUnCheckColor>
+                                                <SolidColorBrush Color="{DynamicResource Light-004}"/>
+                                            </controls:CheckBoxButton.StarUnCheckColor>
+                                            <controls:CheckBoxButton.Foreground>
+                                                <SolidColorBrush Color="{DynamicResource Dark-002}"/>
+                                            </controls:CheckBoxButton.Foreground>
+                                        </controls:CheckBoxButton>
+                                    </StackPanel>
+                                </Expander>
+                                <Expander Header="Касса" Style="{DynamicResource MenuExpanderStyle}" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" FontSize="13.5" Margin="0,17,0,0">
+                                    <Expander.Foreground>
+                                        <SolidColorBrush Color="{DynamicResource Dark-004}"/>
+                                    </Expander.Foreground>
+                                    <StackPanel Margin="0,5,0,0">
+                                        <controls:CheckBoxButton BcContent="Заявка на оплату" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.2">
+                                            <controls:CheckBoxButton.StarUnCheckColor>
+                                                <SolidColorBrush Color="{DynamicResource Light-004}"/>
+                                            </controls:CheckBoxButton.StarUnCheckColor>
+                                            <controls:CheckBoxButton.Foreground>
+                                                <SolidColorBrush Color="{DynamicResource Dark-002}"/>
+                                            </controls:CheckBoxButton.Foreground>
+                                        </controls:CheckBoxButton>
+                                        <controls:CheckBoxButton BcContent="Приходный кассовый ордер" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.2">
+                                            <controls:CheckBoxButton.StarUnCheckColor>
+                                                <SolidColorBrush Color="{DynamicResource Light-004}"/>
+                                            </controls:CheckBoxButton.StarUnCheckColor>
+                                            <controls:CheckBoxButton.Foreground>
+                                                <SolidColorBrush Color="{DynamicResource Dark-002}"/>
+                                            </controls:CheckBoxButton.Foreground>
+                                        </controls:CheckBoxButton>
+                                        <controls:CheckBoxButton BcContent="Расходный кассовый ордер" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.2">
+                                            <controls:CheckBoxButton.StarUnCheckColor>
+                                                <SolidColorBrush Color="{DynamicResource Light-004}"/>
+                                            </controls:CheckBoxButton.StarUnCheckColor>
+                                            <controls:CheckBoxButton.Foreground>
+                                                <SolidColorBrush Color="{DynamicResource Dark-002}"/>
+                                            </controls:CheckBoxButton.Foreground>
+                                        </controls:CheckBoxButton>
+                                        <controls:CheckBoxButton BcContent="Перемещение денежных средств" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.2">
+                                            <controls:CheckBoxButton.StarUnCheckColor>
+                                                <SolidColorBrush Color="{DynamicResource Light-004}"/>
+                                            </controls:CheckBoxButton.StarUnCheckColor>
+                                            <controls:CheckBoxButton.Foreground>
+                                                <SolidColorBrush Color="{DynamicResource Dark-002}"/>
+                                            </controls:CheckBoxButton.Foreground>
+                                        </controls:CheckBoxButton>
+                                        <controls:CheckBoxButton BcContent="Закрытие кассы" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.2">
+                                            <controls:CheckBoxButton.StarUnCheckColor>
+                                                <SolidColorBrush Color="{DynamicResource Light-004}"/>
+                                            </controls:CheckBoxButton.StarUnCheckColor>
+                                            <controls:CheckBoxButton.Foreground>
+                                                <SolidColorBrush Color="{DynamicResource Dark-002}"/>
+                                            </controls:CheckBoxButton.Foreground>
+                                        </controls:CheckBoxButton>
+                                        <controls:CheckBoxButton BcContent="Уволнение" Height="32" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.2">
+                                            <controls:CheckBoxButton.StarUnCheckColor>
+                                                <SolidColorBrush Color="{DynamicResource Light-004}"/>
+                                            </controls:CheckBoxButton.StarUnCheckColor>
+                                            <controls:CheckBoxButton.Foreground>
+                                                <SolidColorBrush Color="{DynamicResource Dark-002}"/>
+                                            </controls:CheckBoxButton.Foreground>
+                                        </controls:CheckBoxButton>
+                                    </StackPanel>
+                                </Expander>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </Grid>
+                </TabItem>
+                <TabItem x:Name="SpravochnikiTabItem" Width="60" Height="60" Margin="0" Style="{DynamicResource MenuTabItemStyle}" Background="Black">
+                    <TabItem.Header>
+                        <Grid>
+                            <Viewbox Margin="2,3,0,0" Width="18" Height="18" Opacity="0.25" Visibility="Hidden">
+                                <Canvas HorizontalAlignment="Left" Height="70" UseLayoutRounding="False" VerticalAlignment="Top" Width="70">
+                                    <Canvas Height="69.999" Canvas.Left="2.066" Canvas.Top="0" Width="65.867">
+                                        <Path Data="F1M67.1621,36.1982L35.5371,51.4052C35.2061,51.6252,34.7661,51.6252,34.4351,51.4052L2.81009999999999,36.1982C1.8181,35.7582,1.8181,34.3252,2.81009999999999,33.7742L9.53209999999999,30.5782L30.6881,40.8262C32.0111,41.4872,33.5541,41.8182,34.9861,41.8182C36.5291,41.8182,37.9621,41.4872,39.2841,40.8262L60.5511,30.5782L67.1621,33.7742C68.1541,34.3252,68.1541,35.7582,67.1621,36.1982 M2.81009999999999,52.2862L9.53209999999999,49.0912L30.6881,59.2282C32.0111,59.8892,33.5541,60.2202,34.9861,60.2202C36.5291,60.2202,37.9621,59.8892,39.2841,59.2282L60.5511,49.0912L67.1621,52.2862C67.7141,52.5072,67.9331,52.9472,67.9331,53.4992C67.9331,53.9392,67.7141,54.4902,67.1621,54.7112L35.5371,69.9172C35.2061,70.0272,34.7661,70.0272,34.4351,69.9172L2.81009999999999,54.7112C1.8181,54.1602,1.8181,52.7272,2.81009999999999,52.2862 M67.1621,17.7962L35.5371,33.0032C35.2061,33.2232,34.7661,33.2232,34.4351,33.0032L2.81009999999999,17.7962C1.8181,17.3552,1.8181,15.8122,2.81009999999999,15.3722L34.4351,0.165199999999999C34.7661,-0.0548000000000002,35.2061,-0.0548000000000002,35.5371,0.165199999999999L67.1621,15.3722C68.1541,15.8122,68.1541,17.3552,67.1621,17.7962" Height="69.999" Canvas.Left="0" Stretch="Fill" Canvas.Top="0" Width="65.867">
+                                            <Path.Fill>
+                                                <SolidColorBrush Color="#FF566283"/>
+                                            </Path.Fill>
+                                        </Path>
+                                    </Canvas>
+                                </Canvas>
+                            </Viewbox>
+                            <Viewbox Margin="0" Width="18" Height="18">
+                                <Canvas HorizontalAlignment="Left" Height="70" UseLayoutRounding="False" VerticalAlignment="Top" Width="70">
+                                    <Canvas Height="69.999" Canvas.Left="2.066" Canvas.Top="0" Width="65.867">
+                                        <Path Data="F1M67.1621,36.1982L35.5371,51.4052C35.2061,51.6252,34.7661,51.6252,34.4351,51.4052L2.81009999999999,36.1982C1.8181,35.7582,1.8181,34.3252,2.81009999999999,33.7742L9.53209999999999,30.5782L30.6881,40.8262C32.0111,41.4872,33.5541,41.8182,34.9861,41.8182C36.5291,41.8182,37.9621,41.4872,39.2841,40.8262L60.5511,30.5782L67.1621,33.7742C68.1541,34.3252,68.1541,35.7582,67.1621,36.1982 M2.81009999999999,52.2862L9.53209999999999,49.0912L30.6881,59.2282C32.0111,59.8892,33.5541,60.2202,34.9861,60.2202C36.5291,60.2202,37.9621,59.8892,39.2841,59.2282L60.5511,49.0912L67.1621,52.2862C67.7141,52.5072,67.9331,52.9472,67.9331,53.4992C67.9331,53.9392,67.7141,54.4902,67.1621,54.7112L35.5371,69.9172C35.2061,70.0272,34.7661,70.0272,34.4351,69.9172L2.81009999999999,54.7112C1.8181,54.1602,1.8181,52.7272,2.81009999999999,52.2862 M67.1621,17.7962L35.5371,33.0032C35.2061,33.2232,34.7661,33.2232,34.4351,33.0032L2.81009999999999,17.7962C1.8181,17.3552,1.8181,15.8122,2.81009999999999,15.3722L34.4351,0.165199999999999C34.7661,-0.0548000000000002,35.2061,-0.0548000000000002,35.5371,0.165199999999999L67.1621,15.3722C68.1541,15.8122,68.1541,17.3552,67.1621,17.7962" Height="69.999" Canvas.Left="0" Stretch="Fill" Canvas.Top="0" Width="65.867" Fill="{Binding Foreground, ElementName=SpravochnikiTabItem}"/>
+                                    </Canvas>
+                                </Canvas>
+                            </Viewbox>
+                        </Grid>
+                    </TabItem.Header>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="32"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Border BorderThickness="0" Margin="10,5,10,0">
+                            <TextBlock Text="СПРАВОЧНИКИ" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto">
+                                <TextBlock.Foreground>
+                                    <SolidColorBrush Color="{DynamicResource Blue-003}"/>
+                                </TextBlock.Foreground>
+                            </TextBlock>
+                        </Border>
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="1" Margin="0,14,0,0">
+                            <StackPanel Margin="10,0,10,10">
+                                <Expander Header="Номенклатура" Style="{DynamicResource MenuExpanderStyle}" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" FontSize="13.5" Margin="0">
+                                    <Expander.Foreground>
+                                        <SolidColorBrush Color="{DynamicResource Dark-004}"/>
+                                    </Expander.Foreground>
+                                    <StackPanel Margin="0,5,0,0">
+                                        <controls:CheckBoxButton BcContent="Номенклатура" Height="28" VerticalContentAlignment="Center" Padding="13,0,0,0" StarCheckColor="#FFFFC776" FontSize="13.2" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed">
+                                            <controls:CheckBoxButton.StarUnCheckColor>
+                                                <SolidColorBrush Color="{DynamicResource Light-004}"/>
+                                            </controls:CheckBoxButton.StarUnCheckColor>
+                                            <controls:CheckBoxButton.Foreground>
+                                                <SolidColorBrush Color="{DynamicResource Dark-002}"/>
+                                            </controls:CheckBoxButton.Foreground>
+                                        </controls:CheckBoxButton>
+                                    </StackPanel>
+                                </Expander>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </Grid>
+                </TabItem>
+                <TabItem x:Name="OrdersTabItem" Width="60" Height="60" Margin="0" Style="{DynamicResource MenuTabItemStyle}" Background="Black">
+                    <TabItem.Header>
+                        <Grid>
+                            <Viewbox Margin="3,3,0,0" Width="18" Height="18" Opacity="0.25" Visibility="Hidden">
+                                <Canvas HorizontalAlignment="Left" Height="70" UseLayoutRounding="False" VerticalAlignment="Top" Width="70">
+                                    <Canvas Height="66.257" Canvas.Left="0" Canvas.Top="1.872" Width="70">
+                                        <Path Data="M0,61.779999 C0,62.431 0.89600003,62.919998 2.0350006,62.919998 L67.721001,62.919998 C68.860001,62.919998 70,62.431 70,61.779999 L70,65.197998 C70,65.767998 68.860001,66.256996 67.721001,66.256996 L2.0350006,66.256996 C0.89600003,66.256996 0,65.767998 0,65.197998 z M30.604998,0 L40.208996,0 C41.999996,2.682209E-07 43.383999,1.7910004 43.383999,4.2330001 L43.383999,50.709 43.383999,52.012001 49.162998,52.093003 49.162998,18.396 C49.162998,16.605002 50.302998,15.058001 52.011997,15.058001 L61.616997,15.058001 C63.407997,15.058001 64.791,16.605002 64.791,18.396 L64.791,52.093003 67.721001,52.093003 C68.861,52.093003 70,52.418999 70,53.07 L70,58.442002 C70,59.093003 68.861,59.581002 67.721001,59.581002 L35.325996,59.581002 34.429996,59.581002 2.0349994,59.581002 C0.89599991,59.581002 1.7881394E-11,59.093003 0,58.442002 L0,53.07 C1.7881394E-11,52.418999 0.89599991,52.093003 2.0349994,52.093003 L6.348999,52.093003 6.348999,29.954001 C6.3489995,28.733 7.9769993,27.756001 9.7679996,27.756001 L19.372,27.756001 C21.081999,27.756001 22.546999,28.733 22.546999,29.954001 L22.546999,52.093003 27.104998,52.093003 27.104998,51.931 27.185997,4.2330001 C27.185997,1.7910004 28.895998,2.682209E-07 30.604998,0 z" Fill="#FF566283" Height="66.257" Canvas.Left="0" Stretch="Fill" Canvas.Top="0" Width="70"/>
+                                    </Canvas>
+                                </Canvas>
+                            </Viewbox>
+                            <Viewbox Margin="0" Width="18" Height="18">
+                                <Canvas HorizontalAlignment="Left" Height="70" UseLayoutRounding="False" VerticalAlignment="Top" Width="70">
+                                    <Canvas Height="66.257" Canvas.Left="0" Canvas.Top="1.872" Width="70">
+                                        <Path Canvas.Left="0" Canvas.Top="0" Width="70" Data="M0,61.779999 C0,62.431 0.89600003,62.919998 2.0350006,62.919998 L67.721001,62.919998 C68.860001,62.919998 70,62.431 70,61.779999 L70,65.197998 C70,65.767998 68.860001,66.256996 67.721001,66.256996 L2.0350006,66.256996 C0.89600003,66.256996 0,65.767998 0,65.197998 z M30.604998,0 L40.208996,0 C41.999996,2.682209E-07 43.383999,1.7910004 43.383999,4.2330001 L43.383999,50.709 43.383999,52.012001 49.162998,52.093003 49.162998,18.396 C49.162998,16.605002 50.302998,15.058001 52.011997,15.058001 L61.616997,15.058001 C63.407997,15.058001 64.791,16.605002 64.791,18.396 L64.791,52.093003 67.721001,52.093003 C68.861,52.093003 70,52.418999 70,53.07 L70,58.442002 C70,59.093003 68.861,59.581002 67.721001,59.581002 L35.325996,59.581002 34.429996,59.581002 2.0349994,59.581002 C0.89599991,59.581002 1.7881394E-11,59.093003 0,58.442002 L0,53.07 C1.7881394E-11,52.418999 0.89599991,52.093003 2.0349994,52.093003 L6.348999,52.093003 6.348999,29.954001 C6.3489995,28.733 7.9769993,27.756001 9.7679996,27.756001 L19.372,27.756001 C21.081999,27.756001 22.546999,28.733 22.546999,29.954001 L22.546999,52.093003 27.104998,52.093003 27.104998,51.931 27.185997,4.2330001 C27.185997,1.7910004 28.895998,2.682209E-07 30.604998,0 z" Height="66.257" Stretch="Fill" Fill="{Binding Foreground, ElementName=OrdersTabItem}"/>
+                                    </Canvas>
+                                </Canvas>
+                            </Viewbox>
+                        </Grid>
+                    </TabItem.Header>
+                </TabItem>
+                <TabItem x:Name="SettingsTabItem" Width="60" Height="60" Margin="0" Style="{DynamicResource MenuTabItemStyle}" Background="Black">
+                    <TabItem.Header>
+                        <Grid>
+                            <Viewbox Margin="3,3,0,0" Width="18" Height="18" Opacity="0.25" Visibility="Hidden">
+                                <Canvas HorizontalAlignment="Left" Height="70" UseLayoutRounding="False" VerticalAlignment="Top" Width="70">
+                                    <Canvas Height="70" Canvas.Left="1.225" Canvas.Top="0" Width="67.549">
+                                        <Path Data="F1M35,49.1172L35,49.1172C27.116,49.1172,20.83,42.8312,20.83,34.9472C20.83,27.1692,27.116,20.7762,35,20.7762C42.777,20.7762,49.171,27.1692,49.171,34.9472C49.171,42.8312,42.777,49.1172,35,49.1172 M63.768,41.6592C60.145,35.3732,62.382,27.1692,68.774,23.5462L61.85,11.6132C59.932,12.7852,57.588,13.4252,55.137,13.4252C47.785,13.4252,41.819,7.3512,41.819,0.000199999999999534L28.075,0.000199999999999534C28.181,2.34419999999999,27.542,4.5812,26.37,6.7122C22.641,13.1052,14.543,15.2362,8.151,11.5072L1.225,23.4402C3.25,24.6122,4.954,26.2102,6.126,28.3412C9.855,34.7332,7.618,42.8312,1.225,46.5602L8.151,58.4932C10.068,57.3212,12.306,56.6812,14.756,56.6812C22.108,56.6812,28.075,62.6482,28.075,70.0002L41.819,70.0002C41.819,67.7632,42.352,65.4192,43.63,63.2882C47.253,57.0022,55.457,54.7632,61.85,58.4932L68.668,46.5602C66.75,45.4952,65.046,43.7902,63.768,41.6592" Height="70" Canvas.Left="0" Stretch="Fill" Canvas.Top="0" Width="67.549" Fill="#FF566283"/>
+                                    </Canvas>
+                                </Canvas>
+                            </Viewbox>
+                            <Viewbox Margin="0" Width="18" Height="18">
+                                <Canvas HorizontalAlignment="Left" Height="70" UseLayoutRounding="False" VerticalAlignment="Top" Width="70">
+                                    <Canvas Height="70" Canvas.Left="1.225" Canvas.Top="0" Width="67.549">
+                                        <Path Data="F1M35,49.1172L35,49.1172C27.116,49.1172,20.83,42.8312,20.83,34.9472C20.83,27.1692,27.116,20.7762,35,20.7762C42.777,20.7762,49.171,27.1692,49.171,34.9472C49.171,42.8312,42.777,49.1172,35,49.1172 M63.768,41.6592C60.145,35.3732,62.382,27.1692,68.774,23.5462L61.85,11.6132C59.932,12.7852,57.588,13.4252,55.137,13.4252C47.785,13.4252,41.819,7.3512,41.819,0.000199999999999534L28.075,0.000199999999999534C28.181,2.34419999999999,27.542,4.5812,26.37,6.7122C22.641,13.1052,14.543,15.2362,8.151,11.5072L1.225,23.4402C3.25,24.6122,4.954,26.2102,6.126,28.3412C9.855,34.7332,7.618,42.8312,1.225,46.5602L8.151,58.4932C10.068,57.3212,12.306,56.6812,14.756,56.6812C22.108,56.6812,28.075,62.6482,28.075,70.0002L41.819,70.0002C41.819,67.7632,42.352,65.4192,43.63,63.2882C47.253,57.0022,55.457,54.7632,61.85,58.4932L68.668,46.5602C66.75,45.4952,65.046,43.7902,63.768,41.6592" Height="70" Canvas.Left="0" Stretch="Fill" Canvas.Top="0" Width="67.549" Fill="{Binding Foreground, ElementName=SettingsTabItem}"/>
+                                    </Canvas>
+                                </Canvas>
+                            </Viewbox>
+                        </Grid>
+                    </TabItem.Header>
+                </TabItem>
+            </TabControl>
+        </Grid>
     </Grid>
 </UserControl>

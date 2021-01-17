@@ -274,9 +274,6 @@ namespace ControlSystemsLibrary.Services
             try
             {
                 CreateConfigFile();
-
-
-
                 XmlDocument document = new XmlDocument();
                 document.Load(path);
                 XmlElement RootElement = document.DocumentElement;
@@ -284,11 +281,13 @@ namespace ControlSystemsLibrary.Services
                 foreach (XmlElement Element in RootElement)
                 {
                     if (Element.Name == "Connections")
+                    {
                         foreach (XmlNode xnode in Element)
                         {
                             XmlNode XName = xnode.Attributes.GetNamedItem("Name");
                             list.Add(Cryption.Decrypt(XName.Value));
                         }
+                    }
                 }
             }
             catch (Exception ex)

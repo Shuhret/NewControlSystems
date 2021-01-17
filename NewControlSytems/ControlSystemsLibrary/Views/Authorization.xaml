@@ -28,7 +28,7 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <StackPanel x:Name="AuthorizationStackPanel" Visibility="{Binding AuthorizationVisibility, ElementName=AU, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding AuthorizationEnabled, ElementName=AU, UpdateSourceTrigger=PropertyChanged}" SnapsToDevicePixels="True" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Width="280" Grid.Column="1" Grid.Row="1" d:IsHidden="True">
+            <StackPanel x:Name="AuthorizationStackPanel" Visibility="{Binding AuthorizationVisibility, ElementName=AU, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding AuthorizationEnabled, ElementName=AU, UpdateSourceTrigger=PropertyChanged}" SnapsToDevicePixels="True" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Width="280" Grid.Column="1" Grid.Row="1">
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
                     <TextBlock Text="CONTROL" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto">
                         <TextBlock.Foreground>
@@ -103,7 +103,7 @@
                 </Button>
                 <Button Content="{Binding CurrentConnectionName, ElementName=AU, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" Foreground="{Binding CurrentConnectionTextColor, ElementName=AU, UpdateSourceTrigger=PropertyChanged}" Click="ClickConnectionNameButton" Style="{DynamicResource ConnectionNameButtonStyle}" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" Margin="0,4,0,0" HorizontalAlignment="Left" FontSize="13" BorderThickness="0" Padding="2" Height="25"/>
             </StackPanel>
-            <Grid x:Name="ConnectionListGrid" Visibility="{Binding ConnectionListVisibility, ElementName=AU,UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ConnectionListEnabled, ElementName=AU, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="1">
+            <Grid x:Name="ConnectionListGrid" Visibility="{Binding ConnectionListVisibility, ElementName=AU,UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ConnectionListEnabled, ElementName=AU, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="1" d:IsHidden="True">
                 <Rectangle Margin="1" Fill="White" RadiusX="1.453" RadiusY="1.453">
                     <Rectangle.Effect>
                         <DropShadowEffect BlurRadius="40" Opacity="0.1" ShadowDepth="0" RenderingBias="Quality"/>
@@ -184,7 +184,7 @@
                                 <ColumnDefinition Width="5"/>
                                 <ColumnDefinition Width="5*"/>
                             </Grid.ColumnDefinitions>
-                            <Button Content="Проверить соединение" Style="{DynamicResource ButtonStyle-001}" BorderThickness="0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Margin="0" Height="37" Padding="1" BorderBrush="{x:Null}" Foreground="White" Grid.Column="2" Click="ClickCheckSelectedConnectionButton">
+                            <Button Content="Проверить соединение" IsEnabled="{Binding CheckSelectedConnectionButtonEnabled, ElementName=AU, UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource ButtonStyle-001}" BorderThickness="0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Margin="0" Height="37" Padding="1" BorderBrush="{x:Null}" Foreground="White" Grid.Column="2" Click="ClickCheckSelectedConnectionButton">
                                 <Button.Background>
                                     <SolidColorBrush Color="{DynamicResource Blue-001}"/>
                                 </Button.Background>
@@ -294,7 +294,7 @@
                                         <Border.Background>
                                             <SolidColorBrush Color="White"/>
                                         </Border.Background>
-                                        <TextBox BorderBrush="{x:Null}" Background="{x:Null}" BorderThickness="0" VerticalContentAlignment="Center" Padding="10,1,1,1" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" FontSize="13">
+                                        <TextBox x:Name="ConnectionNameTextBox" Text="{Binding CreatedConnectionName, ElementName=AU, UpdateSourceTrigger=PropertyChanged}" BorderBrush="{x:Null}" Background="{x:Null}" BorderThickness="0" VerticalContentAlignment="Center" Padding="10,1,1,1" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" FontSize="13">
                                             <TextBox.Foreground>
                                                 <SolidColorBrush Color="{DynamicResource Dark-004}"/>
                                             </TextBox.Foreground>
@@ -320,7 +320,7 @@
                                         <Border.Background>
                                             <SolidColorBrush Color="White"/>
                                         </Border.Background>
-                                        <TextBox BorderBrush="{x:Null}" Background="{x:Null}" BorderThickness="0" VerticalContentAlignment="Center" Padding="10,1,1,1" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" FontSize="13" >
+                                        <TextBox Text="{Binding CreatedConnectionServer, ElementName=AU, UpdateSourceTrigger=PropertyChanged}" BorderBrush="{x:Null}" Background="{x:Null}" BorderThickness="0" VerticalContentAlignment="Center" Padding="10,1,1,1" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" FontSize="13" >
                                             <TextBox.Foreground>
                                                 <SolidColorBrush Color="{DynamicResource Dark-003}"/>
                                             </TextBox.Foreground>
@@ -341,7 +341,7 @@
                                         <Border.Background>
                                             <SolidColorBrush Color="White"/>
                                         </Border.Background>
-                                        <TextBox BorderBrush="{x:Null}" Background="{x:Null}" BorderThickness="0" VerticalContentAlignment="Center" Padding="10,1,1,1" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" FontSize="13" >
+                                        <TextBox Text="{Binding CreatedConnectionDataBase, ElementName=AU, UpdateSourceTrigger=PropertyChanged}" BorderBrush="{x:Null}" Background="{x:Null}" BorderThickness="0" VerticalContentAlignment="Center" Padding="10,1,1,1" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" FontSize="13" >
                                             <TextBox.Foreground>
                                                 <SolidColorBrush Color="{DynamicResource Dark-003}"/>
                                             </TextBox.Foreground>
@@ -362,7 +362,7 @@
                                         <Border.Background>
                                             <SolidColorBrush Color="White"/>
                                         </Border.Background>
-                                        <TextBox BorderBrush="{x:Null}" Background="{x:Null}" BorderThickness="0" VerticalContentAlignment="Center" Padding="10,1,1,1" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" FontSize="13" >
+                                        <TextBox Text="{Binding CreatedConnectionUserID, ElementName=AU, UpdateSourceTrigger=PropertyChanged}" BorderBrush="{x:Null}" Background="{x:Null}" BorderThickness="0" VerticalContentAlignment="Center" Padding="10,1,1,1" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" FontSize="13" >
                                             <TextBox.Foreground>
                                                 <SolidColorBrush Color="{DynamicResource Dark-003}"/>
                                             </TextBox.Foreground>
@@ -383,7 +383,7 @@
                                         <Border.Background>
                                             <SolidColorBrush Color="White"/>
                                         </Border.Background>
-                                        <TextBox BorderBrush="{x:Null}" Background="{x:Null}" BorderThickness="0" VerticalContentAlignment="Center" Padding="10,1,1,1" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" FontSize="13" >
+                                        <TextBox Text="{Binding CreatedConnectionPassword, ElementName=AU, UpdateSourceTrigger=PropertyChanged}" BorderBrush="{x:Null}" Background="{x:Null}" BorderThickness="0" VerticalContentAlignment="Center" Padding="10,1,1,1" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" FontSize="13" >
                                             <TextBox.Foreground>
                                                 <SolidColorBrush Color="{DynamicResource Dark-003}"/>
                                             </TextBox.Foreground>
@@ -410,7 +410,7 @@
                                     </Button>
 
                                     <Border Grid.Column="1" CornerRadius="1" Background="White">
-                                        <TextBox BorderBrush="{x:Null}" Background="{x:Null}" BorderThickness="0" Padding="5" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" FontSize="13" TextWrapping="Wrap">
+                                        <TextBox Text="{Binding CreatedConnectionString, ElementName=AU, UpdateSourceTrigger=PropertyChanged}"  BorderBrush="{x:Null}" Background="{x:Null}" BorderThickness="0" Padding="5" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" FontSize="13" TextWrapping="Wrap">
                                             <TextBox.Foreground>
                                                 <SolidColorBrush Color="{DynamicResource Dark-003}"/>
                                             </TextBox.Foreground>

@@ -89,7 +89,7 @@
                                             <!--<Image x:Name="Icon" Grid.Column="0" Source="{Binding Path=Icon, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" HorizontalAlignment="Right" Margin="4,-7,0,7" Width="32" Height="32" MouseUp="IconMouseUp" MouseLeftButtonDown="IconMouseLeftButtonDown" WindowChrome.IsHitTestVisibleInChrome="True"/>-->
 
                                             <StackPanel Orientation="Horizontal" Grid.Column="1" VerticalAlignment="Center" Margin="-5,0,0,0" Background="{x:Null}">
-                                                <TextBlock Foreground="#FF3897F0" x:Name="Caption" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="4,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" FontSize="12" Text="CONTROL" />
+                                                <TextBlock Foreground="#FF268AE8" x:Name="Caption" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="4,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" FontSize="12" Text="CONTROL" />
                                                 <TextBlock Foreground="#FF3A4671" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="4,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" FontSize="12" Text="SYSTEMS" />
                                             </StackPanel>
 

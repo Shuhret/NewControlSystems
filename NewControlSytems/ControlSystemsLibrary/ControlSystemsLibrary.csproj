@@ -49,6 +49,13 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\UserInterfacesClass.cs" />
+    <Compile Include="Controls\AdminTabItem.xaml.cs">
+      <DependentUpon>AdminTabItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CheckBoxButton.xaml.cs">
+      <DependentUpon>CheckBoxButton.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ConnectionRB.xaml.cs">
       <DependentUpon>ConnectionRB.xaml</DependentUpon>
     </Compile>
@@ -70,6 +77,14 @@
     <Compile Include="Views\UserInterfaceSelection.xaml.cs">
       <DependentUpon>UserInterfaceSelection.xaml</DependentUpon>
     </Compile>
+    <Page Include="Controls\AdminTabItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\CheckBoxButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\ConnectionRB.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -150,6 +165,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Design\projectGuides.guides" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -173,8 +189,6 @@
     <Resource Include="Resources\Fonts\RobotoCondensed-LightItalic.ttf" />
     <Resource Include="Resources\Fonts\RobotoCondensed-Regular.ttf" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Classes\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
