@@ -49,7 +49,7 @@
 
             <Setter Property="Background">
                 <Setter.Value>
-                    <SolidColorBrush Color="{StaticResource Light-002}"/>
+                    <SolidColorBrush Color="{StaticResource Light-001}"/>
                 </Setter.Value>
             </Setter>
 
@@ -63,11 +63,11 @@
                 </Trigger>
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="FontWeight"  Value="Bold" />
-                    <Setter Property="Background" >
+                    <!--<Setter Property="Background" >
                         <Setter.Value>
                             <SolidColorBrush Color="{DynamicResource Light-001}"/>
                         </Setter.Value>
-                    </Setter>
+                    </Setter>-->
                 </Trigger>
             </Style.Triggers>
         </Style>
@@ -286,29 +286,135 @@
             <Border.Background>
                 <SolidColorBrush Color="{DynamicResource Light-002}"/>
             </Border.Background>
-            <Grid Margin="15,20,10,20">
+            <Grid Margin="10,20,10,10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <StackPanel Orientation="Horizontal">
-                    <Button Content="Создать" Style="{DynamicResource ButtonStyle-001}" Height="32" Padding="10,1" BorderBrush="{x:Null}" BorderThickness="0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Foreground="White" Width="120">
-                        <Button.Background>
-                            <SolidColorBrush Color="{DynamicResource Blue-001}"/>
-                        </Button.Background>
+                    <Button Style="{DynamicResource ButtonStyle-002}" BorderThickness="0" Background="White" Height="30" Click="ButtonCreateNomenclature_Click">
+                        <StackPanel Orientation="Horizontal" Margin="7,0,5,0">
+                            <Viewbox Height="18">
+                                <Canvas HorizontalAlignment="Left" Height="50" UseLayoutRounding="False" VerticalAlignment="Top" Width="50">
+                                    <Canvas Height="50" Canvas.Left="0.012" Canvas.Top="0" Width="49.975">
+                                        <Path Data="M8.7603,12.647C10.9093,12.647,12.6593,10.897,12.6593,8.748C12.6593,6.598,10.9093,4.849,8.7603,4.849C6.6113,4.849,4.8613,6.598,4.8613,8.748C4.8613,10.897,6.6113,12.647,8.7603,12.647 M25.0063,13.772L25.0063,13.772C26.2303,13.772,27.2303,14.772,27.2303,15.996L27.2303,22.77L34.0293,22.77C35.2283,22.77,36.2543,23.769,36.2543,24.994C36.2543,26.219,35.2283,27.218,34.0293,27.218L27.2303,27.218L27.2303,34.017C27.2303,35.241,26.2303,36.241,25.0063,36.241C23.7813,36.241,22.7813,35.241,22.7813,34.017L22.7813,27.218L15.9833,27.218C14.7833,27.218,13.7593,26.219,13.7593,24.994C13.7593,23.769,14.7833,22.77,15.9833,22.77L22.7813,22.77L22.7813,15.996C22.7813,14.772,23.7813,13.772,25.0063,13.772 M48.7503,28.343L28.2803,48.763C26.6053,50.412,23.9313,50.412,22.2813,48.763L2.1373,28.868C0.0123000000000015,26.743,0.0123000000000015,22.12,0.0123000000000015,21.12L0.0123000000000015,4.249C0.0123000000000015,1.924,1.7123,-1.77635683940025E-15,4.0613,-1.77635683940025E-15L21.9073,0.0249999999999986C24.7313,0.0249999999999986,26.8553,0.724999999999998,28.9553,2.849L48.7503,22.37C50.3993,24.019,50.3993,26.693,48.7503,28.343" Fill="#FF1697FC" Height="50" Canvas.Left="0" Stretch="Fill" Canvas.Top="0" Width="49.975"/>
+                                    </Canvas>
+                                </Canvas>
+                            </Viewbox>
+                            <TextBlock Text="Создать" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" FontSize="13" Margin="7,0,0,0" VerticalAlignment="Center">
+                                <TextBlock.Foreground>
+                                    <SolidColorBrush Color="{DynamicResource Dark-003}"/>
+                                </TextBlock.Foreground>
+                            </TextBlock>
+                        </StackPanel>
                     </Button>
-                    <ContentControl Content="{Binding LoaderUC, ElementName=Nom, UpdateSourceTrigger=PropertyChanged}" Margin="10,0,0,0"/>
+                    <Button Style="{DynamicResource ButtonStyle-002}" BorderThickness="0" Background="White" Height="30">
+                        <StackPanel Orientation="Horizontal" Margin="7,0,5,0">
+                            <Viewbox Height="18">
+                                <Canvas HorizontalAlignment="Left" Height="30" UseLayoutRounding="False" VerticalAlignment="Top" Width="30">
+                                    <Canvas Height="23.991" Canvas.Left="0.064" Canvas.Top="3.178" Width="30">
+                                        <Path Data="M28.0527,7.1768L15.6077,7.1768C15.2527,7.1768,14.9457,7.0108,14.7567,6.7268L11.3487,3.4628C11.1597,3.2728,10.9237,3.1778,10.6627,3.1778L2.0747,3.1778C0.962700000000002,3.1778,0.0637000000000008,4.0768,0.0637000000000008,5.1898L0.0637000000000008,25.1818C0.0637000000000008,26.2928,0.962700000000002,27.1688,2.0747,27.1688L28.0527,27.1688C29.1647,27.1688,30.0637,26.2928,30.0637,25.1818L30.0637,9.1878C30.0637,8.0758,29.1647,7.1768,28.0527,7.1768" Fill="#FFEB9F3B" Height="23.991" Canvas.Left="0" Stretch="Fill" Canvas.Top="0" Width="30"/>
+                                        <Path Data="M0.064,7.1768L28.053,7.1768C29.165,7.1768,30.064,8.0758,30.064,9.1878L30.064,25.1818C30.064,26.2698,29.165,27.1688,28.053,27.1688L2.075,27.1688C0.963,27.1688,0.064,26.2698,0.064,25.1818z" Fill="#FFFFB655" Height="19.992" Canvas.Left="0" Stretch="Fill" Canvas.Top="3.999" Width="30"/>
+                                        <Path Data="M15.064,9.8027C15.821,9.8267,16.412,10.4177,16.412,11.1757L16.412,15.8127L21.073,15.8127C21.83,15.8127,22.422,16.4277,22.422,17.1847C22.422,17.9417,21.83,18.5327,21.073,18.5327L16.412,18.5327L16.412,23.1947C16.412,23.9277,15.821,24.5427,15.064,24.5427C14.307,24.5427,13.715,23.9277,13.715,23.1947L13.715,18.5327L9.054,18.5327C8.297,18.5327,7.706,17.9417,7.706,17.1847C7.706,16.4277,8.297,15.8127,9.054,15.8127L13.715,15.8127L13.715,11.1757C13.715,10.4177,14.307,9.8267,15.064,9.8027" Fill="White" Height="14.74" Canvas.Left="7.642" Stretch="Fill" Canvas.Top="6.625" Width="14.716"/>
+                                    </Canvas>
+                                </Canvas>
+                            </Viewbox>
+                            <TextBlock Text="Группа" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" FontSize="13" Margin="7,0,0,0" VerticalAlignment="Center">
+                                <TextBlock.Foreground>
+                                    <SolidColorBrush Color="{DynamicResource Dark-003}"/>
+                                </TextBlock.Foreground>
+                            </TextBlock>
+                        </StackPanel>
+                    </Button>
+                    <Button Style="{DynamicResource ButtonStyle-002}" BorderThickness="0" Background="White" Height="30">
+                        <StackPanel Orientation="Horizontal" Margin="7,0,5,0">
+                            <Viewbox Height="16">
+                                <Canvas HorizontalAlignment="Left" Height="30" UseLayoutRounding="False" VerticalAlignment="Top" Width="30">
+                                    <Canvas Height="29.993" Canvas.Left="0" Canvas.Top="0.003" Width="30">
+                                        <Path Data="M19.1592,8.2183L21.8052,10.8643L9.1242,23.5183L6.4782,20.8993z" Fill="#FFFF4D5D" Height="15.3" Canvas.Left="6.478" Stretch="Fill" Canvas.Top="8.215" Width="15.327"/>
+                                        <Path Data="M15.1895,4.249L17.8085,6.868L5.1275,19.549L2.5085,16.902z" Fill="#FFFF4D5D" Height="15.3" Canvas.Left="2.508" Stretch="Fill" Canvas.Top="4.246" Width="15.3"/>
+                                        <Path Data="M23.1289,12.188L25.7749,14.834L13.0939,27.516L10.4759,24.869z" Fill="#FFFF4D5D" Height="15.328" Canvas.Left="10.476" Stretch="Fill" Canvas.Top="12.185" Width="15.299"/>
+                                        <Path Data="M23.5146,1.0786L28.9456,6.5096C30.3516,7.9146,30.3516,10.2586,28.9456,11.6646L27.5396,13.0706L16.9256,2.4846L18.3316,1.0786C19.7656,-0.355399999999998,22.0806,-0.355399999999998,23.5146,1.0786" Fill="#FF566283" Height="13.067" Canvas.Left="16.925" Stretch="Fill" Canvas.Top="0" Width="13.075"/>
+                                        <Path Data="M0.0273,29.9688L0.0273,26.2198L0.000300000000000002,22.4708L3.7773,26.2468L7.5263,29.9958L3.7773,29.9958z" Fill="#FF566283" Height="7.525" Canvas.Left="0" Stretch="Fill" Canvas.Top="22.468" Width="7.526"/>
+                                    </Canvas>
+                                </Canvas>
+                            </Viewbox>
+                            <TextBlock Text="Изменить" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" FontSize="13" Margin="7,0,0,0" VerticalAlignment="Center">
+                                <TextBlock.Foreground>
+                                    <SolidColorBrush Color="{DynamicResource Dark-003}"/>
+                                </TextBlock.Foreground>
+                            </TextBlock>
+                        </StackPanel>
+                    </Button>
+                    <Button Style="{DynamicResource ButtonStyle-002}" BorderThickness="0" Background="White" Height="30">
+                        <StackPanel Orientation="Horizontal" Margin="7,0,5,0">
+                            <Viewbox Height="16">
+                                <Canvas HorizontalAlignment="Left" Height="30" UseLayoutRounding="False" VerticalAlignment="Top" Width="30">
+                                    <Canvas Height="29.037" Canvas.Left="0" Canvas.Top="0.481" Width="30">
+                                        <Path Data="M12.1353,11.8926L14.7423,4.2726C15.5433,1.9306,18.3933,-0.145399999999999,20.7353,0.656600000000001C20.9693,0.736600000000001,21.0943,0.994600000000002,21.0153,1.2286L17.3663,11.8926z M10.3613,13.1586L11.1843,13.1586L11.7013,13.1586L16.9323,13.1586L18.6653,13.1586L29.5513,13.1586C29.7983,13.1586,30.0003,13.3606,30.0003,13.6076C30.0003,16.0816,27.1143,18.1076,24.6393,18.1076L15.2383,18.1076L14.8033,19.3786C14.3203,19.2296,13.8073,19.1476,13.2763,19.1476C11.8513,19.1476,10.5553,19.7326,9.6133,20.6756C9.2623,21.0266,8.9603,21.4276,8.7213,21.8676L10.0083,18.1076L6.1003,18.1076C7.1583,17.9146,8.1103,17.3976,8.8453,16.6616C9.7493,15.7556,10.3213,14.5216,10.3613,13.1586" Fill="#FF90949F" Height="21.386" Canvas.Left="6.1" Stretch="Fill" Canvas.Top="0" Width="23.9"/>
+                                        <Path Data="M13.2759,21.5186C14.8289,21.5186,16.0879,22.7796,16.0879,24.3336C16.0879,25.8886,14.8289,27.1486,13.2759,27.1486C11.7229,27.1486,10.4639,25.8886,10.4639,24.3336C10.4639,22.7796,11.7229,21.5186,13.2759,21.5186 M13.2759,19.1476C14.7009,19.1476,15.9969,19.7326,16.9399,20.6756C17.8779,21.6166,18.4579,22.9096,18.4579,24.3336C18.4579,25.7586,17.8779,27.0516,16.9399,27.9916C15.9969,28.9356,14.7009,29.5186,13.2759,29.5186C11.8509,29.5186,10.5549,28.9356,9.6129,27.9916C8.6739,27.0516,8.0939,25.7586,8.0939,24.3336C8.0939,22.9096,8.6739,21.6166,9.6129,20.6756C10.5549,19.7326,11.8509,19.1476,13.2759,19.1476" Fill="#FFED1518" Height="10.371" Canvas.Left="8.094" Stretch="Fill" Canvas.Top="18.666" Width="10.364"/>
+                                        <Path Data="M5.1821,10.1885C6.7351,10.1885,7.9941,11.4485,7.9941,13.0025C7.9941,14.5595,6.7351,15.8185,5.1821,15.8185C3.6291,15.8185,2.3701,14.5595,2.3701,13.0025C2.3701,11.4485,3.6291,10.1885,5.1821,10.1885 M5.1821,7.8185C6.6071,7.8185,7.9031,8.4015,8.8451,9.3455C9.7841,10.2855,10.3641,11.5795,10.3641,13.0025C10.3641,14.4285,9.7841,15.7215,8.8451,16.6615C7.9031,17.6045,6.6071,18.1895,5.1821,18.1895C3.7571,18.1895,2.4611,17.6045,1.5181,16.6615C0.5801,15.7215,9.99999999997669E-05,14.4285,9.99999999997669E-05,13.0025C9.99999999997669E-05,11.5795,0.5801,10.2855,1.5181,9.3455C2.4611,8.4015,3.7571,7.8185,5.1821,7.8185" Fill="#FFED1518" Height="10.371" Canvas.Left="0" Stretch="Fill" Canvas.Top="7.337" Width="10.364"/>
+                                    </Canvas>
+                                </Canvas>
+                            </Viewbox>
+                            <TextBlock Text="Вырезать" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" FontSize="13" Margin="7,0,0,0" VerticalAlignment="Center">
+                                <TextBlock.Foreground>
+                                    <SolidColorBrush Color="{DynamicResource Dark-003}"/>
+                                </TextBlock.Foreground>
+                            </TextBlock>
+                        </StackPanel>
+                    </Button>
+                    <Button IsEnabled="False" Style="{DynamicResource ButtonStyle-002}" BorderThickness="0" Background="White" Height="30">
+                        <StackPanel Orientation="Horizontal" Margin="7,0,5,0">
+                            <Viewbox Height="16">
+                                <Canvas HorizontalAlignment="Left" Height="30" UseLayoutRounding="False" VerticalAlignment="Top" Width="30">
+                                    <Canvas Height="30" Canvas.Left="1.529" Canvas.Top="0" Width="26.943">
+                                        <Path Data="M2.3257,0L9.0047,0L9.0047,2.267C9.0047,2.705,9.3627,3.063,9.8017,3.063L15.6657,3.063C16.1037,3.063,16.4617,2.705,16.4617,2.267L16.4617,0L23.1407,0C23.5787,0,23.9377,0.358,23.9377,0.797L23.9377,7.509L11.3067,7.509C10.6757,7.509,10.1017,7.767,9.6877,8.181C9.2737,8.595,9.0157,9.169,9.0157,9.8L9.0157,26.962L2.3257,26.962C1.8877,26.962,1.5287,26.604,1.5287,26.166L1.5287,0.797C1.5287,0.358,1.8877,0,2.3257,0" Fill="#FF00B9ED" Height="26.962" Canvas.Left="0" Stretch="Fill" Canvas.Top="0" Width="22.409"/>
+                                        <Path Data="M15.7671,18.0527L23.2131,18.0527C23.6191,18.0527,23.9511,18.3847,23.9511,18.7917C23.9511,19.1967,23.6191,19.5287,23.2131,19.5287L15.7671,19.5287C15.3601,19.5287,15.0281,19.1967,15.0281,18.7917C15.0281,18.3847,15.3601,18.0527,15.7671,18.0527 M15.7671,22.5417L23.2131,22.5417C23.6191,22.5417,23.9511,22.8747,23.9511,23.2817C23.9511,23.6877,23.6191,24.0187,23.2131,24.0187L15.7671,24.0187C15.3601,24.0187,15.0281,23.6877,15.0281,23.2817C15.0281,22.8747,15.3601,22.5417,15.7671,22.5417 M15.7671,13.5347L23.2131,13.5347C23.6191,13.5347,23.9511,13.8677,23.9511,14.2737C23.9511,14.6777,23.6191,15.0107,23.2131,15.0107L15.7671,15.0107C15.3601,15.0107,15.0281,14.6777,15.0281,14.2737C15.0281,13.8677,15.3601,13.5347,15.7671,13.5347 M11.3071,9.0037L27.6751,9.0037C28.1121,9.0037,28.4721,9.3617,28.4721,9.8007L28.4721,29.2027C28.4721,29.6417,28.1121,29.9997,27.6751,29.9997L11.3071,29.9997C10.8691,29.9997,10.5101,29.6417,10.5101,29.2027L10.5101,9.8007C10.5101,9.3617,10.8691,9.0037,11.3071,9.0037" Fill="#FF90949F" Height="20.996" Canvas.Left="8.981" Stretch="Fill" Canvas.Top="9.004" Width="17.962"/>
+                                        <Path Data="M10.455,1.546L15.012,1.546L15.012,0.0279999999999987L10.455,0.0279999999999987z" Fill="#FFED1518" Height="1.518" Canvas.Left="8.926" Stretch="Fill" Canvas.Top="0.028" Width="4.557"/>
+                                    </Canvas>
+                                </Canvas>
+                            </Viewbox>
+                            <TextBlock Text="Вставить" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" FontSize="13" Margin="7,0,0,0" VerticalAlignment="Center">
+                                <TextBlock.Foreground>
+                                    <SolidColorBrush Color="{DynamicResource Dark-003}"/>
+                                </TextBlock.Foreground>
+                            </TextBlock>
+                        </StackPanel>
+                    </Button>
+                    <Button IsEnabled="False" Style="{DynamicResource ButtonStyle-002}" BorderThickness="0" Background="White" Height="30">
+                        <StackPanel Orientation="Horizontal" Margin="7,0,5,0">
+                            <Viewbox Height="16">
+                                <Canvas HorizontalAlignment="Left" Height="70" UseLayoutRounding="False" VerticalAlignment="Top" Width="70">
+                                    <Canvas Height="70" Canvas.Left="7.713" Canvas.Top="0" Width="54.58">
+                                        <Path Data="F1M60.4209,1.9419C57.8319,-0.647099999999996,53.6709,-0.647099999999996,51.1739,1.9419L28.0569,24.9669L18.9019,15.7199C16.3129,13.2229,12.1519,13.2229,9.6549,15.7199C7.06590000000001,18.3089,7.06590000000001,22.4699,9.6549,24.9669L23.4329,38.8379C26.0229,41.3339,30.1839,41.3339,32.6799,38.8379L60.4209,11.1889C62.9179,8.59990000000001,62.9179,4.4389,60.4209,1.9419" Fill="#FF9FCE26" Height="40.71" Canvas.Left="0" Stretch="Fill" Canvas.Top="0" Width="54.58"/>
+                                        <Path Data="F1M60.4209,31.1626C57.8319,28.6656,53.6709,28.6656,51.1739,31.1626L28.0569,54.2806L18.9019,45.0336C16.3129,42.4446,12.1519,42.4446,9.6549,45.0336C7.06590000000001,47.5296,7.06590000000001,51.6906,9.6549,54.2806L23.4329,68.0586C26.0229,70.6476,30.1839,70.6476,32.6799,68.0586L60.4209,40.4096C62.9179,37.8206,62.9179,33.7516,60.4209,31.1626" Fill="#FF9FCE26" Height="40.711" Canvas.Left="0" Stretch="Fill" Canvas.Top="29.29" Width="54.58"/>
+                                    </Canvas>
+                                </Canvas>
+                            </Viewbox>
+                            <TextBlock Text="Выбранные" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" FontSize="13" Margin="7,0,0,0" VerticalAlignment="Center">
+                                <TextBlock.Foreground>
+                                    <SolidColorBrush Color="{DynamicResource Dark-003}"/>
+                                </TextBlock.Foreground>
+                            </TextBlock>
+                        </StackPanel>
+                    </Button>
                     <TextBlock Text="{Binding GroupID, ElementName=Nom, UpdateSourceTrigger=PropertyChanged}" Margin="10,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" FontSize="13" VerticalAlignment="Center">
                         <TextBlock.Foreground>
                             <SolidColorBrush Color="{DynamicResource Blue-004}"/>
                         </TextBlock.Foreground>
                     </TextBlock>
+                    <TextBlock Text="{Binding DataGridSelectedItem, ElementName=Nom, UpdateSourceTrigger=PropertyChanged}" Margin="10,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" FontSize="13" VerticalAlignment="Center">
+                        <TextBlock.Foreground>
+                            <SolidColorBrush Color="{DynamicResource Red-001}"/>
+                        </TextBlock.Foreground>
+                    </TextBlock>
                 </StackPanel>
             </Grid>
         </Border>
-        <DataGrid x:Name="DataGridNomenclatures" Style="{DynamicResource NomenDG}" BorderThickness="0,1,0,0" SelectionUnit="FullRow" SelectionMode="Extended" AutoGenerateColumns="False"  CanUserAddRows="False" PreviewKeyDown="DataGridNomenclatures_PreviewKeyDown" Loaded="DataGridNomenclatures_Loaded" Margin="0" Grid.Row="1">
+        <DataGrid x:Name="DataGridNomenclatures" VerticalScrollBarVisibility="Visible" ItemsSource="{Binding ShowNomenclaturesCollection, ElementName=Nom, UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource NomenDG}" BorderThickness="1" SelectionUnit="FullRow" SelectionMode="Extended" AutoGenerateColumns="False"  CanUserAddRows="False" PreviewKeyDown="DataGridNomenclatures_PreviewKeyDown" Loaded="DataGridNomenclatures_Loaded" Margin="10,0,10,10" Grid.Row="1" SelectionChanged="DataGridNomenclatures_SelectionChanged">
             <DataGrid.Background>
-                <SolidColorBrush Color="{DynamicResource Light-002}"/>
+                <SolidColorBrush Color="{DynamicResource Light-001}"/>
             </DataGrid.Background>
             <DataGrid.BorderBrush>
                 <SolidColorBrush Color="{DynamicResource Light-005}"/>
@@ -410,8 +516,6 @@
             </DataGrid.Columns>
 
         </DataGrid>
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Margin="0,0,0,100">
-            <TextBlock Text="{Binding MessageText, ElementName=Nom, UpdateSourceTrigger=PropertyChanged}" Foreground="{Binding MessageTextColor, ElementName=Nom, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" MaxWidth="250" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" FontSize="13" Margin="0,10,0,0" TextAlignment="Center"/>
-        </StackPanel>
+        <ContentControl Content="{Binding LoaderUC, ElementName=Nom, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,100"/>
     </Grid>
 </UserControl>

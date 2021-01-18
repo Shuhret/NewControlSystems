@@ -36,7 +36,7 @@
                         <Grid SnapsToDevicePixels="true">
                             <Border x:Name="PART_Bd" BorderBrush="#FFCED1DA" BorderThickness="{TemplateBinding BorderThickness}">
                                 <Border.Background>
-                                    <SolidColorBrush Color="{DynamicResource Light-003}"/>
+                                    <SolidColorBrush Color="{DynamicResource Light-004}"/>
                                 </Border.Background>
                                 <Grid HorizontalAlignment="Stretch" Height="Auto" Margin="0" Width="Auto">
                                     <Grid.ColumnDefinitions>

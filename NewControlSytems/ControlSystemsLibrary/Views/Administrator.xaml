@@ -139,7 +139,7 @@
                                     <SolidColorBrush Color="#FFD3D9E6"/>
                                 </Border.BorderBrush>
                                 <Grid Height="Auto" Margin="0,0,5,0" Width="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                    <Border x:Name="border" Width="50" Height="50" CornerRadius="1" Visibility="Hidden" BorderThickness="1,1,1.5,1.5" SnapsToDevicePixels="True">
+                                    <Border x:Name="border" Width="50" Height="50" CornerRadius="1" Visibility="Hidden" BorderThickness="1" SnapsToDevicePixels="True">
                                         <Border.Background>
                                             <SolidColorBrush Color="{DynamicResource Light-003}"/>
                                         </Border.Background>

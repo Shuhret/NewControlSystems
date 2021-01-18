@@ -456,7 +456,7 @@
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="1" Margin="0,0,0,20" Orientation="Vertical" VerticalAlignment="Bottom">
 
-                <ContentControl Content="{Binding LoaderUC, ElementName=AU, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="40" />
+                <ContentControl Content="{Binding LoaderUC, ElementName=AU, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center" />
 
                 <TextBox Foreground="{Binding MessageTextColor, ElementName=AU, UpdateSourceTrigger=PropertyChanged}" Text="{Binding MessageText, ElementName=AU, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" BorderThickness="0" Background="Transparent" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" FontSize="13" HorizontalContentAlignment="Center" TextWrapping="Wrap"/>
             </StackPanel>

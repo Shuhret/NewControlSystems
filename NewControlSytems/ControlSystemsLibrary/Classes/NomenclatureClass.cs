@@ -100,7 +100,7 @@ namespace ControlSystemsLibrary.Classes
 
 
         // Артикул Номенклатуры
-        private string article;
+        private string article = "";
         public string Article
         {
             get => article;
@@ -113,7 +113,7 @@ namespace ControlSystemsLibrary.Classes
 
 
         // Название Номенклатуры
-        private string name;
+        private string name = "";
         public string Name
         {
             get => name;
@@ -126,7 +126,7 @@ namespace ControlSystemsLibrary.Classes
 
 
         // Название Базовой Единицы Измерения
-        private string baseUnit;
+        private string baseUnit = "";
         public string BaseUnit
         {
             get => baseUnit;
@@ -158,7 +158,7 @@ namespace ControlSystemsLibrary.Classes
 
 
         // Вес Базовой Единицы для показа в DataGrid
-        private string weightBaseUnitShow;
+        private string weightBaseUnitShow = "";
         public string WeightBaseUnitShow
         {
             get => weightBaseUnitShow;
@@ -171,7 +171,7 @@ namespace ControlSystemsLibrary.Classes
 
 
         // Штрих-код
-        private string barcode;
+        private string barcode = "";
         public string Barcode
         {
             get => barcode;
@@ -184,7 +184,7 @@ namespace ControlSystemsLibrary.Classes
 
 
         // Тип Штрих-кода        
-        private string barcodeType;
+        private string barcodeType = "";
         public string BarcodeType
         {
             get => barcodeType;
@@ -197,7 +197,7 @@ namespace ControlSystemsLibrary.Classes
 
 
         // Страна Происхождения
-        private string countryOfOrigin;
+        private string countryOfOrigin = "";
         public string CountryOfOrigin
         {
             get => countryOfOrigin;
@@ -210,7 +210,7 @@ namespace ControlSystemsLibrary.Classes
 
 
         // Описание
-        private string description;
+        private string description = "";
         public string Description
         {
             get => description;
