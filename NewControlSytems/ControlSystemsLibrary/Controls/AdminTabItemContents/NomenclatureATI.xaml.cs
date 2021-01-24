@@ -39,14 +39,17 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
             InitializeComponent();
             Loaded += NomenclatureATI_Loaded;
             CurrentGroupID = new Guid("00000000-0000-0000-0000-000000000000");
-            GroupID = CurrentGroupID.ToString();
         }
 
 
-        #region Поля и свойства ==============================================================================================================
-        
 
-       
+
+
+
+        #region Поля и свойства ==============================================================================================================
+
+
+
 
 
         ObservableCollection<NomenclatureClass> AllNomenclaturesCollection = new ObservableCollection<NomenclatureClass>();
@@ -54,18 +57,17 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
         ObservableCollection<NomenclatureClass> ShowNomenclaturesCollection = new ObservableCollection<NomenclatureClass>();
 
 
-
         static Guid CurrentGroupID;
         //static Guid ID;
-        NomenclatureClass SelectedItem;
+        NomenclatureClass DGSelectedItem;
 
-        private string groupID;
-        public string GroupID
+        private string currentGroup; // Временно
+        public string CurrentGroup
         {
-            get => groupID;
+            get => currentGroup;
             set
             {
-                groupID = value;
+                currentGroup = value;
                 OnPropertyChanged();
             }
         }
@@ -193,102 +195,9 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
             ShowMessage(true);
             await Task.Run(() => AllNomenclaturesCollection = DataBaseRequest.GetAllNomenclatures());
             FillingNomenclaturesList();
+            DataGridItemSelect(0);
             ShowMessage(false);
         }
-
-        // Метод: Заполняет "ShowNomenclaturesCollection" из "AllNomenclaturesCollection" текушим CurrentGroupID
-        void FillingNomenclaturesList()
-        {
-            ShowNomenclaturesCollection.Clear();
-            foreach (NomenclatureClass NC in AllNomenclaturesCollection)
-            {
-                if (NC.GroupID == CurrentGroupID)
-                {
-                    ShowNomenclaturesCollection.Add(NC);
-                }
-            }
-            DataGridNomenclatures.ItemsSource = ShowNomenclaturesCollection;
-            DataGridSelectionUpdate();
-            DataGridNomenclatures.SelectedIndex = 0;
-            if (DataGridNomenclatures.SelectedItems.Count > 0)
-            {
-                DataGridNomenclatures.CurrentCell = new DataGridCellInfo(DataGridNomenclatures.Items[0], DataGridNomenclatures.Columns[3]);
-            }
-            else
-            {
-                // Хуевознает ;) так решил проблему с выделением строки при выходе из пустой группы
-                NomenclatureClass NC = new NomenclatureClass();
-                ShowNomenclaturesCollection.Add(NC);
-                DataGridNomenclatures.CurrentCell = new DataGridCellInfo(DataGridNomenclatures.Items[0], DataGridNomenclatures.Columns[3]);
-                DataGridRow DR = DataGridNomenclatures.ItemContainerGenerator.ContainerFromItem(NC) as DataGridRow;
-                if(DR != null)
-                DR.Visibility = Visibility.Hidden;
-            }
-        }
-
-        // Метод: Заполняет BindingList "NomenclaturesList" из базы данных по GroupID (Назад) ------------------------------------------------
-        void FillingNomenclaturesListBack()
-        {
-            ShowNomenclaturesCollection.Clear();
-            GetAllNomenclaturesBack(ref CurrentGroupID, ref SelectedItem);
-            GroupID = CurrentGroupID.ToString(); // Временно!
-            DataGridNomenclatures.ItemsSource = ShowNomenclaturesCollection;
-            DataGridSelectionUpdate();
-
-            if (DataGridNomenclatures.Items.Count > 0)
-            {
-                DataGridNomenclatures.SelectedItem = SelectedItem;
-                DataGridNomenclatures.CurrentCell = new DataGridCellInfo(DataGridNomenclatures.Items[DataGridNomenclatures.SelectedIndex], DataGridNomenclatures.Columns[3]);
-            }
-        }
-
-
-        void GetAllNomenclaturesBack(ref Guid CurrentGroupID, ref NomenclatureClass SelectedItem)
-        {
-            foreach (NomenclatureClass NC in AllNomenclaturesCollection)
-            {
-                if(NC.ID == CurrentGroupID) // Нашел группу маргарины
-                {
-                    SelectedItem = NC;
-                    if (NC.GroupID == new Guid("00000000-0000-0000-0000-000000000000"))
-                    {
-                        Guid MainGroupID = NC.GroupID;
-                        foreach (NomenclatureClass NC2 in AllNomenclaturesCollection)
-                        {
-                            if (NC2.GroupID == MainGroupID) // Нашел группу СолПро
-                            {
-                                ShowNomenclaturesCollection.Add(NC2);
-                                if(CurrentGroupID != NC2.GroupID)
-                                    CurrentGroupID = NC2.GroupID;
-                            }
-                        }
-                        break;
-                    }
-                    else
-                    {
-                        foreach (NomenclatureClass NC2 in AllNomenclaturesCollection)
-                        {
-                            if (NC2.ID == NC.GroupID) // Нашел группу СолПро
-                            {
-                                foreach (NomenclatureClass NC3 in AllNomenclaturesCollection)
-                                {
-                                    if (NC3.GroupID == NC2.ID)
-                                    {
-                                        ShowNomenclaturesCollection.Add(NC3);
-                                        if (CurrentGroupID != NC2.GroupID)
-                                            CurrentGroupID = NC3.GroupID;
-                                    }
-                                }
-                                break;
-                            }
-                        }
-                    }
-                    break;
-                }    
-            }
-        }
-
-
 
 
 
@@ -888,6 +797,7 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
             {
                 CountOfCutElements = 0;
                 FillingNomenclaturesList();
+
                 SelectPastedElements();
                 ClearCutList();
             }
@@ -1045,205 +955,6 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
 
 
 
-        private void DataGridNomenclatures_Loaded(object sender, RoutedEventArgs e)
-        {
-            if (sender is DataGrid)
-            {
-                DataGrid DG = sender as DataGrid;
-                DG.Focus();
-                if (DG.Items.Count > 0)
-                {
-
-                    DG.CurrentCell = new DataGridCellInfo(DG.Items[0], DG.Columns[3]);
-                    if (DG.SelectedItem != null)
-                        DG.ScrollIntoView(DG.SelectedItem);
-                }
-            }
-        }
-
-        // Событие: DoubleClick на DataGridRow -----------------------------------------------------------------------------------------------
-        private void Row_DoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            DataGridRow row = sender as DataGridRow;
-            NomenclatureClass NC = row.Item as NomenclatureClass;
-
-            if (NC.GroupNomen == false)
-            {
-                CurrentGroupID = NC.ID;
-                GroupID = CurrentGroupID.ToString();
-                FillingNomenclaturesList();
-            }
-            else
-            {
-                MessageBox.Show("ID: " + NC.ID.ToString());
-            }
-        }
-
-        // Событие: PreviewKeyDown для DataGridRow -------------------------------------------------------------------------------------------
-        private void DataGridRow_PreviewKeyDown(object sender, KeyEventArgs e)
-        {
-            //// Если нажато: Ctrl+Down
-            //if (e.Key == Key.Down && e.KeyboardDevice.Modifiers == ModifierKeys.Control) // Control + Up
-            //{
-            //    NomenclatureClass NC = (sender as DataGridRow).DataContext as NomenclatureClass;
-            //    if (NC.GroupNomen == false)
-            //    {
-            //        CurrentGroupID = NC.ID;
-            //        GroupID = CurrentGroupID.ToString();
-            //        FillingNomenclaturesList();
-            //    }
-            //    e.Handled = true;
-            //}
-            //// Если нажато: Enter
-            //if (e.Key == Key.Enter)
-            //{
-            //    NomenclatureClass NC = (sender as DataGridRow).DataContext as NomenclatureClass;
-            //    if (NC.GroupNomen == false)
-            //    {
-            //        CurrentGroupID = NC.ID;
-            //        GroupID = CurrentGroupID.ToString();
-            //        FillingNomenclaturesList();
-            //    }
-            //    e.Handled = true;
-            //}
-            // Если нажато: Пробел
-            if (e.Key == Key.Space)
-            {
-                NomenclatureClass NC = (sender as DataGridRow).DataContext as NomenclatureClass;
-                if (NC.Selected == null || NC.Selected == true)
-                    NC.Selected = false;
-                else if (NC.Selected == false)
-                    NC.Selected = true;
-                e.Handled = true;
-            }
-            // Если нажато: Delete
-            if (e.Key == Key.Delete)
-            {
-                e.Handled = true;
-            }
-
-        }
-
-        // Событие: PreviewKeyDown для DataGrid номенклатуры ---------------------------------------------------------------------------------
-        private void DataGridNomenclatures_PreviewKeyDown(object sender, KeyEventArgs e)
-        {
-            // Если нажато: Ctrl+Down
-            if (e.Key == Key.Down && e.KeyboardDevice.Modifiers == ModifierKeys.Control && ((sender as DataGrid).SelectedItem as NomenclatureClass).Name != "") // Control + Up
-            {
-                (sender as DataGrid).SelectedIndex = 0;
-                if ((sender as DataGrid).SelectedItems.Count > 0)
-                {
-                    (sender as DataGrid).CurrentCell = new DataGridCellInfo((sender as DataGrid).Items[0], (sender as DataGrid).Columns[3]);
-                    NomenclatureClass NC = (sender as DataGrid).SelectedItem as NomenclatureClass;
-                    if (NC.GroupNomen == false)
-                    {
-                        CurrentGroupID = NC.ID;
-                        GroupID = CurrentGroupID.ToString();
-                        FillingNomenclaturesList();
-                    }
-                    e.Handled = true;
-                }
-            }
-            // Если нажато: Enter
-            if (e.Key == Key.Enter && ((sender as DataGrid).SelectedItem as NomenclatureClass).Name != "")
-            {
-                (sender as DataGrid).SelectedIndex = 0;
-                if ((sender as DataGrid).SelectedItems.Count > 0)
-                {
-                    (sender as DataGrid).CurrentCell = new DataGridCellInfo((sender as DataGrid).Items[0], (sender as DataGrid).Columns[3]);
-                    NomenclatureClass NC = (sender as DataGrid).SelectedItem as NomenclatureClass;
-                    if (NC.GroupNomen == false)
-                    {
-                        CurrentGroupID = NC.ID;
-                        GroupID = CurrentGroupID.ToString();
-                        FillingNomenclaturesList();
-                    }
-                    e.Handled = true;
-                }
-            }
-            // Если нажато: Control+Up
-            if (e.Key == Key.Up && e.KeyboardDevice.Modifiers == ModifierKeys.Control)
-            {
-                DataGrid DG = sender as DataGrid;
-                NomenclatureClass NC = DG.SelectedItem as NomenclatureClass;
-                if (CurrentGroupID != new Guid("00000000-0000-0000-0000-000000000000"))
-                {
-                    FillingNomenclaturesListBack();
-                }
-                e.Handled = true;
-            }
-            if (e.Key == Key.Back)
-            {
-                DataGrid DG = sender as DataGrid;
-                NomenclatureClass NC = DG.SelectedItem as NomenclatureClass;
-                if (CurrentGroupID != new Guid("00000000-0000-0000-0000-000000000000"))
-                {
-                    FillingNomenclaturesListBack();
-                }
-                e.Handled = true;
-            }
-            if (e.Key == Key.Home)
-            {
-                DataGrid DG = sender as DataGrid;
-                DG.SelectedIndex = 0;
-                if (DG.SelectedItems.Count > 0)
-                    DG.CurrentCell = new DataGridCellInfo(DG.Items[0], DG.Columns[3]);
-                e.Handled = true;
-            }
-            if (e.Key == Key.End)
-            {
-                DataGrid DG = sender as DataGrid;
-                DG.SelectedIndex = DG.Items.Count - 1;
-
-                if (DG.SelectedItems.Count > 0)
-                    DG.CurrentCell = new DataGridCellInfo(DG.Items[DG.Items.Count - 1], DG.Columns[3]);
-                e.Handled = true;
-            }
-            if (e.Key == Key.F2)
-            {
-                //ButtonEdit_Click(null, null);
-                e.Handled = true;
-            }
-            if (e.Key == Key.Space)
-            {
-                //NomenclatureClass NC = (sender as DataGridRow).DataContext as NomenclatureClass;
-                foreach (NomenclatureClass DGR in DataGridNomenclatures.SelectedItems)
-                {
-                    if (DGR.Selected == null || DGR.Selected == false)
-                        DGR.Selected = true;
-                    else if (DGR.Selected == true)
-                    {
-                        DGR.Selected = false;
-                    }
-                }
-                e.Handled = true;
-            }
-            if (e.Key == Key.X && e.KeyboardDevice.Modifiers == ModifierKeys.Control) // Control + X = Вырезать
-            {
-                CutElements(); // Вырезать
-                e.Handled = true;
-            }
-            if (e.Key == Key.V && e.KeyboardDevice.Modifiers == ModifierKeys.Control) // Control + V = Вставить
-            {
-                PasteElements(); // Вставить
-                e.Handled = true;
-            }
-
-        }
-
-        private void Nom_PreviewKeyDown(object sender, KeyEventArgs e)
-        {
-            DataGridNomenclatures_PreviewKeyDown(DataGridNomenclatures, e);
-        }
-
-        private void DG_Header_DoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            if (CurrentGroupID != new Guid("00000000-0000-0000-0000-000000000000"))
-            {
-                FillingNomenclaturesListBack();
-            }
-            e.Handled = true;
-        }
         private void UpdateTagsClick(object sender, RoutedEventArgs e)
         {
 
@@ -1338,22 +1049,301 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
         }
 
 
-        private string dataGridSelectedItem;
-        public string DataGridSelectedItem
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // Событие: DoubleClick на DataGridRow -----------------------------------------------------------------------------------------------
+        private void Row_DoubleClick(object sender, MouseButtonEventArgs e)
         {
-            get=> dataGridSelectedItem;
-            set
+            OpenGroup(DataGridNomenclatures);
+            e.Handled = true;
+        }
+
+        // Событие: PreviewKeyDown для DataGrid номенклатуры ---------------------------------------------------------------------------------
+        private void DataGridNomenclatures_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            // Если нажато: Enter
+            if (e.Key == Key.Enter && ((sender as DataGrid).SelectedItem as NomenclatureClass).Name != "")
             {
-                dataGridSelectedItem = value;
-                OnPropertyChanged();
+                OpenGroup(sender);
+                e.Handled = true;
+            }
+
+
+            // Если нажато: Ctrl+Down
+            if (e.Key == Key.Down && e.KeyboardDevice.Modifiers == ModifierKeys.Control && ((sender as DataGrid).Items.Count > 0)) // Control + Up
+            {
+                OpenGroup(sender);
+                e.Handled = true;
+            }
+
+            //// Если нажато: Control+Up
+            //if (e.Key == Key.Up && e.KeyboardDevice.Modifiers == ModifierKeys.Control)
+            //{
+            //    CloseGroup();
+            //    //e.Handled = true;
+            //}
+            //if (e.Key == Key.Back)
+            //{
+            //    CloseGroup();
+            //    e.Handled = true;
+            //}
+
+
+
+            if (e.Key == Key.Home)
+            {
+                DataGrid DG = sender as DataGrid;
+                DG.SelectedIndex = 0;
+                if (DG.SelectedItems.Count > 0)
+                    DG.CurrentCell = new DataGridCellInfo(DG.Items[0], DG.Columns[3]);
+                e.Handled = true;
+            }
+            if (e.Key == Key.End)
+            {
+                DataGrid DG = sender as DataGrid;
+                DG.SelectedIndex = DG.Items.Count - 1;
+
+                if (DG.SelectedItems.Count > 0)
+                    DG.CurrentCell = new DataGridCellInfo(DG.Items[DG.Items.Count - 1], DG.Columns[3]);
+                e.Handled = true;
+            }
+            if (e.Key == Key.F2)
+            {
+                //ButtonEdit_Click(null, null);
+                e.Handled = true;
+            }
+            if (e.Key == Key.Space)
+            {
+                //NomenclatureClass NC = (sender as DataGridRow).DataContext as NomenclatureClass;
+                foreach (NomenclatureClass DGR in DataGridNomenclatures.SelectedItems)
+                {
+                    if (DGR.Selected == null || DGR.Selected == false)
+                        DGR.Selected = true;
+                    else if (DGR.Selected == true)
+                    {
+                        DGR.Selected = false;
+                    }
+                }
+                e.Handled = true;
+            }
+            if (e.Key == Key.X && e.KeyboardDevice.Modifiers == ModifierKeys.Control) // Control + X = Вырезать
+            {
+                CutElements(); // Вырезать
+                e.Handled = true;
+            }
+            if (e.Key == Key.V && e.KeyboardDevice.Modifiers == ModifierKeys.Control) // Control + V = Вставить
+            {
+                PasteElements(); // Вставить
+                e.Handled = true;
             }
         }
-        private void DataGridNomenclatures_SelectionChanged(object sender, SelectionChangedEventArgs e)
+
+
+        // Событие: PreviewKeyDown для DataGridRow -------------------------------------------------------------------------------------------
+        private void DataGridRow_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            if ((sender as DataGrid).SelectedItem as NomenclatureClass != null)
-                DataGridSelectedItem = ((sender as DataGrid).SelectedItem as NomenclatureClass).Name;
-            else
-                DataGridSelectedItem = "";
+            //// Если нажато: Ctrl+Down
+            //if (e.Key == Key.Down && e.KeyboardDevice.Modifiers == ModifierKeys.Control) // Control + Up
+            //{
+            //    NomenclatureClass NC = (sender as DataGridRow).DataContext as NomenclatureClass;
+            //    if (NC.GroupNomen == false)
+            //    {
+            //        CurrentGroupID = NC.ID;
+            //        GroupID = CurrentGroupID.ToString();
+            //        FillingNomenclaturesList();
+            //    }
+            //    e.Handled = true;
+            //}
+            //// Если нажато: Enter
+            //if (e.Key == Key.Enter)
+            //{
+            //    NomenclatureClass NC = (sender as DataGridRow).DataContext as NomenclatureClass;
+            //    if (NC.GroupNomen == false)
+            //    {
+            //        CurrentGroupID = NC.ID;
+            //        GroupID = CurrentGroupID.ToString();
+            //        FillingNomenclaturesList();
+            //    }
+            //    e.Handled = true;
+            //}
+            // Если нажато: Пробел
+            if (e.Key == Key.Space)
+            {
+                NomenclatureClass NC = (sender as DataGridRow).DataContext as NomenclatureClass;
+                if (NC.Selected == null || NC.Selected == true)
+                    NC.Selected = false;
+                else if (NC.Selected == false)
+                    NC.Selected = true;
+                e.Handled = true;
+            }
+            // Если нажато: Delete
+            if (e.Key == Key.Delete)
+            {
+                e.Handled = true;
+            }
+
         }
+
+
+        private void Nom_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+           // DataGridNomenclatures_PreviewKeyDown(DataGridNomenclatures, e);
+
+            // Если нажато: Control+Up
+            if (e.Key == Key.Up && e.KeyboardDevice.Modifiers == ModifierKeys.Control)
+            {
+                CloseGroup();
+                e.Handled = true;
+            }
+            if (e.Key == Key.Back)
+            {
+                CloseGroup();
+                e.Handled = true;
+            }
+
+
+
+        }
+
+        private void DG_Header_DoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            CloseGroup();
+            //e.Handled = true;
+        }
+
+
+
+
+
+
+
+        // Метод: Заполняет "ShowNomenclaturesCollection" из "AllNomenclaturesCollection" текушим CurrentGroupID
+        void FillingNomenclaturesList()
+        {
+            ShowNomenclaturesCollection.Clear();
+            foreach (NomenclatureClass NC in AllNomenclaturesCollection)
+            {
+                if (NC.GroupID == CurrentGroupID)
+                {
+                    ShowNomenclaturesCollection.Add(NC);
+                }
+            }
+            DataGridNomenclatures.ItemsSource = ShowNomenclaturesCollection;
+        }
+
+
+        void OpenGroup(object sender)
+        {
+            if (sender is DataGrid)
+            {
+                DataGrid DG = sender as DataGrid;
+                if (DG.SelectedItem != null)
+                {
+                    DGSelectedItem = DG.SelectedItem as NomenclatureClass;
+                    if (DGSelectedItem.GroupNomen == false)
+                    {
+                        CurrentGroupID = DGSelectedItem.ID;
+                        FillingNomenclaturesList();
+                        DataGridItemSelect(0);
+                    }
+                }
+            }
+
+            foreach (NomenclatureClass NC in AllNomenclaturesCollection) // Временно
+            {
+                if (NC.ID == CurrentGroupID)
+                {
+                    CurrentGroup = NC.Name;
+                    break;
+                }
+                else
+                {
+                    CurrentGroup = "Номенклатура";
+                }
+            }
+        }
+
+        void CloseGroup()
+        {
+            foreach (NomenclatureClass NC in AllNomenclaturesCollection)
+            {
+                if (NC.ID == CurrentGroupID)
+                {
+                    CurrentGroupID = NC.GroupID;
+                    DGSelectedItem = NC;
+                    FillingNomenclaturesList();
+
+                    int rowIndex = 0;
+                    foreach(NomenclatureClass nc in DataGridNomenclatures.Items)
+                    {
+                        if (nc == DGSelectedItem)
+                            break;
+                        rowIndex++;
+                    }
+
+                    DataGridItemSelect(rowIndex);
+
+
+
+                    break;
+                }
+            }
+
+
+            foreach (NomenclatureClass NC in AllNomenclaturesCollection) // Временно
+            {
+                if (NC.ID == CurrentGroupID)
+                {
+                    CurrentGroup = NC.Name;
+                    break;
+                }
+                else
+                {
+                    CurrentGroup = "Номенклатура";
+                }
+            }
+        }
+
+        void DataGridItemSelect(int RowIndex)
+        {
+            if (DataGridNomenclatures.Items.Count > 0)
+            {
+
+                
+                DataGridNomenclatures.SelectedIndex = RowIndex;
+
+                Keyboard.Focus(DataGridNomenclatures);
+                DataGridNomenclatures.Focus();
+                DataGridNomenclatures.CurrentCell = new DataGridCellInfo(DataGridNomenclatures.Items[RowIndex], DataGridNomenclatures.Columns[3]); 
+                DataGridNomenclatures.ScrollIntoView(DataGridNomenclatures.SelectedItem);
+            }
+            else
+            {
+                Keyboard.Focus(DataGridNomenclatures);
+                DataGridNomenclatures.Focus();
+            }
+        }
+
+       
     }
 }

@@ -282,11 +282,14 @@
         <Grid.Background>
             <SolidColorBrush Color="{DynamicResource Light-002}"/>
         </Grid.Background>
-        <Border>
+        <Border Margin="10" BorderThickness="1">
+            <Border.BorderBrush>
+                <SolidColorBrush Color="{DynamicResource Light-005}"/>
+            </Border.BorderBrush>
             <Border.Background>
-                <SolidColorBrush Color="{DynamicResource Light-002}"/>
+                <SolidColorBrush Color="White"/>
             </Border.Background>
-            <Grid Margin="10,20,10,10">
+            <Grid Margin="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition/>
@@ -399,12 +402,7 @@
                             </TextBlock>
                         </StackPanel>
                     </Button>
-                    <TextBlock Text="{Binding GroupID, ElementName=Nom, UpdateSourceTrigger=PropertyChanged}" Margin="10,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" FontSize="13" VerticalAlignment="Center">
-                        <TextBlock.Foreground>
-                            <SolidColorBrush Color="{DynamicResource Blue-004}"/>
-                        </TextBlock.Foreground>
-                    </TextBlock>
-                    <TextBlock Text="{Binding DataGridSelectedItem, ElementName=Nom, UpdateSourceTrigger=PropertyChanged}" Margin="10,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" FontSize="13" VerticalAlignment="Center">
+                    <TextBlock Text="{Binding CurrentGroup, ElementName=Nom, UpdateSourceTrigger=PropertyChanged}" Margin="10,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" FontSize="13" VerticalAlignment="Center">
                         <TextBlock.Foreground>
                             <SolidColorBrush Color="{DynamicResource Red-001}"/>
                         </TextBlock.Foreground>
@@ -412,7 +410,7 @@
                 </StackPanel>
             </Grid>
         </Border>
-        <DataGrid x:Name="DataGridNomenclatures" VerticalScrollBarVisibility="Visible" ItemsSource="{Binding ShowNomenclaturesCollection, ElementName=Nom, UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource NomenDG}" BorderThickness="1" SelectionUnit="FullRow" SelectionMode="Extended" AutoGenerateColumns="False"  CanUserAddRows="False" PreviewKeyDown="DataGridNomenclatures_PreviewKeyDown" Loaded="DataGridNomenclatures_Loaded" Margin="10,0,10,10" Grid.Row="1" SelectionChanged="DataGridNomenclatures_SelectionChanged">
+        <DataGrid x:Name="DataGridNomenclatures" VerticalScrollBarVisibility="Visible"  Style="{DynamicResource NomenDG}" BorderThickness="1"  AutoGenerateColumns="False"  CanUserAddRows="False" PreviewKeyDown="DataGridNomenclatures_PreviewKeyDown" Margin="10,0,10,10" Grid.Row="1">
             <DataGrid.Background>
                 <SolidColorBrush Color="{DynamicResource Light-001}"/>
             </DataGrid.Background>
