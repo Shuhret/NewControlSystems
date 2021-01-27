@@ -65,7 +65,7 @@
                     <Grid Cursor="Hand">
                         <Rectangle x:Name="rectangle" Fill="{TemplateBinding Background}">
                             <Rectangle.Effect>
-                                <DropShadowEffect Opacity="0.2" RenderingBias="Quality" BlurRadius="10" ShadowDepth="2"/>
+                                <DropShadowEffect Opacity="0.17" RenderingBias="Quality" ShadowDepth="3"/>
                             </Rectangle.Effect>
                         </Rectangle>
                         <Grid>
