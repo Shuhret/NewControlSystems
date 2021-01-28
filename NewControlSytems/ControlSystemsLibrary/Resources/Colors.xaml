@@ -20,5 +20,6 @@
     <Color x:Key="Green-001">#FFB0CD72</Color>
     <Color x:Key="Green-002">#FF7BB23D</Color>
     <Color x:Key="Green-003">#FF39B449</Color>
+    <Color x:Key="Dark-001">#FF747C91</Color>
 
 </ResourceDictionary>

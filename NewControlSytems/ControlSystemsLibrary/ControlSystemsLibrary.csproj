@@ -63,6 +63,9 @@
     <Compile Include="Controls\ConnectionRB.xaml.cs">
       <DependentUpon>ConnectionRB.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\LinqButton.xaml.cs">
+      <DependentUpon>LinqButton.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\LoaderCubes.xaml.cs">
       <DependentUpon>LoaderCubes.xaml</DependentUpon>
     </Compile>
@@ -94,6 +97,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\ConnectionRB.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\LinqButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
