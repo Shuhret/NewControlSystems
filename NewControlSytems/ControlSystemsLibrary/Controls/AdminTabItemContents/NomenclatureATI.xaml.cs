@@ -59,8 +59,11 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
             get => selectedItem;
             set
             {
-                selectedItem = value;
-                OnPropertyChanged();
+                if (selectedItem != value)
+                {
+                    selectedItem = value;
+                    OnPropertyChanged();
+                }
             }
         }
 
@@ -70,11 +73,14 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
             get => currentGroupID;
             set
             {
-                currentGroupID = value;
-                LoadShowNomenclatures();
-                SelectedItem = null;
-                AddLinqButton();
-                OnPropertyChanged();
+                if (currentGroupID != value)
+                {
+                    currentGroupID = value;
+                    LoadShowNomenclatures();
+                    SelectedItem = null;
+                    AddLinqButton();
+                    OnPropertyChanged();
+                }
             }
         }
 
@@ -176,8 +182,6 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
 
         // Методы ----------------------------------------------------------------------------------------------------------------------------
         
-
-
         async void LoadAllNomenclatures()
         {
             await Task.Run(() => AllNomenclaturesCollection = DataBaseRequest.GetAllNomenclatures());
@@ -237,14 +241,40 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
 
         private void LinqButton_Click(object sender, RoutedEventArgs e)
         {
+            SetSelectedItem((sender as LinqButton).ID);
             CurrentGroupID = (sender as LinqButton).ID;
+        }
+
+        void SetSelectedItem(Guid ID)
+        {
+            if (LinqButtonsList.Count > 1)
+            {
+                for (int i = LinqButtonsList.Count - 1; i > 0; i--)
+                {
+                    if (LinqButtonsList[i].ID == ID)
+                    {
+                        foreach(NomenclatureClass NC in  AllNomenclaturesCollection)
+                        {
+                            if(NC.ID == LinqButtonsList[i - 1].ID)
+                            {
+                                SelectedItem = NC;
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                SelectedItem = null;
+            }
         }
 
         void AddLinqButton()
         {
             LinqButtonsList.Clear();
             LinqButtonsStackPanel.Children.Clear();
-
 
             AddCurrentGroupLinqButtonToList();
 
@@ -293,7 +323,7 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
                 LB.Foreground = GetColor.Get("Blue-003");
             else
                 LB.Foreground = GetColor.Get("Dark-002");
-            LB.Background = GetColor.Get("Light-003");
+            LB.Background = GetColor.Get("Light-002");
             LB.Content = ContentText;
             LB.ID = ID;
             LB.Click += LinqButton_Click;

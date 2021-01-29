@@ -984,28 +984,65 @@ namespace ControlSystemsLibrary.Views
             }
         }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         #endregion :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
+        private void UserNameTextBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                if (AuthorizationPasswordBox.Password != null && AuthorizationPasswordBox.Password != "")
+                {
+                    if (UserNameTextBox.Text != null && UserNameTextBox.Text != "")
+                    {
+                        UserAuthorization(AuthorizationPasswordBox);
+                    }
+                }
+                else
+                {
+                    UserNameTextBox.Focus();
+                }
+            }
+        }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        private void AuthorizationPasswordBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                if(UserNameTextBox.Text != null && UserNameTextBox.Text != "")
+                {
+                    if (AuthorizationPasswordBox.Password != null && AuthorizationPasswordBox.Password != "")
+                    {
+                        UserAuthorization(AuthorizationPasswordBox);
+                    }
+                }
+                else
+                {
+                    AuthorizationPasswordBox.Focus();
+                }
+            }
+            
+           
+        }
     }
 }

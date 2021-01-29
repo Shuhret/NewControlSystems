@@ -15,18 +15,14 @@
             <EventSetter Event="MouseDoubleClick" Handler="DG_Header_DoubleClick"/>
             <!--Стиль для области заголовка-->
             <Setter Property="Height" Value="35"/>
-            <Setter Property="Background">
-                <Setter.Value>
-                    <SolidColorBrush Color="{DynamicResource Light-002}"/>
-                </Setter.Value>
-            </Setter>
+            <Setter Property="Background" Value="White"/>
 
             <Setter Property="BorderBrush">
                 <Setter.Value>
-                    <SolidColorBrush Color="{DynamicResource Light-005}"/>
+                    <SolidColorBrush Color="{DynamicResource Blue-001}"/>
                 </Setter.Value>
             </Setter>
-            <Setter Property="BorderThickness" Value="0,1,0,1"/>
+            <Setter Property="BorderThickness" Value="0,0,0,1"/>
             <Setter Property="Foreground">
                 <Setter.Value>
                     <SolidColorBrush Color="{DynamicResource Dark-004}"/>
@@ -291,7 +287,7 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <Border Margin="10,20,10,10" BorderThickness="1" VerticalAlignment="Center">
+                <Border Margin="10" BorderThickness="1" VerticalAlignment="Center">
                     <Grid Margin="0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto"/>
@@ -309,7 +305,7 @@
                                     </Viewbox>
                                     <TextBlock Text="Создать" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" FontSize="12.5" Margin="7,0,0,0" VerticalAlignment="Center">
                                         <TextBlock.Foreground>
-                                            <SolidColorBrush Color="{DynamicResource Dark-003}"/>
+                                            <SolidColorBrush Color="{DynamicResource Dark-002}"/>
                                         </TextBlock.Foreground>
                                     </TextBlock>
                                 </StackPanel>
@@ -327,7 +323,7 @@
                                     </Viewbox>
                                     <TextBlock Text="Группа" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" FontSize="12.5" Margin="7,0,0,0" VerticalAlignment="Center">
                                         <TextBlock.Foreground>
-                                            <SolidColorBrush Color="{DynamicResource Dark-003}"/>
+                                            <SolidColorBrush Color="{DynamicResource Dark-002}"/>
                                         </TextBlock.Foreground>
                                     </TextBlock>
                                 </StackPanel>
@@ -347,7 +343,7 @@
                                     </Viewbox>
                                     <TextBlock Text="Изменить" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" FontSize="12.5" Margin="7,0,0,0" VerticalAlignment="Center">
                                         <TextBlock.Foreground>
-                                            <SolidColorBrush Color="{DynamicResource Dark-003}"/>
+                                            <SolidColorBrush Color="{DynamicResource Dark-002}"/>
                                         </TextBlock.Foreground>
                                     </TextBlock>
                                 </StackPanel>
@@ -365,7 +361,7 @@
                                     </Viewbox>
                                     <TextBlock Text="Вырезать" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" FontSize="12.5" Margin="7,0,0,0" VerticalAlignment="Center">
                                         <TextBlock.Foreground>
-                                            <SolidColorBrush Color="{DynamicResource Dark-003}"/>
+                                            <SolidColorBrush Color="{DynamicResource Dark-002}"/>
                                         </TextBlock.Foreground>
                                     </TextBlock>
                                 </StackPanel>
@@ -383,7 +379,7 @@
                                     </Viewbox>
                                     <TextBlock Text="Вставить" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" FontSize="12.5" Margin="7,0,0,0" VerticalAlignment="Center">
                                         <TextBlock.Foreground>
-                                            <SolidColorBrush Color="{DynamicResource Dark-003}"/>
+                                            <SolidColorBrush Color="{DynamicResource Dark-002}"/>
                                         </TextBlock.Foreground>
                                     </TextBlock>
                                 </StackPanel>
@@ -400,7 +396,7 @@
                                     </Viewbox>
                                     <TextBlock Text="Выбранные" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" FontSize="12.5" Margin="7,0,0,0" VerticalAlignment="Center">
                                         <TextBlock.Foreground>
-                                            <SolidColorBrush Color="{DynamicResource Dark-003}"/>
+                                            <SolidColorBrush Color="{DynamicResource Dark-002}"/>
                                         </TextBlock.Foreground>
                                     </TextBlock>
                                 </StackPanel>
