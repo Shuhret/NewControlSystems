@@ -84,12 +84,17 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
             }
         }
 
-        
-        // События----------------------------------------------------------------------------------------------------------------------------
 
+        // События----------------------------------------------------------------------------------------------------------------------------
+        bool FirstBoot = true;
+         
         private void DataGridNomenclatures_Loaded(object sender, RoutedEventArgs e)
         {
-            LoadAllNomenclatures();
+            if (FirstBoot == true)
+            {
+                LoadAllNomenclatures();
+                FirstBoot = false;
+            }
         }
 
         private void Row_DoubleClick(object sender, MouseButtonEventArgs e)
@@ -177,6 +182,26 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
                 }
                 e.Handled = true;
             }
+
+            // Home 
+            if (e.Key == Key.Home)
+            {
+                NomenclatureClass NC = DataGridNomenclatures.Items[0] as NomenclatureClass;
+                SelectedItem = NC;
+                SelectDataGridRow();
+
+                e.Handled = true;
+            }
+            
+            // End 
+            if (e.Key == Key.End)
+            {
+                NomenclatureClass NC = DataGridNomenclatures.Items[DataGridNomenclatures.Items.Count-1] as NomenclatureClass;
+                SelectedItem = NC;
+                SelectDataGridRow();
+
+                e.Handled = true;
+            }
         }
 
 
@@ -190,7 +215,7 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
             AddLinqButton();
         }
 
-        private void LoadShowNomenclatures()
+        void LoadShowNomenclatures()
         {
             ShowNomenclaturesCollection.Clear();
             foreach (NomenclatureClass NC in AllNomenclaturesCollection)

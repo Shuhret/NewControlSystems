@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         x:Name="MW"
         Style="{DynamicResource VS2012WindowStyle}"
-        Title="MainWindow" Width="1200" Height="700" WindowStartupLocation="CenterScreen" MinWidth="1040" MinHeight="600" >
+        Title="MainWindow" Width="1200" Height="700" WindowStartupLocation="CenterScreen" MinWidth="1040" MinHeight="600" TextOptions.TextFormattingMode="Ideal">
 
     <Grid>
         <Grid.Background>

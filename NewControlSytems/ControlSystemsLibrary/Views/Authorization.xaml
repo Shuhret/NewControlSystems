@@ -28,7 +28,7 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <StackPanel x:Name="AuthorizationStackPanel" Visibility="{Binding AuthorizationVisibility, ElementName=AU, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding AuthorizationEnabled, ElementName=AU, UpdateSourceTrigger=PropertyChanged}" SnapsToDevicePixels="True" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Width="280" Grid.Column="1" Grid.Row="1">
+            <StackPanel x:Name="AuthorizationStackPanel" Visibility="{Binding AuthorizationVisibility, ElementName=AU, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding AuthorizationEnabled, ElementName=AU, UpdateSourceTrigger=PropertyChanged}" SnapsToDevicePixels="True" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Width="280" Grid.Column="1" Grid.Row="1" d:IsHidden="True">
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
                     <TextBlock Text="CONTROL" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto">
                         <TextBlock.Foreground>
@@ -61,7 +61,7 @@
                                 </Canvas>
                             </Canvas>
                         </Viewbox>
-                        <TextBox x:Name="UserNameTextBox" Text="{Binding CurrentUserName, ElementName=AU, UpdateSourceTrigger=PropertyChanged}" BorderThickness="0" BorderBrush="{x:Null}"  FontSize="14" Background="Transparent" VerticalContentAlignment="Center" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" HorizontalContentAlignment="Center" Grid.ColumnSpan="2" PreviewKeyDown="UserNameTextBox_PreviewKeyDown">
+                        <TextBox x:Name="UserNameTextBox" Text="{Binding CurrentUserName, ElementName=AU, UpdateSourceTrigger=PropertyChanged}" BorderThickness="0" BorderBrush="{x:Null}"  FontSize="14" Background="Transparent" VerticalContentAlignment="Center" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" HorizontalContentAlignment="Center" Grid.ColumnSpan="2" PreviewKeyDown="Login_PreviewKeyDown" TextChanged="UserNameTextBox_TextChanged">
                             <TextBox.Foreground>
                                 <SolidColorBrush Color="{DynamicResource Dark-003}"/>
                             </TextBox.Foreground>
@@ -89,21 +89,21 @@
                                 </Canvas>
                             </Canvas>
                         </Viewbox>
-                        <PasswordBox x:Name="AuthorizationPasswordBox" BorderThickness="0" PasswordChar="■" Background="Transparent" FontSize="15" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Password="123" Padding="1,1,1,4" Grid.ColumnSpan="2" PreviewKeyDown="AuthorizationPasswordBox_PreviewKeyDown">
+                        <PasswordBox x:Name="AuthorizationPasswordBox" BorderThickness="0" PasswordChar="■" Background="Transparent" FontSize="15" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="1,1,1,4" Grid.ColumnSpan="2" PreviewKeyDown="Login_PreviewKeyDown" PasswordChanged="AuthorizationPasswordBox_PasswordChanged">
                             <PasswordBox.Foreground>
                                 <SolidColorBrush Color="{DynamicResource Dark-003}"/>
                             </PasswordBox.Foreground>
                         </PasswordBox>
                     </Grid>
                 </Border>
-                <Button Style="{DynamicResource ButtonStyle-001}" IsEnabled="True" Height="37" Foreground="White" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Content="АВТОРИЗАЦИЯ" Margin="0,5,0,0" BorderThickness="0" BorderBrush="#FF00A3E0" Click="ClickAuthorizationButton">
+                <Button IsEnabled="{Binding AuthorizationButtonEnabled, ElementName=AU, UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource ButtonStyle-001}" Height="37" Foreground="White" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Content="АВТОРИЗАЦИЯ" Margin="0,5,0,0" BorderThickness="0" BorderBrush="#FF00A3E0" Click="ClickAuthorizationButton">
                     <Button.Background>
                         <SolidColorBrush Color="{DynamicResource Blue-001}"/>
                     </Button.Background>
                 </Button>
                 <Button Content="{Binding CurrentConnectionName, ElementName=AU, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" Foreground="{Binding CurrentConnectionTextColor, ElementName=AU, UpdateSourceTrigger=PropertyChanged}" Click="ClickConnectionNameButton" Style="{DynamicResource ConnectionNameButtonStyle}" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" Margin="0,4,0,0" HorizontalAlignment="Left" FontSize="13" BorderThickness="0" Padding="2" Height="25"/>
             </StackPanel>
-            <Grid x:Name="ConnectionListGrid" Visibility="{Binding ConnectionListVisibility, ElementName=AU,UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ConnectionListEnabled, ElementName=AU, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="1" d:IsHidden="True">
+            <Grid x:Name="ConnectionListGrid" Visibility="{Binding ConnectionListVisibility, ElementName=AU,UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ConnectionListEnabled, ElementName=AU, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="1">
                 <Rectangle Margin="1" Fill="White" RadiusX="1.453" RadiusY="1.453">
                     <Rectangle.Effect>
                         <DropShadowEffect BlurRadius="40" Opacity="0.1" ShadowDepth="0" RenderingBias="Quality"/>

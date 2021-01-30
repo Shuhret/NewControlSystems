@@ -95,6 +95,16 @@ namespace ControlSystemsLibrary.Views
             }
         }
 
+        private bool authorizationButtonEnabled = false;
+        public bool AuthorizationButtonEnabled
+        {
+            get => authorizationButtonEnabled;
+            set
+            {
+                authorizationButtonEnabled = value;
+                OnPropertyChanged();
+            }
+        }
 
 
         // Коллекция RadioButton-ов подключений -----------------------------------------------------------------------------
@@ -163,6 +173,19 @@ namespace ControlSystemsLibrary.Views
                 AuthorizationEnabled = true;
                 CurrentConnectionTextColor = GetColor.Get("Red-001");
                 ShowMessage("Создайте подключение.", "Red-001", false);
+            }
+            SetFocus();
+        }
+
+        void SetFocus()
+        {
+            if(UserNameTextBox.Text == "" || UserNameTextBox.Text == null)
+            {
+                UserNameTextBox.Focus();
+            }
+            else if(AuthorizationPasswordBox.Password == "" || AuthorizationPasswordBox.Password == null)
+            {
+                AuthorizationPasswordBox.Focus();
             }
         }
 
@@ -281,7 +304,7 @@ namespace ControlSystemsLibrary.Views
                         }
                         if (Connections.Count == 0)
                         {
-                            CurrentConnectionName = null;
+                            CurrentConnectionName = "";
                             ShowMessage("Нет созданных подключений.\nСоздайте новое подключение.", "Red-001", false);
                             CurrentConnectionTextColor = GetColor.Get("Red-001");
                         }
@@ -330,8 +353,16 @@ namespace ControlSystemsLibrary.Views
             get => authorizationVisibility;
             set
             {
-                authorizationVisibility = value;
-                OnPropertyChanged();
+                if (authorizationVisibility != value)
+                {
+                    authorizationVisibility = value;
+                    AuthorizationButtonEnabled = LoginTextChanged();
+                    if(value == Visibility.Visible)
+                    {
+                        SetFocus();
+                    }
+                    OnPropertyChanged();
+                }
             }
         }
 
@@ -392,9 +423,14 @@ namespace ControlSystemsLibrary.Views
 
                 ShowMessage(false);
                 AuthorizationEnabled = true;
+                AuthorizationPasswordBox.Clear();
             }
             else
             {
+                AuthorizationEnabled = true;
+                AuthorizationButtonEnabled = false;
+                AuthorizationPasswordBox.Focus();
+                AuthorizationPasswordBox.SelectAll();
                 ShowMessage(message, "Red-001", false);
             }
         }
@@ -924,8 +960,11 @@ namespace ControlSystemsLibrary.Views
             get => loaderUC;
             set
             {
-                loaderUC = value;
-                OnPropertyChanged();
+                if (loaderUC != value)
+                {
+                    loaderUC = value;
+                    OnPropertyChanged();
+                }
             }
         }
 
@@ -935,8 +974,11 @@ namespace ControlSystemsLibrary.Views
             get => messageText;
             set
             {
-                messageText = value;
-                OnPropertyChanged();
+                if (messageText != value)
+                {
+                    messageText = value;
+                    OnPropertyChanged();
+                }
             }
         }
 
@@ -1007,42 +1049,85 @@ namespace ControlSystemsLibrary.Views
 
         #endregion :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-        private void UserNameTextBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        private void Login_PreviewKeyDown(object sender, KeyEventArgs e)
         {
+            if (e.Key == Key.Space)
+            {
+                e.Handled = true;
+            }
+
             if (e.Key == Key.Enter)
             {
-                if (AuthorizationPasswordBox.Password != null && AuthorizationPasswordBox.Password != "")
+                if (CurrentConnectionName != "")
                 {
-                    if (UserNameTextBox.Text != null && UserNameTextBox.Text != "")
+                    if (sender is TextBox)
                     {
-                        UserAuthorization(AuthorizationPasswordBox);
+                        if (UserNameTextBox.Text != "" && UserNameTextBox.Text != null)
+                        {
+                            if (AuthorizationPasswordBox.Password != "" && AuthorizationPasswordBox.Password != null)
+                            {
+                                if (AuthorizationButtonEnabled == true)
+                                {
+                                    UserAuthorization(AuthorizationPasswordBox);
+                                }
+                            }
+                            else
+                            {
+                                AuthorizationPasswordBox.Focus();
+                                AuthorizationPasswordBox.SelectAll();
+                            }
+                        }
                     }
-                }
-                else
-                {
-                    UserNameTextBox.Focus();
+
+                    if (sender is PasswordBox)
+                    {
+                        if (AuthorizationPasswordBox.Password != "" && AuthorizationPasswordBox.Password != null)
+                        {
+                            if (UserNameTextBox.Text != "" && UserNameTextBox.Text != null)
+                            {
+                                UserAuthorization(AuthorizationPasswordBox);
+                            }
+                            else
+                            {
+                                UserNameTextBox.Focus();
+                                UserNameTextBox.SelectAll();
+                            }
+                        }
+                    }
+
+                    e.Handled = true;
                 }
             }
         }
 
-        private void AuthorizationPasswordBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        private void UserNameTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (e.Key == Key.Enter)
-            {
-                if(UserNameTextBox.Text != null && UserNameTextBox.Text != "")
-                {
-                    if (AuthorizationPasswordBox.Password != null && AuthorizationPasswordBox.Password != "")
-                    {
-                        UserAuthorization(AuthorizationPasswordBox);
-                    }
-                }
-                else
-                {
-                    AuthorizationPasswordBox.Focus();
-                }
-            }
-            
-           
+            if(CurrentConnectionName != "")
+                ShowMessage(false);
+            AuthorizationButtonEnabled = LoginTextChanged();
         }
+
+        private void AuthorizationPasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            if (CurrentConnectionName != "")
+                ShowMessage(false);
+            AuthorizationButtonEnabled = LoginTextChanged();
+        }
+
+        bool LoginTextChanged()
+        {
+            bool ok = true;
+            if ((UserNameTextBox.Text == "" || UserNameTextBox.Text == string.Empty) || (AuthorizationPasswordBox.Password == "" || AuthorizationPasswordBox.Password == string.Empty) || CurrentConnectionName == "")
+            {
+                ok = false;
+            }
+            return ok;
+        }
+
+
+
+        // UserNameTextBox
+        // AuthorizationPasswordBox
+
     }
 }
