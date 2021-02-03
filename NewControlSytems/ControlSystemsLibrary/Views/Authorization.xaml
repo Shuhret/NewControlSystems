@@ -184,7 +184,24 @@
                                 <ColumnDefinition Width="5"/>
                                 <ColumnDefinition Width="5*"/>
                             </Grid.ColumnDefinitions>
-                            <Button Content="Проверить соединение" IsEnabled="{Binding CheckSelectedConnectionButtonEnabled, ElementName=AU, UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource ButtonStyle-001}" BorderThickness="0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Margin="0" Height="37" Padding="1" BorderBrush="{x:Null}" Foreground="White" Grid.Column="2" Click="ClickCheckSelectedConnectionButton">
+                            <Button Content="Назад" Style="{DynamicResource ButtonStyle-001}" BorderThickness="0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Margin="0" Height="37" Padding="1"  Click="ClickConnectionListCloseButton">
+                                <Button.Foreground>
+                                    <SolidColorBrush Color="White"/>
+                                </Button.Foreground>
+                                <Button.BorderBrush>
+                                    <SolidColorBrush Color="{DynamicResource Light-005}"/>
+                                </Button.BorderBrush>
+                                <Button.Background>
+                                    <SolidColorBrush Color="{DynamicResource Blue-001}"/>
+                                </Button.Background>
+                            </Button>
+                            <Button Content="Проверить соединение" IsEnabled="{Binding CheckSelectedConnectionButtonEnabled, ElementName=AU, UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource ButtonStyle-001}" BorderThickness="0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Margin="0" Height="37" Padding="1" Grid.Column="2" Click="ClickCheckSelectedConnectionButton">
+                                <Button.Foreground>
+                                    <SolidColorBrush Color="White"/>
+                                </Button.Foreground>
+                                <Button.BorderBrush>
+                                    <SolidColorBrush Color="{DynamicResource Light-005}"/>
+                                </Button.BorderBrush>
                                 <Button.Background>
                                     <SolidColorBrush Color="{DynamicResource Blue-001}"/>
                                 </Button.Background>
@@ -428,7 +445,7 @@
                                 <ColumnDefinition Width="5"/>
                                 <ColumnDefinition Width="5*"/>
                             </Grid.ColumnDefinitions>
-                            <CheckBox Content="Connection string" IsChecked="{Binding CreatedMode, ElementName=AU, UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource CheckBoxStyle-001}" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" FontSize="13" Margin="6,0,0,0" Grid.ColumnSpan="5" HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <CheckBox Content="Connection string" IsChecked="{Binding CreatedMode, ElementName=AU, UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource CheckBoxStyle-001}" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" FontSize="13" Margin="6,0,0,0" Grid.ColumnSpan="5" HorizontalAlignment="Left" VerticalAlignment="Center" Background="White">
                                 <CheckBox.Foreground>
                                     <SolidColorBrush Color="{DynamicResource Dark-004}"/>
                                 </CheckBox.Foreground>

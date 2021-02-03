@@ -21,7 +21,7 @@ using System.Windows.Shapes;
 
 namespace ControlSystemsLibrary.Controls.AdminTabItemContents
 {
-
+    public delegate void CloseCreateNomenclatureDelegate();
     public partial class NomenclatureATI : UserControl, INotifyPropertyChanged
     {
 
@@ -135,6 +135,7 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
                 }
                 e.Handled = true;
             }
+
         }
 
         private void Nom_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -202,11 +203,19 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
 
                 e.Handled = true;
             }
+
+            // Ctrl + N (Создание новой номенклатуры)
+            if (e.Key == Key.N && e.KeyboardDevice.Modifiers == ModifierKeys.Control)
+            {
+                CreateNomenclatureButtonClick(null, null);
+                e.Handled = true;
+            }
+
         }
 
 
         // Методы ----------------------------------------------------------------------------------------------------------------------------
-        
+
         async void LoadAllNomenclatures()
         {
             await Task.Run(() => AllNomenclaturesCollection = DataBaseRequest.GetAllNomenclatures());
@@ -348,7 +357,7 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
                 LB.Foreground = GetColor.Get("Blue-003");
             else
                 LB.Foreground = GetColor.Get("Dark-002");
-            LB.Background = GetColor.Get("Light-002");
+            LB.Background = new SolidColorBrush(Colors.White);
             LB.Content = ContentText;
             LB.ID = ID;
             LB.Click += LinqButton_Click;
@@ -356,6 +365,56 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
         }
 
 
+
+
+
+        #endregion :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+        #region Создать номенклатуру =========================================================================================================
+
+        private Visibility createNemenclatureUCVisibility = Visibility.Hidden;
+        public Visibility CreateNemenclatureUCVisibility
+        {
+            get => createNemenclatureUCVisibility;
+            set
+            {
+                createNemenclatureUCVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private UserControl createNemenclatureUC = null;
+        public UserControl CreateNemenclatureUC
+        {
+            get => createNemenclatureUC;
+            set
+            {
+                if (createNemenclatureUC != value)
+                {
+                    createNemenclatureUC = value;
+                    OnPropertyChanged();
+                    if(value == null)
+                    {
+                        CreateNemenclatureUCVisibility = Visibility.Hidden;
+                    }
+                    else
+                    {
+                        CreateNemenclatureUCVisibility = Visibility.Visible;
+                    }
+                }
+            }
+        }
+
+        private void CreateNomenclatureButtonClick(object sender, RoutedEventArgs e)
+        {
+            CloseCreateNomenclatureDelegate CCND = CloseCreateNomenclature;
+            CreateNemenclatureUC = new CreateNomenclature(true, CCND);
+        }
+
+        private void CloseCreateNomenclature()
+        {
+            CreateNemenclatureUC = null;
+        }
         #endregion :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
     }

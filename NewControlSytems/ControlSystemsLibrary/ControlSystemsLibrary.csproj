@@ -32,6 +32,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationFramework.Aero" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Windows.Forms" />
@@ -62,6 +63,9 @@
     </Compile>
     <Compile Include="Controls\ConnectionRB.xaml.cs">
       <DependentUpon>ConnectionRB.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CreateNomenclature.xaml.cs">
+      <DependentUpon>CreateNomenclature.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\LinqButton.xaml.cs">
       <DependentUpon>LinqButton.xaml</DependentUpon>
@@ -100,6 +104,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\CreateNomenclature.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\LinqButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -124,6 +132,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Resources\Styles\ComboBoxStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Resources\Styles\ElementStyles.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -139,6 +151,10 @@
     <Page Include="Resources\Styles\ScrollBarStyles.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Styles\TabControlStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Resources\Styles\WindowStyle\VS2012WindowStyle.xaml">
       <Generator>MSBuild:Compile</Generator>

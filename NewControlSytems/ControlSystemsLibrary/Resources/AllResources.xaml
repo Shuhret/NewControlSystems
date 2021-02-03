@@ -13,7 +13,9 @@
         <ResourceDictionary Source="/ControlSystemsLibrary;component/Resources/Styles/ListBoxStyles.xaml"/>
         <ResourceDictionary Source="/ControlSystemsLibrary;component/Resources/Styles/ScrollBarStyles.xaml"/>
         <ResourceDictionary Source="/ControlSystemsLibrary;component/Resources/Styles/ExpanderStyles.xaml"/>
-
+        <ResourceDictionary Source="/ControlSystemsLibrary;component/Resources/Styles/TabControlStyles.xaml"/>
+        <ResourceDictionary Source="/ControlSystemsLibrary;component/Resources/Styles/ComboBoxStyles.xaml"/>
+        
     </ResourceDictionary.MergedDictionaries>
 
 

@@ -135,25 +135,30 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type CheckBox}">
-                    <Border x:Name="border1" Padding="4,4,5,4" CornerRadius="3" SnapsToDevicePixels="True" Background="Transparent" Cursor="Hand">
-                        <Grid Height="Auto" Width="Auto">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="auto"/>
-                            </Grid.ColumnDefinitions>
-                            <Border x:Name="border" BorderBrush="#FFD3D9E6" BorderThickness="1" CornerRadius="2" Width="17" Height="17">
-                                <Grid Margin="0">
-                                    <Rectangle x:Name="rectangle" Fill="#FF02B0F1" Margin="4" RadiusY="0.767" RadiusX="0.767" Visibility="Hidden"/>
-                                    <Viewbox x:Name="viewbox" Margin="2,2,3,2" Visibility="Hidden">
-                                        <Canvas HorizontalAlignment="Left" Height="30" UseLayoutRounding="False" VerticalAlignment="Top" Width="30">
-                                            <Canvas Height="16.547" Canvas.Left="2.5" Canvas.Top="6.727" Width="25">
-                                                <Path Data="M2.5,14.8188L10.954,23.2738L27.5,6.7268" Height="17.547" Canvas.Left="-0.5" StrokeStartLineCap="Round" Stretch="Fill" StrokeEndLineCap="Round" Stroke="White" StrokeThickness="5" StrokeLineJoin="Round" Canvas.Top="-0.5" Width="26"/>
-                                            </Canvas>
-                                        </Canvas>
-                                    </Viewbox>
+                    <Border x:Name="border1" CornerRadius="3" SnapsToDevicePixels="True" Background="Transparent" Cursor="Hand" BorderThickness="0">
+                        <Grid>
+                            <Rectangle x:Name="rectangle1" Fill="{TemplateBinding Background}" RadiusX="2" RadiusY="2" Visibility="Hidden"/>
+                            <Border Height="Auto" Width="Auto" Padding="4">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Border x:Name="border" BorderBrush="#FFD3D9E6" BorderThickness="1" CornerRadius="2" Width="17" Height="17">
+                                        <Grid Margin="0">
+                                            <Rectangle x:Name="rectangle" Fill="#FF02B0F1" Margin="4" RadiusY="0.767" RadiusX="0.767" Visibility="Hidden"/>
+                                            <Viewbox x:Name="viewbox" Margin="2,2,3,2" Visibility="Hidden">
+                                                <Canvas HorizontalAlignment="Left" Height="30" UseLayoutRounding="False" VerticalAlignment="Top" Width="30">
+                                                    <Canvas Height="16.547" Canvas.Left="2.5" Canvas.Top="6.727" Width="25">
+                                                        <Path Data="M2.5,14.8188L10.954,23.2738L27.5,6.7268" Height="17.547" Canvas.Left="-0.5" StrokeStartLineCap="Round" Stretch="Fill" StrokeEndLineCap="Round" Stroke="White" StrokeThickness="5" StrokeLineJoin="Round" Canvas.Top="-0.5" Width="26"/>
+                                                    </Canvas>
+                                                </Canvas>
+                                            </Viewbox>
+                                        </Grid>
+                                    </Border>
+                                    <ContentPresenter x:Name="contentPresenter" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" Grid.ColumnSpan="1" Grid.Column="1" VerticalAlignment="Center" Margin="7,1,0,0" Opacity="0.75"/>
                                 </Grid>
                             </Border>
-                            <ContentPresenter x:Name="contentPresenter" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" Grid.ColumnSpan="1" Grid.Column="1" VerticalAlignment="Center" Margin="7,1,0,0" Opacity="0.75"/>
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -168,7 +173,7 @@
                             <Setter Property="Opacity" TargetName="contentPresenter" Value="1"/>
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" TargetName="border1" Value="White"/>
+                            <Setter Property="Visibility" TargetName="rectangle1" Value="Visible"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

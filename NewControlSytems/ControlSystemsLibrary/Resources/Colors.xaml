@@ -11,6 +11,7 @@
     <Color x:Key="Blue-003">#FF268AE8</Color>
     <Color x:Key="Blue-004">#FF2C58C3</Color>
 
+    <Color x:Key="Dark-001">#FF747C91</Color>
     <Color x:Key="Dark-002">#FF5A647C</Color>
     <Color x:Key="Dark-003">#FF4C566E</Color>
     <Color x:Key="Dark-004">#FF454E78</Color>
@@ -20,6 +21,5 @@
     <Color x:Key="Green-001">#FFB0CD72</Color>
     <Color x:Key="Green-002">#FF7BB23D</Color>
     <Color x:Key="Green-003">#FF39B449</Color>
-    <Color x:Key="Dark-001">#FF747C91</Color>
 
 </ResourceDictionary>
