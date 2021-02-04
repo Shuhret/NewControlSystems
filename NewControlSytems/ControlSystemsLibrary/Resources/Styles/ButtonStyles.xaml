@@ -49,63 +49,56 @@
     </Style>
 
     <Style x:Key="ButtonStyle-001" TargetType="{x:Type Button}">
+        <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <ControlTemplate.Resources>
                         <Storyboard x:Key="press">
-                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Effect).(DropShadowEffect.Opacity)" Storyboard.TargetName="rectangle">
-                                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
-                                <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="0.2"/>
+                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="rectangle_Copy">
+                                <EasingDoubleKeyFrame KeyTime="0" Value="0.5"/>
+                                <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="0"/>
                             </DoubleAnimationUsingKeyFrames>
-                            <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="border">
-                                <EasingThicknessKeyFrame KeyTime="0" Value="0,1,0,0"/>
-                                <EasingThicknessKeyFrame KeyTime="0:0:0.1" Value="0"/>
-                            </ThicknessAnimationUsingKeyFrames>
+                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Effect).(DropShadowEffect.ShadowDepth)" Storyboard.TargetName="rectangle1">
+                                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                                <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="2"/>
+                            </DoubleAnimationUsingKeyFrames>
                         </Storyboard>
                     </ControlTemplate.Resources>
-                    <Grid Cursor="Hand">
-                        <Rectangle x:Name="rectangle" Fill="{TemplateBinding Background}" RadiusX="3.969" RadiusY="3.969">
+                    <Grid>
+                        <Rectangle x:Name="rectangle1" Fill="White" RadiusY="1.062" RadiusX="1.062">
                             <Rectangle.Effect>
-                                <DropShadowEffect Opacity="0.15" RenderingBias="Quality" BlurRadius="3" ShadowDepth="3"/>
+                                <DropShadowEffect ShadowDepth="2" Opacity="0.1"/>
                             </Rectangle.Effect>
                         </Rectangle>
-                        <Grid>
-
-                            <Border x:Name="border" Background="{TemplateBinding Background}" Cursor="Hand" SnapsToDevicePixels="True" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Margin="0" CornerRadius="1"/>
-                            <Rectangle x:Name="rectangle1" Fill="White" Opacity="0"/>
-                            <Rectangle x:Name="rectangle2" Fill="White" Opacity="0"/>
-                            <Border x:Name="bb" Height="Auto" Width="Auto" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Padding="{TemplateBinding Padding}">
-                                <ContentPresenter RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
-                            </Border>
-                        </Grid>
+                        <Border x:Name="border" ClipToBounds="True" CornerRadius="1" Background="{TemplateBinding Background}">
+                            <Grid>
+                                <Rectangle x:Name="rectangle" Fill="White" Opacity="0" RadiusY="1.062" RadiusX="1.062" Margin="0"/>
+                                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                <Rectangle x:Name="rectangle_Copy" Fill="White" Opacity="0" RadiusY="1.062" RadiusX="1.062" Margin="0"/>
+                            </Grid>
+                        </Border>
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Opacity" TargetName="rectangle1" Value="0.1"/>
-                        </Trigger>
                         <Trigger Property="IsFocused" Value="True"/>
                         <Trigger Property="IsDefaulted" Value="True"/>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Opacity" TargetName="rectangle" Value="0.1"/>
+                        </Trigger>
                         <Trigger Property="IsPressed" Value="True">
                             <Trigger.EnterActions>
                                 <BeginStoryboard Storyboard="{StaticResource press}"/>
                             </Trigger.EnterActions>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Opacity" TargetName="border" Value="0.4"/>
-                            <Setter Property="Opacity" TargetName="rectangle" Value="0.4"/>
-                            <Setter Property="Effect" TargetName="rectangle">
-                                <Setter.Value>
-                                    <DropShadowEffect BlurRadius="2" Opacity="0" ShadowDepth="6"/>
-                                </Setter.Value>
-                            </Setter>
+                            <Setter Property="Opacity" TargetName="border" Value="0.5"/>
+                            <Setter Property="Visibility" TargetName="rectangle1" Value="Hidden"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
-
     <Style x:Key="ConnectionNameButtonStyle" TargetType="{x:Type Button}">
         <Setter Property="Template">
             <Setter.Value>
@@ -160,21 +153,19 @@
                 <ControlTemplate TargetType="{x:Type Button}">
                     <ControlTemplate.Resources>
                         <Storyboard x:Key="press">
-                            <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="rectangle">
-                                <EasingThicknessKeyFrame KeyTime="0" Value="1"/>
-                                <EasingThicknessKeyFrame KeyTime="0:0:0.1" Value="0"/>
-                            </ThicknessAnimationUsingKeyFrames>
-                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="contentPresenter">
+                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="rectangle_Copy">
                                 <EasingDoubleKeyFrame KeyTime="0" Value="0.5"/>
-                                <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="1"/>
+                                <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="0"/>
                             </DoubleAnimationUsingKeyFrames>
                         </Storyboard>
                     </ControlTemplate.Resources>
                     <Grid>
-                        <Border Background="Transparent" Padding="{TemplateBinding Padding}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Cursor="Hand">
-                            <Grid Margin="0">
-                                <Rectangle x:Name="rectangle" RadiusY="1" RadiusX="1" Fill="{TemplateBinding Background}" Visibility="Hidden"/>
+                        <Border x:Name="border" ClipToBounds="True" CornerRadius="0" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Background="White">
+                            <Grid>
+                                <Rectangle x:Name="rectangle_Copy1" Fill="{TemplateBinding Background}" Opacity="1" RadiusY="0" RadiusX="0" Margin="0"/>
+                                <Rectangle x:Name="rectangle" Fill="White" Opacity="0" RadiusY="0" RadiusX="0" Margin="0" d:IsHidden="True"/>
                                 <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                <Rectangle x:Name="rectangle_Copy" Fill="White" Opacity="0" RadiusY="0" RadiusX="0" Margin="0"/>
                             </Grid>
                         </Border>
                     </Grid>
@@ -182,7 +173,7 @@
                         <Trigger Property="IsFocused" Value="True"/>
                         <Trigger Property="IsDefaulted" Value="True"/>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Visibility" TargetName="rectangle" Value="Visible"/>
+                            <Setter Property="Opacity" TargetName="rectangle" Value="0.1"/>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
                             <Trigger.EnterActions>
@@ -190,6 +181,7 @@
                             </Trigger.EnterActions>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" TargetName="rectangle_Copy1" Value="0.5"/>
                             <Setter Property="Opacity" TargetName="contentPresenter" Value="0.5"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
@@ -197,6 +189,5 @@
             </Setter.Value>
         </Setter>
     </Style>
-
 
 </ResourceDictionary>

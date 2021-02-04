@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -135,7 +136,14 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
                 }
                 e.Handled = true;
             }
+            else
+            {
+                KeyConverter kc = new KeyConverter();
+                var str = kc.ConvertToString(e.Key);
 
+                
+                    MessageBox.Show(str);
+            }
         }
 
         private void Nom_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -354,7 +362,7 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
         {
             LinqButton LB = new LinqButton();
             if (ID == new Guid("00000000-0000-0000-0000-000000000000"))
-                LB.Foreground = GetColor.Get("Blue-003");
+                LB.Foreground = GetColor.Get("Blue-004");
             else
                 LB.Foreground = GetColor.Get("Dark-002");
             LB.Background = new SolidColorBrush(Colors.White);
@@ -417,5 +425,9 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
         }
         #endregion :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
+        private void DataGridNomenclatures_KeyDown(object sender, KeyEventArgs e)
+        {
+           
+        }
     }
 }

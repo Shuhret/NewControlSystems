@@ -19,7 +19,7 @@
 
             <Setter Property="BorderBrush">
                 <Setter.Value>
-                    <SolidColorBrush Color="{DynamicResource Blue-001}"/>
+                    <SolidColorBrush Color="{DynamicResource Blue-003}"/>
                 </Setter.Value>
             </Setter>
             <Setter Property="BorderThickness" Value="0,0,0,1"/>
@@ -265,98 +265,168 @@
         <Grid.Background>
             <SolidColorBrush Color="{DynamicResource Light-002}"/>
         </Grid.Background>
-        <Grid Margin="0">
+        <Grid Margin="0" Grid.ColumnSpan="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <Border Margin="10,15" BorderThickness="1" VerticalAlignment="Center" Height="29">
+            <Border Margin="10" BorderThickness="1" VerticalAlignment="Center" Height="29">
                 <Grid Margin="0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition/>
+                        <ColumnDefinition Width="auto"/>
                     </Grid.ColumnDefinitions>
                     <StackPanel Orientation="Horizontal">
-                        <Button Style="{DynamicResource ButtonStyle-001}" BorderThickness="0" Click="CreateNomenclatureButtonClick" Foreground="White" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" BorderBrush="{x:Null}" Width="35" Padding="11,1">
+                        <Button Style="{DynamicResource ButtonStyle-001}" BorderThickness="0,1" Click="CreateNomenclatureButtonClick" Foreground="White" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Padding="11,1" Cursor="Hand" ToolTip="Создать новую номенклатуру">
                             <Button.Background>
                                 <SolidColorBrush Color="{DynamicResource Blue-001}"/>
                             </Button.Background>
-                            <Viewbox >
-                                <Canvas HorizontalAlignment="Left" Height="30" UseLayoutRounding="False" VerticalAlignment="Top" Width="30">
-                                    <Canvas Height="30" Canvas.Left="0" Canvas.Top="0" Width="30">
-                                        <Path Data="M14.5,0L15.5,0C16.875,0,18,1.125,18,2.5L18,12L27.5,12C28.875,12,30,13.125,30,14.5L30,15.5C30,16.875,28.875,18,27.5,18L18,18L18,27.5C18,28.875,16.875,30,15.5,30L14.5,30C13.125,30,12,28.875,12,27.5L12,18L2.5,18C1.125,18,0,16.875,0,15.5L0,14.5C0,13.125,1.125,12,2.5,12L12,12L12,2.5C12,1.125,13.125,0,14.5,0" Fill="White" Height="30" Canvas.Left="0" Stretch="Fill" Canvas.Top="0" Width="30"/>
+                            <Button.BorderBrush>
+                                <SolidColorBrush Color="{DynamicResource Light-005}"/>
+                            </Button.BorderBrush>
+                            <StackPanel Orientation="Horizontal" Margin="10,0">
+                                <Viewbox Width="12" HorizontalAlignment="Center" VerticalAlignment="Center" >
+                                    <Canvas HorizontalAlignment="Left" Height="30" UseLayoutRounding="False" VerticalAlignment="Top" Width="30">
+                                        <Canvas Height="30" Canvas.Left="0" Canvas.Top="0" Width="30">
+                                            <Path Data="M14.5,0L15.5,0C16.875,0,18,1.125,18,2.5L18,12L27.5,12C28.875,12,30,13.125,30,14.5L30,15.5C30,16.875,28.875,18,27.5,18L18,18L18,27.5C18,28.875,16.875,30,15.5,30L14.5,30C13.125,30,12,28.875,12,27.5L12,18L2.5,18C1.125,18,0,16.875,0,15.5L0,14.5C0,13.125,1.125,12,2.5,12L12,12L12,2.5C12,1.125,13.125,0,14.5,0" Height="30" Canvas.Left="0" Stretch="Fill" Canvas.Top="0" Width="30" Fill="White"/>
+                                        </Canvas>
                                     </Canvas>
-                                </Canvas>
-                            </Viewbox>
+                                </Viewbox>
+                                <TextBlock Text="Новая номенклатура" RenderOptions.BitmapScalingMode="Fant" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="7,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto"/>
+                            </StackPanel>
                         </Button>
-                        <Button Style="{DynamicResource ButtonStyle-001}" BorderThickness="0" Margin="7,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Foreground="White" BorderBrush="{x:Null}" Width="35" Padding="10,1">
+                        <Button Style="{DynamicResource ButtonStyle-001}" BorderThickness="1,1,0,1" Margin="5,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Foreground="White" Width="35" Padding="10,1" Cursor="Hand" ToolTip="Создать новую группу">
                             <Button.Background>
-                                <SolidColorBrush Color="#FF02B0F1"/>
+                                <SolidColorBrush Color="{DynamicResource Blue-001}"/>
                             </Button.Background>
-                            <Viewbox>
+                            <Button.BorderBrush>
+                                <SolidColorBrush Color="{DynamicResource Light-005}"/>
+                            </Button.BorderBrush>
+                            <Viewbox Width="13">
                                 <Canvas HorizontalAlignment="Left" Height="30" UseLayoutRounding="False" VerticalAlignment="Top" Width="30">
                                     <Canvas Height="23.991" Canvas.Left="0.064" Canvas.Top="3.178" Width="30">
-                                        <Path Data="M28.0527,7.1768L15.6077,7.1768C15.2527,7.1768,14.9457,7.0108,14.7567,6.7268L11.3487,3.4628C11.1597,3.2728,10.9237,3.1778,10.6627,3.1778L2.0747,3.1778C0.962700000000002,3.1778,0.0637000000000008,4.0768,0.0637000000000008,5.1898L0.0637000000000008,25.1818C0.0637000000000008,26.2928,0.962700000000002,27.1688,2.0747,27.1688L28.0527,27.1688C29.1647,27.1688,30.0637,26.2928,30.0637,25.1818L30.0637,9.1878C30.0637,8.0758,29.1647,7.1768,28.0527,7.1768" Fill="#FFDEDEDE" Height="23.991" Canvas.Left="0" Stretch="Fill" Canvas.Top="0" Width="30"/>
-                                        <Path Data="M0.064,7.1768L28.053,7.1768C29.165,7.1768,30.064,8.0758,30.064,9.1878L30.064,25.1818C30.064,26.2698,29.165,27.1688,28.053,27.1688L2.075,27.1688C0.963,27.1688,0.064,26.2698,0.064,25.1818z" Fill="White" Height="19.992" Canvas.Left="0" Stretch="Fill" Canvas.Top="3.999" Width="30"/>
+                                        <Path Data="M28.0527,7.1768L15.6077,7.1768C15.2527,7.1768,14.9457,7.0108,14.7567,6.7268L11.3487,3.4628C11.1597,3.2728,10.9237,3.1778,10.6627,3.1778L2.0747,3.1778C0.962700000000002,3.1778,0.0637000000000008,4.0768,0.0637000000000008,5.1898L0.0637000000000008,25.1818C0.0637000000000008,26.2928,0.962700000000002,27.1688,2.0747,27.1688L28.0527,27.1688C29.1647,27.1688,30.0637,26.2928,30.0637,25.1818L30.0637,9.1878C30.0637,8.0758,29.1647,7.1768,28.0527,7.1768" Height="23.991" Canvas.Left="0" Stretch="Fill" Canvas.Top="0" Width="30">
+                                            <Path.Fill>
+                                                <SolidColorBrush Color="White"/>
+                                            </Path.Fill>
+                                        </Path>
+                                        <Path Data="M0.064,7.1768L28.053,7.1768C29.165,7.1768,30.064,8.0758,30.064,9.1878L30.064,25.1818C30.064,26.2698,29.165,27.1688,28.053,27.1688L2.075,27.1688C0.963,27.1688,0.064,26.2698,0.064,25.1818z" Height="19.992" Canvas.Left="0" Stretch="Fill" Canvas.Top="3.999" Width="30">
+                                            <Path.Fill>
+                                                <SolidColorBrush Color="White"/>
+                                            </Path.Fill>
+                                        </Path>
                                         <Path Data="M15.064,9.8027C15.821,9.8267,16.412,10.4177,16.412,11.1757L16.412,15.8127L21.073,15.8127C21.83,15.8127,22.422,16.4277,22.422,17.1847C22.422,17.9417,21.83,18.5327,21.073,18.5327L16.412,18.5327L16.412,23.1947C16.412,23.9277,15.821,24.5427,15.064,24.5427C14.307,24.5427,13.715,23.9277,13.715,23.1947L13.715,18.5327L9.054,18.5327C8.297,18.5327,7.706,17.9417,7.706,17.1847C7.706,16.4277,8.297,15.8127,9.054,15.8127L13.715,15.8127L13.715,11.1757C13.715,10.4177,14.307,9.8267,15.064,9.8027" Height="14.74" Canvas.Left="7.642" Stretch="Fill" Canvas.Top="6.625" Width="14.716" Visibility="Hidden">
                                             <Path.Fill>
-                                                <SolidColorBrush Color="{DynamicResource Blue-001}"/>
+                                                <SolidColorBrush Color="{DynamicResource Blue-003}"/>
                                             </Path.Fill>
                                         </Path>
                                     </Canvas>
                                 </Canvas>
                             </Viewbox>
                         </Button>
-                        <Button Style="{DynamicResource ButtonStyle-001}" BorderThickness="0" Margin="7,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Foreground="White" BorderBrush="{x:Null}" Width="35" Padding="11,1">
+                        <Button Style="{DynamicResource ButtonStyle-001}" BorderThickness="1,1,0,1" Margin="5,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Foreground="White" Width="35" Padding="11,1" Cursor="Hand" ToolTip="Изменить">
                             <Button.Background>
                                 <SolidColorBrush Color="{DynamicResource Blue-001}"/>
                             </Button.Background>
-                            <Viewbox>
+                            <Button.BorderBrush>
+                                <SolidColorBrush Color="{DynamicResource Light-005}"/>
+                            </Button.BorderBrush>
+                            <Viewbox Width="13">
                                 <Canvas HorizontalAlignment="Left" Height="30" UseLayoutRounding="False" VerticalAlignment="Top" Width="30">
                                     <Canvas Height="30" Canvas.Left="0" Canvas.Top="0" Width="30">
-                                        <Path Data="F1M0,20.4222L0.196,29.8322L9.578,30.0002L25.094,14.5122L15.516,4.9062z M5.294,22.3542L17.028,10.6192L19.381,12.9722L7.646,24.7072z" Fill="White" Height="25.094" Canvas.Left="0" Stretch="Fill" Canvas.Top="4.906" Width="25.094"/>
-                                        <Path Data="F1M23.1611,0.00489999999999924C26.7741,0.172899999999999,29.8271,3.2259,29.9951,6.8669C30.0511,8.3509,29.6311,9.6669,28.8471,10.7319L26.3541,13.2519L16.7761,3.6459L19.2681,1.1529C20.3331,0.368899999999999,21.6771,-0.0511000000000008,23.1611,0.00489999999999924" Fill="White" Height="13.252" Canvas.Left="16.776" Stretch="Fill" Canvas.Top="0" Width="13.224"/>
+                                        <Path Data="F1M0,20.4222L0.196,29.8322L9.578,30.0002L25.094,14.5122L15.516,4.9062z M5.294,22.3542L17.028,10.6192L19.381,12.9722L7.646,24.7072z" Height="25.094" Canvas.Left="0" Stretch="Fill" Canvas.Top="4.906" Width="25.094">
+                                            <Path.Fill>
+                                                <SolidColorBrush Color="White"/>
+                                            </Path.Fill>
+                                        </Path>
+                                        <Path Data="F1M23.1611,0.00489999999999924C26.7741,0.172899999999999,29.8271,3.2259,29.9951,6.8669C30.0511,8.3509,29.6311,9.6669,28.8471,10.7319L26.3541,13.2519L16.7761,3.6459L19.2681,1.1529C20.3331,0.368899999999999,21.6771,-0.0511000000000008,23.1611,0.00489999999999924" Height="13.252" Canvas.Left="16.776" Stretch="Fill" Canvas.Top="0" Width="13.224">
+                                            <Path.Fill>
+                                                <SolidColorBrush Color="White"/>
+                                            </Path.Fill>
+                                        </Path>
                                     </Canvas>
                                 </Canvas>
                             </Viewbox>
                         </Button>
-                        <Button Style="{DynamicResource ButtonStyle-001}" BorderThickness="0" Margin="7,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Foreground="White" BorderBrush="{x:Null}" Width="35" Padding="10,1">
+                        <Button Style="{DynamicResource ButtonStyle-001}" BorderThickness="1,1,0,1" Margin="5,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Foreground="White" Width="35" Padding="10,1" Cursor="Hand" ToolTip="Вырезать">
                             <Button.Background>
                                 <SolidColorBrush Color="{DynamicResource Blue-001}"/>
                             </Button.Background>
-                            <Viewbox>
+                            <Button.BorderBrush>
+                                <SolidColorBrush Color="{DynamicResource Light-005}"/>
+                            </Button.BorderBrush>
+                            <Viewbox Width="14">
                                 <Canvas HorizontalAlignment="Left" Height="30" UseLayoutRounding="False" VerticalAlignment="Top" Width="30">
                                     <Canvas Height="28.573" Canvas.Left="1.89" Canvas.Top="0.713" Width="26.221">
-                                        <Path Data="F1M4.8096,10.9461L9.1466,10.9461L9.1466,18.5711L20.8536,18.5711L20.8536,10.9461L25.1626,10.9461L14.9856,0.713100000000001z" Fill="White" Height="17.858" Canvas.Left="2.92" Stretch="Fill" Canvas.Top="0" Width="20.353"/>
-                                        <Path Data="M20.854,24.354L9.147,24.354L9.147,20.64L20.854,20.64z" Fill="White" Height="3.714" Canvas.Left="7.257" Stretch="Fill" Canvas.Top="19.927" Width="11.707"/>
-                                        <Path Data="F1M1.89,29.286L28.111,29.286L28.111,26.509L1.89,26.509z" Fill="White" Height="2.777" Canvas.Left="0" Stretch="Fill" Canvas.Top="25.796" Width="26.221"/>
+                                        <Path Data="F1M4.8096,10.9461L9.1466,10.9461L9.1466,18.5711L20.8536,18.5711L20.8536,10.9461L25.1626,10.9461L14.9856,0.713100000000001z" Height="17.858" Canvas.Left="2.92" Stretch="Fill" Canvas.Top="0" Width="20.353">
+                                            <Path.Fill>
+                                                <SolidColorBrush Color="White"/>
+                                            </Path.Fill>
+                                        </Path>
+                                        <Path Data="M20.854,24.354L9.147,24.354L9.147,20.64L20.854,20.64z" Height="3.714" Canvas.Left="7.257" Stretch="Fill" Canvas.Top="19.927" Width="11.707">
+                                            <Path.Fill>
+                                                <SolidColorBrush Color="White"/>
+                                            </Path.Fill>
+                                        </Path>
+                                        <Path Data="F1M1.89,29.286L28.111,29.286L28.111,26.509L1.89,26.509z" Height="2.777" Canvas.Left="0" Stretch="Fill" Canvas.Top="25.796" Width="26.221">
+                                            <Path.Fill>
+                                                <SolidColorBrush Color="White"/>
+                                            </Path.Fill>
+                                        </Path>
                                     </Canvas>
                                 </Canvas>
                             </Viewbox>
                         </Button>
-                        <Button Style="{DynamicResource ButtonStyle-001}" BorderThickness="0" Margin="7,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Foreground="White" BorderBrush="{x:Null}" Width="35" Padding="10,1" IsEnabled="False">
+                        <Button Style="{DynamicResource ButtonStyle-001}" BorderThickness="1,1,0,1" Margin="5,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Foreground="White" Width="35" Padding="10,1" IsEnabled="False" Cursor="Hand" ToolTip="Вставить">
                             <Button.Background>
                                 <SolidColorBrush Color="{DynamicResource Blue-001}"/>
                             </Button.Background>
-                            <Viewbox>
+                            <Button.BorderBrush>
+                                <SolidColorBrush Color="{DynamicResource Light-005}"/>
+                            </Button.BorderBrush>
+                            <Viewbox Width="14">
                                 <Canvas HorizontalAlignment="Left" Height="30" UseLayoutRounding="False" VerticalAlignment="Top" Width="30">
                                     <Canvas Height="28.573" Canvas.Left="1.89" Canvas.Top="0.713" Width="26.221">
-                                        <Path Data="M4.8096,14.1494L14.9856,24.3544L25.1626,14.1494L20.8536,14.1494L20.8536,6.4964L9.1466,6.4964L9.1466,14.1494z" Fill="White" Height="17.858" Canvas.Left="2.92" Stretch="Fill" Canvas.Top="5.783" Width="20.353"/>
-                                        <Path Data="F1M9.147,4.426L20.854,4.426L20.854,0.712999999999997L9.147,0.712999999999997z" Fill="White" Height="3.713" Canvas.Left="7.257" Stretch="Fill" Canvas.Top="0" Width="11.707"/>
-                                        <Path Data="F1M1.89,29.286L28.111,29.286L28.111,26.509L1.89,26.509z" Fill="White" Height="2.777" Canvas.Left="0" Stretch="Fill" Canvas.Top="25.796" Width="26.221"/>
+                                        <Path Data="M4.8096,14.1494L14.9856,24.3544L25.1626,14.1494L20.8536,14.1494L20.8536,6.4964L9.1466,6.4964L9.1466,14.1494z" Height="17.858" Canvas.Left="2.92" Stretch="Fill" Canvas.Top="5.783" Width="20.353">
+                                            <Path.Fill>
+                                                <SolidColorBrush Color="White"/>
+                                            </Path.Fill>
+                                        </Path>
+                                        <Path Data="F1M9.147,4.426L20.854,4.426L20.854,0.712999999999997L9.147,0.712999999999997z" Height="3.713" Canvas.Left="7.257" Stretch="Fill" Canvas.Top="0" Width="11.707">
+                                            <Path.Fill>
+                                                <SolidColorBrush Color="White"/>
+                                            </Path.Fill>
+                                        </Path>
+                                        <Path Data="F1M1.89,29.286L28.111,29.286L28.111,26.509L1.89,26.509z" Height="2.777" Canvas.Left="0" Stretch="Fill" Canvas.Top="25.796" Width="26.221">
+                                            <Path.Fill>
+                                                <SolidColorBrush Color="White"/>
+                                            </Path.Fill>
+                                        </Path>
                                     </Canvas>
                                 </Canvas>
                             </Viewbox>
                         </Button>
-                        <Button Style="{DynamicResource ButtonStyle-001}" BorderThickness="0" Margin="7,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Foreground="White" BorderBrush="{x:Null}" Width="35" Padding="11,1" IsEnabled="False">
+                        <Button Style="{DynamicResource ButtonStyle-001}" BorderThickness="1" Margin="5,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Foreground="White" Width="35" Padding="11,1" IsEnabled="False" Cursor="Hand" ToolTip="Выбранные">
                             <Button.Background>
                                 <SolidColorBrush Color="{DynamicResource Blue-001}"/>
                             </Button.Background>
-                            <Viewbox>
+                            <Button.BorderBrush>
+                                <SolidColorBrush Color="{DynamicResource Light-005}"/>
+                            </Button.BorderBrush>
+                            <Viewbox Width="13">
                                 <Canvas HorizontalAlignment="Left" Height="70" UseLayoutRounding="False" VerticalAlignment="Top" Width="70">
                                     <Canvas Height="70" Canvas.Left="7.713" Canvas.Top="0" Width="54.58">
-                                        <Path Data="F1M60.4209,1.9419C57.8319,-0.647099999999996,53.6709,-0.647099999999996,51.1739,1.9419L28.0569,24.9669L18.9019,15.7199C16.3129,13.2229,12.1519,13.2229,9.6549,15.7199C7.06590000000001,18.3089,7.06590000000001,22.4699,9.6549,24.9669L23.4329,38.8379C26.0229,41.3339,30.1839,41.3339,32.6799,38.8379L60.4209,11.1889C62.9179,8.59990000000001,62.9179,4.4389,60.4209,1.9419" Fill="White" Height="40.71" Canvas.Left="0" Stretch="Fill" Canvas.Top="0" Width="54.58"/>
-                                        <Path Data="F1M60.4209,31.1626C57.8319,28.6656,53.6709,28.6656,51.1739,31.1626L28.0569,54.2806L18.9019,45.0336C16.3129,42.4446,12.1519,42.4446,9.6549,45.0336C7.06590000000001,47.5296,7.06590000000001,51.6906,9.6549,54.2806L23.4329,68.0586C26.0229,70.6476,30.1839,70.6476,32.6799,68.0586L60.4209,40.4096C62.9179,37.8206,62.9179,33.7516,60.4209,31.1626" Fill="White" Height="40.711" Canvas.Left="0" Stretch="Fill" Canvas.Top="29.29" Width="54.58"/>
+                                        <Path Data="F1M60.4209,1.9419C57.8319,-0.647099999999996,53.6709,-0.647099999999996,51.1739,1.9419L28.0569,24.9669L18.9019,15.7199C16.3129,13.2229,12.1519,13.2229,9.6549,15.7199C7.06590000000001,18.3089,7.06590000000001,22.4699,9.6549,24.9669L23.4329,38.8379C26.0229,41.3339,30.1839,41.3339,32.6799,38.8379L60.4209,11.1889C62.9179,8.59990000000001,62.9179,4.4389,60.4209,1.9419" Height="40.71" Canvas.Left="0" Stretch="Fill" Canvas.Top="0" Width="54.58">
+                                            <Path.Fill>
+                                                <SolidColorBrush Color="White"/>
+                                            </Path.Fill>
+                                        </Path>
+                                        <Path Data="F1M60.4209,31.1626C57.8319,28.6656,53.6709,28.6656,51.1739,31.1626L28.0569,54.2806L18.9019,45.0336C16.3129,42.4446,12.1519,42.4446,9.6549,45.0336C7.06590000000001,47.5296,7.06590000000001,51.6906,9.6549,54.2806L23.4329,68.0586C26.0229,70.6476,30.1839,70.6476,32.6799,68.0586L60.4209,40.4096C62.9179,37.8206,62.9179,33.7516,60.4209,31.1626" Height="40.711" Canvas.Left="0" Stretch="Fill" Canvas.Top="29.29" Width="54.58">
+                                            <Path.Fill>
+                                                <SolidColorBrush Color="White"/>
+                                            </Path.Fill>
+                                        </Path>
                                     </Canvas>
                                 </Canvas>
                             </Viewbox>
@@ -367,25 +437,44 @@
                             </Rectangle.Fill>
                         </Rectangle>
                     </StackPanel>
-                    <Border Margin="0" Grid.Column="1" Height="30">
-                        <StackPanel x:Name="LinqButtonsStackPanel" Orientation="Horizontal" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Center">
-                            <controls:LinqButton Content="Номенклатура" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" FontSize="12.5" Click="LinqButton_Click" Visibility="Collapsed">
-                                <controls:LinqButton.Background>
-                                    <SolidColorBrush Color="{DynamicResource Light-003}"/>
-                                </controls:LinqButton.Background>
-                                <controls:LinqButton.Foreground>
-                                    <SolidColorBrush Color="{DynamicResource Blue-003}"/>
-                                </controls:LinqButton.Foreground>
-                            </controls:LinqButton>
-                            <controls:LinqButton Content="Номенклатура" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" FontSize="12.5" Click="LinqButton_Click" Visibility="Collapsed">
-                                <controls:LinqButton.Background>
-                                    <SolidColorBrush Color="{DynamicResource Light-003}"/>
-                                </controls:LinqButton.Background>
-                                <controls:LinqButton.Foreground>
-                                    <SolidColorBrush Color="{DynamicResource Dark-002}"/>
-                                </controls:LinqButton.Foreground>
-                            </controls:LinqButton>
+                    <Border Margin="0" Grid.Column="1">
+                        <StackPanel Orientation="Horizontal">
+                            <Viewbox Margin="0,0,5,0">
+                                <Canvas HorizontalAlignment="Left" Height="70" UseLayoutRounding="False" VerticalAlignment="Top" Width="70">
+                                    <Canvas Height="46.494" Canvas.Left="0" Canvas.Top="11.753" Width="70">
+                                        <Path Data="M2.7612,11.7529L16.3312,11.7529L23.2862,11.7529C24.0412,11.7529,24.7452,12.0649,25.2402,12.5599C27.2972,14.6179,27.2452,19.1759,32.5592,19.1759L57.0692,19.1759C59.3362,19.1759,61.2112,21.0259,61.2112,23.2919L61.2112,54.1059C61.2112,56.3719,59.3362,58.2469,57.0692,58.2469L4.1412,58.2469C1.8752,58.2469,0.000199999999999978,56.3719,0.000199999999999978,54.1059L0.000199999999999978,23.2919L0.000199999999999978,14.5139C0.000199999999999978,13.0029,1.2502,11.7529,2.7612,11.7529" Fill="#FFF4C779" Height="46.494" Canvas.Left="0" Stretch="Fill" Canvas.Top="0" Width="61.211"/>
+                                        <Path Data="M13.4146,22.979L67.1496,22.979C69.2076,22.979,70.4316,24.646,69.8586,26.704L62.2266,54.496C61.6796,56.554,59.5176,58.247,57.4596,58.247L3.7506,58.247C1.6926,58.247,0.4686,56.554,1.0156,54.496L8.6736,26.704C9.2206,24.646,11.3566,22.979,13.4146,22.979" Fill="#FFFFDA99" Height="35.268" Canvas.Left="0.885" Stretch="Fill" Canvas.Top="11.226" Width="69.115"/>
+                                    </Canvas>
+                                </Canvas>
+                            </Viewbox>
+                            <StackPanel x:Name="LinqButtonsStackPanel" Orientation="Horizontal" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Center">
+                                <controls:LinqButton Content="Номенклатура" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" FontSize="12.5" Click="LinqButton_Click" Visibility="Collapsed">
+                                    <controls:LinqButton.Background>
+                                        <SolidColorBrush Color="{DynamicResource Light-003}"/>
+                                    </controls:LinqButton.Background>
+                                    <controls:LinqButton.Foreground>
+                                        <SolidColorBrush Color="{DynamicResource Blue-003}"/>
+                                    </controls:LinqButton.Foreground>
+                                </controls:LinqButton>
+                                <controls:LinqButton Content="Номенклатура" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" FontSize="12.5" Click="LinqButton_Click" Visibility="Collapsed">
+                                    <controls:LinqButton.Background>
+                                        <SolidColorBrush Color="{DynamicResource Light-003}"/>
+                                    </controls:LinqButton.Background>
+                                    <controls:LinqButton.Foreground>
+                                        <SolidColorBrush Color="{DynamicResource Dark-002}"/>
+                                    </controls:LinqButton.Foreground>
+                                </controls:LinqButton>
+                            </StackPanel>
                         </StackPanel>
+                    </Border>
+                    <Border Width="300" Grid.Column="2" BorderThickness="1">
+                        <Border.BorderBrush>
+                            <SolidColorBrush Color="{DynamicResource Light-005}"/>
+                        </Border.BorderBrush>
+                        <Border.Background>
+                            <SolidColorBrush Color="White"/>
+                        </Border.Background>
+
                     </Border>
                 </Grid>
             </Border>
@@ -393,7 +482,7 @@
                 <Border.BorderBrush>
                     <SolidColorBrush Color="{DynamicResource Light-005}"/>
                 </Border.BorderBrush>
-                <DataGrid x:Name="DataGridNomenclatures" CanUserReorderColumns="False" IsSynchronizedWithCurrentItem = "true" VerticalScrollBarVisibility="Auto"  Style="{DynamicResource NomenDG}" BorderThickness="0"  AutoGenerateColumns="False"  CanUserAddRows="False" Loaded="DataGridNomenclatures_Loaded" PreviewKeyDown="DataGridNomenclatures_PreviewKeyDown" Background="{x:Null}" Margin="10,0,10,10">
+                <DataGrid x:Name="DataGridNomenclatures" CanUserReorderColumns="False" IsSynchronizedWithCurrentItem = "true" VerticalScrollBarVisibility="Auto"  Style="{DynamicResource NomenDG}" BorderThickness="0"  AutoGenerateColumns="False"  CanUserAddRows="False" Loaded="DataGridNomenclatures_Loaded" PreviewKeyDown="DataGridNomenclatures_PreviewKeyDown" Background="{x:Null}" Margin="10,0,10,10" KeyDown="DataGridNomenclatures_KeyDown">
                     <DataGrid.BorderBrush>
                         <SolidColorBrush Color="{DynamicResource Light-005}"/>
                     </DataGrid.BorderBrush>
@@ -497,6 +586,6 @@
             </Border>
             <ContentControl Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,100"/>
         </Grid>
-        <ContentControl x:Name="CreateNomenclatureContentControl" Content="{Binding CreateNemenclatureUC, ElementName=Nom, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding CreateNemenclatureUCVisibility, ElementName=Nom, UpdateSourceTrigger=PropertyChanged}" d:IsHidden="True"/>
+        <ContentControl x:Name="CreateNomenclatureContentControl" Content="{Binding CreateNemenclatureUC, ElementName=Nom, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding CreateNemenclatureUCVisibility, ElementName=Nom, UpdateSourceTrigger=PropertyChanged}" d:IsHidden="True" Grid.ColumnSpan="2"/>
     </Grid>
 </UserControl>
