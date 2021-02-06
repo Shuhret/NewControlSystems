@@ -96,7 +96,6 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
             {
                 if(searchedText != value)
                 {
-                    
                     searchedText = value;
                     OnPropertyChanged();
                     if (value != "")
@@ -106,6 +105,7 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
                     else
                     {
                         SearchedTextColor = GetColor.Get("Light-005");
+                        SearchResult = "Поиск";
                     }
                 }
             }
@@ -122,7 +122,20 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
             }
         }
 
-        
+        private string searchResult = "Поиск";
+        public string SearchResult
+        {
+            get => searchResult;
+            set
+            {
+                if (searchResult != value)
+                {
+                    searchResult = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
 
         // События----------------------------------------------------------------------------------------------------------------------------
         bool FirstBoot = true;
@@ -147,6 +160,7 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
                 }
                 if(name == SearchedText)
                 {
+                    SearchResult = "Найдено в наименованиях";
                     SearchedTextColor = GetColor.Get("Blue-003");
                     SelectedItem = NC;
                     SelectedCollumn = 3;
@@ -155,6 +169,7 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
                 }
                 else if (article == SearchedText)
                 {
+                    SearchResult = "Найдено в артикулах";
                     SearchedTextColor = GetColor.Get("Blue-003");
                     SelectedItem = NC;
                     SelectedCollumn = 4;
@@ -163,7 +178,9 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
                 }
                 else
                 {
-                    SearchedTextColor = GetColor.Get("Red-002");
+                    SearchResult = "Не найдено!";
+                    SelectedItem = null;
+                    SearchedTextColor = GetColor.Get("Purpure-002");
                 }
             }
         }
@@ -179,6 +196,7 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
 
         private void Row_DoubleClick(object sender, MouseButtonEventArgs e)
         {
+            SelectedItem = null;
             DataGridRow row = sender as DataGridRow;
             NomenclatureClass NC = row.Item as NomenclatureClass;
             if (NC.GroupNomen == false)
@@ -205,6 +223,7 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
             // Enter
             if (e.Key == Key.Enter)
             {
+                SelectedItem = null;
                 if ((sender as DataGrid).SelectedItem != null)
                 {
                     NomenclatureClass NC = (sender as DataGrid).SelectedItem as NomenclatureClass;
@@ -232,6 +251,11 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
             {
                 SearchedText = "";
             }
+            if(e.Key == Key.Delete)
+            {
+                SearchedText = "";
+                e.Handled = true;
+            }
         }
 
         private void Nom_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -239,6 +263,7 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
             // Ctrl + Down ↓
             if (e.Key == Key.Down && e.KeyboardDevice.Modifiers == ModifierKeys.Control)
             {
+                SelectedItem = null;
                 if (DataGridNomenclatures.SelectedItem != null)
                 {
                     NomenclatureClass NC = DataGridNomenclatures.SelectedItem as NomenclatureClass;
@@ -347,6 +372,7 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
                 DataGridNomenclatures.Columns[3].IsReadOnly = false;
                 DataGridNomenclatures.BeginEdit();
                 DataGridNomenclatures.Columns[3].IsReadOnly = true;
+
             }
             if (DataGridNomenclatures.Items.Count > 0 && SelectedItem == null)
             {
@@ -517,10 +543,13 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
 
         private void DataGridNomenclatures_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            if (e.Text.All(IsGood))
+            if (DataGridNomenclatures.Items.Count > 0)
             {
-                SearchedText += e.Text;
-                e.Handled = true;
+                if (e.Text.All(IsGood))
+                {
+                    SearchedText += e.Text;
+                    e.Handled = true;
+                }
             }
         }
 

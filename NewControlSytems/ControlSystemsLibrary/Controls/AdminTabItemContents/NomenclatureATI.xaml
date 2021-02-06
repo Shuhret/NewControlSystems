@@ -19,7 +19,7 @@
 
             <Setter Property="BorderBrush">
                 <Setter.Value>
-                    <SolidColorBrush Color="{DynamicResource Purpure-002}"/>
+                    <SolidColorBrush Color="{DynamicResource Blue-003}"/>
                 </Setter.Value>
             </Setter>
             <Setter Property="BorderThickness" Value="0,0,0,1"/>
@@ -274,13 +274,14 @@
                 <Grid Margin="0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="454*"/>
-                        <ColumnDefinition Width="75*"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="120"/>
                     </Grid.ColumnDefinitions>
                     <StackPanel Orientation="Horizontal">
-                        <Button Style="{DynamicResource ButtonStyle-001}" BorderThickness="0,1" Click="CreateNomenclatureButtonClick" Foreground="White" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Padding="11,1" Cursor="Hand" ToolTip="Создать новую номенклатуру">
+                        <Button Style="{DynamicResource ButtonStyle-001}" BorderThickness="0,1" Click="CreateNomenclatureButtonClick" Foreground="White" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Padding="11,1" Cursor="Hand" ToolTip="Создать новую номенклатуру" Width="28">
                             <Button.Background>
-                                <SolidColorBrush Color="{DynamicResource Purpure-002}"/>
+                                <SolidColorBrush Color="{DynamicResource Blue-001}"/>
                             </Button.Background>
                             <Button.BorderBrush>
                                 <SolidColorBrush Color="{DynamicResource Light-005}"/>
@@ -293,12 +294,12 @@
                                         </Canvas>
                                     </Canvas>
                                 </Viewbox>
-                                <TextBlock Text="Новая номенклатура" RenderOptions.BitmapScalingMode="Fant" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" FontSize="11.5"/>
+                                <TextBlock Text="Новая номенклатура" RenderOptions.BitmapScalingMode="Fant" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" FontSize="11.5" Visibility="Collapsed"/>
                             </StackPanel>
                         </Button>
-                        <Button Style="{DynamicResource ButtonStyle-001}" BorderThickness="1,1,0,1" Margin="5,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Foreground="White" Width="35" Padding="10,1" Cursor="Hand" ToolTip="Создать новую группу">
+                        <Button Style="{DynamicResource ButtonStyle-001}" BorderThickness="1,1,0,1" Margin="5,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Foreground="White" Width="28" Padding="10,1" Cursor="Hand" ToolTip="Создать новую группу">
                             <Button.Background>
-                                <SolidColorBrush Color="{DynamicResource Purpure-002}"/>
+                                <SolidColorBrush Color="{DynamicResource Blue-001}"/>
                             </Button.Background>
                             <Button.BorderBrush>
                                 <SolidColorBrush Color="{DynamicResource Light-005}"/>
@@ -325,9 +326,9 @@
                                 </Canvas>
                             </Viewbox>
                         </Button>
-                        <Button Style="{DynamicResource ButtonStyle-001}" BorderThickness="1,1,0,1" Margin="5,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Foreground="White" Width="35" Padding="11,1" Cursor="Hand" ToolTip="Изменить">
+                        <Button Style="{DynamicResource ButtonStyle-001}" BorderThickness="1,1,0,1" Margin="5,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Foreground="White" Width="28" Padding="11,1" Cursor="Hand" ToolTip="Изменить">
                             <Button.Background>
-                                <SolidColorBrush Color="{DynamicResource Purpure-002}"/>
+                                <SolidColorBrush Color="{DynamicResource Blue-001}"/>
                             </Button.Background>
                             <Button.BorderBrush>
                                 <SolidColorBrush Color="{DynamicResource Light-005}"/>
@@ -349,9 +350,32 @@
                                 </Canvas>
                             </Viewbox>
                         </Button>
-                        <Button Style="{DynamicResource ButtonStyle-001}" BorderThickness="1,1,0,1" Margin="5,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Foreground="White" Width="35" Padding="10,1" Cursor="Hand" ToolTip="Вырезать">
+                        <Button Style="{DynamicResource ButtonStyle-001}" BorderThickness="1" Margin="5,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Foreground="White" Width="28" Padding="11,1" Cursor="Hand" ToolTip="Поиск везде">
                             <Button.Background>
-                                <SolidColorBrush Color="{DynamicResource Purpure-002}"/>
+                                <SolidColorBrush Color="{DynamicResource Blue-001}"/>
+                            </Button.Background>
+                            <Button.BorderBrush>
+                                <SolidColorBrush Color="{DynamicResource Light-005}"/>
+                            </Button.BorderBrush>
+                            <Viewbox Width="13" RenderTransformOrigin="0.5,0.5">
+                                <Viewbox.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform/>
+                                        <SkewTransform/>
+                                        <RotateTransform Angle="90"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Viewbox.RenderTransform>
+                                <Canvas HorizontalAlignment="Left" Height="50" UseLayoutRounding="False" VerticalAlignment="Top" Width="50">
+                                    <Canvas Height="50.001" Canvas.Left="0" Canvas.Top="0" Width="50">
+                                        <Path Data="F1M21.8267,6.1919L21.8267,6.1919C13.3127,6.1919,6.1917,13.3129,6.1917,21.8269C6.1917,30.4949,13.3127,37.4609,21.8267,37.4609C30.4947,37.4609,37.4607,30.4949,37.4607,21.8269C37.4607,13.3129,30.4947,6.1919,21.8267,6.1919 M48.6067,48.6069C46.7487,50.4649,43.8077,50.4649,41.9507,48.6069L33.5917,40.2479C30.1857,42.4149,26.1607,43.8079,21.8267,43.8079C9.7527,43.8079,-0.000300000000002854,34.0559,-0.000300000000002854,21.8269C-0.000300000000002854,9.7529,9.7527,-0.00010000000000332,21.8267,-0.00010000000000332C34.0557,-0.00010000000000332,43.8077,9.7529,43.8077,21.8269C43.8077,26.3159,42.4147,30.1859,40.2477,33.5919L48.6067,41.9499C50.4647,43.8079,50.4647,46.7489,48.6067,48.6069" Fill="White" Height="50.001" Canvas.Left="0" Stretch="Fill" Canvas.Top="0" Width="50"/>
+                                    </Canvas>
+                                </Canvas>
+                            </Viewbox>
+                        </Button>
+                        <Button Style="{DynamicResource ButtonStyle-001}" BorderThickness="1,1,0,1" Margin="5,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Foreground="White" Width="28" Padding="10,1" Cursor="Hand" ToolTip="Вырезать">
+                            <Button.Background>
+                                <SolidColorBrush Color="{DynamicResource Blue-001}"/>
                             </Button.Background>
                             <Button.BorderBrush>
                                 <SolidColorBrush Color="{DynamicResource Light-005}"/>
@@ -378,9 +402,9 @@
                                 </Canvas>
                             </Viewbox>
                         </Button>
-                        <Button Style="{DynamicResource ButtonStyle-001}" BorderThickness="1,1,0,1" Margin="5,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Foreground="White" Width="35" Padding="10,1" IsEnabled="False" Cursor="Hand" ToolTip="Вставить">
+                        <Button Style="{DynamicResource ButtonStyle-001}" BorderThickness="1,1,0,1" Margin="5,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Foreground="White" Width="28" Padding="10,1" IsEnabled="False" Cursor="Hand" ToolTip="Вставить">
                             <Button.Background>
-                                <SolidColorBrush Color="{DynamicResource Purpure-002}"/>
+                                <SolidColorBrush Color="{DynamicResource Blue-001}"/>
                             </Button.Background>
                             <Button.BorderBrush>
                                 <SolidColorBrush Color="{DynamicResource Light-005}"/>
@@ -407,9 +431,9 @@
                                 </Canvas>
                             </Viewbox>
                         </Button>
-                        <Button Style="{DynamicResource ButtonStyle-001}" BorderThickness="1" Margin="5,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Foreground="White" Width="35" Padding="11,1" IsEnabled="False" Cursor="Hand" ToolTip="Выбранные">
+                        <Button Style="{DynamicResource ButtonStyle-001}" BorderThickness="1" Margin="5,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Foreground="White" Width="28" Padding="11,1" IsEnabled="False" Cursor="Hand" ToolTip="Выбранные">
                             <Button.Background>
-                                <SolidColorBrush Color="{DynamicResource Purpure-002}"/>
+                                <SolidColorBrush Color="{DynamicResource Blue-001}"/>
                             </Button.Background>
                             <Button.BorderBrush>
                                 <SolidColorBrush Color="{DynamicResource Light-005}"/>
@@ -468,7 +492,10 @@
                             </StackPanel>
                         </StackPanel>
                     </Border>
-                    <Border Grid.Column="2" BorderThickness="1" BorderBrush="{Binding SearchedTextColor, ElementName=Nom, UpdateSourceTrigger=PropertyChanged}">
+                    <StackPanel Grid.Column="2" VerticalAlignment="Center">
+                        <TextBlock Text="{Binding SearchResult, ElementName=Nom, UpdateSourceTrigger=PropertyChanged}" Foreground="{Binding SearchedTextColor, ElementName=Nom, UpdateSourceTrigger=PropertyChanged}" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" Margin="0,0,4,0"/>
+                    </StackPanel>
+                    <Border Grid.Column="3" BorderThickness="1" BorderBrush="{Binding SearchedTextColor, ElementName=Nom, UpdateSourceTrigger=PropertyChanged}">
                         <TextBox x:Name="SearchTextBox" Text="{Binding SearchedText, ElementName=Nom, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" BorderThickness="0" Background="{x:Null}" VerticalContentAlignment="Center" Padding="5,1" Foreground="{Binding SearchedTextColor, ElementName=Nom, UpdateSourceTrigger=PropertyChanged}" HorizontalContentAlignment="Right" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed"/>
                     </Border>
                 </Grid>
