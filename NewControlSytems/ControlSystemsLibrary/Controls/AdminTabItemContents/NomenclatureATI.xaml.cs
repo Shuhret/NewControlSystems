@@ -20,6 +20,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+
 namespace ControlSystemsLibrary.Controls.AdminTabItemContents
 {
     public delegate void CloseCreateNomenclatureDelegate();
@@ -85,10 +86,68 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
             }
         }
 
+        private string searchedText = "";
+        public string SearchedText
+        {
+            get => searchedText;
+            set
+            {
+                if(searchedText != value)
+                {
+                    
+                    searchedText = value;
+                    OnPropertyChanged();
+                    if (value != "")
+                    {
+                        SearchRow();
+                    }
+                    else
+                    {
+                        SearchedTextColor = GetColor.Get("Light-005");
+                    }
+                }
+            }
+        }
+
+        private SolidColorBrush searchedTextColor = GetColor.Get("Light-005");
+        public SolidColorBrush SearchedTextColor
+        {
+            get => searchedTextColor;
+            set
+            {
+                searchedTextColor = value;
+                OnPropertyChanged();
+            }
+        }
 
         // События----------------------------------------------------------------------------------------------------------------------------
         bool FirstBoot = true;
          
+
+        private void SearchRow()
+        {
+            foreach(NomenclatureClass NC in DataGridNomenclatures.Items)
+            {
+                string str = "";
+                for(int i = 0; i < SearchedText.Length; i++)
+                {
+                    if(NC.Name.Length-1 >= i)
+                    str += NC.Name[i];
+                }
+                if(str == SearchedText)
+                {
+                    SearchedTextColor = GetColor.Get("Blue-003");
+                    SelectedItem = NC;
+                    SelectDataGridRow();
+                    break;
+                }
+                else
+                {
+                    SearchedTextColor = GetColor.Get("Red-002");
+                }
+            }
+        }
+
         private void DataGridNomenclatures_Loaded(object sender, RoutedEventArgs e)
         {
             if (FirstBoot == true)
@@ -134,20 +193,29 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
                         CurrentGroupID = NC.ID;
                     }
                 }
+                SearchedText = "";
                 e.Handled = true;
             }
-            else
+            if(e.Key == Key.Up)
             {
-                KeyConverter kc = new KeyConverter();
-                var str = kc.ConvertToString(e.Key);
-
-                
-                    MessageBox.Show(str);
+                SearchedText = "";
+            }
+            if (e.Key == Key.Down)
+            {
+                SearchedText = "";
+            }
+            if (e.Key == Key.Left)
+            {
+                SearchedText = "";
+            }
+            if (e.Key == Key.Right)
+            {
+                SearchedText = "";
             }
         }
 
         private void Nom_PreviewKeyDown(object sender, KeyEventArgs e)
-        {
+        {            
             // Ctrl + Down ↓
             if (e.Key == Key.Down && e.KeyboardDevice.Modifiers == ModifierKeys.Control)
             {
@@ -159,6 +227,7 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
                         CurrentGroupID = NC.ID;
                     }
                 }
+                SearchedText = "";
                 e.Handled = true;
             }
 
@@ -174,21 +243,19 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
                         break;
                     }
                 }
+                SearchedText = "";
                 e.Handled = true;
             }
 
             // Backspace ←
             if (e.Key == Key.Back)
             {
-                foreach (NomenclatureClass NC in AllNomenclaturesCollection)
+                string str = "";
+                for(int i = 0; i < SearchedText.Length-1;i++)
                 {
-                    if (NC.ID == CurrentGroupID)
-                    {
-                        SelectedItem = NC;
-                        CurrentGroupID = NC.GroupID;
-                        break;
-                    }
+                    str += SearchedText[i];
                 }
+                SearchedText = str;
                 e.Handled = true;
             }
 
@@ -198,17 +265,17 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
                 NomenclatureClass NC = DataGridNomenclatures.Items[0] as NomenclatureClass;
                 SelectedItem = NC;
                 SelectDataGridRow();
-
+                SearchedText = "";
                 e.Handled = true;
             }
-            
+
             // End 
             if (e.Key == Key.End)
             {
-                NomenclatureClass NC = DataGridNomenclatures.Items[DataGridNomenclatures.Items.Count-1] as NomenclatureClass;
+                NomenclatureClass NC = DataGridNomenclatures.Items[DataGridNomenclatures.Items.Count - 1] as NomenclatureClass;
                 SelectedItem = NC;
                 SelectDataGridRow();
-
+                SearchedText = "";
                 e.Handled = true;
             }
 
@@ -216,19 +283,23 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
             if (e.Key == Key.N && e.KeyboardDevice.Modifiers == ModifierKeys.Control)
             {
                 CreateNomenclatureButtonClick(null, null);
+                SearchedText = "";
                 e.Handled = true;
             }
+
 
         }
 
 
         // Методы ----------------------------------------------------------------------------------------------------------------------------
 
+
         async void LoadAllNomenclatures()
         {
             await Task.Run(() => AllNomenclaturesCollection = DataBaseRequest.GetAllNomenclatures());
             LoadShowNomenclatures();
             DataGridNomenclatures.ItemsSource = ShowNomenclaturesCollection;
+            SearchedText = "";
             AddLinqButton();
         }
 
@@ -242,7 +313,7 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
                     ShowNomenclaturesCollection.Add(NC);
                 }
             }
-            
+            SearchedText = "";
             SelectDataGridRow();
         }
 
@@ -274,8 +345,6 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
 
 
         #endregion :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-
-
 
         #region LinqButtons ==================================================================================================================
 
@@ -423,11 +492,33 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
         {
             CreateNemenclatureUC = null;
         }
+
         #endregion :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-        private void DataGridNomenclatures_KeyDown(object sender, KeyEventArgs e)
+        private void DataGridNomenclatures_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-           
+            if (e.Text.All(IsGood))
+            {
+                SearchedText += e.Text;
+                e.Handled = true;
+            }
+        }
+
+        bool IsGood(char c)
+        {
+            if (c >= '0' && c <= '9')
+                return true;
+            if (c >= 'a' && c <= 'z')
+                return true;
+            if (c >= 'A' && c <= 'z')
+                return true;
+            if (c >= 'а' && c <= 'я')
+                return true;
+            if (c >= 'А' && c <= 'Я')
+                return true;
+            if (c == ' ' || c == '-' || c == '/' || c == '_' || c == '.' || c == ',' || c == '+' || c == '*')
+                return true;
+            return false;
         }
     }
 }

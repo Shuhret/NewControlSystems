@@ -22,5 +22,6 @@
     <Color x:Key="Green-002">#FF7BB23D</Color>
     <Color x:Key="Green-003">#FF39B449</Color>
     <Color x:Key="Purpure-002">#FFE4577A</Color>
+    <Color x:Key="Red-002">#FFFF7373</Color>
 
 </ResourceDictionary>

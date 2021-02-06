@@ -19,7 +19,7 @@
 
             <Setter Property="BorderBrush">
                 <Setter.Value>
-                    <SolidColorBrush Color="{DynamicResource Blue-003}"/>
+                    <SolidColorBrush Color="{DynamicResource Purpure-002}"/>
                 </Setter.Value>
             </Setter>
             <Setter Property="BorderThickness" Value="0,0,0,1"/>
@@ -270,35 +270,35 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <Border Margin="10" BorderThickness="1" VerticalAlignment="Center" Height="29">
+            <Border Margin="10" BorderThickness="1" VerticalAlignment="Center" Height="25">
                 <Grid Margin="0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="454*"/>
+                        <ColumnDefinition Width="75*"/>
                     </Grid.ColumnDefinitions>
                     <StackPanel Orientation="Horizontal">
                         <Button Style="{DynamicResource ButtonStyle-001}" BorderThickness="0,1" Click="CreateNomenclatureButtonClick" Foreground="White" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Padding="11,1" Cursor="Hand" ToolTip="Создать новую номенклатуру">
                             <Button.Background>
-                                <SolidColorBrush Color="{DynamicResource Blue-001}"/>
+                                <SolidColorBrush Color="{DynamicResource Purpure-002}"/>
                             </Button.Background>
                             <Button.BorderBrush>
                                 <SolidColorBrush Color="{DynamicResource Light-005}"/>
                             </Button.BorderBrush>
-                            <StackPanel Orientation="Horizontal" Margin="10,0">
-                                <Viewbox Width="12" HorizontalAlignment="Center" VerticalAlignment="Center" >
+                            <StackPanel Orientation="Horizontal" Margin="5,0">
+                                <Viewbox Width="10" HorizontalAlignment="Center" VerticalAlignment="Center" >
                                     <Canvas HorizontalAlignment="Left" Height="30" UseLayoutRounding="False" VerticalAlignment="Top" Width="30">
                                         <Canvas Height="30" Canvas.Left="0" Canvas.Top="0" Width="30">
                                             <Path Data="M14.5,0L15.5,0C16.875,0,18,1.125,18,2.5L18,12L27.5,12C28.875,12,30,13.125,30,14.5L30,15.5C30,16.875,28.875,18,27.5,18L18,18L18,27.5C18,28.875,16.875,30,15.5,30L14.5,30C13.125,30,12,28.875,12,27.5L12,18L2.5,18C1.125,18,0,16.875,0,15.5L0,14.5C0,13.125,1.125,12,2.5,12L12,12L12,2.5C12,1.125,13.125,0,14.5,0" Height="30" Canvas.Left="0" Stretch="Fill" Canvas.Top="0" Width="30" Fill="White"/>
                                         </Canvas>
                                     </Canvas>
                                 </Viewbox>
-                                <TextBlock Text="Новая номенклатура" RenderOptions.BitmapScalingMode="Fant" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="7,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto"/>
+                                <TextBlock Text="Новая номенклатура" RenderOptions.BitmapScalingMode="Fant" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" FontSize="11.5"/>
                             </StackPanel>
                         </Button>
                         <Button Style="{DynamicResource ButtonStyle-001}" BorderThickness="1,1,0,1" Margin="5,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Foreground="White" Width="35" Padding="10,1" Cursor="Hand" ToolTip="Создать новую группу">
                             <Button.Background>
-                                <SolidColorBrush Color="{DynamicResource Blue-001}"/>
+                                <SolidColorBrush Color="{DynamicResource Purpure-002}"/>
                             </Button.Background>
                             <Button.BorderBrush>
                                 <SolidColorBrush Color="{DynamicResource Light-005}"/>
@@ -327,7 +327,7 @@
                         </Button>
                         <Button Style="{DynamicResource ButtonStyle-001}" BorderThickness="1,1,0,1" Margin="5,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Foreground="White" Width="35" Padding="11,1" Cursor="Hand" ToolTip="Изменить">
                             <Button.Background>
-                                <SolidColorBrush Color="{DynamicResource Blue-001}"/>
+                                <SolidColorBrush Color="{DynamicResource Purpure-002}"/>
                             </Button.Background>
                             <Button.BorderBrush>
                                 <SolidColorBrush Color="{DynamicResource Light-005}"/>
@@ -351,7 +351,7 @@
                         </Button>
                         <Button Style="{DynamicResource ButtonStyle-001}" BorderThickness="1,1,0,1" Margin="5,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Foreground="White" Width="35" Padding="10,1" Cursor="Hand" ToolTip="Вырезать">
                             <Button.Background>
-                                <SolidColorBrush Color="{DynamicResource Blue-001}"/>
+                                <SolidColorBrush Color="{DynamicResource Purpure-002}"/>
                             </Button.Background>
                             <Button.BorderBrush>
                                 <SolidColorBrush Color="{DynamicResource Light-005}"/>
@@ -380,7 +380,7 @@
                         </Button>
                         <Button Style="{DynamicResource ButtonStyle-001}" BorderThickness="1,1,0,1" Margin="5,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Foreground="White" Width="35" Padding="10,1" IsEnabled="False" Cursor="Hand" ToolTip="Вставить">
                             <Button.Background>
-                                <SolidColorBrush Color="{DynamicResource Blue-001}"/>
+                                <SolidColorBrush Color="{DynamicResource Purpure-002}"/>
                             </Button.Background>
                             <Button.BorderBrush>
                                 <SolidColorBrush Color="{DynamicResource Light-005}"/>
@@ -409,7 +409,7 @@
                         </Button>
                         <Button Style="{DynamicResource ButtonStyle-001}" BorderThickness="1" Margin="5,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Foreground="White" Width="35" Padding="11,1" IsEnabled="False" Cursor="Hand" ToolTip="Выбранные">
                             <Button.Background>
-                                <SolidColorBrush Color="{DynamicResource Blue-001}"/>
+                                <SolidColorBrush Color="{DynamicResource Purpure-002}"/>
                             </Button.Background>
                             <Button.BorderBrush>
                                 <SolidColorBrush Color="{DynamicResource Light-005}"/>
@@ -440,10 +440,11 @@
                     <Border Margin="0" Grid.Column="1">
                         <StackPanel Orientation="Horizontal">
                             <Viewbox Margin="0,0,5,0">
-                                <Canvas HorizontalAlignment="Left" Height="70" UseLayoutRounding="False" VerticalAlignment="Top" Width="70">
-                                    <Canvas Height="46.494" Canvas.Left="0" Canvas.Top="11.753" Width="70">
-                                        <Path Data="M2.7612,11.7529L16.3312,11.7529L23.2862,11.7529C24.0412,11.7529,24.7452,12.0649,25.2402,12.5599C27.2972,14.6179,27.2452,19.1759,32.5592,19.1759L57.0692,19.1759C59.3362,19.1759,61.2112,21.0259,61.2112,23.2919L61.2112,54.1059C61.2112,56.3719,59.3362,58.2469,57.0692,58.2469L4.1412,58.2469C1.8752,58.2469,0.000199999999999978,56.3719,0.000199999999999978,54.1059L0.000199999999999978,23.2919L0.000199999999999978,14.5139C0.000199999999999978,13.0029,1.2502,11.7529,2.7612,11.7529" Fill="#FFF4C779" Height="46.494" Canvas.Left="0" Stretch="Fill" Canvas.Top="0" Width="61.211"/>
-                                        <Path Data="M13.4146,22.979L67.1496,22.979C69.2076,22.979,70.4316,24.646,69.8586,26.704L62.2266,54.496C61.6796,56.554,59.5176,58.247,57.4596,58.247L3.7506,58.247C1.6926,58.247,0.4686,56.554,1.0156,54.496L8.6736,26.704C9.2206,24.646,11.3566,22.979,13.4146,22.979" Fill="#FFFFDA99" Height="35.268" Canvas.Left="0.885" Stretch="Fill" Canvas.Top="11.226" Width="69.115"/>
+                                <Canvas HorizontalAlignment="Left" Height="50" UseLayoutRounding="False" VerticalAlignment="Top" Width="50">
+                                    <Canvas x:Name="Слой_17" Height="46.615" Canvas.Left="0" Canvas.Top="1.693" Width="50">
+                                        <Path Data="M45.5176,48.3076L4.4816,48.3076C4.3616,48.3076,4.2616,48.2276,4.2616,48.1076L0.00160000000000338,20.0906C-0.017399999999995,19.9506,0.101600000000005,19.8306,0.242600000000003,19.8306L49.7576,19.8306C49.9166,19.8306,50.0176,19.9506,49.9966,20.0906L45.7576,48.1076C45.7386,48.2276,45.6376,48.3076,45.5176,48.3076" Fill="#FFFFDA99" Height="28.477" Canvas.Left="0" Stretch="Fill" Canvas.Top="18.138" Width="50"/>
+                                        <Path Data="M46.5781,19.8306L46.5781,6.6716C46.5781,6.3116,46.2771,6.0116,45.9181,6.0116L19.3401,6.0116C19.1001,6.0116,18.8801,5.8916,18.7601,5.6916L16.5601,2.0126C16.4401,1.8116,16.2211,1.6926,16.0001,1.6926L4.0821,1.6926C3.7221,1.6926,3.4221,1.9926,3.4221,2.3516L3.4221,19.8306z" Fill="#FFF4C779" Height="18.138" Canvas.Left="3.423" Stretch="Fill" Canvas.Top="0" Width="43.156"/>
+                                        <Path Data="M6.881,19.831L43.137,19.831L43.137,13.771L6.881,13.771z" Fill="White" Height="6.06" Canvas.Left="6.881" Stretch="Fill" Canvas.Top="12.078" Width="36.256"/>
                                     </Canvas>
                                 </Canvas>
                             </Viewbox>
@@ -467,14 +468,8 @@
                             </StackPanel>
                         </StackPanel>
                     </Border>
-                    <Border Width="300" Grid.Column="2" BorderThickness="1">
-                        <Border.BorderBrush>
-                            <SolidColorBrush Color="{DynamicResource Light-005}"/>
-                        </Border.BorderBrush>
-                        <Border.Background>
-                            <SolidColorBrush Color="White"/>
-                        </Border.Background>
-
+                    <Border Grid.Column="2" BorderThickness="1" BorderBrush="{Binding SearchedTextColor, ElementName=Nom, UpdateSourceTrigger=PropertyChanged}">
+                        <TextBox x:Name="SearchTextBox" Text="{Binding SearchedText, ElementName=Nom, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" BorderThickness="0" Background="{x:Null}" VerticalContentAlignment="Center" Padding="5,1" Foreground="{Binding SearchedTextColor, ElementName=Nom, UpdateSourceTrigger=PropertyChanged}" HorizontalContentAlignment="Right" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed"/>
                     </Border>
                 </Grid>
             </Border>
@@ -482,7 +477,7 @@
                 <Border.BorderBrush>
                     <SolidColorBrush Color="{DynamicResource Light-005}"/>
                 </Border.BorderBrush>
-                <DataGrid x:Name="DataGridNomenclatures" CanUserReorderColumns="False" IsSynchronizedWithCurrentItem = "true" VerticalScrollBarVisibility="Auto"  Style="{DynamicResource NomenDG}" BorderThickness="0"  AutoGenerateColumns="False"  CanUserAddRows="False" Loaded="DataGridNomenclatures_Loaded" PreviewKeyDown="DataGridNomenclatures_PreviewKeyDown" Background="{x:Null}" Margin="10,0,10,10" KeyDown="DataGridNomenclatures_KeyDown">
+                <DataGrid x:Name="DataGridNomenclatures" CanUserReorderColumns="False" IsSynchronizedWithCurrentItem = "true" VerticalScrollBarVisibility="Auto"  Style="{DynamicResource NomenDG}" BorderThickness="0"  AutoGenerateColumns="False"  CanUserAddRows="False" Loaded="DataGridNomenclatures_Loaded" PreviewKeyDown="DataGridNomenclatures_PreviewKeyDown" Background="{x:Null}" Margin="10,0,10,10" PreviewTextInput="DataGridNomenclatures_PreviewTextInput">
                     <DataGrid.BorderBrush>
                         <SolidColorBrush Color="{DynamicResource Light-005}"/>
                     </DataGrid.BorderBrush>
