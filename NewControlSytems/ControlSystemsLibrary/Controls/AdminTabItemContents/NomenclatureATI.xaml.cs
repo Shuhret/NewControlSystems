@@ -69,6 +69,8 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
             }
         }
 
+        int SelectedCollumn = 3;
+
         private Guid currentGroupID = new Guid("00000000-0000-0000-0000-000000000000");
         public Guid CurrentGroupID
         {
@@ -120,6 +122,8 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
             }
         }
 
+        
+
         // События----------------------------------------------------------------------------------------------------------------------------
         bool FirstBoot = true;
          
@@ -128,16 +132,32 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
         {
             foreach(NomenclatureClass NC in DataGridNomenclatures.Items)
             {
-                string str = "";
-                for(int i = 0; i < SearchedText.Length; i++)
+                string name = "";
+                string article = "";
+                for (int i = 0; i < SearchedText.Length; i++)
                 {
-                    if(NC.Name.Length-1 >= i)
-                    str += NC.Name[i];
+                    if (NC.Name.Length - 1 >= i)
+                    {
+                        name += NC.Name[i];
+                    }
+                    if (NC.Article.Length - 1 >= i)
+                    {
+                        article += NC.Article[i];
+                    }
                 }
-                if(str == SearchedText)
+                if(name == SearchedText)
                 {
                     SearchedTextColor = GetColor.Get("Blue-003");
                     SelectedItem = NC;
+                    SelectedCollumn = 3;
+                    SelectDataGridRow();
+                    break;
+                }
+                else if (article == SearchedText)
+                {
+                    SearchedTextColor = GetColor.Get("Blue-003");
+                    SelectedItem = NC;
+                    SelectedCollumn = 4;
                     SelectDataGridRow();
                     break;
                 }
@@ -322,7 +342,7 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
             if (DataGridNomenclatures.Items.Count > 0 && SelectedItem != null)
             {
                 DataGridNomenclatures.SelectedItem = SelectedItem;
-                DataGridNomenclatures.CurrentCell = new DataGridCellInfo(DataGridNomenclatures.Items[DataGridNomenclatures.SelectedIndex], DataGridNomenclatures.Columns[3]);
+                DataGridNomenclatures.CurrentCell = new DataGridCellInfo(DataGridNomenclatures.Items[DataGridNomenclatures.SelectedIndex], DataGridNomenclatures.Columns[SelectedCollumn]);
                 DataGridNomenclatures.ScrollIntoView(DataGridNomenclatures.SelectedItem);
                 DataGridNomenclatures.Columns[3].IsReadOnly = false;
                 DataGridNomenclatures.BeginEdit();
@@ -331,7 +351,7 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
             if (DataGridNomenclatures.Items.Count > 0 && SelectedItem == null)
             {
                 DataGridNomenclatures.SelectedIndex = 0;
-                DataGridNomenclatures.CurrentCell = new DataGridCellInfo(DataGridNomenclatures.Items[0], DataGridNomenclatures.Columns[3]);
+                DataGridNomenclatures.CurrentCell = new DataGridCellInfo(DataGridNomenclatures.Items[0], DataGridNomenclatures.Columns[SelectedCollumn]);
                 DataGridNomenclatures.ScrollIntoView(DataGridNomenclatures.SelectedItem);
                 DataGridNomenclatures.Columns[3].IsReadOnly = false;
                 DataGridNomenclatures.BeginEdit();
