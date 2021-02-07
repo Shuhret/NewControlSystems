@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ControlSystemsLibrary.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="900" d:DesignWidth="1440" Loaded="CN_Loaded">
+             d:DesignHeight="900" d:DesignWidth="1440" Loaded="CN_Loaded" PreviewKeyDown="CN_PreviewKeyDown">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
@@ -92,7 +92,7 @@
                         <TabControl.BorderBrush>
                             <SolidColorBrush Color="{DynamicResource Light-005}"/>
                         </TabControl.BorderBrush>
-                        <TabItem Header="Основное" Width="170" Style="{DynamicResource CreateNomenclatureTabItemStyle}" HorizontalContentAlignment="Stretch" Height="35" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" Padding="1,3,1,1" Background="Transparent" FontSize="13">
+                        <TabItem x:Name="MainTI" Header="Основное" Width="170" Style="{DynamicResource CreateNomenclatureTabItemStyle}" HorizontalContentAlignment="Stretch" Height="35" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" Padding="1,3,1,1" Background="Transparent" FontSize="13">
                             <Grid Margin="10,5,0,0">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="auto"/>
@@ -249,7 +249,7 @@
                                 </Border>
                             </Grid>
                         </TabItem>
-                        <TabItem IsEnabled="{Binding Readiness, ElementName=CN, UpdateSourceTrigger=PropertyChanged}" Width="170" Style="{DynamicResource CreateNomenclatureTabItemStyle}" HorizontalContentAlignment="Stretch" Height="45" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" Padding="1,3,1,1" Background="Transparent" FontSize="13">
+                        <TabItem x:Name="AddUnitsTI" IsEnabled="{Binding Readiness, ElementName=CN, UpdateSourceTrigger=PropertyChanged}" Width="170" Style="{DynamicResource CreateNomenclatureTabItemStyle}" HorizontalContentAlignment="Stretch" Height="45" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" Padding="1,3,1,1" Background="Transparent" FontSize="13">
                             <TabItem.Header>
                                 <TextBlock Text="Дополнительные единицы измерения" TextWrapping="Wrap"/>
                             </TabItem.Header>
@@ -320,7 +320,7 @@
                                             </Grid>
                                         </Border>
                                         <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="1" >
-                                            <StackPanel x:Name="AddUnitsStackPanel" Background="Transparent">
+                                            <StackPanel x:Name="AddUnitsStackPanel" Background="Transparent" MouseLeftButtonDown="AddUnitsStackPanel_MouseLeftButtonDown">
 
                                             </StackPanel>
                                         </ScrollViewer>
@@ -328,7 +328,7 @@
                                 </Border>
                             </Grid>
                         </TabItem>
-                        <TabItem IsEnabled="{Binding Readiness, ElementName=CN, UpdateSourceTrigger=PropertyChanged}" Header="Свойства и значения" Width="170" Style="{DynamicResource CreateNomenclatureTabItemStyle}" HorizontalContentAlignment="Stretch" Height="35" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" Padding="1,3,1,1" Background="Transparent" FontSize="13">
+                        <TabItem x:Name="PropertyTI" IsEnabled="{Binding Readiness, ElementName=CN, UpdateSourceTrigger=PropertyChanged}" Header="Свойства и значения" Width="170" Style="{DynamicResource CreateNomenclatureTabItemStyle}" HorizontalContentAlignment="Stretch" Height="35" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" Padding="1,3,1,1" Background="Transparent" FontSize="13">
                             <Grid Margin="10,0,0,0">
                                 <Border BorderThickness="0">
                                     <Border.BorderBrush>
@@ -362,7 +362,7 @@
                                                         <SolidColorBrush Color="{DynamicResource Dark-001}"/>
                                                     </TextBlock.Foreground>
                                                 </TextBlock>
-                                                <Button x:Name="AddPropertyButton" Style="{DynamicResource ButtonStyle-000}" Height="30" VerticalAlignment="Bottom" Grid.Column="6" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" Padding="0" BorderBrush="{x:Null}" Cursor="Hand" Background="White">
+                                                <Button x:Name="AddPropertyButton" Style="{DynamicResource ButtonStyle-000}" Height="30" VerticalAlignment="Bottom" Grid.Column="6" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" Padding="0" BorderBrush="{x:Null}" Cursor="Hand" Background="White" Click="AddPropertyButton_Click">
                                                     <Button.Foreground>
                                                         <SolidColorBrush Color="{DynamicResource Blue-004}"/>
                                                     </Button.Foreground>
@@ -384,13 +384,13 @@
                                             </Grid>
                                         </Border>
                                         <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="1">
-                                            <StackPanel x:Name="AddPropertiesStackPanel" Background="Transparent"/>
+                                            <StackPanel x:Name="AddPropertiesStackPanel" Background="Transparent" MouseLeftButtonDown="AddPropertiesStackPanel_MouseLeftButtonDown"/>
                                         </ScrollViewer>
                                     </Grid>
                                 </Border>
                             </Grid>
                         </TabItem>
-                        <TabItem Header="Штрих-коды" IsEnabled="{Binding Readiness, ElementName=CN, UpdateSourceTrigger=PropertyChanged}" Width="170" Style="{DynamicResource CreateNomenclatureTabItemStyle}" HorizontalContentAlignment="Stretch" Height="35" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" Padding="1,3,1,1" Background="Transparent" FontSize="13">
+                        <TabItem x:Name="BarcodeTI" Header="Штрих-коды" IsEnabled="{Binding Readiness, ElementName=CN, UpdateSourceTrigger=PropertyChanged}" Width="170" Style="{DynamicResource CreateNomenclatureTabItemStyle}" HorizontalContentAlignment="Stretch" Height="35" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" Padding="1,3,1,1" Background="Transparent" FontSize="13">
                             <Grid Margin="10,0,0,0">
                                 <Border BorderThickness="0">
                                     <Border.BorderBrush>
@@ -517,7 +517,7 @@
                             </Grid>
 
                         </TabItem>
-                        <TabItem Header="Избражения" IsEnabled="{Binding Readiness, ElementName=CN, UpdateSourceTrigger=PropertyChanged}" Width="170" Style="{DynamicResource CreateNomenclatureTabItemStyle}" HorizontalContentAlignment="Stretch" Height="35" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" Padding="1,3,1,1" Background="Transparent" FontSize="13">
+                        <TabItem x:Name="ImageTI" Header="Избражения" IsEnabled="{Binding Readiness, ElementName=CN, UpdateSourceTrigger=PropertyChanged}" Width="170" Style="{DynamicResource CreateNomenclatureTabItemStyle}" HorizontalContentAlignment="Stretch" Height="35" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" Padding="1,3,1,1" Background="Transparent" FontSize="13">
                             <Grid Margin="10,0,0,0">
                                 <Border BorderThickness="0">
                                     <Border.BorderBrush>
@@ -594,7 +594,7 @@
                             </CheckBox.Foreground>
                         </CheckBox>
                         <StackPanel Orientation="Horizontal" Grid.Column="1">
-                            <Button IsEnabled="{Binding Readiness, ElementName=CN, UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource ButtonStyle-001}" Width="170" Foreground="White" Content="{Binding CreateButtonText, ElementName=CN, UpdateSourceTrigger=PropertyChanged}" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" BorderThickness="0" FontSize="13" Height="35">
+                            <Button x:Name="CreateNomenclatureButton" IsEnabled="{Binding Readiness, ElementName=CN, UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource ButtonStyle-001}" Width="170" Foreground="White" Content="{Binding CreateButtonText, ElementName=CN, UpdateSourceTrigger=PropertyChanged}" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" BorderThickness="0" FontSize="13" Height="35" Click="CreateNomenclatureButton_Click">
                                 <Button.Background>
                                     <SolidColorBrush Color="{DynamicResource Blue-001}"/>
                                 </Button.Background>

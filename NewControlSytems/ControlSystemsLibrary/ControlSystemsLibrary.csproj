@@ -76,6 +76,9 @@
     <Compile Include="Controls\LoaderCubes.xaml.cs">
       <DependentUpon>LoaderCubes.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\NomenPropertyUC.xaml.cs">
+      <DependentUpon>NomenPropertyUC.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Services\Cryption.cs" />
     <Compile Include="Services\DataBaseRequest.cs" />
     <Compile Include="Services\GetColor.cs" />
@@ -120,6 +123,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\LoaderCubes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\NomenPropertyUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -8,8 +8,8 @@
              mc:Ignorable="d" 
              x:Name="AUUC"
              d:DesignHeight="30" d:DesignWidth="606" Height="30" Loaded="AUUC_Loaded">
-    
-    
+
+
     <UserControl.Resources>
 
         <Style x:Key="ComboBoxFocusVisual">
@@ -243,7 +243,7 @@
         </Style>
         <Storyboard x:Key="ReadinessFalse">
             <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)" Storyboard.TargetName="border">
-                <EasingColorKeyFrame KeyTime="0" Value="#FFFF5858"/>
+                <EasingColorKeyFrame KeyTime="0" Value="#FFFF545F"/>
                 <EasingColorKeyFrame KeyTime="0:0:0.2" Value="White"/>
             </ColorAnimationUsingKeyFrames>
         </Storyboard>
@@ -259,7 +259,7 @@
                 <ColumnDefinition Width="165"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <ComboBox x:Name="UnitsComboBox" x:FieldModifier="public" Background="Transparent" BorderThickness="0" Margin="0" VerticalContentAlignment="Center" Padding="10,3,4,3" FontFamily="/ShuhratControlLibrary;component/Fonts/#Roboto" Style="{DynamicResource ComboBoxStyle1}">
+            <ComboBox x:Name="UnitsComboBox" x:FieldModifier="public" Background="Transparent" BorderThickness="0" Margin="0" VerticalContentAlignment="Center" Padding="10,3,4,3" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Style="{DynamicResource ComboBoxStyle1}">
                 <ComboBox.BorderBrush>
                     <SolidColorBrush Color="{DynamicResource Light-005}"/>
                 </ComboBox.BorderBrush>
@@ -272,7 +272,7 @@
                     <SolidColorBrush Color="{DynamicResource Light-005}"/>
                 </Rectangle.Fill>
             </Rectangle>
-            <TextBox x:Name="QuantityTextBox" x:FieldModifier="public" Text="{Binding QuantityText, ElementName=AUUC, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" BorderThickness="0" BorderBrush="Transparent" Margin="0" VerticalContentAlignment="Center" Padding="9,1,1,1" FontFamily="/ShuhratControlLibrary;component/Fonts/#Roboto" Background="{x:Null}" GotFocus="TextBoxGotFocus" LostFocus="TextBoxLostFocus" PreviewTextInput="DigitText_PreviewTextInput" KeyDown="TextBox_KeyDown">
+            <TextBox x:Name="QuantityTextBox" x:FieldModifier="public" Text="{Binding QuantityText, ElementName=AUUC, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" BorderThickness="0" BorderBrush="Transparent" Margin="0" VerticalContentAlignment="Center" Padding="9,1,1,1" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Background="{x:Null}" GotFocus="TextBoxGotFocus" LostFocus="TextBoxLostFocus" PreviewTextInput="DigitText_PreviewTextInput" KeyDown="TextBox_KeyDown">
                 <TextBox.Foreground>
                     <SolidColorBrush Color="{DynamicResource Blue-004}"/>
                 </TextBox.Foreground>
@@ -282,7 +282,7 @@
                     <SolidColorBrush Color="{DynamicResource Light-005}"/>
                 </Rectangle.Fill>
             </Rectangle>
-            <TextBox x:Name="WeightTextBox" Text="{Binding WeightText, ElementName=AUUC, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" BorderThickness="0" BorderBrush="Transparent" Margin="0" VerticalContentAlignment="Center" Padding="9,1,1,1" FontFamily="/ShuhratControlLibrary;component/Fonts/#Roboto" Background="{x:Null}" GotFocus="TextBoxGotFocus" LostFocus="TextBoxLostFocus" PreviewTextInput="DigitText_PreviewTextInput" KeyDown="TextBox_KeyDown">
+            <TextBox x:Name="WeightTextBox" Text="{Binding WeightText, ElementName=AUUC, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Grid.Column="2" BorderThickness="0" BorderBrush="Transparent" Margin="0" VerticalContentAlignment="Center" Padding="9,1,1,1" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Background="{x:Null}" GotFocus="TextBoxGotFocus" LostFocus="TextBoxLostFocus" PreviewTextInput="DigitText_PreviewTextInput" KeyDown="TextBox_KeyDown">
                 <TextBox.Foreground>
                     <SolidColorBrush Color="{DynamicResource Blue-004}"/>
                 </TextBox.Foreground>
@@ -304,7 +304,7 @@
                             </TransformGroup>
                         </Rectangle.RenderTransform>
                         <Rectangle.Fill>
-                            <SolidColorBrush Color="{DynamicResource Dark-002}"/>
+                            <SolidColorBrush Color="{DynamicResource Purpure-002}"/>
                         </Rectangle.Fill>
                     </Rectangle>
                     <Rectangle Width="12" Height="1.5" RenderTransformOrigin="0.5,0.5" Margin="0,0.25">
@@ -317,7 +317,7 @@
                             </TransformGroup>
                         </Rectangle.RenderTransform>
                         <Rectangle.Fill>
-                            <SolidColorBrush Color="{DynamicResource Dark-002}"/>
+                            <SolidColorBrush Color="{DynamicResource Purpure-002}"/>
                         </Rectangle.Fill>
                     </Rectangle>
                 </Grid>

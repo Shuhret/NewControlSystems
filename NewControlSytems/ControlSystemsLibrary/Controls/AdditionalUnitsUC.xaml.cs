@@ -63,8 +63,7 @@ namespace ControlSystemsLibrary.Controls
                 baseUnitName = value;
 
                 if (Quantity > 0)
-                    QuantityText = Quantity + " " + baseUnitName;
-
+                    QuantityText = string.Format("{0:0.000}", quantity) + " " + BaseUnitName;
                 OnPropertyChanged();
             }
         }
@@ -125,8 +124,9 @@ namespace ControlSystemsLibrary.Controls
 
                 if (value > 0)
                 {
-                    QuantityText = quantity + " " + BaseUnitName;
-                    Weight = Quantity * BaseUnitWeight;
+                    //string.Format("{0:0.000}", 25.657446842);
+                    QuantityText = string.Format("{0:0.000}", quantity) + " " + BaseUnitName;
+                    Weight = Math.Round((Quantity * BaseUnitWeight), 3); 
                 }
                 else
                 {
@@ -157,9 +157,12 @@ namespace ControlSystemsLibrary.Controls
             set
             {
                 weight = value;
+                OnPropertyChanged();
                 if (value > 0)
                 {
-                    WeightText = value.ToString() + " кг";
+                    //string.Format("{0:0.00}", 25.657446842);
+                    //WeightText = (Math.Round(weight, 3)).ToString() + " кг";
+                    WeightText = string.Format("{0:0.000}", weight) + " кг";
                 }
                 else
                 {
@@ -167,7 +170,6 @@ namespace ControlSystemsLibrary.Controls
                 }
                 CheckWeight();
                 CheckReadiness();
-                OnPropertyChanged();
             }
         }
         private string weightText;
@@ -249,6 +251,8 @@ namespace ControlSystemsLibrary.Controls
                 }
             }
         }
+
+
 
         private void DigitText_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
@@ -345,6 +349,18 @@ namespace ControlSystemsLibrary.Controls
                             WeightTextBox.Focus();
                             WeightTextBox.SelectionStart = 0;
                             WeightTextBox.SelectionLength = WeightTextBox.Text.Length;
+                            break;
+                        case "WeightTextBox":
+                            {
+                                // Все это для снятия фокуса с WeightTextBox
+                                FrameworkElement parent = (FrameworkElement)textBox.Parent;
+                                while (parent != null && parent is IInputElement && !((IInputElement)parent).Focusable)
+                                {
+                                    parent = (FrameworkElement)parent.Parent;
+                                }
+                                DependencyObject scope = FocusManager.GetFocusScope(textBox);
+                                FocusManager.SetFocusedElement(scope, parent as IInputElement);
+                            }
                             break;
                     }
                 }

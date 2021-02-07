@@ -136,6 +136,7 @@ namespace ControlSystemsLibrary.Controls
             set
             {
                 baseUnitWeight = value;
+                CheckAddedUnitsWeight();
                 OnPropertyChanged();
             }
         }
@@ -290,12 +291,15 @@ namespace ControlSystemsLibrary.Controls
                     double num;
                     if (double.TryParse(box.Text, out num))
                     {
+
                         double num2 = Math.Round(Convert.ToDouble(box.Text), 3);
 
                         if (num2 > 0.0)
                         {
                             BaseUnitWeight = num2;
-                            BaseUnitWeightText = BaseUnitWeight.ToString() + " кг";
+                            //string.Format("{0:0.000}", 25.657446842);
+
+                            BaseUnitWeightText = string.Format("{0:0.000}", BaseUnitWeight) + " кг";
                         }
                         else
                         {
@@ -446,14 +450,9 @@ namespace ControlSystemsLibrary.Controls
             }
         }
 
-
-
-
-
         // Событие: Click (Для добавления новой Доп. Единицы измерения) ----------------------------------------------------------------------
         private void AddAddUnitButton_Click(object sender, RoutedEventArgs e)
         {
-
             if (this.CheckReadinessAddUnits())
             {
                 AdditionalUnitsUC AUUC = new AdditionalUnitsUC
@@ -537,7 +536,15 @@ namespace ControlSystemsLibrary.Controls
             }
         }
 
-
+        // Двойной клик по StackPanel для добавления Доп. единицы ----------------------------------------------------------------------------
+        private void AddUnitsStackPanel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ClickCount == 2)
+            {
+                AddAddUnitButton_Click(null, null);
+            }
+        }
+    
         #endregion :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 
@@ -591,7 +598,6 @@ namespace ControlSystemsLibrary.Controls
             }
         }
 
-
         // Метод: Проверяет указаны-ли важные значения для создания номенклатуры -------------------------------------------------------------
         private void CheckMainValues()
         {
@@ -604,11 +610,6 @@ namespace ControlSystemsLibrary.Controls
                 Readiness = false;
             }
         }
-
-
-
-
-
 
 
 
@@ -686,8 +687,229 @@ namespace ControlSystemsLibrary.Controls
                 }
             }
         }
+
+
+        private void CheckAddedUnitsWeight()
+        {
+            if(AddUnitsStackPanel.Children.Count > 0)
+            {
+                foreach(AdditionalUnitsUC AUUC in AddUnitsStackPanel.Children)
+                {
+                    AUUC.BaseUnitWeight = BaseUnitWeight;
+                    AUUC.Quantity = AUUC.Quantity;
+                }
+            }
+        }
+
+
+
         #endregion :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
+        // Событие: Click (Для добавления нового свойства) -----------------------------------------------------------------------------------
+        private void AddPropertyButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (CheckReadinessProperties())
+            {
+                NomenPropertyUC NPUC = new NomenPropertyUC();
+                NPUC.PropertyComboBox.SelectionChanged += PropertyComboBox_SelectionChanged;
+                NPUC.ValueComboBox.SelectionChanged += ValueComboBox_SelectionChanged;
+                LoadPropertiesInComboBox(ref NPUC.PropertyComboBox);
 
+                NPUC.PropertyComboBox.IsDropDownOpen = true;
+                AddPropertiesStackPanel.Children.Add(NPUC);
+                (AddPropertiesStackPanel.Parent as ScrollViewer).ScrollToEnd();
+            }
+        }
+
+
+        // Метод: Проверяет "Готовность" созданных свойств и значений ------------------------------------------------------------------------
+        private bool CheckReadinessProperties()
+        {
+            bool readiness = true;
+            if (AddPropertiesStackPanel.Children.Count == 0)
+            {
+                return readiness;
+            }
+            foreach (NomenPropertyUC NPUC in AddPropertiesStackPanel.Children)
+            {
+                if (!NPUC.Readiness)
+                {
+                    readiness = false;
+                }
+            }
+            return readiness;
+        }
+
+        // Метод: Загружает Свойства в ComboBox из базы данных -------------------------------------------------------------------------------
+        private void LoadPropertiesInComboBox(ref ComboBox CBX)
+        {
+            ArrayList allNomenProperties = DataBaseRequest.GetAllNomenProperties(CurrentCryptConnectionString);
+            CBX.Items.Clear();
+            foreach (object obj2 in allNomenProperties)
+            {
+                ComboBoxItem newItem = new ComboBoxItem
+                {
+                    Content = obj2.ToString(),
+                    Height = 25.0,
+                    Padding = new Thickness(10.0, 1.0, 1.0, 1.0),
+                    Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF3B5BA6"))
+                };
+                CBX.Items.Add(newItem);
+            }
+        }
+
+        // Двойной клик по StackPanel для добавления свойства и значения
+        private void AddPropertiesStackPanel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ClickCount == 2)
+            {
+                AddPropertyButton_Click(null, null);
+            }
+        }
+
+        // Событие: SelectionChanged (Для ComboBox Свойство ) --------------------------------------------------------------------------------
+        private void PropertyComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (sender is ComboBox)
+            {
+                ComboBox propertyComboBox = sender as ComboBox;
+                ComboBox valueComboBox = (((propertyComboBox.Parent as Grid).Parent as Border).Parent as NomenPropertyUC).ValueComboBox;
+                NomenPropertyUC NPUC = ((propertyComboBox.Parent as Grid).Parent as Border).Parent as NomenPropertyUC;
+
+                LoadValuesInComboBox(ref valueComboBox, (propertyComboBox.SelectedItem as ComboBoxItem).Content.ToString());
+                if (CreateMode)
+                {
+                    SetPropertyesReadiness();
+                    valueComboBox.IsDropDownOpen = true;
+                }
+            }
+        }
+
+        // Событие: SelectionChanged (Для ComboBox Значение ) --------------------------------------------------------------------------------
+        private void ValueComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (sender is ComboBox)
+            {
+                ComboBox box = sender as ComboBox;
+                NomenPropertyUC NPUC = ((box.Parent as Grid).Parent as Border).Parent as NomenPropertyUC;
+
+                if (box.SelectedItem != null)
+                {
+                    if(!CheckAlreadyCreated(NPUC))
+                    {
+                        MessageBox.Show("Свойство " + '"' + (NPUC.PropertyComboBox.SelectedItem as ComboBoxItem).Content.ToString() + '"' + " с значением " + '"' + (NPUC.ValueComboBox.SelectedItem as ComboBoxItem).Content.ToString() + '"' + " уже имеется в списке!", "Внимание!");
+                        box.SelectedItem = null;
+                        box.IsDropDownOpen = true;
+                    }
+                    else
+                    {
+                        SetPropertyesReadiness();
+                    }
+                }
+            }
+        }
+
+        // Метод: Проверяет на повторение ранее созданных свойств и значений -----------------------------------------------------------------
+        private bool CheckAlreadyCreated(NomenPropertyUC CheckedNPUC)
+        {
+            bool readiness = true;
+            string property = (CheckedNPUC.PropertyComboBox.SelectedItem as ComboBoxItem).Content.ToString();
+            string value = (CheckedNPUC.ValueComboBox.SelectedItem as ComboBoxItem).Content.ToString();
+            foreach (NomenPropertyUC NPUC in AddPropertiesStackPanel.Children)
+            {
+                if (NPUC.ID != CheckedNPUC.ID)
+                {
+                    if ((NPUC.PropertyComboBox.SelectedItem as ComboBoxItem).Content.ToString() == property && (NPUC.ValueComboBox.SelectedItem as ComboBoxItem).Content.ToString() == value)
+                    {
+                        NPUC.Readiness = false;
+                        readiness = NPUC.Readiness;
+                        NPUC.Readiness = true;
+                        break; 
+                    }
+                }
+            }
+            return readiness;
+        }
+
+        private void SetPropertyesReadiness()
+        {
+            foreach (NomenPropertyUC NPUC in AddPropertiesStackPanel.Children)
+            {
+                if (NPUC.PropertyComboBox.SelectedItem != null && NPUC.ValueComboBox.SelectedItem != null)
+                {
+                    NPUC.Readiness = true;
+                }
+                else
+                {
+                    NPUC.Readiness = false;
+                }
+            }
+        }
+
+
+        // Метод: Загружает Значения в ComboBox элемента "Свойства и значения" из базы данных ------------------------------------------------
+        private void LoadValuesInComboBox(ref ComboBox CBX, string Property)
+        {
+            ArrayList allNomenPropertyValues = DataBaseRequest.GetAllNomenPropertyValues(CurrentCryptConnectionString, Property);
+            CBX.Items.Clear();
+            foreach (object obj2 in allNomenPropertyValues)
+            {
+                ComboBoxItem newItem = new ComboBoxItem
+                {
+                    Content = obj2.ToString(),
+                    Height = 25.0,
+                    Padding = new Thickness(10.0, 1.0, 1.0, 1.0),
+                    Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF3B5BA6"))
+                };
+                CBX.Items.Add(newItem);
+            }
+        }
+
+        private void CN_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.Escape)
+            {
+                CCND();
+            }
+        }
+
+        // Событие: Клик кнопки "СОЗДАТЬ"
+        private void CreateNomenclatureButton_Click(object sender, RoutedEventArgs e)
+        {
+            RemoveReadinessFalseAddedUnits();
+            RemoveReadinessFalseProperties();
+        }
+
+        // Метод: Удаляет не готовые дополнительные единицы
+        private void RemoveReadinessFalseAddedUnits()
+        {
+            if (AddUnitsStackPanel.Children.Count > 0)
+            {
+                foreach (AdditionalUnitsUC AUUC in AddUnitsStackPanel.Children)
+                {
+                    if (AUUC.Readiness == false)
+                    {
+                        AddUnitsStackPanel.Children.Remove(AUUC);
+                        break;
+                    }
+                }
+            }
+        }
+
+        // Метод: Удаляет не готовые свойства и значения
+        private void RemoveReadinessFalseProperties()
+        {
+            if (AddPropertiesStackPanel.Children.Count > 0)
+            {
+                foreach (NomenPropertyUC NPUC in AddPropertiesStackPanel.Children)
+                {
+                    if (NPUC.Readiness == false)
+                    {
+                        AddPropertiesStackPanel.Children.Remove(NPUC);
+                        break;
+                    }
+                }
+            }
+        }
     }
 }

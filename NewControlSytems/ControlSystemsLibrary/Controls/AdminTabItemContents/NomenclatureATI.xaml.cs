@@ -311,7 +311,11 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
                 SearchedText = "";
                 e.Handled = true;
             }
-
+            if (e.Key == Key.N && e.KeyboardDevice.Modifiers == ModifierKeys.Control)
+            {
+                CreateNomenclatureButtonClick(null, null);
+                e.Handled = true;
+            }
 
         }
 
@@ -561,6 +565,7 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
         private void CloseCreateNomenclature()
         {
             CreateNemenclatureUC = null;
+            SelectDataGridRow();
         }
 
         #endregion :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::

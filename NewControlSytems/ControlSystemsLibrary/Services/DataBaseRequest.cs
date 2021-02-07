@@ -131,6 +131,74 @@ namespace ControlSystemsLibrary.Services
             return list;
         }
 
+        //---Метод: Загружает все свойства номенклатуры (ХП)-------------------------------------------------------------
+        public static ArrayList GetAllNomenProperties(string Connectionstring)
+        {
+            ArrayList list = new ArrayList();
+            using (SqlConnection connect = new SqlConnection(Cryption.Decrypt(Connectionstring)))
+            {
+                try
+                {
+                    connect.Open();
+                    SqlCommand command = new SqlCommand("GetAllNomenProperties", connect);
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    SqlDataReader reading = command.ExecuteReader();
+
+                    while (reading.Read())
+                    {
+                        list.Add(reading.GetValue(0).ToString());
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "GetAllNomenProperties");
+                }
+            }
+            return list;
+        }
+
+        //---Метод: Загружает все значения свойства номенклатуры (ХП)----------------------------------------------------
+        public static ArrayList GetAllNomenPropertyValues(string Connectionstring, string PropertyName)
+        {
+            ArrayList list = new ArrayList();
+            using (SqlConnection connect = new SqlConnection(Cryption.Decrypt(Connectionstring)))
+            {
+                try
+                {
+                    connect.Open();
+                    SqlCommand command = new SqlCommand("GetPropertyValues", connect);
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    SqlParameter Param0 = new SqlParameter { ParameterName = "@PropertyName", Value = PropertyName }; //---Передаваемый параметр
+                    command.Parameters.Add(Param0);
+
+                    command.ExecuteNonQuery();
+
+                    SqlDataReader reading = command.ExecuteReader();
+
+                    while (reading.Read())
+                    {
+                        list.Add(reading.GetValue(0).ToString());
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "GetAllNomenPropertyValues");
+                }
+            }
+            return list;
+        }
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -164,64 +232,8 @@ namespace ControlSystemsLibrary.Services
 
 
 
-        ////---Метод: Загружает все свойства номенклатуры (ХП)-------------------------------------------------------------
-        //public static ArrayList GetAllNomenProperties()
-        //{
-        //    ArrayList list = new ArrayList();
-        //    using (SqlConnection connect = new SqlConnection(Cryption.Decrypt(XmlClass.GetSelectedConnectionString())))
-        //    {
-        //        try
-        //        {
-        //            connect.Open();
-        //            SqlCommand command = new SqlCommand("GetAllNomenProperties", connect);
-        //            command.CommandType = CommandType.StoredProcedure;
 
-        //            SqlDataReader reading = command.ExecuteReader();
 
-        //            while (reading.Read())
-        //            {
-        //                list.Add(reading.GetValue(0).ToString());
-        //            }
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            MessageBox.Show(ex.Message, "GetAllNomenProperties");
-        //        }
-        //    }
-        //    return list;
-        //}
-
-        ////---Метод: Загружает все значения свойства номенклатуры (ХП)----------------------------------------------------
-        //public static ArrayList GetAllNomenPropertyValues(string PropertyName)
-        //{
-        //    ArrayList list = new ArrayList();
-        //    using (SqlConnection connect = new SqlConnection(Cryption.Decrypt(XmlClass.GetSelectedConnectionString())))
-        //    {
-        //        try
-        //        {
-        //            connect.Open();
-        //            SqlCommand command = new SqlCommand("GetPropertyValues", connect);
-        //            command.CommandType = CommandType.StoredProcedure;
-
-        //            SqlParameter Param0 = new SqlParameter { ParameterName = "@PropertyName", Value = PropertyName }; //---Передаваемый параметр
-        //            command.Parameters.Add(Param0);
-
-        //            command.ExecuteNonQuery();
-
-        //            SqlDataReader reading = command.ExecuteReader();
-
-        //            while (reading.Read())
-        //            {
-        //                list.Add(reading.GetValue(0).ToString());
-        //            }
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            MessageBox.Show(ex.Message, "GetAllNomenPropertyValues");
-        //        }
-        //    }
-        //    return list;
-        //}
 
 
 
