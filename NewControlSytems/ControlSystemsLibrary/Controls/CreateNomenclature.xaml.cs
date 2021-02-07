@@ -233,11 +233,21 @@ namespace ControlSystemsLibrary.Controls
             StartMethod();
         }
 
+        // Событие: Клик кнопки "СОЗДАТЬ"
+        private void CreateNomenclatureButton_Click(object sender, RoutedEventArgs e)
+        {
+            RemoveReadinessFalseAddedUnits();
+            RemoveReadinessFalseProperties();
+        }
+
+
         private void StartMethod()
         {
             CreateNomenclatureTabControl.SelectedIndex = 0;
             LoadUnits();
             LoadCountry();
+            LoadBarcodeTypes();
+            ArticleTextBox.Focus();
 
             if (CreateMode == true)
             {
@@ -251,9 +261,7 @@ namespace ControlSystemsLibrary.Controls
 
         async void CreatedModeMethod()
         {
-            ArticleTextBox.Focus();
             CreateButtonText = "Создать";
-
         }
         async void EditModeMethod()
         {
@@ -598,6 +606,31 @@ namespace ControlSystemsLibrary.Controls
             }
         }
 
+        // Метод: Загружает Типы штрих-кодов в ComboBox из базы данных -----------------------------------------------------------------------
+        async void LoadBarcodeTypes()
+        {
+            ArrayList barcodeTypes = new ArrayList();
+            await Task.Run(() =>
+            {
+                barcodeTypes = DataBaseRequest.GetBarcodeTypes(CurrentCryptConnectionString);
+
+            });
+            BarcodeTypesComboBox.Items.Clear();
+            foreach (object obj2 in barcodeTypes)
+            {
+                ComboBoxItem newItem = new ComboBoxItem
+                {
+                    Content = obj2.ToString(),
+                    Height = 25.0,
+                    Padding = new Thickness(10.0, 1.0, 1.0, 1.0),
+                    Foreground = GetColor.Get("Blue-004"),
+                };
+                BarcodeTypesComboBox.Items.Add(newItem);
+            }
+
+        }
+
+
         // Метод: Проверяет указаны-ли важные значения для создания номенклатуры -------------------------------------------------------------
         private void CheckMainValues()
         {
@@ -610,8 +643,6 @@ namespace ControlSystemsLibrary.Controls
                 Readiness = false;
             }
         }
-
-
 
         // Метод: Проверяет "Готовность" созданных Доп. Единиц измерения ---------------------------------------------------------------------
         private bool CheckReadinessAddUnits()
@@ -687,7 +718,6 @@ namespace ControlSystemsLibrary.Controls
                 }
             }
         }
-
 
         private void CheckAddedUnitsWeight()
         {
@@ -780,6 +810,7 @@ namespace ControlSystemsLibrary.Controls
                 if (CreateMode)
                 {
                     SetPropertyesReadiness();
+                    valueComboBox.Focus();
                     valueComboBox.IsDropDownOpen = true;
                 }
             }
@@ -873,12 +904,6 @@ namespace ControlSystemsLibrary.Controls
             }
         }
 
-        // Событие: Клик кнопки "СОЗДАТЬ"
-        private void CreateNomenclatureButton_Click(object sender, RoutedEventArgs e)
-        {
-            RemoveReadinessFalseAddedUnits();
-            RemoveReadinessFalseProperties();
-        }
 
         // Метод: Удаляет не готовые дополнительные единицы
         private void RemoveReadinessFalseAddedUnits()

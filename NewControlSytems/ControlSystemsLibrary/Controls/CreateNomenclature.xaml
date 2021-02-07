@@ -456,7 +456,7 @@
                                                         <Border.Background>
                                                             <SolidColorBrush Color="{DynamicResource Light-001}"/>
                                                         </Border.Background>
-                                                        <ComboBox Style="{DynamicResource ComboBoxStyle1}" Background="Transparent" BorderThickness="0">
+                                                        <ComboBox x:Name="BarcodeTypesComboBox" Style="{DynamicResource ComboBoxStyle1}" Background="Transparent" BorderThickness="0">
                                                             <ComboBox.BorderBrush>
                                                                 <SolidColorBrush Color="{DynamicResource Light-004}"/>
                                                             </ComboBox.BorderBrush>

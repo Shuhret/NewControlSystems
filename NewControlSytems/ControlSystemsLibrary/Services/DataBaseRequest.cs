@@ -190,43 +190,31 @@ namespace ControlSystemsLibrary.Services
             return list;
         }
 
+        //---Метод: Возвращает из базы данных Типы Штрих кодов----------------------------------------------------------
+        public static ArrayList GetBarcodeTypes(string Connectionstring)
+        {
+            ArrayList list = new ArrayList();
+            using (SqlConnection connect = new SqlConnection(Cryption.Decrypt(Connectionstring)))
+            {
+                try
+                {
+                    connect.Open();
+                    SqlCommand command = connect.CreateCommand(); // Создание команды
+                    command.CommandText = "SELECT [TypeName] FROM [dbo].[BarсodeTypes] ORDER BY [TypeName]"; // Текст команды
+                    SqlDataReader reading = command.ExecuteReader();
 
-
-
-
-
-
-
-
-
-
-
-
-        ////---Метод: Возвращает из базы данных Типы Штрих кодов----------------------------------------------------------
-        //public static ArrayList GetBarcodeTypes()
-        //{
-        //    ArrayList list = new ArrayList();
-        //    using (SqlConnection connect = new SqlConnection(Cryption.Decrypt(XmlClass.GetSelectedConnectionString())))
-        //    {
-        //        try
-        //        {
-        //            connect.Open();
-        //            SqlCommand command = connect.CreateCommand(); // Создание команды
-        //            command.CommandText = "SELECT [TypeName] FROM [dbo].[BarсodeTypes] ORDER BY [TypeName]"; // Текст команды
-        //            SqlDataReader reading = command.ExecuteReader();
-
-        //            while (reading.Read())
-        //            {
-        //                list.Add(reading.GetValue(0).ToString());
-        //            }
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            MessageBox.Show(ex.Message, "Пиздец кароче нахуй блядь!");
-        //        }
-        //    }
-        //    return list;
-        //}
+                    while (reading.Read())
+                    {
+                        list.Add(reading.GetValue(0).ToString());
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Пиздец кароче нахуй блядь!");
+                }
+            }
+            return list;
+        }
 
 
 
