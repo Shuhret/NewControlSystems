@@ -38,6 +38,9 @@ namespace ControlSystemsLibrary.Views
         #endregion
 
         LockInterfaceDelegate LockInterface;
+
+        public string CurrentCryptConnectionString;
+        // Констуктор
         public Administrator(string CurrentUserName, string CurrentConnectionName, string CurrentCryptConnectionString, LockInterfaceDelegate LockInterface)
         {
             this.CurrentUserName = CurrentUserName;
@@ -59,10 +62,6 @@ namespace ControlSystemsLibrary.Views
             }
         }
 
-        private void ClickTopLockButton(object sender, RoutedEventArgs e)
-        {
-            LockInterface();
-        }
 
 
         private string currentUserName = "";
@@ -76,7 +75,6 @@ namespace ControlSystemsLibrary.Views
             }
         }
 
-
         private string currentConnectionName = "";
         public string CurrentConnectionName
         {
@@ -87,20 +85,6 @@ namespace ControlSystemsLibrary.Views
                 OnPropertyChanged();
             }
         }
-
-
-        private string currentCryptConnectionString = "";
-        public string CurrentCryptConnectionString
-        {
-            get => currentCryptConnectionString;
-            set
-            {
-                if (Equals(currentCryptConnectionString, value)) return;
-                currentCryptConnectionString = value;
-                OnPropertyChanged();
-            }
-        }
-
 
         private double adminTabControlActualWidth = 0;
         public double AdminTabControlActualWidth
@@ -114,7 +98,6 @@ namespace ControlSystemsLibrary.Views
             }
         }
 
-
         private Thickness tabControlBorderThickness = new Thickness(0);
         public Thickness TabControlBorderThickness
         {
@@ -126,6 +109,10 @@ namespace ControlSystemsLibrary.Views
             }
         }
 
+        private void ClickTopLockButton(object sender, RoutedEventArgs e)
+        {
+            LockInterface();
+        }
         private void ATI_Closed(object sender, EventArgs e)
         {
             AdminTabItem ATI = sender as AdminTabItem;
@@ -300,7 +287,7 @@ namespace ControlSystemsLibrary.Views
                 case "MenuButtonVozvratpostavshiku": return null;
                 case "MenuButtonOtchetPostavshiku": return null;
 
-                case "MenuButtonNomenclatura": return new NomenclatureATI();
+                case "MenuButtonNomenclatura": return new NomenclatureATI(CurrentCryptConnectionString);
                 default: return null;
 
             }

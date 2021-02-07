@@ -88,7 +88,7 @@
                             </Grid>
                         </Button>
                     </Grid>
-                    <TabControl Grid.Row="1" Background="Transparent" Style="{DynamicResource CreateNomenclatureTabControlStyle}" BorderThickness="1,0,0,0" Margin="20,10,20,0" Padding="0" TabStripPlacement="Left">
+                    <TabControl x:Name="CreateNomenclatureTabControl" Grid.Row="1" Background="Transparent" Style="{DynamicResource CreateNomenclatureTabControlStyle}" BorderThickness="1,0,0,0" Margin="20,10,20,0" Padding="0" TabStripPlacement="Left">
                         <TabControl.BorderBrush>
                             <SolidColorBrush Color="{DynamicResource Light-005}"/>
                         </TabControl.BorderBrush>
@@ -123,7 +123,7 @@
                                                 <Border.Background>
                                                     <SolidColorBrush Color="{DynamicResource Light-001}"/>
                                                 </Border.Background>
-                                                <TextBox Background="Transparent" BorderThickness="0" VerticalContentAlignment="Center" Padding="5,1,1,1">
+                                                <TextBox x:Name="ArticleTextBox" Text="{Binding Article, ElementName=CN, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Center" Padding="5,1,1,1" KeyDown="TextBox_KeyDown" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto">
                                                     <TextBox.Foreground>
                                                         <SolidColorBrush Color="{DynamicResource Blue-004}"/>
                                                     </TextBox.Foreground>
@@ -131,7 +131,7 @@
                                             </Border>
                                         </StackPanel>
                                         <StackPanel Grid.Column="2" Grid.ColumnSpan="5">
-                                            <TextBlock Text="Наименование" Margin="4,0,0,2">
+                                            <TextBlock Text="Наименование*" Margin="4,0,0,2">
                                                 <TextBlock.Foreground>
                                                     <SolidColorBrush Color="{DynamicResource Dark-001}"/>
                                                 </TextBlock.Foreground>
@@ -143,7 +143,7 @@
                                                 <Border.Background>
                                                     <SolidColorBrush Color="{DynamicResource Light-001}"/>
                                                 </Border.Background>
-                                                <TextBox Background="Transparent" BorderThickness="0" VerticalContentAlignment="Center" Padding="5,1,1,1">
+                                                <TextBox x:Name="NomenNameTextBox" Text="{Binding NomenclatureName, ElementName=CN, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Center" Padding="5,1,1,1" KeyDown="TextBox_KeyDown" TextChanged="TextBoxes_TextChanged" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto">
                                                     <TextBox.Foreground>
                                                         <SolidColorBrush Color="{DynamicResource Blue-004}"/>
                                                     </TextBox.Foreground>
@@ -162,7 +162,7 @@
                                             <ColumnDefinition Width="1*"/>
                                         </Grid.ColumnDefinitions>
                                         <StackPanel>
-                                            <TextBlock Text="Базовая единица" Margin="4,0,0,2">
+                                            <TextBlock Text="Базовая единица*" Margin="4,0,0,2">
                                                 <TextBlock.Foreground>
                                                     <SolidColorBrush Color="{DynamicResource Dark-001}"/>
                                                 </TextBlock.Foreground>
@@ -174,7 +174,7 @@
                                                 <Border.Background>
                                                     <SolidColorBrush Color="{DynamicResource Light-001}"/>
                                                 </Border.Background>
-                                                <ComboBox Style="{DynamicResource ComboBoxStyle1}" Background="Transparent" BorderThickness="0">
+                                                <ComboBox x:Name="BaseUnitComboBox" Style="{DynamicResource ComboBoxStyle1}" Background="Transparent" BorderThickness="0" SelectionChanged="BaseUnitNameComboBoxSelectionChanged" VerticalContentAlignment="Center" Padding="10,3,4,3" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto">
                                                     <ComboBox.BorderBrush>
                                                         <SolidColorBrush Color="{DynamicResource Light-004}"/>
                                                     </ComboBox.BorderBrush>
@@ -185,7 +185,7 @@
                                             </Border>
                                         </StackPanel>
                                         <StackPanel Grid.Column="2">
-                                            <TextBlock Text="Вес базовой единицы" Margin="4,0,0,2">
+                                            <TextBlock Text="Вес базовой единицы*" Margin="4,0,0,2">
                                                 <TextBlock.Foreground>
                                                     <SolidColorBrush Color="{DynamicResource Dark-001}"/>
                                                 </TextBlock.Foreground>
@@ -197,7 +197,7 @@
                                                 <Border.Background>
                                                     <SolidColorBrush Color="{DynamicResource Light-001}"/>
                                                 </Border.Background>
-                                                <TextBox Background="Transparent" BorderThickness="0" VerticalContentAlignment="Center" Padding="5,1,1,1">
+                                                <TextBox x:Name="TextBoxBaseWeight" Text="{Binding BaseUnitWeightText, ElementName=CN, UpdateSourceTrigger=PropertyChanged}"  Background="Transparent" BorderThickness="0" VerticalContentAlignment="Center" Padding="5,1,1,1" KeyDown="TextBox_KeyDown" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" GotFocus="TextBoxBaseWeight_GotFocus" LostFocus="TextBoxBaseWeight_LostFocus" PreviewTextInput="DigitText_PreviewTextInput" TextChanged="TextBoxes_TextChanged">
                                                     <TextBox.Foreground>
                                                         <SolidColorBrush Color="{DynamicResource Blue-004}"/>
                                                     </TextBox.Foreground>
@@ -217,7 +217,7 @@
                                                 <Border.Background>
                                                     <SolidColorBrush Color="{DynamicResource Light-001}"/>
                                                 </Border.Background>
-                                                <ComboBox Style="{DynamicResource ComboBoxStyle1}" Background="Transparent" BorderThickness="0">
+                                                <ComboBox x:Name="ComboBoxCountry" Style="{DynamicResource ComboBoxStyle1}" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Center" Padding="10,3,4,3" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" SelectionChanged="ComboBoxCountry_SelectionChanged">
                                                     <ComboBox.BorderBrush>
                                                         <SolidColorBrush Color="{DynamicResource Light-004}"/>
                                                     </ComboBox.BorderBrush>
@@ -241,7 +241,7 @@
                                     <Border.Background>
                                         <SolidColorBrush Color="{DynamicResource Light-001}"/>
                                     </Border.Background>
-                                    <TextBox Background="Transparent" BorderThickness="0" VerticalContentAlignment="Center" Padding="5,1,1,1">
+                                    <TextBox x:Name="DescriptionTextBox" Text="{Binding Description, ElementName=CN, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" AcceptsReturn="True" Background="Transparent" BorderThickness="0" Padding="10,5" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto">
                                         <TextBox.Foreground>
                                             <SolidColorBrush Color="{DynamicResource Blue-004}"/>
                                         </TextBox.Foreground>
@@ -249,7 +249,7 @@
                                 </Border>
                             </Grid>
                         </TabItem>
-                        <TabItem Width="170" Style="{DynamicResource CreateNomenclatureTabItemStyle}" HorizontalContentAlignment="Stretch" Height="45" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" Padding="1,3,1,1" Background="Transparent" FontSize="13">
+                        <TabItem IsEnabled="{Binding Readiness, ElementName=CN, UpdateSourceTrigger=PropertyChanged}" Width="170" Style="{DynamicResource CreateNomenclatureTabItemStyle}" HorizontalContentAlignment="Stretch" Height="45" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" Padding="1,3,1,1" Background="Transparent" FontSize="13">
                             <TabItem.Header>
                                 <TextBlock Text="Дополнительные единицы измерения" TextWrapping="Wrap"/>
                             </TabItem.Header>
@@ -295,7 +295,7 @@
                                                         <SolidColorBrush Color="{DynamicResource Dark-001}"/>
                                                     </TextBlock.Foreground>
                                                 </TextBlock>
-                                                <Button x:Name="AddAddUnitButton" Style="{DynamicResource ButtonStyle-000}" Height="30" VerticalAlignment="Bottom" Grid.Column="6" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" Padding="0" BorderBrush="{x:Null}" Cursor="Hand">
+                                                <Button x:Name="AddAddUnitButton" Style="{DynamicResource ButtonStyle-000}" Height="30" VerticalAlignment="Bottom" Grid.Column="6" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" Padding="0" BorderBrush="{x:Null}" Cursor="Hand" Click="AddAddUnitButton_Click">
                                                     <Button.Background>
                                                         <SolidColorBrush Color="White"/>
                                                     </Button.Background>
@@ -328,7 +328,7 @@
                                 </Border>
                             </Grid>
                         </TabItem>
-                        <TabItem Header="Свойства и значения" IsEnabled="True" Width="170" Style="{DynamicResource CreateNomenclatureTabItemStyle}" HorizontalContentAlignment="Stretch" Height="35" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" Padding="1,3,1,1" Background="Transparent" FontSize="13">
+                        <TabItem IsEnabled="{Binding Readiness, ElementName=CN, UpdateSourceTrigger=PropertyChanged}" Header="Свойства и значения" Width="170" Style="{DynamicResource CreateNomenclatureTabItemStyle}" HorizontalContentAlignment="Stretch" Height="35" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" Padding="1,3,1,1" Background="Transparent" FontSize="13">
                             <Grid Margin="10,0,0,0">
                                 <Border BorderThickness="0">
                                     <Border.BorderBrush>
@@ -390,7 +390,7 @@
                                 </Border>
                             </Grid>
                         </TabItem>
-                        <TabItem Header="Штрих-коды" IsEnabled="True" Width="170" Style="{DynamicResource CreateNomenclatureTabItemStyle}" HorizontalContentAlignment="Stretch" Height="35" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" Padding="1,3,1,1" Background="Transparent" FontSize="13">
+                        <TabItem Header="Штрих-коды" IsEnabled="{Binding Readiness, ElementName=CN, UpdateSourceTrigger=PropertyChanged}" Width="170" Style="{DynamicResource CreateNomenclatureTabItemStyle}" HorizontalContentAlignment="Stretch" Height="35" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" Padding="1,3,1,1" Background="Transparent" FontSize="13">
                             <Grid Margin="10,0,0,0">
                                 <Border BorderThickness="0">
                                     <Border.BorderBrush>
@@ -411,32 +411,82 @@
                                             <Border.BorderBrush>
                                                 <SolidColorBrush Color="{DynamicResource Blue-003}"/>
                                             </Border.BorderBrush>
-                                            <Grid Margin="0">
+                                            <Grid Margin="0,0,0,5">
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="165"/>
-                                                    <ColumnDefinition Width="165"/>
-                                                    <ColumnDefinition Width="165"/>
+                                                    <ColumnDefinition Width="5"/>
+                                                    <ColumnDefinition Width="158"/>
+                                                    <ColumnDefinition Width="5"/>
+                                                    <ColumnDefinition Width="157"/>
                                                     <ColumnDefinition/>
                                                 </Grid.ColumnDefinitions>
-                                                <TextBlock Text="Единица измерения" VerticalAlignment="Center" Margin="10,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed">
-                                                    <TextBlock.Foreground>
-                                                        <SolidColorBrush Color="{DynamicResource Dark-001}"/>
-                                                    </TextBlock.Foreground>
-                                                </TextBlock>
-                                                <TextBlock Text="Тип штрих кода" VerticalAlignment="Center" Margin="10,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" Grid.Column="1">
-                                                    <TextBlock.Foreground>
-                                                        <SolidColorBrush Color="{DynamicResource Dark-001}"/>
-                                                    </TextBlock.Foreground>
-                                                </TextBlock>
-                                                <TextBlock Text="Штрих-код" VerticalAlignment="Center" Margin="10,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" Grid.Column="2">
-                                                    <TextBlock.Foreground>
-                                                        <SolidColorBrush Color="{DynamicResource Dark-001}"/>
-                                                    </TextBlock.Foreground>
-                                                </TextBlock>
-                                                <Button Style="{DynamicResource ButtonStyle-000}" Height="30" VerticalAlignment="Bottom" Grid.Column="6" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" Padding="0" BorderBrush="{x:Null}" Cursor="Hand">
-                                                    <Button.Background>
-                                                        <SolidColorBrush Color="White"/>
-                                                    </Button.Background>
+                                                <StackPanel Margin="0" Orientation="Vertical">
+                                                    <TextBlock Text="Единица измерения" VerticalAlignment="Center" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" Margin="2,0,0,2">
+                                                        <TextBlock.Foreground>
+                                                            <SolidColorBrush Color="{DynamicResource Dark-001}"/>
+                                                        </TextBlock.Foreground>
+                                                    </TextBlock>
+                                                    <Border Height="27" BorderThickness="0" Margin="0">
+                                                        <Border.BorderBrush>
+                                                            <SolidColorBrush Color="{DynamicResource Light-005}"/>
+                                                        </Border.BorderBrush>
+                                                        <Border.Background>
+                                                            <SolidColorBrush Color="{DynamicResource Light-001}"/>
+                                                        </Border.Background>
+                                                        <ComboBox Style="{DynamicResource ComboBoxStyle1}" Background="Transparent" BorderThickness="0">
+                                                            <ComboBox.BorderBrush>
+                                                                <SolidColorBrush Color="{DynamicResource Light-004}"/>
+                                                            </ComboBox.BorderBrush>
+                                                            <ComboBox.Foreground>
+                                                                <SolidColorBrush Color="{DynamicResource Blue-004}"/>
+                                                            </ComboBox.Foreground>
+                                                        </ComboBox>
+                                                    </Border>
+                                                </StackPanel>
+                                                <StackPanel Margin="0" Orientation="Vertical" Grid.Column="2">
+                                                    <TextBlock Text="Тип штрих-кода" VerticalAlignment="Center" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" Margin="2,0,0,2">
+                                                        <TextBlock.Foreground>
+                                                            <SolidColorBrush Color="{DynamicResource Dark-001}"/>
+                                                        </TextBlock.Foreground>
+                                                    </TextBlock>
+                                                    <Border Height="27" BorderThickness="0" Margin="0">
+                                                        <Border.BorderBrush>
+                                                            <SolidColorBrush Color="{DynamicResource Light-005}"/>
+                                                        </Border.BorderBrush>
+                                                        <Border.Background>
+                                                            <SolidColorBrush Color="{DynamicResource Light-001}"/>
+                                                        </Border.Background>
+                                                        <ComboBox Style="{DynamicResource ComboBoxStyle1}" Background="Transparent" BorderThickness="0">
+                                                            <ComboBox.BorderBrush>
+                                                                <SolidColorBrush Color="{DynamicResource Light-004}"/>
+                                                            </ComboBox.BorderBrush>
+                                                            <ComboBox.Foreground>
+                                                                <SolidColorBrush Color="{DynamicResource Blue-004}"/>
+                                                            </ComboBox.Foreground>
+                                                        </ComboBox>
+                                                    </Border>
+                                                </StackPanel>
+                                                <StackPanel Margin="0" Orientation="Vertical" Grid.Column="4">
+                                                    <TextBlock Text="Штрих-код" VerticalAlignment="Center" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" Margin="2,0,0,2">
+                                                        <TextBlock.Foreground>
+                                                            <SolidColorBrush Color="{DynamicResource Dark-001}"/>
+                                                        </TextBlock.Foreground>
+                                                    </TextBlock>
+                                                    <Border Height="27" BorderThickness="0">
+                                                        <Border.BorderBrush>
+                                                            <SolidColorBrush Color="{DynamicResource Light-005}"/>
+                                                        </Border.BorderBrush>
+                                                        <Border.Background>
+                                                            <SolidColorBrush Color="{DynamicResource Light-001}"/>
+                                                        </Border.Background>
+                                                        <TextBox Background="Transparent" BorderThickness="0" VerticalContentAlignment="Center" Padding="5,1,1,1">
+                                                            <TextBox.Foreground>
+                                                                <SolidColorBrush Color="{DynamicResource Blue-004}"/>
+                                                            </TextBox.Foreground>
+                                                        </TextBox>
+                                                    </Border>
+                                                </StackPanel>
+                                                <Button Style="{DynamicResource ButtonStyle-000}" Height="30" VerticalAlignment="Bottom" Grid.Column="5" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" Padding="0" BorderBrush="{x:Null}" Cursor="Hand" Background="White">
                                                     <Button.Foreground>
                                                         <SolidColorBrush Color="{DynamicResource Blue-004}"/>
                                                     </Button.Foreground>
@@ -464,119 +514,10 @@
                                         </ScrollViewer>
                                     </Grid>
                                 </Border>
-                                <Grid d:IsHidden="True">
-                                    <Rectangle Fill="White" Opacity="0.5"/>
-                                    <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Width="380" Height="280">
-                                        <Rectangle Fill="White">
-                                            <Rectangle.Effect>
-                                                <DropShadowEffect BlurRadius="10" Opacity="0.2" ShadowDepth="2"/>
-                                            </Rectangle.Effect>
-                                        </Rectangle>
-                                        <Border Background="White" BorderThickness="1">
-                                            <Border.BorderBrush>
-                                                <SolidColorBrush Color="{DynamicResource Light-005}"/>
-                                            </Border.BorderBrush>
-                                            <Grid Margin="20,20,20,0">
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition Height="auto"/>
-                                                    <RowDefinition/>
-                                                    <RowDefinition Height="55"/>
-                                                </Grid.RowDefinitions>
-                                                <StackPanel Orientation="Vertical">
-                                                    <Grid Height="27">
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="3*"/>
-                                                            <ColumnDefinition Width="5*"/>
-                                                        </Grid.ColumnDefinitions>
-                                                        <TextBlock Text="Единица измерения:" FontSize="12" VerticalAlignment="Top" Margin="0,2,5,0" HorizontalAlignment="Right">
-                                                            <TextBlock.Foreground>
-                                                                <SolidColorBrush Color="{DynamicResource Dark-002}"/>
-                                                            </TextBlock.Foreground>
-                                                        </TextBlock>
-                                                        <Border Height="27" BorderThickness="1" Margin="0" Grid.Column="1">
-                                                            <Border.BorderBrush>
-                                                                <SolidColorBrush Color="{DynamicResource Light-005}"/>
-                                                            </Border.BorderBrush>
-                                                            <Border.Background>
-                                                                <SolidColorBrush Color="{DynamicResource Light-001}"/>
-                                                            </Border.Background>
-                                                            <ComboBox Background="Transparent" Style="{DynamicResource ComboBoxStyle1}" BorderThickness="0" VerticalContentAlignment="Center">
-                                                                <ComboBox.Foreground>
-                                                                    <SolidColorBrush Color="{DynamicResource Blue-004}"/>
-                                                                </ComboBox.Foreground>
-                                                                <ComboBox.BorderBrush>
-                                                                    <SolidColorBrush Color="{DynamicResource Light-005}"/>
-                                                                </ComboBox.BorderBrush>
-                                                            </ComboBox>
-                                                        </Border>
-                                                    </Grid>
-                                                    <Grid Height="27" Margin="0,5,0,0">
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="3*"/>
-                                                            <ColumnDefinition Width="5*"/>
-                                                        </Grid.ColumnDefinitions>
-                                                        <TextBlock Text="Тип штрих кода:" FontSize="12" VerticalAlignment="Top" Margin="0,2,5,0" HorizontalAlignment="Right">
-                                                            <TextBlock.Foreground>
-                                                                <SolidColorBrush Color="{DynamicResource Dark-002}"/>
-                                                            </TextBlock.Foreground>
-                                                        </TextBlock>
-                                                        <Border Height="27" BorderThickness="1" Margin="0" Grid.Column="1">
-                                                            <Border.BorderBrush>
-                                                                <SolidColorBrush Color="{DynamicResource Light-005}"/>
-                                                            </Border.BorderBrush>
-                                                            <Border.Background>
-                                                                <SolidColorBrush Color="{DynamicResource Light-001}"/>
-                                                            </Border.Background>
-                                                            <ComboBox Background="Transparent" Style="{DynamicResource ComboBoxStyle1}" BorderThickness="0" VerticalContentAlignment="Center">
-                                                                <ComboBox.Foreground>
-                                                                    <SolidColorBrush Color="{DynamicResource Blue-004}"/>
-                                                                </ComboBox.Foreground>
-                                                                <ComboBox.BorderBrush>
-                                                                    <SolidColorBrush Color="{DynamicResource Light-005}"/>
-                                                                </ComboBox.BorderBrush>
-                                                            </ComboBox>
-
-                                                        </Border>
-                                                    </Grid>
-                                                    <Grid Height="27" Margin="0,5,0,0">
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="3*"/>
-                                                            <ColumnDefinition Width="5*"/>
-                                                        </Grid.ColumnDefinitions>
-                                                        <TextBlock Text="Штрих-код:" FontSize="12" VerticalAlignment="Top" Margin="0,2,5,0" HorizontalAlignment="Right">
-                                                            <TextBlock.Foreground>
-                                                                <SolidColorBrush Color="{DynamicResource Dark-002}"/>
-                                                            </TextBlock.Foreground>
-                                                        </TextBlock>
-                                                        <Border Height="27" BorderThickness="1" Margin="0" Grid.Column="1">
-                                                            <Border.BorderBrush>
-                                                                <SolidColorBrush Color="{DynamicResource Light-005}"/>
-                                                            </Border.BorderBrush>
-                                                            <Border.Background>
-                                                                <SolidColorBrush Color="{DynamicResource Light-001}"/>
-                                                            </Border.Background>
-                                                            <TextBox Background="Transparent" VerticalContentAlignment="Center" Padding="0" BorderThickness="0">
-                                                                <TextBox.Foreground>
-                                                                    <SolidColorBrush Color="{DynamicResource Blue-004}"/>
-                                                                </TextBox.Foreground>
-                                                            </TextBox>
-                                                        </Border>
-                                                    </Grid>
-                                                </StackPanel>
-                                                <Border Grid.Row="1" Margin="0,5,0,0">
-                                                    <Border.Background>
-                                                        <SolidColorBrush Color="{DynamicResource Light-001}"/>
-                                                    </Border.Background>
-
-                                                </Border>
-                                            </Grid>
-                                        </Border>
-                                    </Grid>
-                                </Grid>
                             </Grid>
 
                         </TabItem>
-                        <TabItem Header="Избражения" IsEnabled="True" Width="170" Style="{DynamicResource CreateNomenclatureTabItemStyle}" HorizontalContentAlignment="Stretch" Height="35" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" Padding="1,3,1,1" Background="Transparent" FontSize="13">
+                        <TabItem Header="Избражения" IsEnabled="{Binding Readiness, ElementName=CN, UpdateSourceTrigger=PropertyChanged}" Width="170" Style="{DynamicResource CreateNomenclatureTabItemStyle}" HorizontalContentAlignment="Stretch" Height="35" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" Padding="1,3,1,1" Background="Transparent" FontSize="13">
                             <Grid Margin="10,0,0,0">
                                 <Border BorderThickness="0">
                                     <Border.BorderBrush>
@@ -639,12 +580,12 @@
 
                         </TabItem>
                     </TabControl>
-                    <Grid Grid.Row="2" Margin="20">
+                    <Grid Grid.Row="2" Margin="20,0" VerticalAlignment="Center">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
                             <ColumnDefinition Width="auto"/>
                         </Grid.ColumnDefinitions>
-                        <CheckBox Content="Не закрывать окно после создания" Style="{DynamicResource CheckBoxStyle-001}" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" FontSize="13" VerticalAlignment="Center" HorizontalAlignment="Left">
+                        <CheckBox Content="Не закрывать окно после создания" Style="{DynamicResource CheckBoxStyle-001}" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" FontSize="13" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0">
                             <CheckBox.Background>
                                 <SolidColorBrush Color="{DynamicResource Light-001}"/>
                             </CheckBox.Background>
@@ -653,7 +594,7 @@
                             </CheckBox.Foreground>
                         </CheckBox>
                         <StackPanel Orientation="Horizontal" Grid.Column="1">
-                            <Button IsEnabled="True" Style="{DynamicResource ButtonStyle-001}" Width="170" Foreground="White" Content="Создать" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" BorderThickness="0" FontSize="13">
+                            <Button IsEnabled="{Binding Readiness, ElementName=CN, UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource ButtonStyle-001}" Width="170" Foreground="White" Content="{Binding CreateButtonText, ElementName=CN, UpdateSourceTrigger=PropertyChanged}" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" BorderThickness="0" FontSize="13" Height="35">
                                 <Button.Background>
                                     <SolidColorBrush Color="{DynamicResource Blue-001}"/>
                                 </Button.Background>

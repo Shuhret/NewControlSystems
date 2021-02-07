@@ -43,6 +43,7 @@ namespace ControlSystemsLibrary.Views
         ObservableCollection<UserInterfacesClass> UserInterfacesCollection = new ObservableCollection<UserInterfacesClass>();
         LockInterfaceDelegate LockInterface;
 
+        private string CurrentCryptConnectionString = "";
         // КОНСТРУКТОР ==================================================================================================
         public Authorization(ContentControl CurrentUserInterfaceParent)
         {
@@ -78,19 +79,6 @@ namespace ControlSystemsLibrary.Views
             set
             {
                 currentConnectionName = value;
-                OnPropertyChanged();
-            }
-        }
-
-
-        private string currentCryptConnectionString = "";
-        public string CurrentCryptConnectionString
-        {
-            get => currentCryptConnectionString;
-            set
-            {
-                if (Equals(currentCryptConnectionString, value)) return;
-                currentCryptConnectionString = value;
                 OnPropertyChanged();
             }
         }
@@ -399,9 +387,9 @@ namespace ControlSystemsLibrary.Views
             AuthorizationEnabled = false;
             ShowMessage("Проверка логина и пароля...", "Blue-003", true);
             string message = "";
-            if (await Task.Run(() => DataBaseRequest.CheckAuthorization(CurrentUserName, passwordBox.Password, ref message) == true))
+            if (await Task.Run(() => DataBaseRequest.CheckAuthorization(CurrentCryptConnectionString, CurrentUserName, passwordBox.Password, ref message) == true))
             {
-                string UserInterfaceName = DataBaseRequest.GetUserInterfaceName(CurrentUserName);
+                string UserInterfaceName = DataBaseRequest.GetUserInterfaceName(CurrentCryptConnectionString, CurrentUserName);
                 string UserInterfaceFullName = GenerateUserInterfaceFullName(UserInterfaceName);
 
                 if (CheckUserInterfacesCollection(UserInterfaceFullName) == false)

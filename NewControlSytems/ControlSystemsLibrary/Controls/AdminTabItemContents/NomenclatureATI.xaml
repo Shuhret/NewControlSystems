@@ -163,7 +163,7 @@
             <!--******************** Сортировка ******************** -->
             <!--Разрещение(Запрет) на фильрацию-->
             <Setter Property="ColumnWidth" Value="*"/>
-            <Setter Property="RowHeight" Value="35"/>
+            <Setter Property="RowHeight" Value="32"/>
             <!--Высота строк-->
 
             <!--<Setter Property="RowStyle">
@@ -286,16 +286,13 @@
                             <Button.BorderBrush>
                                 <SolidColorBrush Color="{DynamicResource Light-005}"/>
                             </Button.BorderBrush>
-                            <StackPanel Orientation="Horizontal" Margin="5,0">
-                                <Viewbox Width="10" HorizontalAlignment="Center" VerticalAlignment="Center" >
-                                    <Canvas HorizontalAlignment="Left" Height="30" UseLayoutRounding="False" VerticalAlignment="Top" Width="30">
-                                        <Canvas Height="30" Canvas.Left="0" Canvas.Top="0" Width="30">
-                                            <Path Data="M14.5,0L15.5,0C16.875,0,18,1.125,18,2.5L18,12L27.5,12C28.875,12,30,13.125,30,14.5L30,15.5C30,16.875,28.875,18,27.5,18L18,18L18,27.5C18,28.875,16.875,30,15.5,30L14.5,30C13.125,30,12,28.875,12,27.5L12,18L2.5,18C1.125,18,0,16.875,0,15.5L0,14.5C0,13.125,1.125,12,2.5,12L12,12L12,2.5C12,1.125,13.125,0,14.5,0" Height="30" Canvas.Left="0" Stretch="Fill" Canvas.Top="0" Width="30" Fill="White"/>
-                                        </Canvas>
+                            <Viewbox Width="12" HorizontalAlignment="Center" VerticalAlignment="Center" >
+                                <Canvas HorizontalAlignment="Left" Height="30" UseLayoutRounding="False" VerticalAlignment="Top" Width="30">
+                                    <Canvas Height="30" Canvas.Left="0" Canvas.Top="0" Width="30">
+                                        <Path Data="M14.5,0L15.5,0C16.875,0,18,1.125,18,2.5L18,12L27.5,12C28.875,12,30,13.125,30,14.5L30,15.5C30,16.875,28.875,18,27.5,18L18,18L18,27.5C18,28.875,16.875,30,15.5,30L14.5,30C13.125,30,12,28.875,12,27.5L12,18L2.5,18C1.125,18,0,16.875,0,15.5L0,14.5C0,13.125,1.125,12,2.5,12L12,12L12,2.5C12,1.125,13.125,0,14.5,0" Height="30" Canvas.Left="0" Stretch="Fill" Canvas.Top="0" Width="30" Fill="White"/>
                                     </Canvas>
-                                </Viewbox>
-                                <TextBlock Text="Новая номенклатура" RenderOptions.BitmapScalingMode="Fant" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" FontSize="11.5" Visibility="Collapsed"/>
-                            </StackPanel>
+                                </Canvas>
+                            </Viewbox>
                         </Button>
                         <Button Style="{DynamicResource ButtonStyle-001}" BorderThickness="1,1,0,1" Margin="5,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Foreground="White" Width="28" Padding="10,1" Cursor="Hand" ToolTip="Создать новую группу">
                             <Button.Background>
@@ -350,7 +347,7 @@
                                 </Canvas>
                             </Viewbox>
                         </Button>
-                        <Button Style="{DynamicResource ButtonStyle-001}" BorderThickness="1" Margin="5,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Foreground="White" Width="28" Padding="11,1" Cursor="Hand" ToolTip="Поиск везде">
+                        <Button Style="{DynamicResource ButtonStyle-001}" BorderThickness="1" Margin="5,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Foreground="White" Width="28" Padding="11,1" Cursor="Hand" ToolTip="Поиск номенклатуры или группы везде">
                             <Button.Background>
                                 <SolidColorBrush Color="{DynamicResource Blue-001}"/>
                             </Button.Background>
@@ -500,7 +497,7 @@
                     </Border>
                 </Grid>
             </Border>
-            <Border Margin="10,0,10,10" Grid.Row="1" Background="White" BorderThickness="1" >
+            <Border Margin="10,0,10,10" Grid.Row="1" Background="White" BorderThickness="0" >
                 <Border.BorderBrush>
                     <SolidColorBrush Color="{DynamicResource Light-005}"/>
                 </Border.BorderBrush>

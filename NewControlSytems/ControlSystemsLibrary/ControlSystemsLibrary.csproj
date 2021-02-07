@@ -52,6 +52,9 @@
   <ItemGroup>
     <Compile Include="Classes\NomenclatureClass.cs" />
     <Compile Include="Classes\UserInterfacesClass.cs" />
+    <Compile Include="Controls\AdditionalUnitsUC.xaml.cs">
+      <DependentUpon>AdditionalUnitsUC.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\AdminTabItem.xaml.cs">
       <DependentUpon>AdminTabItem.xaml</DependentUpon>
     </Compile>
@@ -88,6 +91,10 @@
     <Compile Include="Views\UserInterfaceSelection.xaml.cs">
       <DependentUpon>UserInterfaceSelection.xaml</DependentUpon>
     </Compile>
+    <Page Include="Controls\AdditionalUnitsUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\AdminTabItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

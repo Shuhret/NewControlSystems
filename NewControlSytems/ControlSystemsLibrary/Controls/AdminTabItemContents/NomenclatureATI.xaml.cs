@@ -6,19 +6,11 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 
 namespace ControlSystemsLibrary.Controls.AdminTabItemContents
@@ -40,12 +32,16 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
 
         #endregion :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
+        private string CurrentCryptConnectionString;
+
         // Конструктор
-        public NomenclatureATI()
+        public NomenclatureATI(string CurrentCryptConnectionString)
         {
+            this.CurrentCryptConnectionString = CurrentCryptConnectionString;
             InitializeComponent();
         }
 
+       
 
         #region Заполнение таблицы и навигация ===============================================================================================
 
@@ -136,9 +132,9 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
             }
         }
 
+        bool FirstBoot = true;
 
         // События----------------------------------------------------------------------------------------------------------------------------
-        bool FirstBoot = true;
          
 
         private void SearchRow()
@@ -256,10 +252,17 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
                 SearchedText = "";
                 e.Handled = true;
             }
-        }
-
-        private void Nom_PreviewKeyDown(object sender, KeyEventArgs e)
-        {            
+            // Backspace ←
+            if (e.Key == Key.Back)
+            {
+                string str = "";
+                for (int i = 0; i < SearchedText.Length - 1; i++)
+                {
+                    str += SearchedText[i];
+                }
+                SearchedText = str;
+                e.Handled = true;
+            }
             // Ctrl + Down ↓
             if (e.Key == Key.Down && e.KeyboardDevice.Modifiers == ModifierKeys.Control)
             {
@@ -275,7 +278,6 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
                 SearchedText = "";
                 e.Handled = true;
             }
-
             // Ctrl + Up ↑
             if (e.Key == Key.Up && e.KeyboardDevice.Modifiers == ModifierKeys.Control)
             {
@@ -291,19 +293,6 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
                 SearchedText = "";
                 e.Handled = true;
             }
-
-            // Backspace ←
-            if (e.Key == Key.Back)
-            {
-                string str = "";
-                for(int i = 0; i < SearchedText.Length-1;i++)
-                {
-                    str += SearchedText[i];
-                }
-                SearchedText = str;
-                e.Handled = true;
-            }
-
             // Home 
             if (e.Key == Key.Home)
             {
@@ -313,7 +302,6 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
                 SearchedText = "";
                 e.Handled = true;
             }
-
             // End 
             if (e.Key == Key.End)
             {
@@ -323,6 +311,13 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
                 SearchedText = "";
                 e.Handled = true;
             }
+
+
+        }
+
+        private void Nom_PreviewKeyDown(object sender, KeyEventArgs e)
+        {            
+            
 
             // Ctrl + N (Создание новой номенклатуры)
             if (e.Key == Key.N && e.KeyboardDevice.Modifiers == ModifierKeys.Control)
@@ -335,13 +330,26 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
 
         }
 
+        private void DataGridNomenclatures_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (DataGridNomenclatures.Items.Count > 0)
+            {
+                if (e.Text.All(IsGood))
+                {
+                    SearchedText += e.Text;
+                    e.Handled = true;
+                }
+            }
+        }
+
+
 
         // Методы ----------------------------------------------------------------------------------------------------------------------------
 
 
         async void LoadAllNomenclatures()
         {
-            await Task.Run(() => AllNomenclaturesCollection = DataBaseRequest.GetAllNomenclatures());
+            await Task.Run(() => AllNomenclaturesCollection = DataBaseRequest.GetAllNomenclatures(CurrentCryptConnectionString));
             LoadShowNomenclatures();
             DataGridNomenclatures.ItemsSource = ShowNomenclaturesCollection;
             SearchedText = "";
@@ -389,6 +397,22 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
             }
         }
 
+        bool IsGood(char c)
+        {
+            if (c >= '0' && c <= '9')
+                return true;
+            if (c >= 'a' && c <= 'z')
+                return true;
+            if (c >= 'A' && c <= 'z')
+                return true;
+            if (c >= 'а' && c <= 'я')
+                return true;
+            if (c >= 'А' && c <= 'Я')
+                return true;
+            if (c == ' ' || c == '-' || c == '/' || c == '_' || c == '.' || c == ',' || c == '+' || c == '*')
+                return true;
+            return false;
+        }
 
         #endregion :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -531,7 +555,7 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
         private void CreateNomenclatureButtonClick(object sender, RoutedEventArgs e)
         {
             CloseCreateNomenclatureDelegate CCND = CloseCreateNomenclature;
-            CreateNemenclatureUC = new CreateNomenclature(true, CCND);
+            CreateNemenclatureUC = new CreateNomenclature(CurrentCryptConnectionString, true, CCND, CurrentGroupID);
         }
 
         private void CloseCreateNomenclature()
@@ -541,33 +565,5 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
 
         #endregion :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-        private void DataGridNomenclatures_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            if (DataGridNomenclatures.Items.Count > 0)
-            {
-                if (e.Text.All(IsGood))
-                {
-                    SearchedText += e.Text;
-                    e.Handled = true;
-                }
-            }
-        }
-
-        bool IsGood(char c)
-        {
-            if (c >= '0' && c <= '9')
-                return true;
-            if (c >= 'a' && c <= 'z')
-                return true;
-            if (c >= 'A' && c <= 'z')
-                return true;
-            if (c >= 'а' && c <= 'я')
-                return true;
-            if (c >= 'А' && c <= 'Я')
-                return true;
-            if (c == ' ' || c == '-' || c == '/' || c == '_' || c == '.' || c == ',' || c == '+' || c == '*')
-                return true;
-            return false;
-        }
     }
 }
