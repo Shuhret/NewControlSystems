@@ -284,7 +284,7 @@
                                 <SolidColorBrush Color="{DynamicResource Blue-001}"/>
                             </Button.Background>
                             <Button.BorderBrush>
-                                <SolidColorBrush Color="{DynamicResource Light-005}"/>
+                                <SolidColorBrush Color="White"/>
                             </Button.BorderBrush>
                             <Viewbox Width="12" HorizontalAlignment="Center" VerticalAlignment="Center" >
                                 <Canvas HorizontalAlignment="Left" Height="30" UseLayoutRounding="False" VerticalAlignment="Top" Width="30">

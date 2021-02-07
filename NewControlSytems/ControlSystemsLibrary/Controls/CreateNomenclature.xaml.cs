@@ -114,13 +114,13 @@ namespace ControlSystemsLibrary.Controls
         }
 
         // Базовая единица Создаваемой/редактируемой номенклатуры
-        private string baseUnit = "";
-        public string BaseUnit
+        private string baseUnitName = "";
+        public string BaseUnitName
         {
-            get => baseUnit;
+            get => baseUnitName;
             set
             {
-                baseUnit = value;
+                baseUnitName = value;
                 OnPropertyChanged();
             }
         }
@@ -405,7 +405,7 @@ namespace ControlSystemsLibrary.Controls
 
                 if (CheckWithAdditionalUnits(unitName))
                 {
-                    BaseUnit = ((sender as ComboBox).SelectedItem as ComboBoxItem).Content.ToString();
+                    BaseUnitName = ((sender as ComboBox).SelectedItem as ComboBoxItem).Content.ToString();
 
                     TextBoxBaseWeight.Focus();
                     TextBoxBaseWeight.SelectionStart = 0;
@@ -420,7 +420,7 @@ namespace ControlSystemsLibrary.Controls
                         // Если нажато "Нет"
                         foreach (ComboBoxItem item in (sender as ComboBox).Items)
                         {
-                            if (item.Content.ToString() == BaseUnit)
+                            if (item.Content.ToString() == BaseUnitName)
                             {
                                 (sender as ComboBox).SelectedItem = item;
                             }
@@ -429,6 +429,7 @@ namespace ControlSystemsLibrary.Controls
                     else
                     {
                         // Если нажато "Да"
+                        BaseUnitName = ((sender as ComboBox).SelectedItem as ComboBoxItem).Content.ToString();
                         RemoveAddedUnit(unitName);
                     }
                 }
@@ -459,7 +460,7 @@ namespace ControlSystemsLibrary.Controls
                 {
                     ID = Guid.NewGuid(),
                     NomenclatureID = ID,
-                    BaseUnitName = BaseUnit,
+                    BaseUnitName = BaseUnitName,
                     BaseUnitWeight = BaseUnitWeight
                 };
                 AUUC.UnitsComboBox.SelectionChanged += AdditionalUnitsComboBox_SelectionChanged;
@@ -481,12 +482,12 @@ namespace ControlSystemsLibrary.Controls
                 AdditionalUnitsUC AUUC = ((box.Parent as Grid).Parent as Border).Parent as AdditionalUnitsUC;
                 if (box.SelectedItem != null)
                 {
-                    string unitName = (box.SelectedItem as ComboBoxItem).Content.ToString();
-                    if (CompareToBaseUnit(unitName))
+                    string SelectedUnitName = (box.SelectedItem as ComboBoxItem).Content.ToString();
+                    if (CompareToBaseUnit(SelectedUnitName))
                     {
-                        if (CheckWithAdditionalUnits(AUUC.ID, unitName))
+                        if (CheckWithAdditionalUnits(AUUC.ID, SelectedUnitName))
                         {
-                            AUUC.AddUnitName = unitName;
+                            AUUC.AddUnitName = SelectedUnitName;
                             if (CreateMode)
                             {
                                 AUUC.QuantityTextBox.Focus();
@@ -496,14 +497,14 @@ namespace ControlSystemsLibrary.Controls
                         }
                         else
                         {
-                            MessageBox.Show("Единица \"" + unitName + "\" уже имеется в списке.", "Исправьте!");
+                            MessageBox.Show("Единица \"" + SelectedUnitName + "\" уже имеется в списке.", "Исправьте!");
                             box.SelectedItem = null;
                             box.IsDropDownOpen = true;
                         }
                     }
                     else
                     {
-                        MessageBox.Show("Единица \"" + unitName + "\" установлена как базовая единица.", "Исправьте!");
+                        MessageBox.Show("Единица \"" + SelectedUnitName + "\" установлена как базовая единица.", "Исправьте!");
                         AUUC.Readiness = false;
                         box.SelectedItem = null;
                         box.IsDropDownOpen = true;
@@ -594,7 +595,7 @@ namespace ControlSystemsLibrary.Controls
         // Метод: Проверяет указаны-ли важные значения для создания номенклатуры -------------------------------------------------------------
         private void CheckMainValues()
         {
-            if (BaseUnitWeightText != "" && NomenclatureName != "" && BaseUnit != "")
+            if (BaseUnitWeightText != "" && NomenclatureName != "" && BaseUnitName != "")
             {
                 Readiness = true;
             }
@@ -632,7 +633,7 @@ namespace ControlSystemsLibrary.Controls
         // Метод: Сверяет с базовой единицей -------------------------------------------------------------------------------------------------
         private bool CompareToBaseUnit(string UnitName)
         {
-            if (BaseUnit == UnitName)
+            if (BaseUnitName == UnitName)
             {
                 return false;
             }
@@ -643,13 +644,14 @@ namespace ControlSystemsLibrary.Controls
         private bool CheckWithAdditionalUnits(Guid ID, string UnitName)
         {
             bool readiness = true;
-            foreach (AdditionalUnitsUC suc in AddUnitsStackPanel.Children)
+            foreach (AdditionalUnitsUC AUUC in AddUnitsStackPanel.Children)
             {
-                if ((suc.ID != ID) && (suc.AddUnitName == UnitName))
+                AUUC.BaseUnitName = BaseUnitName;
+                if ((AUUC.ID != ID) && (AUUC.AddUnitName == UnitName))
                 {
-                    suc.Readiness = false;
-                    readiness = suc.Readiness;
-                    suc.Readiness = true;
+                    AUUC.Readiness = false;
+                    readiness = AUUC.Readiness;
+                    AUUC.Readiness = true;
                 }
             }
             return readiness;
@@ -661,6 +663,7 @@ namespace ControlSystemsLibrary.Controls
             bool flag = true;
             foreach (AdditionalUnitsUC AUUC in AddUnitsStackPanel.Children)
             {
+                AUUC.BaseUnitName = UnitName;
                 if (AUUC.AddUnitName == UnitName)
                 {
                     AUUC.Readiness = false;

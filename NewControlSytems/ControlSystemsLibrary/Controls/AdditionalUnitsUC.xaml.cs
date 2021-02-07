@@ -343,15 +343,23 @@ namespace ControlSystemsLibrary.Controls
                     {
                         case "QuantityTextBox":
                             WeightTextBox.Focus();
+                            WeightTextBox.SelectionStart = 0;
+                            WeightTextBox.SelectionLength = WeightTextBox.Text.Length;
                             break;
                     }
                 }
             }
         }
 
+        bool FirstLoaded = true;
         private void AUUC_Loaded(object sender, RoutedEventArgs e)
         {
             UnitsComboBox.Focus();
+            if (FirstLoaded)
+            {
+                UnitsComboBox.IsDropDownOpen = true;
+                FirstLoaded = false;
+            }
         }
 
     }
