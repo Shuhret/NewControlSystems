@@ -433,7 +433,7 @@
                                                         <Border.Background>
                                                             <SolidColorBrush Color="{DynamicResource Light-001}"/>
                                                         </Border.Background>
-                                                        <ComboBox Style="{DynamicResource ComboBoxStyle1}" Background="Transparent" BorderThickness="0">
+                                                        <ComboBox x:Name="BarcodeUnitsComboBox" Style="{DynamicResource ComboBoxStyle1}" Background="Transparent" BorderThickness="0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" VerticalContentAlignment="Center">
                                                             <ComboBox.BorderBrush>
                                                                 <SolidColorBrush Color="{DynamicResource Light-004}"/>
                                                             </ComboBox.BorderBrush>
@@ -456,7 +456,7 @@
                                                         <Border.Background>
                                                             <SolidColorBrush Color="{DynamicResource Light-001}"/>
                                                         </Border.Background>
-                                                        <ComboBox x:Name="BarcodeTypesComboBox" Style="{DynamicResource ComboBoxStyle1}" Background="Transparent" BorderThickness="0">
+                                                        <ComboBox x:Name="BarcodeTypesComboBox" Style="{DynamicResource ComboBoxStyle1}" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Center" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto">
                                                             <ComboBox.BorderBrush>
                                                                 <SolidColorBrush Color="{DynamicResource Light-004}"/>
                                                             </ComboBox.BorderBrush>
@@ -486,7 +486,7 @@
                                                         </TextBox>
                                                     </Border>
                                                 </StackPanel>
-                                                <Button Style="{DynamicResource ButtonStyle-000}" Height="30" VerticalAlignment="Bottom" Grid.Column="5" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" Padding="0" BorderBrush="{x:Null}" Cursor="Hand" Background="White">
+                                                <Button IsEnabled="False" Style="{DynamicResource ButtonStyle-000}" Height="30" VerticalAlignment="Bottom" Grid.Column="5" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" Padding="0" BorderBrush="{x:Null}" Cursor="Hand" Background="White">
                                                     <Button.Foreground>
                                                         <SolidColorBrush Color="{DynamicResource Blue-004}"/>
                                                     </Button.Foreground>

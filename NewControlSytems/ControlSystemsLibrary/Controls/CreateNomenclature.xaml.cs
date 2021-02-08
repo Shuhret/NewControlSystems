@@ -246,6 +246,7 @@ namespace ControlSystemsLibrary.Controls
             CreateNomenclatureTabControl.SelectedIndex = 0;
             LoadUnits();
             LoadCountry();
+            LoadUnitsForBarcodes();
             LoadBarcodeTypes();
             ArticleTextBox.Focus();
 
@@ -263,6 +264,7 @@ namespace ControlSystemsLibrary.Controls
         {
             CreateButtonText = "Создать";
         }
+
         async void EditModeMethod()
         {
             CreateButtonText = "Принять изменения";
@@ -418,7 +420,6 @@ namespace ControlSystemsLibrary.Controls
                 if (CheckWithAdditionalUnits(unitName))
                 {
                     BaseUnitName = ((sender as ComboBox).SelectedItem as ComboBoxItem).Content.ToString();
-
                     TextBoxBaseWeight.Focus();
                     TextBoxBaseWeight.SelectionStart = 0;
                     TextBoxBaseWeight.SelectionLength = TextBoxBaseWeight.Text.Length;
@@ -606,6 +607,29 @@ namespace ControlSystemsLibrary.Controls
             }
         }
 
+        // Метод: Загружает Единицы измерения в ComboBox Базовой единицы из базы данных ------------------------------------------------------
+        async void LoadUnitsForBarcodes()
+        {
+            ArrayList units = new ArrayList();
+            await Task.Run(() =>
+            {
+                units = DataBaseRequest.GetUnits(CurrentCryptConnectionString);
+            });
+
+            BarcodeUnitsComboBox.Items.Clear();
+            foreach (object obj2 in units)
+            {
+                ComboBoxItem newItem = new ComboBoxItem
+                {
+                    Height = 25.0,
+                    Foreground = GetColor.Get("Blue-004"),
+                    Padding = new Thickness(10.0, 0.0, 0.0, 0.0)
+                };
+                newItem.Content = obj2.ToString();
+                BarcodeUnitsComboBox.Items.Add(newItem);
+            }
+        }
+
         // Метод: Загружает Типы штрих-кодов в ComboBox из базы данных -----------------------------------------------------------------------
         async void LoadBarcodeTypes()
         {
@@ -782,7 +806,7 @@ namespace ControlSystemsLibrary.Controls
                     Content = obj2.ToString(),
                     Height = 25.0,
                     Padding = new Thickness(10.0, 1.0, 1.0, 1.0),
-                    Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF3B5BA6"))
+                    Foreground = GetColor.Get("Blue-004")
                 };
                 CBX.Items.Add(newItem);
             }
@@ -890,7 +914,7 @@ namespace ControlSystemsLibrary.Controls
                     Content = obj2.ToString(),
                     Height = 25.0,
                     Padding = new Thickness(10.0, 1.0, 1.0, 1.0),
-                    Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF3B5BA6"))
+                    Foreground = GetColor.Get("Blue-004")
                 };
                 CBX.Items.Add(newItem);
             }
@@ -936,5 +960,8 @@ namespace ControlSystemsLibrary.Controls
                 }
             }
         }
+
+
+
     }
 }

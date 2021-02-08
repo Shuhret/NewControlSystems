@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ControlSystemsLibrary.Services;
+using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
@@ -327,11 +328,11 @@ namespace ControlSystemsLibrary.Controls
             {
                 if (Weight < (Quantity * BaseUnitWeight))
                 {
-                    WeightTextBox.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFF7881"));
+                    WeightTextBox.Foreground = GetColor.Get("Red-001");
                 }
                 else
                 {
-                    WeightTextBox.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF3B5BA6"));
+                    WeightTextBox.Foreground = GetColor.Get("Blue-004");
                 }
             }
         }
