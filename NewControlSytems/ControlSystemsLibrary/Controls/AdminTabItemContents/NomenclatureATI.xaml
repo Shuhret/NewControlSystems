@@ -565,26 +565,20 @@
                         <!--Столбец Название-->
                         <DataGridTextColumn Header="Наименование" Width="5*" Binding="{Binding Name}"  IsReadOnly="True" CanUserResize="False"/>
 
+                        <!--Столбец Артикул-->
+                        <DataGridTextColumn Header="Артикул" Width="2*" MinWidth="70" IsReadOnly="True" Binding="{Binding Article}" CanUserResize="False"/>
+                        
                         <!--Категория-->
                         <DataGridTextColumn Width="2*" Header="Категория" IsReadOnly="True" Binding="{Binding Category}" CanUserResize="False"/>
 
-
-                        <!--Столбец Артикул-->
-                        <DataGridTextColumn Header="Артикул" Width="2*" MinWidth="70" IsReadOnly="True" Binding="{Binding Article}" CanUserResize="False"/>
-
-
                         <!--Столбец Вес базовой единицы-->
                         <DataGridTextColumn Width="2*" Header="Вес базовой единицы" IsReadOnly="True" Binding="{Binding WeightBaseUnitShow}" CanUserResize="False"/>
-
 
                         <!--Столбец Базовая единица-->
                         <DataGridTextColumn Width="2*" Header="Базовая единица" IsReadOnly="True" Binding="{Binding BaseUnit}" CanUserResize="False"/>
 
                         <!--Столбец Штрих код-->
                         <DataGridTextColumn Width="2*" Header="Штрих код" IsReadOnly="True" Binding="{Binding Barcode}" CanUserResize="False"/>
-
-
-
 
                         <!--Столбец Метки-->
                         <DataGridTemplateColumn Width="Auto" Header="Метки" IsReadOnly="True" MinWidth="50" CanUserResize="False">

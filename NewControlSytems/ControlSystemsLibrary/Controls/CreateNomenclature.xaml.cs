@@ -274,12 +274,12 @@ namespace ControlSystemsLibrary.Controls
             }
         }
 
-        async void CreatedModeMethod()
+        private void CreatedModeMethod()
         {
             CreateButtonText = "Создать";
         }
 
-        async void EditModeMethod()
+        private void EditModeMethod()
         {
             CreateButtonText = "Принять изменения";
         }
@@ -895,7 +895,7 @@ namespace ControlSystemsLibrary.Controls
                     if(!CheckAlreadyCreated(NPUC))
                     {
                         NPUC.Readiness = false;
-                        MessageBox.Show("Свойство " + '"' + (NPUC.PropertyComboBox.SelectedItem as ComboBoxItem).Content.ToString() + '"' + " с значением " + '"' + (NPUC.ValueComboBox.SelectedItem as ComboBoxItem).Content.ToString() + '"' + " уже имеется в списке!", "Внимание!");
+                        MessageBox.Show("Свойство " + '"' + (NPUC.PropertyComboBox.SelectedItem as ComboBoxItem).Content.ToString() + '"' + " со значением " + '"' + (NPUC.ValueComboBox.SelectedItem as ComboBoxItem).Content.ToString() + '"' + " уже имеется в списке!", "Внимание!");
                         box.SelectedItem = null;
                         box.IsDropDownOpen = true;
                     }
