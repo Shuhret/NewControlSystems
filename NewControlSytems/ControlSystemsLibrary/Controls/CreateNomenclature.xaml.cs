@@ -10,6 +10,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Linq;
 
 namespace ControlSystemsLibrary.Controls
 {
@@ -89,18 +90,6 @@ namespace ControlSystemsLibrary.Controls
             }
         }
 
-        // Артикул Создаваемой/редактируемой номенклатуры
-        private string article = "";
-        public string Article
-        {
-            get => article;
-            set
-            {
-                article = value;
-                OnPropertyChanged();
-            }
-        }
-
         // Название Создаваемой/редактируемой номенклатуры
         private string nomenclatureName = "";
         public string NomenclatureName
@@ -109,6 +98,31 @@ namespace ControlSystemsLibrary.Controls
             set
             {
                 nomenclatureName = value;
+                OnPropertyChanged();
+            }
+        }
+
+        // Категория Создаваемой/редактируемой номенклатуры
+        private string category = "";
+        public string Category
+        {
+            get => category;
+            set
+            {
+                category = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+        // Артикул Создаваемой/редактируемой номенклатуры
+        private string article = "";
+        public string Article
+        {
+            get => article;
+            set
+            {
+                article = value;
                 OnPropertyChanged();
             }
         }
@@ -244,12 +258,12 @@ namespace ControlSystemsLibrary.Controls
         private void StartMethod()
         {
             CreateNomenclatureTabControl.SelectedIndex = 0;
+            LoadAllNomenclatureCategories();
             LoadUnits();
             LoadCountry();
             LoadUnitsForBarcodes();
             LoadBarcodeTypes();
-            ArticleTextBox.Focus();
-
+            NomenNameTextBox.Focus();
             if (CreateMode == true)
             {
                 CreatedModeMethod();
@@ -381,25 +395,26 @@ namespace ControlSystemsLibrary.Controls
             if ((sender is TextBox) && (e.Key == Key.Enter))
             {
                 TextBox box = sender as TextBox;
-                string name = box.Name;
-                if (!(name == "ArticleTextBox"))
+                switch (box.Name)
                 {
-                    if (name == "NomenNameTextBox")
-                    {
-                        BaseUnitComboBox.Focus();
-                        BaseUnitComboBox.IsDropDownOpen = true;
-                    }
-                    else if (name == "TextBoxBaseWeight")
-                    {
-                        ComboBoxCountry.Focus();
-                        ComboBoxCountry.IsDropDownOpen = true;
-                    }
-                }
-                else
-                {
-                    NomenNameTextBox.Focus();
-                    NomenNameTextBox.SelectionStart = 0;
-                    NomenNameTextBox.SelectionLength = NomenNameTextBox.Text.Length;
+                    case "NomenNameTextBox":
+                        {
+                            CategoriesComboBox.Focus();
+                            CategoriesComboBox.IsDropDownOpen = true;
+                        }
+                        break;
+                    case "ArticleTextBox":
+                        {
+                            BaseUnitComboBox.Focus();
+                            BaseUnitComboBox.IsDropDownOpen = true;
+                        }
+                        break;
+                    case "TextBoxBaseWeight":
+                        {
+                            ComboBoxCountry.Focus();
+                            ComboBoxCountry.IsDropDownOpen = true;
+                        }
+                        break;
                 }
             }
         }
@@ -505,6 +520,7 @@ namespace ControlSystemsLibrary.Controls
                         }
                         else
                         {
+                            AUUC.Readiness = false;
                             MessageBox.Show("Единица \"" + SelectedUnitName + "\" уже имеется в списке.", "Исправьте!");
                             box.SelectedItem = null;
                             box.IsDropDownOpen = true;
@@ -654,11 +670,36 @@ namespace ControlSystemsLibrary.Controls
 
         }
 
+        // Метод: Загружает Категории в ComboBox из базы данных ------------------------------------------------------
+        async void LoadAllNomenclatureCategories()
+        {
+            ArrayList units = new ArrayList();
+
+            await Task.Run(() =>
+            {
+                units = DataBaseRequest.GetAllNomenclatureCategories(CurrentCryptConnectionString);
+            });
+
+            CategoriesComboBox.Items.Clear();
+            foreach (object obj2 in units)
+            {
+                ComboBoxItem newItem = new ComboBoxItem
+                {
+                    Height = 25.0,
+                    Foreground = GetColor.Get("Blue-004"),
+                    Padding = new Thickness(10.0, 0.0, 0.0, 0.0)
+                };
+                newItem.Content = obj2.ToString();
+                CategoriesComboBox.Items.Add(newItem);
+            }
+        }
+
+
 
         // Метод: Проверяет указаны-ли важные значения для создания номенклатуры -------------------------------------------------------------
         private void CheckMainValues()
         {
-            if (BaseUnitWeightText != "" && NomenclatureName != "" && BaseUnitName != "")
+            if (BaseUnitWeightText != "" && NomenclatureName != "" && BaseUnitName != "" && CategoriesComboBox.SelectedItem != null)
             {
                 Readiness = true;
             }
@@ -788,6 +829,7 @@ namespace ControlSystemsLibrary.Controls
             {
                 if (!NPUC.Readiness)
                 {
+                    NPUC.ReadinessFalseAnimationBegin();
                     readiness = false;
                 }
             }
@@ -852,6 +894,7 @@ namespace ControlSystemsLibrary.Controls
                 {
                     if(!CheckAlreadyCreated(NPUC))
                     {
+                        NPUC.Readiness = false;
                         MessageBox.Show("Свойство " + '"' + (NPUC.PropertyComboBox.SelectedItem as ComboBoxItem).Content.ToString() + '"' + " с значением " + '"' + (NPUC.ValueComboBox.SelectedItem as ComboBoxItem).Content.ToString() + '"' + " уже имеется в списке!", "Внимание!");
                         box.SelectedItem = null;
                         box.IsDropDownOpen = true;
@@ -872,14 +915,20 @@ namespace ControlSystemsLibrary.Controls
             string value = (CheckedNPUC.ValueComboBox.SelectedItem as ComboBoxItem).Content.ToString();
             foreach (NomenPropertyUC NPUC in AddPropertiesStackPanel.Children)
             {
-                if (NPUC.ID != CheckedNPUC.ID)
+                if (NPUC.ID != CheckedNPUC.ID && NPUC.Readiness == true)
                 {
-                    if ((NPUC.PropertyComboBox.SelectedItem as ComboBoxItem).Content.ToString() == property && (NPUC.ValueComboBox.SelectedItem as ComboBoxItem).Content.ToString() == value)
+                    if (NPUC.PropertyComboBox.SelectedItem != null && NPUC.ValueComboBox.SelectedItem != null)
                     {
-                        NPUC.Readiness = false;
-                        readiness = NPUC.Readiness;
-                        NPUC.Readiness = true;
-                        break; 
+                        if ((NPUC.PropertyComboBox.SelectedItem as ComboBoxItem).Content.ToString() == property && (NPUC.ValueComboBox.SelectedItem as ComboBoxItem).Content.ToString() == value)
+                        {
+                            NPUC.ReadinessFalseAnimationBegin();
+                            readiness = false;
+                        }
+                    }
+                    else
+                    {
+                        NPUC.ReadinessFalseAnimationBegin();
+                        readiness = false;
                     }
                 }
             }
@@ -934,12 +983,12 @@ namespace ControlSystemsLibrary.Controls
         {
             if (AddUnitsStackPanel.Children.Count > 0)
             {
-                foreach (AdditionalUnitsUC AUUC in AddUnitsStackPanel.Children)
+                var children = AddUnitsStackPanel.Children.OfType<UIElement>().ToList();
+                foreach (AdditionalUnitsUC AUUC in children)
                 {
                     if (AUUC.Readiness == false)
                     {
                         AddUnitsStackPanel.Children.Remove(AUUC);
-                        break;
                     }
                 }
             }
@@ -950,18 +999,28 @@ namespace ControlSystemsLibrary.Controls
         {
             if (AddPropertiesStackPanel.Children.Count > 0)
             {
-                foreach (NomenPropertyUC NPUC in AddPropertiesStackPanel.Children)
+                var children = AddPropertiesStackPanel.Children.OfType<UIElement>().ToList();
+                foreach (NomenPropertyUC NPUC in children)
                 {
                     if (NPUC.Readiness == false)
                     {
+                        NPUC.ReadinessFalseAnimationBegin();
                         AddPropertiesStackPanel.Children.Remove(NPUC);
-                        break;
+                        
                     }
                 }
             }
         }
 
-
-
+        // Событие: SelectionChanged (Для ComboBox Страна происхождения)
+        private void CategoriesComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if ((sender as ComboBox).SelectedItem != null)
+            {
+                Category = ((sender as ComboBox).SelectedItem as ComboBoxItem).Content.ToString();
+                CheckMainValues();
+                ArticleTextBox.Focus();
+            }
+        }
     }
 }

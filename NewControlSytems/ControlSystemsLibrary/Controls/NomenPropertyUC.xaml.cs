@@ -44,19 +44,10 @@ namespace ControlSystemsLibrary.Controls
             }
         }
 
-        private bool readiness;
+        private bool readiness = false;
         public bool Readiness
         {
-            get
-            {
-                //CheckReadiness();
-                if(readiness == false)
-                {
-                    Storyboard sb = this.FindResource("ReadinessFalse") as Storyboard;
-                    sb.Begin();
-                }
-                return readiness;
-            }
+            get =>readiness;
             set
             {
                 readiness = value;
@@ -65,7 +56,11 @@ namespace ControlSystemsLibrary.Controls
         }
 
 
-
+        public void ReadinessFalseAnimationBegin()
+        {
+            Storyboard sb = this.FindResource("ReadinessFalse") as Storyboard;
+            sb.Begin();
+        }
 
 
 
@@ -78,7 +73,6 @@ namespace ControlSystemsLibrary.Controls
         bool FirstLoaded = true;
         private void NPUC_Loaded(object sender, RoutedEventArgs e)
         {
-            Readiness = false;
             ID = Guid.NewGuid();
             if (FirstLoaded == true)
             {

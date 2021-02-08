@@ -168,7 +168,7 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
                     SearchResult = "Найдено в артикулах";
                     SearchedTextColor = GetColor.Get("Blue-003");
                     SelectedItem = NC;
-                    SelectedCollumn = 4;
+                    SelectedCollumn = 5;
                     SelectDataGridRow();
                     break;
                 }

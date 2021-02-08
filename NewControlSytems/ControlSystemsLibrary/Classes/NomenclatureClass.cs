@@ -98,6 +98,31 @@ namespace ControlSystemsLibrary.Classes
             }
         }
 
+        // Название Номенклатуры
+        private string name = "";
+        public string Name
+        {
+            get => name;
+            set
+            {
+                name = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+        // Категория Создаваемой/редактируемой номенклатуры
+        private string category = "";
+        public string Category
+        {
+            get => category;
+            set
+            {
+                category = value;
+                OnPropertyChanged();
+            }
+        }
+
 
         // Артикул Номенклатуры
         private string article = "";
@@ -111,18 +136,6 @@ namespace ControlSystemsLibrary.Classes
             }
         }
 
-
-        // Название Номенклатуры
-        private string name = "";
-        public string Name
-        {
-            get => name;
-            set
-            {
-                name = value;
-                OnPropertyChanged();
-            }
-        }
 
 
         // Название Базовой Единицы Измерения

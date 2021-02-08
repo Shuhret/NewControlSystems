@@ -565,6 +565,8 @@
                         <!--Столбец Название-->
                         <DataGridTextColumn Header="Наименование" Width="5*" Binding="{Binding Name}"  IsReadOnly="True" CanUserResize="False"/>
 
+                        <!--Категория-->
+                        <DataGridTextColumn Width="2*" Header="Категория" IsReadOnly="True" Binding="{Binding Category}" CanUserResize="False"/>
 
 
                         <!--Столбец Артикул-->
@@ -583,8 +585,6 @@
 
 
 
-                        <!--Столбец Страна происхождения-->
-                        <DataGridTextColumn Width="2*" Header="Страна происхождения" IsReadOnly="True" Binding="{Binding CountryOfOrigin}" CanUserResize="False"/>
 
                         <!--Столбец Метки-->
                         <DataGridTemplateColumn Width="Auto" Header="Метки" IsReadOnly="True" MinWidth="50" CanUserResize="False">

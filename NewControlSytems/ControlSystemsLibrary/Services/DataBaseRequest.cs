@@ -79,6 +79,54 @@ namespace ControlSystemsLibrary.Services
             return UserInterfaceName;
         }
 
+        public static ObservableCollection<NomenclatureClass> GetAllNomenclatures(string Connectionstring)
+        {
+            ObservableCollection<NomenclatureClass> list = new ObservableCollection<NomenclatureClass>();
+            using (SqlConnection connect = new SqlConnection(Cryption.Decrypt(Connectionstring)))
+            {
+                try
+                {
+                    connect.Open();
+                    SqlCommand command = new SqlCommand("GetAllNomenclatures", connect);
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    SqlDataReader reading = command.ExecuteReader();
+
+                    while (reading.Read())
+                    {
+                        NomenclatureClass NC = new NomenclatureClass();
+                        NC.ID = (Guid)reading.GetValue(0);
+                        NC.GroupID = (Guid)reading.GetValue(1);
+                        NC.GroupNomen = (bool)reading.GetValue(2);
+
+                        NC.Name = reading.GetValue(3).ToString();
+
+                        if (NC.GroupNomen == true)
+                        {
+                            NC.Category = reading.GetValue(4).ToString();
+                            NC.Article = reading.GetValue(5).ToString();
+                            NC.BaseUnit = reading.GetValue(6).ToString();
+                            NC.WeightBaseUnit = Convert.ToDouble(reading.GetValue(7));
+                            NC.BarcodeType = reading.GetValue(8).ToString();
+                            NC.Barcode = reading.GetValue(9).ToString();
+                            NC.CountryOfOrigin = reading.GetValue(10).ToString();
+                            NC.Description = reading.GetValue(11).ToString();
+                            NC.Aksia = (bool)reading.GetValue(12);
+                            NC.Focus = (bool)reading.GetValue(13);
+                            NC.New = (bool)reading.GetValue(14);
+                        }
+                        list.Add(NC);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Ошибка в методе: DataBaseRequest.GetAllNomenclatures" + "\n" + ex.Message, "Хуёво!");
+                }
+            }
+            return list;
+        }
+
+
         //---Метод: Возвращает из базы данных Единицы измерения----------------------------------------------------------
         public static ArrayList GetUnits(string Connectionstring)
         {
@@ -89,7 +137,7 @@ namespace ControlSystemsLibrary.Services
                 {
                     connect.Open();
                     SqlCommand command = connect.CreateCommand(); // Создание команды
-                    command.CommandText = "SELECT [Unit] FROM [dbo].[Units]"; // Текст команды
+                    command.CommandText = "SELECT [Unit] FROM [dbo].[Units] ORDER BY [Unit]"; // Текст команды
                     SqlDataReader reading = command.ExecuteReader();
 
                     while (reading.Read())
@@ -190,7 +238,7 @@ namespace ControlSystemsLibrary.Services
             return list;
         }
 
-        //---Метод: Возвращает из базы данных Типы Штрих кодов----------------------------------------------------------
+        //---Метод: Возвращает из базы данных Типы Штрих кодов-----------------------------------------------------------
         public static ArrayList GetBarcodeTypes(string Connectionstring)
         {
             ArrayList list = new ArrayList();
@@ -216,6 +264,31 @@ namespace ControlSystemsLibrary.Services
             return list;
         }
 
+        //---Метод: Возвращает из базы данных Категории номенклатуры ----------------------------------------------------
+        public static ArrayList GetAllNomenclatureCategories(string Connectionstring)
+        {
+            ArrayList list = new ArrayList();
+            using (SqlConnection connect = new SqlConnection(Cryption.Decrypt(Connectionstring)))
+            {
+                //try
+                //{
+                    connect.Open();
+                    SqlCommand command = connect.CreateCommand(); // Создание команды
+                    command.CommandText = "SELECT [Category] FROM [dbo].[NomenclatureCategories] ORDER BY [Category]"; // Текст команды
+                    SqlDataReader reading = command.ExecuteReader();
+
+                    while (reading.Read())
+                    {
+                        list.Add(reading.GetValue(0).ToString());
+                    }
+                //}
+                //catch (Exception ex)
+                //{
+                //    MessageBox.Show(ex.Message, "Пиздец кароче нахуй блядь!");
+                //}
+            }
+            return list;
+        }
 
 
 
@@ -522,51 +595,6 @@ namespace ControlSystemsLibrary.Services
 
 
 
-        public static ObservableCollection<NomenclatureClass> GetAllNomenclatures(string Connectionstring)
-        {
-            ObservableCollection<NomenclatureClass> list = new ObservableCollection<NomenclatureClass>();
-            using (SqlConnection connect = new SqlConnection(Cryption.Decrypt(Connectionstring)))
-            {
-                try
-                {
-                    connect.Open();
-                    SqlCommand command = new SqlCommand("GetAllNomenclatures", connect);
-                    command.CommandType = CommandType.StoredProcedure;
-
-                    SqlDataReader reading = command.ExecuteReader();
-
-                    while (reading.Read())
-                    {
-                        NomenclatureClass NC = new NomenclatureClass();
-                        NC.ID = (Guid)reading.GetValue(0);
-                        NC.GroupID = (Guid)reading.GetValue(1);
-                        NC.GroupNomen = (bool)reading.GetValue(2);
-
-                        NC.Name = reading.GetValue(4).ToString();
-
-                        if (NC.GroupNomen == true)
-                        {
-                            NC.Article = reading.GetValue(3).ToString();
-                            NC.BaseUnit = reading.GetValue(5).ToString();
-                            NC.WeightBaseUnit = Convert.ToDouble(reading.GetValue(6));
-                            NC.BarcodeType = reading.GetValue(7).ToString();
-                            NC.Barcode = reading.GetValue(8).ToString();
-                            NC.CountryOfOrigin = reading.GetValue(9).ToString();
-                            NC.Description = reading.GetValue(10).ToString();
-                            NC.Aksia = (bool)reading.GetValue(11);
-                            NC.Focus = (bool)reading.GetValue(12);
-                            NC.New = (bool)reading.GetValue(13);
-                        }
-                        list.Add(NC);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Ошибка в методе: DataBaseRequest.GetAllNomenclatures" + "\n" + ex.Message, "Хуёво!");
-                }
-            }
-            return list;
-        }
 
         //public static ObservableCollection<NomenclatureClass> GetAllMainNomenclatures(Guid GroupID)
         //{
