@@ -12,14 +12,14 @@
                 <ControlTemplate TargetType="{x:Type Button}">
                     <ControlTemplate.Resources>
                         <Storyboard x:Key="press">
-                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="contentPresenter">
+                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="border">
                                 <EasingDoubleKeyFrame KeyTime="0" Value="0.5"/>
                                 <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="1"/>
                             </DoubleAnimationUsingKeyFrames>
                         </Storyboard>
                     </ControlTemplate.Resources>
                     <Grid>
-                        <Border Background="Transparent" Cursor="Hand">
+                        <Border x:Name="border" Background="Transparent" Cursor="Hand">
                             <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                         </Border>
                     </Grid>

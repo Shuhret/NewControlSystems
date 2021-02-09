@@ -467,7 +467,7 @@
                                                         <Border.Background>
                                                             <SolidColorBrush Color="{DynamicResource Light-001}"/>
                                                         </Border.Background>
-                                                        <ComboBox x:Name="BarcodeUnitsComboBox" Style="{DynamicResource ComboBoxStyle1}" Background="Transparent" BorderThickness="0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" VerticalContentAlignment="Center">
+                                                        <ComboBox x:Name="BarcodeUnitsComboBox" Style="{DynamicResource ComboBoxStyle1}" Background="Transparent" BorderThickness="0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" VerticalContentAlignment="Center" SelectionChanged="BarcodeUnitComboBoxSelectionChanged">
                                                             <ComboBox.BorderBrush>
                                                                 <SolidColorBrush Color="{DynamicResource Light-004}"/>
                                                             </ComboBox.BorderBrush>
@@ -490,7 +490,7 @@
                                                         <Border.Background>
                                                             <SolidColorBrush Color="{DynamicResource Light-001}"/>
                                                         </Border.Background>
-                                                        <ComboBox x:Name="BarcodeTypesComboBox" Style="{DynamicResource ComboBoxStyle1}" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Center" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto">
+                                                        <ComboBox x:Name="BarcodeTypesComboBox" Style="{DynamicResource ComboBoxStyle1}" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Center" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" SelectionChanged="BarcodeTypeComboBoxSelectionChanged">
                                                             <ComboBox.BorderBrush>
                                                                 <SolidColorBrush Color="{DynamicResource Light-004}"/>
                                                             </ComboBox.BorderBrush>
@@ -513,14 +513,14 @@
                                                         <Border.Background>
                                                             <SolidColorBrush Color="{DynamicResource Light-001}"/>
                                                         </Border.Background>
-                                                        <TextBox Background="Transparent" BorderThickness="0" VerticalContentAlignment="Center" Padding="5,1,1,1">
+                                                        <TextBox x:Name="BarcodeTextBox" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Center" Padding="5,1,1,1" TextChanged="BarcodeTextBoxTextChanged">
                                                             <TextBox.Foreground>
                                                                 <SolidColorBrush Color="{DynamicResource Blue-004}"/>
                                                             </TextBox.Foreground>
                                                         </TextBox>
                                                     </Border>
                                                 </StackPanel>
-                                                <Button IsEnabled="False" Style="{DynamicResource ButtonStyle-000}" Height="30" VerticalAlignment="Bottom" Grid.Column="5" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" Padding="0" BorderBrush="{x:Null}" Cursor="Hand" Background="White">
+                                                <Button x:Name="AddBarcodeButton" IsEnabled="{Binding AddBarcodeButtonEnable, ElementName=CN, UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource ButtonStyle-000}" Height="30" VerticalAlignment="Bottom" Grid.Column="5" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" Padding="0" BorderBrush="{x:Null}" Cursor="Hand" Background="White" Click="AddBarcodeButtonClick">
                                                     <Button.Foreground>
                                                         <SolidColorBrush Color="{DynamicResource Blue-004}"/>
                                                     </Button.Foreground>
@@ -541,10 +541,10 @@
                                                 </Button>
                                             </Grid>
                                         </Border>
-                                        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="1" >
-                                            <StackPanel  Background="Transparent">
+                                        <ScrollViewer VerticalScrollBarVisibility="Visible" Grid.Row="1" >
+                                            <WrapPanel x:Name="BarcodesWrapPanel"  Background="Transparent" Margin="5,5,0,0">
 
-                                            </StackPanel>
+                                            </WrapPanel>
                                         </ScrollViewer>
                                     </Grid>
                                 </Border>

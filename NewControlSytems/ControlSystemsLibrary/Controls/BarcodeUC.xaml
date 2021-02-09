@@ -1,0 +1,95 @@
+﻿<UserControl x:Class="ControlSystemsLibrary.Controls.BarcodeUC"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ControlSystemsLibrary.Controls"
+             mc:Ignorable="d" 
+             x:Name="BCUC"
+             d:DesignHeight="180" d:DesignWidth="276.5" Height="180" Width="276.5" Margin="0,0,5,5">
+    
+    
+    <UserControl.Resources>
+        <Storyboard x:Key="ReadinessFalse">
+            <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)" Storyboard.TargetName="border">
+                <EasingColorKeyFrame KeyTime="0" Value="#FFFF5858"/>
+                <EasingColorKeyFrame KeyTime="0:0:0.2" Value="White"/>
+            </ColorAnimationUsingKeyFrames>
+        </Storyboard>
+    </UserControl.Resources>
+
+    <Border x:Name="border" Background="White" BorderThickness="1" Margin="0">
+        <Border.BorderBrush>
+            <SolidColorBrush Color="#FFCED1DA"/>
+        </Border.BorderBrush>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+            <Image Margin="10,0" Source="{Binding BacodeImage, ElementName=BCUC, UpdateSourceTrigger=PropertyChanged}"/>
+            <Border Margin="10,0" Grid.Row="1" BorderThickness="0,1,0,0">
+                <Border.BorderBrush>
+                    <SolidColorBrush Color="{DynamicResource Light-005}"/>
+                </Border.BorderBrush>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="40"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Orientation="Vertical" VerticalAlignment="Center" Height="33" Margin="0,8">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,5">
+                            <TextBlock Text="Единица измерения:" Margin="0,0,5,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed">
+                                <TextBlock.Foreground>
+                                    <SolidColorBrush Color="{DynamicResource Dark-002}"/>
+                                </TextBlock.Foreground>
+                            </TextBlock>
+                            <TextBlock Foreground="{Binding TextColor, ElementName=BCUC, UpdateSourceTrigger=PropertyChanged}" Text="{Binding UnitName, ElementName=BCUC, UpdateSourceTrigger=PropertyChanged}" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto"/>
+
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <TextBlock Text="Тип:" Margin="0,0,5,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed">
+                                <TextBlock.Foreground>
+                                    <SolidColorBrush Color="{DynamicResource Dark-002}"/>
+                                </TextBlock.Foreground>
+                            </TextBlock>
+
+                            <TextBlock Foreground="{Binding TextColor, ElementName=BCUC, UpdateSourceTrigger=PropertyChanged}" Text="{Binding BarcodeType, ElementName=BCUC, UpdateSourceTrigger=PropertyChanged}" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto"/>
+                        </StackPanel>
+                    </StackPanel>
+                    <Button x:Name="DeleteButton" Background="Transparent" Style="{DynamicResource ButtonStyle-000}" Click="DeleteButton_Click" Margin="0,10" Grid.Column="1">
+                        <Grid>
+                            <Rectangle Width="12" Height="1.5" RenderTransformOrigin="0.5,0.5">
+                                <Rectangle.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform/>
+                                        <SkewTransform/>
+                                        <RotateTransform Angle="45"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Rectangle.RenderTransform>
+                                <Rectangle.Fill>
+                                    <SolidColorBrush Color="{DynamicResource Purpure-002}"/>
+                                </Rectangle.Fill>
+                            </Rectangle>
+                            <Rectangle Width="12" Height="1.5" RenderTransformOrigin="0.5,0.5" Margin="0,0.25">
+                                <Rectangle.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform/>
+                                        <SkewTransform/>
+                                        <RotateTransform Angle="-45"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Rectangle.RenderTransform>
+                                <Rectangle.Fill>
+                                    <SolidColorBrush Color="{DynamicResource Purpure-002}"/>
+                                </Rectangle.Fill>
+                            </Rectangle>
+                        </Grid>
+                    </Button>
+                </Grid>
+            </Border>
+        </Grid>
+    </Border>
+
+</UserControl>

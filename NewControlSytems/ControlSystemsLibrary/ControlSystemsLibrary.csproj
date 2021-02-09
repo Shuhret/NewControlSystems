@@ -32,9 +32,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BarcodeStandard">
+      <HintPath>..\..\..\ControlSystems\ControlSystemsLibrary\bin\Debug\BarcodeStandard.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationFramework.Aero" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Common, Version=4.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Drawing.Common.5.0.0\lib\net461\System.Drawing.Common.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -61,6 +68,9 @@
     <Compile Include="Controls\AdminTabItemContents\NomenclatureATI.xaml.cs">
       <DependentUpon>NomenclatureATI.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\BarcodeUC.xaml.cs">
+      <DependentUpon>BarcodeUC.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\CheckBoxButton.xaml.cs">
       <DependentUpon>CheckBoxButton.xaml</DependentUpon>
     </Compile>
@@ -79,6 +89,7 @@
     <Compile Include="Controls\NomenPropertyUC.xaml.cs">
       <DependentUpon>NomenPropertyUC.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Services\BarCodes.cs" />
     <Compile Include="Services\Cryption.cs" />
     <Compile Include="Services\DataBaseRequest.cs" />
     <Compile Include="Services\GetColor.cs" />
@@ -103,6 +114,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\AdminTabItemContents\NomenclatureATI.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\BarcodeUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -211,6 +226,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="Design\projectGuides.guides" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

@@ -45,7 +45,7 @@
                             </Viewbox.RenderTransform>
                             <Canvas HorizontalAlignment="Left" Height="30" UseLayoutRounding="False" VerticalAlignment="Top" Width="30">
                                 <Canvas Height="20" Canvas.Left="9.078" Canvas.Top="5" Width="11.872">
-                                    <Path Data="M20.9502,5L9.0782,15.01L20.9502,25" Height="25.669" Canvas.Left="-2.835" StrokeStartLineCap="Round" Stretch="Fill" StrokeEndLineCap="Round" Stroke="#FF989FAD" StrokeThickness="5" StrokeLineJoin="Round" Canvas.Top="-2.834" Width="17.541"/>
+                                    <Path Data="M20.9502,5L9.0782,15.01L20.9502,25" Height="25.669" Canvas.Left="-2.835" StrokeStartLineCap="Round" Stretch="Fill" StrokeEndLineCap="Round" Stroke="#FF989FAD" StrokeThickness="4" StrokeLineJoin="Round" Canvas.Top="-2.834" Width="17.541"/>
                                 </Canvas>
                             </Canvas>
                         </Viewbox>

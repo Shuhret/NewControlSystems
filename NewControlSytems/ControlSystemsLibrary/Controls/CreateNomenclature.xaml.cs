@@ -114,7 +114,6 @@ namespace ControlSystemsLibrary.Controls
             }
         }
 
-
         // Артикул Создаваемой/редактируемой номенклатуры
         private string article = "";
         public string Article
@@ -200,13 +199,6 @@ namespace ControlSystemsLibrary.Controls
             }
         }
 
-
-
-
-
-
-
-
         // Enabled кнопки "Создать/Принять изменения"
         private bool readiness;
         public bool Readiness
@@ -237,6 +229,17 @@ namespace ControlSystemsLibrary.Controls
             }
         }
 
+        private bool addBarcodeButtonEnable = false;
+        public bool AddBarcodeButtonEnable
+        {
+            get => addBarcodeButtonEnable;
+            set
+            {
+                addBarcodeButtonEnable = value;
+                OnPropertyChanged();
+            }
+        }
+
         #endregion :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 
@@ -252,6 +255,7 @@ namespace ControlSystemsLibrary.Controls
         {
             RemoveReadinessFalseAddedUnits();
             RemoveReadinessFalseProperties();
+            RemoveReadinessFalseBarcodes();
         }
 
 
@@ -415,6 +419,14 @@ namespace ControlSystemsLibrary.Controls
                             ComboBoxCountry.IsDropDownOpen = true;
                         }
                         break;
+                    case "BarcodeTextBox":
+                        {
+                            if ((sender as TextBox).Text != "" && BarcodeTextBox.Text != null && BarcodeTextBox.Text != string.Empty && AddBarcodeButtonEnable == true)
+                            {
+                                AddBarcodeButton.Focus();
+                            }
+                        }
+                        break;
                 }
             }
         }
@@ -461,6 +473,7 @@ namespace ControlSystemsLibrary.Controls
                         RemoveAddedUnit(unitName);
                     }
                 }
+                CheckBarcodesReadiness();
             }
         }
 
@@ -534,6 +547,7 @@ namespace ControlSystemsLibrary.Controls
                         box.IsDropDownOpen = true;
                     }
                 }
+                CheckBarcodesReadiness();
             }
         }
 
@@ -542,7 +556,7 @@ namespace ControlSystemsLibrary.Controls
         {
             AdditionalUnitsUC parent = (((sender as Button).Parent as Grid).Parent as Border).Parent as AdditionalUnitsUC;
             AddUnitsStackPanel.Children.Remove(parent);
-            //CheckBarcodesAfterChangeUnits();
+            CheckBarcodesReadiness();
         }
 
         // Метод: Загружает Единицы измерения в ComboBox элемента "Доп. Един." из базы данных ------------------------------------------------
@@ -1004,7 +1018,6 @@ namespace ControlSystemsLibrary.Controls
                 {
                     if (NPUC.Readiness == false)
                     {
-                        NPUC.ReadinessFalseAnimationBegin();
                         AddPropertiesStackPanel.Children.Remove(NPUC);
                         
                     }
@@ -1022,5 +1035,130 @@ namespace ControlSystemsLibrary.Controls
                 ArticleTextBox.Focus();
             }
         }
+
+
+
+
+
+
+
+        private void AddBarcodeButtonClick(object sender, RoutedEventArgs e)
+        {
+            AddBarcode();
+        }
+
+        private void BarcodeUnitComboBoxSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            CheckCreatedBarcodeValues();
+            if ((sender as ComboBox).SelectedItem != null)
+            {
+                BarcodeTypesComboBox.Focus();
+                BarcodeTypesComboBox.IsDropDownOpen = true;
+            }
+        }
+
+        private void BarcodeTypeComboBoxSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            CheckCreatedBarcodeValues();
+            if ((sender as ComboBox).SelectedItem != null)
+            {
+                BarcodeTextBox.Focus();
+            }
+        }
+
+        private void BarcodeTextBoxTextChanged(object sender, TextChangedEventArgs e)
+        {
+            CheckCreatedBarcodeValues();
+           
+        }
+
+        private void CheckCreatedBarcodeValues()
+        {
+            if(BarcodeUnitsComboBox.SelectedItem != null && BarcodeTypesComboBox.SelectedItem != null && BarcodeTextBox.Text != "" && BarcodeTextBox.Text != null && BarcodeTextBox.Text != string.Empty)
+            {
+                AddBarcodeButtonEnable = true;
+            }
+            else
+            {
+                AddBarcodeButtonEnable = false;
+            }
+        }
+        private void AddBarcode()
+        {
+            if (CheckCreatedBarcode() == true)
+            {
+                BarcodesWrapPanel.Children.Add(GetBarcode());
+                BarcodeUnitsComboBox.SelectedItem = null;
+                BarcodeTypesComboBox.SelectedItem = null;
+                BarcodeTextBox.Text = "";
+                AddBarcodeButtonEnable = false;
+                CheckBarcodesReadiness();
+            }
+        }
+
+        
+        private bool CheckCreatedBarcode()
+        {
+            BarcodeUC BUC = new BarcodeUC();
+            return BarCodes.CheckCreatedBarcode((BarcodeTypesComboBox.SelectedItem as ComboBoxItem).Content.ToString(), BarcodeTextBox.Text);
+        }
+        private BarcodeUC GetBarcode()
+        {
+            BarcodeUC BUC = new BarcodeUC()
+            {
+                UnitName = (BarcodeUnitsComboBox.SelectedItem as ComboBoxItem).Content.ToString(),
+                BarcodeType = (BarcodeTypesComboBox.SelectedItem as ComboBoxItem).Content.ToString(),
+                Barcode = BarcodeTextBox.Text,
+                BacodeImage = BarCodes.GetBarcodeBitmapSource((BarcodeTypesComboBox.SelectedItem as ComboBoxItem).Content.ToString(), BarcodeTextBox.Text)
+            };
+            return BUC;
+        }
+
+        private void CheckBarcodesReadiness()
+        {
+            if (BarcodesWrapPanel.Children.Count > 0)
+            {
+                var children = BarcodesWrapPanel.Children.OfType<UIElement>().ToList();
+                foreach (BarcodeUC BUC in children)
+                {
+                    BUC.Readiness = false;
+                    if(BUC.UnitName == BaseUnitName)
+                    {
+                        BUC.Readiness = true;
+                    }
+                    else
+                    {
+                        foreach(AdditionalUnitsUC AUUC in AddUnitsStackPanel.Children)
+                        {
+                            if (AUUC.Readiness == true)
+                            {
+                                if (BUC.UnitName == (AUUC.UnitsComboBox.SelectedItem as ComboBoxItem).Content.ToString())
+                                {
+                                    BUC.Readiness = true;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
+        // Метод: Удаляет не готовые штрих-коды
+        private void RemoveReadinessFalseBarcodes()
+        {
+            if (BarcodesWrapPanel.Children.Count > 0)
+            {
+                var children = BarcodesWrapPanel.Children.OfType<UIElement>().ToList();
+                foreach (BarcodeUC BUC in children)
+                {
+                    if (BUC.Readiness == false)
+                    {
+                        BarcodesWrapPanel.Children.Remove(BUC);
+                    }
+                }
+            }
+        }
+
     }
 }
