@@ -128,7 +128,7 @@ namespace ControlSystemsLibrary.Services
 
 
         //---Метод: Возвращает из базы данных Единицы измерения----------------------------------------------------------
-        public static ArrayList GetUnits(string Connectionstring)
+        public static ArrayList GetUnitsName(string Connectionstring)
         {
             ArrayList list = new ArrayList();
             using (SqlConnection connect = new SqlConnection(Cryption.Decrypt(Connectionstring)))
@@ -152,6 +152,70 @@ namespace ControlSystemsLibrary.Services
             }
             return list;
         }
+
+        //---Метод: Возвращает из базы данных ID Единицы измерения ----------------------------------------------------------
+        public static Guid GetUnitID(string Connectionstring, string UnitName)
+        {
+            Guid UnitID = new Guid();
+            using (SqlConnection connect = new SqlConnection(Cryption.Decrypt(Connectionstring)))
+            {
+                try
+                {
+                    connect.Open();
+                    SqlCommand command = connect.CreateCommand(); // Создание команды
+                    command.CommandText = "SELECT [ID] FROM [dbo].[Units] WHERE [Unit] = " + UnitName; // Текст команды
+                    UnitID = (Guid)command.ExecuteScalar();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message.ToString());
+                }
+            }
+            return UnitID;
+        }
+
+        //---Метод: Возвращает из базы данных ID тип штрих кода ----------------------------------------------------------
+        public static Guid GetBarcodeTypeID(string Connectionstring, string BarcodeTypeName)
+        {
+            Guid BarcodTypeID = new Guid();
+            using (SqlConnection connect = new SqlConnection(Cryption.Decrypt(Connectionstring)))
+            {
+                try
+                {
+                    connect.Open();
+                    SqlCommand command = connect.CreateCommand(); // Создание команды
+                    command.CommandText = "SELECT [ID] FROM [dbo].[BarсodeTypes] WHERE [TypeName]  = " + BarcodeTypeName; // Текст команды
+                    BarcodTypeID = (Guid)command.ExecuteScalar();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message.ToString());
+                }
+            }
+            return BarcodTypeID;
+        }
+
+        //---Метод: Возвращает из базы данных ID тип штрих кода ----------------------------------------------------------
+        public static Guid GetNomenclaturePropertyValueID(string Connectionstring, string PropertyName, string ValuesName)
+        {
+            Guid ValueID = new Guid();
+            using (SqlConnection connect = new SqlConnection(Cryption.Decrypt(Connectionstring)))
+            {
+                try
+                {
+                    connect.Open();
+                    SqlCommand command = connect.CreateCommand(); // Создание команды
+                    command.CommandText = "SELECT [ID] FROM [dbo].[NomenPropertyValues] WHERE [ValueName] = '"+ ValuesName + "' AND [PropertyID] = (SELECT [ID] FROM [dbo].[NomenProperties] WHERE [PropertyName] = " + PropertyName + ")"; // Текст команды
+                    ValueID = (Guid)command.ExecuteScalar();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message.ToString());
+                }
+            }
+            return ValueID;
+        }
+
 
         //---Метод: Возвращает из базы данных Страны происхождения-------------------------------------------------------
         public static ArrayList GetCountry(string Connectionstring)
@@ -293,6 +357,61 @@ namespace ControlSystemsLibrary.Services
 
 
 
+        //---Метод: Создание новой номенклатуры (Основные данные + штрих-код базовой единицы) (ХП)---------------------------------------------------------------------
+        public static bool CreateNewNomenclature(NomenclatureClass Nomen)
+        {
+            bool ok = false;
+            using (SqlConnection connect = new SqlConnection(Cryption.Decrypt(XmlClass.GetSelectedConnectionString())))
+            {
+                //try
+                //{
+                connect.Open();
+                SqlCommand command = new SqlCommand("CreateNewNomenclature", connect);
+                command.CommandType = CommandType.StoredProcedure;
+
+                SqlParameter Param0 = new SqlParameter { ParameterName = "@ID", Value = Nomen.ID };// Новый ID //---Передаваемый параметр
+                command.Parameters.Add(Param0);
+
+                SqlParameter Param1 = new SqlParameter { ParameterName = "@GroupID", Value = Nomen.GroupID }; //---Передаваемый параметр
+                command.Parameters.Add(Param1);
+
+                SqlParameter Param2 = new SqlParameter { ParameterName = "@Aricle", Value = Nomen.Article }; //---Передаваемый параметр
+                command.Parameters.Add(Param2);
+
+                SqlParameter Param3 = new SqlParameter { ParameterName = "@NomenclatureName", Value = Nomen.Name }; //---Передаваемый параметр
+                command.Parameters.Add(Param3);
+
+                SqlParameter Param4 = new SqlParameter { ParameterName = "@BaseUnitName", Value = Nomen.BaseUnit }; //---Передаваемый параметр
+                command.Parameters.Add(Param4);
+
+                SqlParameter Param5 = new SqlParameter { ParameterName = "@CountryOfOriginName", Value = Nomen.CountryOfOrigin }; //---Передаваемый параметр
+                command.Parameters.Add(Param5);
+
+                SqlParameter Param6 = new SqlParameter { ParameterName = "@BaseUnitWeight", Value = Nomen.WeightBaseUnit }; //---Передаваемый параметр
+                command.Parameters.Add(Param6);
+
+                SqlParameter Param11 = new SqlParameter { ParameterName = "@Barcode", Value = Nomen.Barcode }; //---Передаваемый параметр
+                command.Parameters.Add(Param11);
+
+                SqlParameter Param12 = new SqlParameter { ParameterName = "@BarcodeType", Value = Nomen.BarcodeType }; //---Передаваемый параметр
+                command.Parameters.Add(Param12);
+
+                SqlParameter Param13 = new SqlParameter { ParameterName = "@Description", Value = Nomen.Description }; //---Передаваемый параметр
+                command.Parameters.Add(Param13);
+
+                command.Parameters.Add("@Result", SqlDbType.Bit).Direction = ParameterDirection.Output; // Выходной параметр
+
+                command.ExecuteNonQuery();
+
+                ok = (bool)command.Parameters["@Result"].Value;
+                //}
+                //catch (Exception ex)
+                //{
+                //    MessageBox.Show(ex.Message, "DataBaseRequest.CreateNewNomenclature");
+                //}
+                return ok;
+            }
+        }
 
 
 
@@ -305,61 +424,6 @@ namespace ControlSystemsLibrary.Services
 
 
 
-        ////---Метод: Создание новой номенклатуры (Основные данные + штрих-код базовой единицы) (ХП)---------------------------------------------------------------------
-        //public static bool CreateNewNomenclature(NomenclatureClass Nomen)
-        //{
-        //    bool ok = false;
-        //    using (SqlConnection connect = new SqlConnection(Cryption.Decrypt(XmlClass.GetSelectedConnectionString())))
-        //    {
-        //        //try
-        //        //{
-        //        connect.Open();
-        //        SqlCommand command = new SqlCommand("CreateNewNomenclature", connect);
-        //        command.CommandType = CommandType.StoredProcedure;
-
-        //        SqlParameter Param0 = new SqlParameter { ParameterName = "@ID", Value = Nomen.ID };// Новый ID //---Передаваемый параметр
-        //        command.Parameters.Add(Param0);
-
-        //        SqlParameter Param1 = new SqlParameter { ParameterName = "@GroupID", Value = Nomen.GroupID }; //---Передаваемый параметр
-        //        command.Parameters.Add(Param1);
-
-        //        SqlParameter Param2 = new SqlParameter { ParameterName = "@Aricle", Value = Nomen.Article }; //---Передаваемый параметр
-        //        command.Parameters.Add(Param2);
-
-        //        SqlParameter Param3 = new SqlParameter { ParameterName = "@NomenclatureName", Value = Nomen.Name }; //---Передаваемый параметр
-        //        command.Parameters.Add(Param3);
-
-        //        SqlParameter Param4 = new SqlParameter { ParameterName = "@BaseUnitName", Value = Nomen.BaseUnit }; //---Передаваемый параметр
-        //        command.Parameters.Add(Param4);
-
-        //        SqlParameter Param5 = new SqlParameter { ParameterName = "@CountryOfOriginName", Value = Nomen.CountryOfOrigin }; //---Передаваемый параметр
-        //        command.Parameters.Add(Param5);
-
-        //        SqlParameter Param6 = new SqlParameter { ParameterName = "@BaseUnitWeight", Value = Nomen.WeightBaseUnit }; //---Передаваемый параметр
-        //        command.Parameters.Add(Param6);
-
-        //        SqlParameter Param11 = new SqlParameter { ParameterName = "@Barcode", Value = Nomen.Barcode }; //---Передаваемый параметр
-        //        command.Parameters.Add(Param11);
-
-        //        SqlParameter Param12 = new SqlParameter { ParameterName = "@BarcodeType", Value = Nomen.BarcodeType }; //---Передаваемый параметр
-        //        command.Parameters.Add(Param12);
-
-        //        SqlParameter Param13 = new SqlParameter { ParameterName = "@Description", Value = Nomen.Description }; //---Передаваемый параметр
-        //        command.Parameters.Add(Param13);
-
-        //        command.Parameters.Add("@Result", SqlDbType.Bit).Direction = ParameterDirection.Output; // Выходной параметр
-
-        //        command.ExecuteNonQuery();
-
-        //        ok = (bool)command.Parameters["@Result"].Value;
-        //        //}
-        //        //catch (Exception ex)
-        //        //{
-        //        //    MessageBox.Show(ex.Message, "DataBaseRequest.CreateNewNomenclature");
-        //        //}
-        //        return ok;
-        //    }
-        //}
 
 
         ////---Метод: Создание новой номенклатуры (Дополнительные единицы измерения + штрих-коды)(ХП)---------------------------------------------------------------------

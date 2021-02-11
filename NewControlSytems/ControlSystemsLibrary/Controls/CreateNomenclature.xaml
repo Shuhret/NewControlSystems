@@ -636,6 +636,37 @@
                     </Grid>
                 </Grid>
             </Border>
+            <Border Visibility="{Binding CreatedWaitVisibility, ElementName=CN, UpdateSourceTrigger=PropertyChanged}" Background="White" BorderThickness="1" d:IsHidden="True" MouseLeftButtonDown="Border_MouseLeftButtonDown">
+                <Border.BorderBrush>
+                    <SolidColorBrush Color="{DynamicResource Light-005}"/>
+                </Border.BorderBrush>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="5*"/>
+                        <RowDefinition Height="5*"/>
+                    </Grid.RowDefinitions>
+                    <ContentControl Visibility="{Binding LoaderVisibility, ElementName=CN, UpdateSourceTrigger=PropertyChanged}" Content="{Binding Loader, ElementName=CN, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,10"/>
+                    <Viewbox Visibility="{Binding ResultVisibility, ElementName=CN, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="35" Margin="0,0,0,10">
+                        <Canvas HorizontalAlignment="Left" Height="70" UseLayoutRounding="False" VerticalAlignment="Top" Width="70">
+                            <Canvas Height="52.211" Canvas.Left="0.004" Canvas.Top="8.898" Width="69.999">
+                                <Path Data="F1M67.6016,11.3887C64.2816,8.0677,58.9446,8.0677,55.7426,11.3887L26.0946,40.9177L14.3536,29.0587C11.0326,25.8567,5.6966,25.8567,2.49460000000001,29.0587C-0.826399999999992,32.3797,-0.826399999999992,37.7167,2.49460000000001,40.9177L20.1646,58.7067C23.4856,61.9097,28.8216,61.9097,32.0236,58.7067L67.6016,23.2477C70.8036,19.9277,70.8036,14.5907,67.6016,11.3887" Fill="#FF9FCE26" Height="52.211" Canvas.Left="0" Stretch="Fill" Canvas.Top="0" Width="69.999"/>
+                            </Canvas>
+                        </Canvas>
+                    </Viewbox>
+                    <TextBlock x:Name="ProcessTextBlock" Visibility="{Binding LoaderVisibility, ElementName=CN, UpdateSourceTrigger=PropertyChanged}" Text="{Binding ProcessText, ElementName=CN, UpdateSourceTrigger=PropertyChanged}" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" Margin="0" FontSize="14" Grid.RowSpan="2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top">
+                        <TextBlock.Foreground>
+                            <SolidColorBrush Color="{DynamicResource Blue-003}"/>
+                        </TextBlock.Foreground>
+                    </TextBlock>
+                    <TextBlock x:Name="ResultTextBlock" Visibility="{Binding ResultVisibility, ElementName=CN, UpdateSourceTrigger=PropertyChanged}" Text="{Binding ResultText, ElementName=CN, UpdateSourceTrigger=PropertyChanged}" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" FontSize="14" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top">
+                        <TextBlock.Foreground>
+                            <SolidColorBrush Color="#FF9FCE26"/>
+                        </TextBlock.Foreground>
+                    </TextBlock>
+
+                </Grid>
+            </Border>
         </Grid>
+
     </Grid>
 </UserControl>
