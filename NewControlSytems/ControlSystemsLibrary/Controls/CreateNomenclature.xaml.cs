@@ -509,12 +509,17 @@ namespace ControlSystemsLibrary.Controls
                 };
                 AUUC.UnitsComboBox.SelectionChanged += AdditionalUnitsComboBox_SelectionChanged;
                 AUUC.DeleteButton.Click += AdditionalUnitsDeleteButton_Click;
-
+                AUUC.ReadinessChanged += AUUC_ReadinessChanged;
                 LoadAddUnitsToComboBox(ref AUUC);
 
                 AddUnitsStackPanel.Children.Add(AUUC);
                 (AddUnitsStackPanel.Parent as ScrollViewer).ScrollToEnd();
             }
+        }
+
+        private void AUUC_ReadinessChanged(object sender, EventArgs e)
+        {
+            CheckBarcodesReadiness();
         }
 
         // Событие: SelectionChanged (Для ComboBox Доп. единица измерения) -------------------------------------------------------------------
@@ -532,7 +537,6 @@ namespace ControlSystemsLibrary.Controls
                         if (CheckWithAdditionalUnits(AUUC.ID, SelectedUnitName))
                         {
                             AUUC.AddUnitName = SelectedUnitName;
-                            CheckBarcodesReadiness();
                             if (CreateMode)
                             {
                                 AUUC.QuantityTextBox.Focus();
@@ -563,38 +567,42 @@ namespace ControlSystemsLibrary.Controls
         // Метод: Проверяет "Готовность" созданных Доп. Единиц измерения ?????????????????????????????????????????????---------
         private bool CheckReadinessAddUnits()
         {
-            bool flag = true;
             if (AddUnitsStackPanel.Children.Count == 0)
             {
                 return true;
             }
+            int count = 0;
             foreach (AdditionalUnitsUC AUUC in AddUnitsStackPanel.Children)
             {
                 if (!AUUC.Readiness)
                 {
+                    count++;
                     AUUC.ReadinessFalseAnimationBegin();
-                    flag = false;
-                    break;
                 }
             }
-            return flag;
+            if(count > 0)
+                return false;
+            else
+                return true;
         }
 
         // Метод: Проверяет на наличие такой единицы измерения в Доп. Единицах ?????????????????????????????????????????????????????----
         private bool CheckWithAdditionalUnits(Guid ID, string UnitName)
         {
-            bool flag = true;
+            int count = 0;
             foreach (AdditionalUnitsUC AUUC in AddUnitsStackPanel.Children)
             {
                 AUUC.BaseUnitName = BaseUnitName;
                 if ((AUUC.ID != ID) && (AUUC.AddUnitName == UnitName))
                 {
                     AUUC.ReadinessFalseAnimationBegin();
-                    flag = false;
-                    break;
+                    count++;
                 }
             }
-            return flag;
+            if (count > 0)
+                return false;
+            else
+                return true;
         }
 
 
@@ -1243,6 +1251,14 @@ namespace ControlSystemsLibrary.Controls
                         }
                     }
                 }
+            }
+        }
+
+        private void BarcodeTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.Enter)
+            {
+                AddBarcode();
             }
         }
     }

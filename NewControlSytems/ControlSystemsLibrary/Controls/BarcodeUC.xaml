@@ -27,7 +27,7 @@
                 <RowDefinition/>
                 <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
-            <Image Margin="10,0" Source="{Binding BacodeImage, ElementName=BCUC, UpdateSourceTrigger=PropertyChanged}"/>
+            <Image Margin="10,0" Opacity="{Binding BarcodeOpacity, ElementName=BCUC, UpdateSourceTrigger=PropertyChanged}" Source="{Binding BacodeImage, ElementName=BCUC, UpdateSourceTrigger=PropertyChanged}"/>
             <Border Margin="10,0" Grid.Row="1" BorderThickness="0,1,0,0">
                 <Border.BorderBrush>
                     <SolidColorBrush Color="{DynamicResource Light-005}"/>

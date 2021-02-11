@@ -43,6 +43,17 @@ namespace ControlSystemsLibrary.Controls
             }
         }
 
+        private double barcodeOpacity = 1;
+        public double BarcodeOpacity
+        {
+            get => barcodeOpacity;
+            set
+            {
+                barcodeOpacity = value;
+                OnPropertyChanged();
+            }
+        }
+
         private BitmapSource bacodeImage;
         public BitmapSource BacodeImage
         {
@@ -73,11 +84,13 @@ namespace ControlSystemsLibrary.Controls
                 if(Readiness == true)
                 {
                     TextColor = GetColor.Get("Blue-004");
+                    BarcodeOpacity = 1.0;
                     ToolTip = null;
                 }
                 else
                 {
                     TextColor = GetColor.Get("Purpure-002");
+                    BarcodeOpacity = 0.2;
                     this.ToolTip = "Внимание!\nЕдиница "+'"'+ UnitName +'"'+" не добавлена.\nДанный штрих-код не будет добавлен в базу данных!";
                 }
             }

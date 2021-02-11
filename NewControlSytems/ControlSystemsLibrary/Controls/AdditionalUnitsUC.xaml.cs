@@ -26,7 +26,7 @@ namespace ControlSystemsLibrary.Controls
         }
 
         #endregion
-
+        public event EventHandler ReadinessChanged;
         public AdditionalUnitsUC()
         {
             InitializeComponent();
@@ -87,17 +87,19 @@ namespace ControlSystemsLibrary.Controls
         {
             get
             {
-                //if (readiness == false)
-                //{
-                //    Storyboard sb = this.FindResource("ReadinessFalse") as Storyboard;
-                //    sb.Begin();
-                //}
                 return readiness;
             }
             set
             {
+                bool flag = readiness;
                 readiness = value;
                 OnPropertyChanged();
+                if(readiness != flag)
+                {
+                    if (ReadinessChanged != null)
+                        ReadinessChanged(this, null);
+                }
+
             }
         }
 

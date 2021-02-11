@@ -513,7 +513,7 @@
                                                         <Border.Background>
                                                             <SolidColorBrush Color="{DynamicResource Light-001}"/>
                                                         </Border.Background>
-                                                        <TextBox x:Name="BarcodeTextBox" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Center" Padding="5,1,1,1" TextChanged="BarcodeTextBoxTextChanged">
+                                                        <TextBox x:Name="BarcodeTextBox" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Center" Padding="5,1,1,1" TextChanged="BarcodeTextBoxTextChanged" KeyDown="BarcodeTextBox_KeyDown">
                                                             <TextBox.Foreground>
                                                                 <SolidColorBrush Color="{DynamicResource Blue-004}"/>
                                                             </TextBox.Foreground>
