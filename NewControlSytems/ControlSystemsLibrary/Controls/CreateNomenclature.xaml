@@ -57,7 +57,7 @@
                                 </TextBlock.Foreground>
                             </TextBlock>
                         </StackPanel>
-                        <Button x:Name="ButtonClose" Style="{DynamicResource ResourceKey=ButtonStyle-000}" Background="Transparent" BorderThickness="0" BorderBrush="Transparent" HorizontalAlignment="Right" Margin="0" Width="55" Grid.Column="1" Click="CloseButtonClick">
+                        <Button x:Name="ButtonClose" Style="{DynamicResource ResourceKey=ButtonStyle-000}" Background="Transparent" BorderThickness="0" BorderBrush="Transparent" Margin="0,5,5,5" Grid.Column="1" Click="CloseButtonClick">
                             <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <Rectangle Width="15" Height="1.5" RadiusY="1" RadiusX="1" RenderTransformOrigin="0.5,0.5">
                                     <Rectangle.RenderTransform>
@@ -329,7 +329,7 @@
                                                         <SolidColorBrush Color="{DynamicResource Dark-001}"/>
                                                     </TextBlock.Foreground>
                                                 </TextBlock>
-                                                <Button x:Name="AddAddUnitButton" Style="{DynamicResource ButtonStyle-000}" Height="30" VerticalAlignment="Bottom" Grid.Column="6" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" Padding="0" BorderBrush="{x:Null}" Cursor="Hand" Click="AddAddUnitButton_Click">
+                                                <Button x:Name="AddAddUnitButton" Style="{DynamicResource ButtonStyle-000}" Height="27" VerticalAlignment="Bottom" Grid.Column="6" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" Padding="0" BorderBrush="{x:Null}" Cursor="Hand" Click="AddAddUnitButton_Click" Margin="5,0,0,3">
                                                     <Button.Background>
                                                         <SolidColorBrush Color="White"/>
                                                     </Button.Background>
@@ -396,7 +396,7 @@
                                                         <SolidColorBrush Color="{DynamicResource Dark-001}"/>
                                                     </TextBlock.Foreground>
                                                 </TextBlock>
-                                                <Button x:Name="AddPropertyButton" Style="{DynamicResource ButtonStyle-000}" Height="30" VerticalAlignment="Bottom" Grid.Column="6" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" Padding="0" BorderBrush="{x:Null}" Cursor="Hand" Background="White" Click="AddPropertyButton_Click">
+                                                <Button x:Name="AddPropertyButton" Style="{DynamicResource ButtonStyle-000}" Height="27" VerticalAlignment="Bottom" Grid.Column="6" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" Padding="0" BorderBrush="{x:Null}" Cursor="Hand" Background="White" Click="AddPropertyButton_Click" Margin="5,0,1,3">
                                                     <Button.Foreground>
                                                         <SolidColorBrush Color="{DynamicResource Blue-004}"/>
                                                     </Button.Foreground>
@@ -520,7 +520,7 @@
                                                         </TextBox>
                                                     </Border>
                                                 </StackPanel>
-                                                <Button x:Name="AddBarcodeButton" IsEnabled="{Binding AddBarcodeButtonEnable, ElementName=CN, UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource ButtonStyle-000}" Height="30" VerticalAlignment="Bottom" Grid.Column="5" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" Padding="0" BorderBrush="{x:Null}" Cursor="Hand" Background="White" Click="AddBarcodeButtonClick">
+                                                <Button x:Name="AddBarcodeButton" IsEnabled="{Binding AddBarcodeButtonEnable, ElementName=CN, UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource ButtonStyle-000}" Height="27" VerticalAlignment="Bottom" Grid.Column="5" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" Padding="0" BorderBrush="{x:Null}" Cursor="Hand" Background="White" Click="AddBarcodeButtonClick" Margin="5,0,0,0">
                                                     <Button.Foreground>
                                                         <SolidColorBrush Color="{DynamicResource Blue-004}"/>
                                                     </Button.Foreground>
@@ -579,7 +579,7 @@
                                                     <ColumnDefinition Width="165"/>
                                                     <ColumnDefinition/>
                                                 </Grid.ColumnDefinitions>
-                                                <Button Style="{DynamicResource ButtonStyle-000}" Height="30" VerticalAlignment="Bottom" Grid.Column="6" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" Padding="0" BorderBrush="{x:Null}" Cursor="Hand">
+                                                <Button Style="{DynamicResource ButtonStyle-000}" Height="27" VerticalAlignment="Bottom" Grid.Column="6" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" Padding="0" BorderBrush="{x:Null}" Cursor="Hand" Click="AddImageButtonClick" Margin="0,0,0,3">
                                                     <Button.Background>
                                                         <SolidColorBrush Color="White"/>
                                                     </Button.Background>
@@ -603,9 +603,8 @@
                                                 </Button>
                                             </Grid>
                                         </Border>
-                                        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="1" >
-                                            <WrapPanel  Background="Transparent">
-
+                                        <ScrollViewer VerticalScrollBarVisibility="Hidden" Grid.Row="1" >
+                                            <WrapPanel x:Name="CreatedNomenclatureImageWrapPanel" Background="Transparent" Margin="10,10,0,0">
                                             </WrapPanel>
                                         </ScrollViewer>
                                     </Grid>

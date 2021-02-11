@@ -87,11 +87,11 @@ namespace ControlSystemsLibrary.Controls
         {
             get
             {
-                if (readiness == false)
-                {
-                    Storyboard sb = this.FindResource("ReadinessFalse") as Storyboard;
-                    sb.Begin();
-                }
+                //if (readiness == false)
+                //{
+                //    Storyboard sb = this.FindResource("ReadinessFalse") as Storyboard;
+                //    sb.Begin();
+                //}
                 return readiness;
             }
             set
@@ -189,6 +189,12 @@ namespace ControlSystemsLibrary.Controls
 
 
 
+        public void ReadinessFalseAnimationBegin()
+        {
+            Storyboard sb = this.FindResource("ReadinessFalse") as Storyboard;
+            sb.Begin();
+        }
+
         private void TextBoxGotFocus(object sender, RoutedEventArgs e)
         {
             if (sender is TextBox)
@@ -253,8 +259,6 @@ namespace ControlSystemsLibrary.Controls
             }
         }
 
-
-
         private void DigitText_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             double result;
@@ -313,13 +317,16 @@ namespace ControlSystemsLibrary.Controls
 
         }
 
-
         private void CheckReadiness()
         {
             if (Weight > 0 && Quantity > 0 && AddUnitName != "" && AddUnitName != null && AddUnitName != string.Empty)
+            {
                 Readiness = true;
+            }
             else
+            {
                 Readiness = false;
+            }
         }
 
         private void CheckWeight()

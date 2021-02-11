@@ -11,6 +11,8 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Linq;
+using Microsoft.Win32;
+using System.Windows.Media.Imaging;
 
 namespace ControlSystemsLibrary.Controls
 {
@@ -262,7 +264,7 @@ namespace ControlSystemsLibrary.Controls
         private void StartMethod()
         {
             CreateNomenclatureTabControl.SelectedIndex = 0;
-            LoadAllNomenclatureCategories();
+            LoadCategories();
             LoadUnits();
             LoadCountry();
             LoadUnitsForBarcodes();
@@ -487,10 +489,16 @@ namespace ControlSystemsLibrary.Controls
             }
         }
 
+
+
+
+
+
+
         // Событие: Click (Для добавления новой Доп. Единицы измерения) ----------------------------------------------------------------------
         private void AddAddUnitButton_Click(object sender, RoutedEventArgs e)
         {
-            if (this.CheckReadinessAddUnits())
+            if (CheckReadinessAddUnits())
             {
                 AdditionalUnitsUC AUUC = new AdditionalUnitsUC
                 {
@@ -524,6 +532,7 @@ namespace ControlSystemsLibrary.Controls
                         if (CheckWithAdditionalUnits(AUUC.ID, SelectedUnitName))
                         {
                             AUUC.AddUnitName = SelectedUnitName;
+                            CheckBarcodesReadiness();
                             if (CreateMode)
                             {
                                 AUUC.QuantityTextBox.Focus();
@@ -547,9 +556,58 @@ namespace ControlSystemsLibrary.Controls
                         box.IsDropDownOpen = true;
                     }
                 }
-                CheckBarcodesReadiness();
+                
             }
         }
+
+        // Метод: Проверяет "Готовность" созданных Доп. Единиц измерения ?????????????????????????????????????????????---------
+        private bool CheckReadinessAddUnits()
+        {
+            bool flag = true;
+            if (AddUnitsStackPanel.Children.Count == 0)
+            {
+                return true;
+            }
+            foreach (AdditionalUnitsUC AUUC in AddUnitsStackPanel.Children)
+            {
+                if (!AUUC.Readiness)
+                {
+                    AUUC.ReadinessFalseAnimationBegin();
+                    flag = false;
+                    break;
+                }
+            }
+            return flag;
+        }
+
+        // Метод: Проверяет на наличие такой единицы измерения в Доп. Единицах ?????????????????????????????????????????????????????----
+        private bool CheckWithAdditionalUnits(Guid ID, string UnitName)
+        {
+            bool flag = true;
+            foreach (AdditionalUnitsUC AUUC in AddUnitsStackPanel.Children)
+            {
+                AUUC.BaseUnitName = BaseUnitName;
+                if ((AUUC.ID != ID) && (AUUC.AddUnitName == UnitName))
+                {
+                    AUUC.ReadinessFalseAnimationBegin();
+                    flag = false;
+                    break;
+                }
+            }
+            return flag;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
 
         // Событие: Click (Для Удаления Доп. единицы измерения) ------------------------------------------------------------------------------
         private void AdditionalUnitsDeleteButton_Click(object sender, RoutedEventArgs e)
@@ -685,7 +743,7 @@ namespace ControlSystemsLibrary.Controls
         }
 
         // Метод: Загружает Категории в ComboBox из базы данных ------------------------------------------------------
-        async void LoadAllNomenclatureCategories()
+        async void LoadCategories()
         {
             ArrayList units = new ArrayList();
 
@@ -723,23 +781,6 @@ namespace ControlSystemsLibrary.Controls
             }
         }
 
-        // Метод: Проверяет "Готовность" созданных Доп. Единиц измерения ---------------------------------------------------------------------
-        private bool CheckReadinessAddUnits()
-        {
-            bool flag = true;
-            if (AddUnitsStackPanel.Children.Count == 0)
-            {
-                return true;
-            }
-            foreach (AdditionalUnitsUC AUUC in AddUnitsStackPanel.Children)
-            {
-                if (!AUUC.Readiness)
-                {
-                    flag = false;
-                }
-            }
-            return flag;
-        }
 
         // Метод: Сверяет с базовой единицей -------------------------------------------------------------------------------------------------
         private bool CompareToBaseUnit(string UnitName)
@@ -751,18 +792,22 @@ namespace ControlSystemsLibrary.Controls
             return true;
         }
 
-        // Метод: Проверяет на наличие такой единицы измерения в Доп. Единицах (2-перегрузка) ------------------------------------------------
-        private bool CheckWithAdditionalUnits(Guid ID, string UnitName)
+
+
+        // Метод: Проверяет "Готовность" созданных свойств и значений ------------------------------------------------------------------------
+        private bool CheckReadinessProperties()
         {
             bool readiness = true;
-            foreach (AdditionalUnitsUC AUUC in AddUnitsStackPanel.Children)
+            if (AddPropertiesStackPanel.Children.Count == 0)
             {
-                AUUC.BaseUnitName = BaseUnitName;
-                if ((AUUC.ID != ID) && (AUUC.AddUnitName == UnitName))
+                return readiness;
+            }
+            foreach (NomenPropertyUC NPUC in AddPropertiesStackPanel.Children)
+            {
+                if (!NPUC.Readiness)
                 {
-                    AUUC.Readiness = false;
-                    readiness = AUUC.Readiness;
-                    AUUC.Readiness = true;
+                    NPUC.ReadinessFalseAnimationBegin();
+                    readiness = false;
                 }
             }
             return readiness;
@@ -831,24 +876,6 @@ namespace ControlSystemsLibrary.Controls
         }
 
 
-        // Метод: Проверяет "Готовность" созданных свойств и значений ------------------------------------------------------------------------
-        private bool CheckReadinessProperties()
-        {
-            bool readiness = true;
-            if (AddPropertiesStackPanel.Children.Count == 0)
-            {
-                return readiness;
-            }
-            foreach (NomenPropertyUC NPUC in AddPropertiesStackPanel.Children)
-            {
-                if (!NPUC.Readiness)
-                {
-                    NPUC.ReadinessFalseAnimationBegin();
-                    readiness = false;
-                }
-            }
-            return readiness;
-        }
 
         // Метод: Загружает Свойства в ComboBox из базы данных -------------------------------------------------------------------------------
         private void LoadPropertiesInComboBox(ref ComboBox CBX)
@@ -1160,5 +1187,63 @@ namespace ControlSystemsLibrary.Controls
             }
         }
 
+        private void AddImageButtonClick(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Filter = "Image files(*.jpg, *.png) | *.jpg; *.png";
+
+                if (openFileDialog.ShowDialog() == true)
+                {
+                    AddImageControl(openFileDialog.FileName);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\nПопробуйте загрузить другое изображение.", "Ошибка загрузки изображения");
+            }
+        }
+
+
+        // Метод: Добавляет Изображение в WrapPanel из полученной ссылки на файл -------------------------------------------------------------
+        private void AddImageControl(string ImagePath)
+        {
+            NomenclatureImageUC NIUC = new NomenclatureImageUC();
+            NIUC.ImagePath = ImagePath;
+            NIUC.Deleted += ImageDeleteClick;
+            if (CreatedNomenclatureImageWrapPanel.Children.Count == 0)
+                NIUC.IsChecked = true;
+            CreatedNomenclatureImageWrapPanel.Children.Add(NIUC);
+            (CreatedNomenclatureImageWrapPanel.Parent as ScrollViewer).ScrollToEnd();
+        }
+
+        private void ImageDeleteClick(object sender, EventArgs e)
+        {
+            bool selectedDelete = false;
+            if (CreatedNomenclatureImageWrapPanel.Children.Count > 0)
+            {
+                var children = CreatedNomenclatureImageWrapPanel.Children.OfType<UIElement>().ToList();
+                foreach (NomenclatureImageUC NIUC in children)
+                {
+
+                    if(NIUC.IsChecked == true)
+                    {
+                        if(CreatedNomenclatureImageWrapPanel.Children.Count > 1)
+                        {
+                            selectedDelete = true;
+                        }
+                    }
+                    if (NIUC == (sender as NomenclatureImageUC))
+                    {
+                        CreatedNomenclatureImageWrapPanel.Children.Remove(NIUC);
+                        if(selectedDelete == true)
+                        {
+                            (CreatedNomenclatureImageWrapPanel.Children[0] as NomenclatureImageUC).IsChecked = true;
+                        }
+                    }
+                }
+            }
+        }
     }
 }

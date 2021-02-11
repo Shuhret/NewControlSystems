@@ -19,14 +19,23 @@
                         </Storyboard>
                     </ControlTemplate.Resources>
                     <Grid>
-                        <Border x:Name="border" Background="Transparent" Cursor="Hand">
-                            <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        <Border x:Name="border" Background="{TemplateBinding Background}" Cursor="Hand" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="2">
+                            <Grid Height="Auto" Margin="0" VerticalAlignment="Stretch" Width="Auto">
+                                <Rectangle x:Name="rectangle" Opacity="0" RadiusY="1.5" RadiusX="1.5">
+                                    <Rectangle.Fill>
+                                        <SolidColorBrush Color="#FFF9FAFC"/>
+                                    </Rectangle.Fill>
+                                </Rectangle>
+                                <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                            </Grid>
                         </Border>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsFocused" Value="True"/>
                         <Trigger Property="IsDefaulted" Value="True"/>
-                        <Trigger Property="IsMouseOver" Value="True"/>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Opacity" TargetName="rectangle" Value="1"/>
+                        </Trigger>
                         <Trigger Property="IsPressed" Value="True">
                             <Trigger.EnterActions>
                                 <BeginStoryboard Storyboard="{StaticResource press}"/>
@@ -40,6 +49,8 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+
 
 
     <Style x:Key="ButtonStyle-001" TargetType="{x:Type Button}">
@@ -93,7 +104,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
+
     <Style x:Key="ConnectionNameButtonStyle" TargetType="{x:Type Button}">
         <Setter Property="Template">
             <Setter.Value>

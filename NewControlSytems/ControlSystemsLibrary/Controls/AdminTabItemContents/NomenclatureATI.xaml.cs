@@ -570,5 +570,11 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
 
         #endregion :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
+
+        private void DataGridNomenclatures_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            SearchedText = "";
+        }
+
     }
 }

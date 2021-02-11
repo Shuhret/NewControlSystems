@@ -86,6 +86,9 @@
     <Compile Include="Controls\LoaderCubes.xaml.cs">
       <DependentUpon>LoaderCubes.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\NomenclatureImageUC.xaml.cs">
+      <DependentUpon>NomenclatureImageUC.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\NomenPropertyUC.xaml.cs">
       <DependentUpon>NomenPropertyUC.xaml</DependentUpon>
     </Compile>
@@ -138,6 +141,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\LoaderCubes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\NomenclatureImageUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -250,6 +257,5 @@
     <Resource Include="Resources\Fonts\RobotoCondensed-LightItalic.ttf" />
     <Resource Include="Resources\Fonts\RobotoCondensed-Regular.ttf" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

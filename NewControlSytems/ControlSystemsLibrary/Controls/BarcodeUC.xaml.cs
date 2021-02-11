@@ -73,7 +73,7 @@ namespace ControlSystemsLibrary.Controls
                 if(Readiness == true)
                 {
                     TextColor = GetColor.Get("Blue-004");
-                    ToolTip = "";
+                    ToolTip = null;
                 }
                 else
                 {
