@@ -1,4 +1,5 @@
 ﻿using ControlSystemsLibrary.Classes;
+using ControlSystemsLibrary.Controls;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -98,7 +99,6 @@ namespace ControlSystemsLibrary.Services
                         NC.ID = (Guid)reading.GetValue(0);
                         NC.GroupID = (Guid)reading.GetValue(1);
                         NC.GroupNomen = (bool)reading.GetValue(2);
-
                         NC.Name = reading.GetValue(3).ToString();
 
                         if (NC.GroupNomen == true)
@@ -107,13 +107,11 @@ namespace ControlSystemsLibrary.Services
                             NC.Article = reading.GetValue(5).ToString();
                             NC.BaseUnit = reading.GetValue(6).ToString();
                             NC.WeightBaseUnit = Convert.ToDouble(reading.GetValue(7));
-                            NC.BarcodeType = reading.GetValue(8).ToString();
-                            NC.Barcode = reading.GetValue(9).ToString();
-                            NC.CountryOfOrigin = reading.GetValue(10).ToString();
-                            NC.Description = reading.GetValue(11).ToString();
-                            NC.Aksia = (bool)reading.GetValue(12);
-                            NC.Focus = (bool)reading.GetValue(13);
-                            NC.New = (bool)reading.GetValue(14);
+                            NC.CountryOfOrigin = reading.GetValue(8).ToString();
+                            NC.Description = reading.GetValue(9).ToString();
+                            NC.Aksia = (bool)reading.GetValue(10);
+                            NC.Focus = (bool)reading.GetValue(11);
+                            NC.New = (bool)reading.GetValue(12);
                         }
                         list.Add(NC);
                     }
@@ -163,7 +161,7 @@ namespace ControlSystemsLibrary.Services
                 {
                     connect.Open();
                     SqlCommand command = connect.CreateCommand(); // Создание команды
-                    command.CommandText = "SELECT [ID] FROM [dbo].[Units] WHERE [Unit] = " + UnitName; // Текст команды
+                    command.CommandText = "SELECT [ID] FROM [dbo].[Units] WHERE [Unit] = '" + UnitName+"'"; // Текст команды
                     UnitID = (Guid)command.ExecuteScalar();
                 }
                 catch (Exception ex)
@@ -184,8 +182,8 @@ namespace ControlSystemsLibrary.Services
                 {
                     connect.Open();
                     SqlCommand command = connect.CreateCommand(); // Создание команды
-                    command.CommandText = "SELECT [ID] FROM [dbo].[BarсodeTypes] WHERE [TypeName]  = " + BarcodeTypeName; // Текст команды
-                    BarcodTypeID = (Guid)command.ExecuteScalar();
+                    command.CommandText = "SELECT [ID] FROM [dbo].[BarсodeTypes] WHERE [TypeName]  = '" + BarcodeTypeName+"'"; // Текст команды
+                    return (Guid)command.ExecuteScalar();
                 }
                 catch (Exception ex)
                 {
@@ -205,7 +203,7 @@ namespace ControlSystemsLibrary.Services
                 {
                     connect.Open();
                     SqlCommand command = connect.CreateCommand(); // Создание команды
-                    command.CommandText = "SELECT [ID] FROM [dbo].[NomenPropertyValues] WHERE [ValueName] = '"+ ValuesName + "' AND [PropertyID] = (SELECT [ID] FROM [dbo].[NomenProperties] WHERE [PropertyName] = " + PropertyName + ")"; // Текст команды
+                    command.CommandText = "SELECT [ID] FROM [dbo].[NomenPropertyValues] WHERE [ValueName] = '"+ ValuesName + "' AND [PropertyID] = (SELECT [ID] FROM [dbo].[NomenProperties] WHERE [PropertyName] = '" + PropertyName + "')"; // Текст команды
                     ValueID = (Guid)command.ExecuteScalar();
                 }
                 catch (Exception ex)
@@ -358,58 +356,133 @@ namespace ControlSystemsLibrary.Services
 
 
         //---Метод: Создание новой номенклатуры (Основные данные + штрих-код базовой единицы) (ХП)---------------------------------------------------------------------
-        public static bool CreateNewNomenclature(NomenclatureClass Nomen)
+        public static bool CreateNewNomenclature(string Connectionstring, NomenclatureClass Nomen, ArrayList AddAdditionalUnits, ArrayList PropertyValues, ArrayList Images, ArrayList Barcodes)
         {
-            bool ok = false;
-            using (SqlConnection connect = new SqlConnection(Cryption.Decrypt(XmlClass.GetSelectedConnectionString())))
+            string message = "";
+
+            DataTable AAUDT = new DataTable();
+            AAUDT.Columns.Add(new DataColumn("ID", typeof(Guid)));
+            AAUDT.Columns.Add(new DataColumn("NomenclatureID", typeof(Guid)));
+            AAUDT.Columns.Add(new DataColumn("UnitID", typeof(Guid)));
+            AAUDT.Columns.Add(new DataColumn("Quantity", typeof(double)));
+            AAUDT.Columns.Add(new DataColumn("UnitWeight", typeof(double)));
+
+            foreach(AdditionalUnitsClass AUC in AddAdditionalUnits)
             {
-                //try
-                //{
-                connect.Open();
-                SqlCommand command = new SqlCommand("CreateNewNomenclature", connect);
-                command.CommandType = CommandType.StoredProcedure;
+                AAUDT.Rows.Add(AUC.ID, AUC.NomenclatureID, AUC.UnitID, AUC.Quantity, AUC.UnitWeight);
+            }
 
-                SqlParameter Param0 = new SqlParameter { ParameterName = "@ID", Value = Nomen.ID };// Новый ID //---Передаваемый параметр
-                command.Parameters.Add(Param0);
 
-                SqlParameter Param1 = new SqlParameter { ParameterName = "@GroupID", Value = Nomen.GroupID }; //---Передаваемый параметр
-                command.Parameters.Add(Param1);
+            DataTable PVDT = new DataTable();
+            PVDT.Columns.Add(new DataColumn("ID", typeof(Guid)));
+            PVDT.Columns.Add(new DataColumn("ValuesID", typeof(Guid)));
+            PVDT.Columns.Add(new DataColumn("NomenclatureID", typeof(Guid)));
+            foreach(NomenclaturePropertyValuesClass NPVC in PropertyValues)
+            {
+                PVDT.Rows.Add(NPVC.ID, NPVC.ValuesID, NPVC.NomenclatureID);
+            }
 
-                SqlParameter Param2 = new SqlParameter { ParameterName = "@Aricle", Value = Nomen.Article }; //---Передаваемый параметр
-                command.Parameters.Add(Param2);
 
-                SqlParameter Param3 = new SqlParameter { ParameterName = "@NomenclatureName", Value = Nomen.Name }; //---Передаваемый параметр
-                command.Parameters.Add(Param3);
 
-                SqlParameter Param4 = new SqlParameter { ParameterName = "@BaseUnitName", Value = Nomen.BaseUnit }; //---Передаваемый параметр
-                command.Parameters.Add(Param4);
+            DataTable IDT = new DataTable();
+            IDT.Columns.Add(new DataColumn("ID", typeof(Guid)));
+            IDT.Columns.Add(new DataColumn("NomenclatureID", typeof(Guid)));
+            IDT.Columns.Add(new DataColumn("NomenclatureImage", typeof(Byte[])));
+            IDT.Columns.Add(new DataColumn("MainImage", typeof(bool)));
+            foreach (NomenclatureImageClass NIC in Images)
+            {
+                IDT.Rows.Add(NIC.ID, NIC.NomenclatureID, NIC.ImageArray, NIC.MainImage);
+            }
 
-                SqlParameter Param5 = new SqlParameter { ParameterName = "@CountryOfOriginName", Value = Nomen.CountryOfOrigin }; //---Передаваемый параметр
-                command.Parameters.Add(Param5);
 
-                SqlParameter Param6 = new SqlParameter { ParameterName = "@BaseUnitWeight", Value = Nomen.WeightBaseUnit }; //---Передаваемый параметр
-                command.Parameters.Add(Param6);
+            DataTable BDT = new DataTable();
+            BDT.Columns.Add(new DataColumn("ID", typeof(Guid)));
+            BDT.Columns.Add(new DataColumn("NomenclatureID", typeof(Guid)));
+            BDT.Columns.Add(new DataColumn("BarcodeTypeID", typeof(Guid)));
+            BDT.Columns.Add(new DataColumn("Barcode", typeof(string)));
+            BDT.Columns.Add(new DataColumn("UnitID", typeof(Guid)));
+            foreach (NomenclatureBarcodesClass NBC in Barcodes)
+            {
+                BDT.Rows.Add(NBC.ID, NBC.NomenclatureID, NBC.BarcodeTypeID, NBC.Barcode, NBC.UnitID);
+            }
 
-                SqlParameter Param11 = new SqlParameter { ParameterName = "@Barcode", Value = Nomen.Barcode }; //---Передаваемый параметр
-                command.Parameters.Add(Param11);
 
-                SqlParameter Param12 = new SqlParameter { ParameterName = "@BarcodeType", Value = Nomen.BarcodeType }; //---Передаваемый параметр
-                command.Parameters.Add(Param12);
+            bool ok = false;
+            using (SqlConnection connect = new SqlConnection(Cryption.Decrypt(Connectionstring)))
+            {
+                try
+                {
+                    connect.Open();
+                    SqlCommand command = new SqlCommand("CreateNewNomenclature", connect);
+                    command.CommandType = CommandType.StoredProcedure;
 
-                SqlParameter Param13 = new SqlParameter { ParameterName = "@Description", Value = Nomen.Description }; //---Передаваемый параметр
-                command.Parameters.Add(Param13);
+                    SqlParameter paramID = command.Parameters.AddWithValue("@ID", Nomen.ID);
+                    paramID.SqlDbType = SqlDbType.UniqueIdentifier;
 
-                command.Parameters.Add("@Result", SqlDbType.Bit).Direction = ParameterDirection.Output; // Выходной параметр
+                    SqlParameter paramGroupID = command.Parameters.AddWithValue("@GroupID", Nomen.GroupID);
+                    paramGroupID.SqlDbType = SqlDbType.UniqueIdentifier;
 
-                command.ExecuteNonQuery();
+                    SqlParameter paramAricle = command.Parameters.AddWithValue("@Aricle", Nomen.Article);
+                    paramAricle.SqlDbType = SqlDbType.NVarChar;
+                    paramAricle.Size = 50;
 
-                ok = (bool)command.Parameters["@Result"].Value;
-                //}
-                //catch (Exception ex)
-                //{
-                //    MessageBox.Show(ex.Message, "DataBaseRequest.CreateNewNomenclature");
-                //}
-                return ok;
+                    SqlParameter paramNomenclatureName = command.Parameters.AddWithValue("@NomenclatureName", Nomen.Name);
+                    paramNomenclatureName.SqlDbType = SqlDbType.NVarChar;
+                    paramNomenclatureName.Size = 100;
+
+                    SqlParameter paramBaseUnitName = command.Parameters.AddWithValue("@BaseUnitName", Nomen.BaseUnit);
+                    paramBaseUnitName.SqlDbType = SqlDbType.NVarChar;
+                    paramBaseUnitName.Size = 50;
+
+                    SqlParameter paramCountryOfOriginName = command.Parameters.AddWithValue("@CountryOfOriginName", Nomen.CountryOfOrigin);
+                    paramCountryOfOriginName.SqlDbType = SqlDbType.NVarChar;
+                    paramCountryOfOriginName.Size = 50;
+
+                    SqlParameter paramCategory = command.Parameters.AddWithValue("@Category", Nomen.Category);
+                    paramCategory.SqlDbType = SqlDbType.NVarChar;
+                    paramCategory.Size = 50;
+
+                    SqlParameter paramBaseUnitWeight = command.Parameters.AddWithValue("@BaseUnitWeight", Nomen.WeightBaseUnit);
+                    paramBaseUnitWeight.SqlDbType = SqlDbType.Decimal;
+                    paramBaseUnitWeight.Precision = 18;
+                    paramBaseUnitWeight.Scale = 3;
+
+                    SqlParameter paramDescription = command.Parameters.AddWithValue("@Description", Nomen.Description);
+                    paramDescription.SqlDbType = SqlDbType.NVarChar;
+                    paramDescription.Size = 500;
+
+
+                    SqlParameter ParamAdditionalUnits = new SqlParameter { ParameterName = "@AdditionalUnits", Value = AAUDT }; //---Передаваемый параметр
+                    ParamAdditionalUnits.SqlDbType = SqlDbType.Structured;
+                    command.Parameters.Add(ParamAdditionalUnits);
+
+                    SqlParameter ParamPropertyValues = new SqlParameter { ParameterName = "@PropertyValues", Value = PVDT }; //---Передаваемый параметр
+                    ParamPropertyValues.SqlDbType = SqlDbType.Structured;
+                    command.Parameters.Add(ParamPropertyValues);
+
+                    SqlParameter ParamImages = new SqlParameter { ParameterName = "@Images", Value = IDT }; //---Передаваемый параметр
+                    ParamImages.SqlDbType = SqlDbType.Structured;
+                    command.Parameters.Add(ParamImages);
+
+                    SqlParameter ParamBarcodes = new SqlParameter { ParameterName = "@Barcodes", Value = BDT }; //---Передаваемый параметр
+                    ParamBarcodes.SqlDbType = SqlDbType.Structured;
+                    command.Parameters.Add(ParamBarcodes);
+
+
+
+                    command.Parameters.Add("@Result", SqlDbType.Bit).Direction = ParameterDirection.Output; // Выходной параметр
+                    command.Parameters.Add("@Message", SqlDbType.NVarChar, -1).Direction = ParameterDirection.Output; // Выходной параметр
+
+                    command.ExecuteNonQuery();
+
+                    ok = (bool)command.Parameters["@Result"].Value;
+                    message = command.Parameters["@Message"].Value.ToString();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message+"\nSQL Server: "+message, "DataBaseRequest.CreateNewNomenclature");
+                }
+            return ok;
             }
         }
 

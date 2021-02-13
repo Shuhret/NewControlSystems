@@ -579,7 +579,7 @@
                         <DataGridTextColumn Width="2*" Header="Базовая единица" IsReadOnly="True" Binding="{Binding BaseUnit}" CanUserResize="False"/>
 
                         <!--Столбец Штрих код-->
-                        <DataGridTextColumn Width="2*" Header="Штрих код" IsReadOnly="True" Binding="{Binding Barcode}" CanUserResize="False"/>
+                        <DataGridTextColumn Width="2*" Header="Страна происхождения" IsReadOnly="True" Binding="{Binding CountryOfOrigin}" CanUserResize="False"/>
 
                         <!--Столбец Метки-->
                         <DataGridTemplateColumn Width="Auto" Header="Метки" IsReadOnly="True" MinWidth="50" CanUserResize="False">

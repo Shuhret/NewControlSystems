@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Linq;
 using Microsoft.Win32;
 using System.Windows.Media.Imaging;
+using System.Data;
 
 namespace ControlSystemsLibrary.Controls
 {
@@ -253,25 +254,6 @@ namespace ControlSystemsLibrary.Controls
 
         }
 
-        // Событие: Клик кнопки "СОЗДАТЬ"
-        private void CreateNomenclatureButton_Click(object sender, RoutedEventArgs e)
-        {
-            RemoveReadinessFalseAddedUnits();
-            RemoveReadinessFalseProperties();
-            RemoveReadinessFalseBarcodes();
-
-            CreatedWaitVisibility = Visibility.Visible;
-            if (CreateMode == true)
-            {
-                ProcessText = "Создается номенклатура...";
-                ResultText = "Номенклатура создана!";
-            }
-            else
-            {
-                ProcessText = "Изменяется номенклатура...";
-                ResultText = "Номенклатура изменена!";
-            }
-        }
 
 
         private void StartMethod()
@@ -516,6 +498,7 @@ namespace ControlSystemsLibrary.Controls
             {
                 AdditionalUnitsUC AUUC = new AdditionalUnitsUC
                 {
+                    ID = Guid.NewGuid(),
                     NomenclatureID = CreatedNomenclatureID,
                     BaseUnitName = BaseUnitName,
                     BaseUnitWeight = BaseUnitWeight
@@ -1383,8 +1366,59 @@ namespace ControlSystemsLibrary.Controls
 
 
 
+        // Событие: Клик кнопки "СОЗДАТЬ"
+        private void CreateNomenclatureButton_Click(object sender, RoutedEventArgs e)
+        {
+            RemoveReadinessFalseAddedUnits();
+            RemoveReadinessFalseProperties();
+            RemoveReadinessFalseBarcodes();
 
-        async Task<ArrayList> GetAdditionalUnitsArray()
+            //CreatedWaitVisibility = Visibility.Visible;
+            if (CreateMode == true)
+            {
+                ProcessText = "Создается номенклатура...";
+                ResultText = "Номенклатура создана!";
+                if (CreateNewNomenclatureDB() == true)
+                {
+                    ResultVisibility = Visibility.Visible;
+                    MessageBox.Show("HI!");
+                }
+
+
+            }
+            else
+            {
+                ProcessText = "Изменяется номенклатура...";
+                ResultText = "Номенклатура изменена!";
+            }
+        }
+
+
+        bool CreateNewNomenclatureDB()
+        {
+            bool result = false;
+            NomenclatureClass CreatedNomenclature = new NomenclatureClass();
+            CreatedNomenclature.ID = CreatedNomenclatureID;
+            CreatedNomenclature.GroupID = CurrentGroupID;
+            CreatedNomenclature.Article = Article;
+            CreatedNomenclature.Category = (CategoriesComboBox.SelectedItem as ComboBoxItem).Content.ToString();
+            CreatedNomenclature.Name = NomenclatureName;
+            CreatedNomenclature.GroupNomen = true;
+            CreatedNomenclature.BaseUnit = (BaseUnitComboBox.SelectedItem as ComboBoxItem).Content.ToString();
+            CreatedNomenclature.WeightBaseUnit = BaseUnitWeight;
+            if (ComboBoxCountry.SelectedItem != null)
+                CreatedNomenclature.CountryOfOrigin = (ComboBoxCountry.SelectedItem as ComboBoxItem).Content.ToString();
+            CreatedNomenclature.Description = DescriptionTextBox.Text;
+
+            //await Task.Run(() =>
+            //{
+            result = DataBaseRequest.CreateNewNomenclature(CurrentCryptConnectionString, CreatedNomenclature, GetAdditionalUnitsArray(), GetPropertyValueArray(), GetImagesArray(), GetBarcodesArray());
+            //});
+            return result;
+        }
+
+
+        ArrayList GetAdditionalUnitsArray()
         {
             ArrayList List = new ArrayList();
 
@@ -1393,36 +1427,18 @@ namespace ControlSystemsLibrary.Controls
                 if (AUUC.Readiness == true)
                 {
                     AdditionalUnitsClass AU = new AdditionalUnitsClass();
-                    AU.UnitName = (AUUC.UnitsComboBox.SelectedItem as ComboBoxItem).Content.ToString();
                     AU.ID = Guid.NewGuid();
                     AU.NomenclatureID = CreatedNomenclatureID;
-
-                    await Task.Run(() =>
-                    {
-                        AU.UnitID = GetUnitID(AU.UnitName);
-                    });
-
+                    AU.UnitID = GetUnitID((AUUC.UnitsComboBox.SelectedItem as ComboBoxItem).Content.ToString());
                     AU.Quantity = AUUC.Quantity;
                     AU.UnitWeight = AUUC.Weight;
-                    foreach (BarcodeUC BUC in BarcodesWrapPanel.Children)
-                    {
-                        if (AU.UnitName == BUC.UnitName)
-                        {
-                            await Task.Run(() =>
-                            {
-                                AU.BarcodeTypeID = GetBarcodeTypeID(BUC.BarcodeType);
-                            });
-                            AU.Barcode = BUC.Barcode;
-                        }
-                    }
                     List.Add(AU);
                 }
             }
-
             return List;
         }
 
-        async Task<ArrayList> GetPropertyValueArray()
+        ArrayList GetPropertyValueArray()
         {
             ArrayList List = new ArrayList();
 
@@ -1432,12 +1448,9 @@ namespace ControlSystemsLibrary.Controls
                 {
                     NomenclaturePropertyValuesClass NPVC = new NomenclaturePropertyValuesClass();
                     NPVC.ID = Guid.NewGuid();
-                    NPVC.PropertyName = (NPUC.PropertyComboBox.SelectedItem as ComboBoxItem).Content.ToString();
-                    NPVC.ValueName = (NPUC.ValueComboBox.SelectedItem as ComboBoxItem).Content.ToString();
-                    await Task.Run(() =>
-                    {
-                        NPVC.ValuesID = GetPropertyValueID(NPVC.PropertyName, NPVC.ValueName);
-                    });
+                    //NPVC.PropertyName = (NPUC.PropertyComboBox.SelectedItem as ComboBoxItem).Content.ToString();
+                    //NPVC.ValueName = (NPUC.ValueComboBox.SelectedItem as ComboBoxItem).Content.ToString();
+                    NPVC.ValuesID = GetPropertyValueID((NPUC.PropertyComboBox.SelectedItem as ComboBoxItem).Content.ToString(), (NPUC.ValueComboBox.SelectedItem as ComboBoxItem).Content.ToString());
                     NPVC.NomenclatureID = CreatedNomenclatureID;
                     List.Add(NPVC);
                 }
@@ -1462,6 +1475,24 @@ namespace ControlSystemsLibrary.Controls
             return List;
         }
 
+        ArrayList GetBarcodesArray()
+        {
+            ArrayList List = new ArrayList();
+            foreach (BarcodeUC BUC in BarcodesWrapPanel.Children)
+            {
+                if (BUC.Readiness == true)
+                {
+                    NomenclatureBarcodesClass NBC = new NomenclatureBarcodesClass();
+                    NBC.ID = Guid.NewGuid();
+                    NBC.NomenclatureID = CreatedNomenclatureID;
+                    NBC.BarcodeTypeID = GetBarcodeTypeID(BUC.BarcodeType);
+                    NBC.Barcode = BUC.Barcode;
+                    NBC.UnitID = GetUnitID(BUC.UnitName);
+                    List.Add(NBC);
+                }
+            }
+            return List;
+        }
 
         private Guid GetUnitID(string UnitName)
         {
@@ -1479,36 +1510,37 @@ namespace ControlSystemsLibrary.Controls
         }
     }
 
-    
+
 
 
     class AdditionalUnitsClass
     {
-        public string UnitName { get; set; }
+        //public string UnitName { get; set; }
         public Guid ID { get; set; }
         public Guid NomenclatureID { get; set; }
         public Guid UnitID { get; set; }
         public double Quantity { get; set; }
         public double UnitWeight { get; set; }
-        public Guid BarcodeTypeID { get; set; }
-        public string Barcode { get; set; }
     }
-
     class NomenclaturePropertyValuesClass
     {
-        public string PropertyName { get; set; }
-        public string ValueName { get; set; }
         public Guid ID { get; set; }
-        public Guid PropertyID { get; set; }
         public Guid ValuesID { get; set; }
         public Guid NomenclatureID { get; set; }
     }
-
     class NomenclatureImageClass
     {
         public Guid ID { get; set; }
         public Guid NomenclatureID { get; set; }
         public byte[] ImageArray { get; set; }
         public bool MainImage { get; set; }
+    }
+    class NomenclatureBarcodesClass
+    {
+        public Guid ID { get; set; }
+        public Guid NomenclatureID { get; set; }
+        public Guid BarcodeTypeID { get; set; }
+        public string Barcode { get; set; }
+        public Guid UnitID { get; set; }
     }
 }

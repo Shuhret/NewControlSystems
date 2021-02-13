@@ -182,33 +182,6 @@ namespace ControlSystemsLibrary.Classes
             }
         }
 
-
-        // Штрих-код
-        private string barcode = "";
-        public string Barcode
-        {
-            get => barcode;
-            set
-            {
-                barcode = value;
-                OnPropertyChanged();
-            }
-        }
-
-
-        // Тип Штрих-кода        
-        private string barcodeType = "";
-        public string BarcodeType
-        {
-            get => barcodeType;
-            set
-            {
-                barcodeType = value;
-                OnPropertyChanged();
-            }
-        }
-
-
         // Страна Происхождения
         private string countryOfOrigin = "";
         public string CountryOfOrigin
