@@ -34,25 +34,29 @@ namespace ControlSystemsLibrary.Controls
 
 
         bool CreateMode; // Режим (Создать/Изменить)
-        CloseCreateNomenclatureDelegate CCND; // Делегат
+        CloseCreateNomenclatureDelegate CCND; // Делегат закрывает окно
+        ShowCreatedNomenclatureDelegate SCND; // Делегат добавляет в коллекцию и выделяет в списке
         public string CurrentCryptConnectionString; // Строка подключения (шифровано)
 
         // Конструктор (1-перегрузка (Создание))
-        public CreateNomenclature(string CurrentCryptConnectionString, bool CreateMode, CloseCreateNomenclatureDelegate CCND, Guid CurrentGroupID)
+        public CreateNomenclature(string CurrentCryptConnectionString, bool CreateMode, CloseCreateNomenclatureDelegate CCND, ShowCreatedNomenclatureDelegate SCND, Guid CurrentGroupID)
         {
             this.CurrentCryptConnectionString = CurrentCryptConnectionString;
             this.CreateMode = CreateMode;
             this.CCND = CCND;
+            this.SCND = SCND;
             this.CurrentGroupID = CurrentGroupID;
 
             InitializeComponent();
         }
+
         // Конструктор (2-перегрузка (Редактирование))
-        public CreateNomenclature(string CurrentCryptConnectionString, bool CreateMode, CloseCreateNomenclatureDelegate CCND, NomenclatureClass EditableNomenclature)
+        public CreateNomenclature(string CurrentCryptConnectionString, bool CreateMode, CloseCreateNomenclatureDelegate CCND, ShowCreatedNomenclatureDelegate SCND, NomenclatureClass EditableNomenclature)
         {
             this.CurrentCryptConnectionString = CurrentCryptConnectionString;
             this.CreateMode = CreateMode;
             this.CCND = CCND;
+            this.SCND = SCND;
             this.EditableNomenclature = EditableNomenclature;
 
             InitializeComponent();
@@ -243,6 +247,17 @@ namespace ControlSystemsLibrary.Controls
             }
         }
 
+        private Visibility notCloseCheckBoxVisibility = Visibility.Visible;
+        public Visibility NotCloseCheckBoxVisibility
+        {
+            get => notCloseCheckBoxVisibility;
+            set
+            {
+                notCloseCheckBoxVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
         #endregion :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 
@@ -251,7 +266,6 @@ namespace ControlSystemsLibrary.Controls
         private void CN_Loaded(object sender, RoutedEventArgs e)
         {
             StartMethod();
-
         }
 
 
@@ -267,8 +281,8 @@ namespace ControlSystemsLibrary.Controls
             NomenNameTextBox.Focus();
             if (CreateMode == true)
             {
+                
                 CreatedModeMethod();
-                CreatedNomenclatureID = Guid.NewGuid();
             }
             else
             {
@@ -278,12 +292,18 @@ namespace ControlSystemsLibrary.Controls
 
         private void CreatedModeMethod()
         {
+            ResultText = "Номенклатура создана!";
             CreateButtonText = "Создать";
+            CreatedNomenclatureID = Guid.NewGuid();
+
         }
 
         private void EditModeMethod()
         {
             CreateButtonText = "Принять изменения";
+            ResultText = "Номенклатура изменена!";
+            NotCloseCheckBoxVisibility = Visibility.Hidden;
+
         }
 
 
@@ -1020,6 +1040,13 @@ namespace ControlSystemsLibrary.Controls
             {
                 CCND();
             }
+            if (e.Key == Key.Enter && e.KeyboardDevice.Modifiers == ModifierKeys.Control)
+            {
+                if(Readiness == true)
+                {
+                    CreateNomenclatureButton_Click(null, null);
+                }
+            }
         }
 
 
@@ -1263,235 +1290,178 @@ namespace ControlSystemsLibrary.Controls
 
 
 
-        private Visibility createdWaitVisibility = Visibility.Hidden;
-        public Visibility CreatedWaitVisibility
-        {
-            get => createdWaitVisibility;
-            set
-            {
-                createdWaitVisibility = value;
-                OnPropertyChanged();
-                if (value == Visibility.Visible)
-                    LoaderVisibility = value;
-                else
-                    ResultVisibility = value;
-            }
-        }
-
-        private Visibility loaderVisibility = Visibility.Hidden;
-        public Visibility LoaderVisibility
-        {
-            get => loaderVisibility;
-            set
-            {
-                loaderVisibility = value;
-                OnPropertyChanged();
-                if (value == Visibility.Visible)
-                    Loader = new LoaderCubes();
-                else
-                    Loader = null;
-            }
-        }
-
-        private Visibility resultVisibility = Visibility.Hidden;
-        public Visibility ResultVisibility
-        {
-            get => resultVisibility;
-            set
-            {
-                resultVisibility = value;
-                OnPropertyChanged();
-
-                if (value == Visibility.Visible)
-                {
-                    LoaderVisibility = Visibility.Hidden;
-                    AfterCreated();
-                }
-            }
-        }
-
-        private UserControl loader = null;
-        public UserControl Loader
-        {
-            get => loader;
-            set
-            {
-                loader = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private string processText = "";
-        public string ProcessText
-        {
-            get => processText;
-            set
-            {
-                processText = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private string resultText = "";
-        public string ResultText
-        {
-            get => resultText;
-            set
-            {
-                resultText = value;
-
-                OnPropertyChanged();
-            }
-        }
-
-        async void AfterCreated()
-        {
-            for (int i = 0; i < 2; i++)
-            {
-                await Task.Delay(1000);
-            }
-            CreatedWaitVisibility = Visibility.Hidden;
-        }
-
-        private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)// Временно!
-        {
-            ResultVisibility = Visibility.Visible;
-            if (CreateMode == true)
-                ResultText = "Номенклатура создана!";
-            else
-                ResultText = "Номенклатура изменена!";
-        }
-
-
-
-
-
         // Событие: Клик кнопки "СОЗДАТЬ"
-        private void CreateNomenclatureButton_Click(object sender, RoutedEventArgs e)
+        private async void CreateNomenclatureButton_Click(object sender, RoutedEventArgs e)
         {
             RemoveReadinessFalseAddedUnits();
             RemoveReadinessFalseProperties();
             RemoveReadinessFalseBarcodes();
 
-            //CreatedWaitVisibility = Visibility.Visible;
             if (CreateMode == true)
             {
-                ProcessText = "Создается номенклатура...";
-                ResultText = "Номенклатура создана!";
-                if (CreateNewNomenclatureDB() == true)
+                NomenclatureClass CreatedNomenclature = new NomenclatureClass();
+                if (await Task.Run(() => CreateNewNomenclatureDB(CreatedNomenclature)) == true)
                 {
+                    CreatedNomenclatureID = Guid.NewGuid();
+                    BaseUnitWeight = 0;
+
                     ResultVisibility = Visibility.Visible;
-                    MessageBox.Show("HI!");
+                    SCND(CreatedNomenclature);
                 }
-
-
             }
             else
             {
-                ProcessText = "Изменяется номенклатура...";
-                ResultText = "Номенклатура изменена!";
             }
         }
 
-
-        bool CreateNewNomenclatureDB()
+        private bool CreateNewNomenclatureDB(NomenclatureClass CreatedNomenclature)
         {
-            bool result = false;
-            NomenclatureClass CreatedNomenclature = new NomenclatureClass();
+            bool result;
+
             CreatedNomenclature.ID = CreatedNomenclatureID;
             CreatedNomenclature.GroupID = CurrentGroupID;
             CreatedNomenclature.Article = Article;
-            CreatedNomenclature.Category = (CategoriesComboBox.SelectedItem as ComboBoxItem).Content.ToString();
             CreatedNomenclature.Name = NomenclatureName;
             CreatedNomenclature.GroupNomen = true;
-            CreatedNomenclature.BaseUnit = (BaseUnitComboBox.SelectedItem as ComboBoxItem).Content.ToString();
             CreatedNomenclature.WeightBaseUnit = BaseUnitWeight;
-            if (ComboBoxCountry.SelectedItem != null)
-                CreatedNomenclature.CountryOfOrigin = (ComboBoxCountry.SelectedItem as ComboBoxItem).Content.ToString();
-            CreatedNomenclature.Description = DescriptionTextBox.Text;
-
-            //await Task.Run(() =>
-            //{
-            result = DataBaseRequest.CreateNewNomenclature(CurrentCryptConnectionString, CreatedNomenclature, GetAdditionalUnitsArray(), GetPropertyValueArray(), GetImagesArray(), GetBarcodesArray());
-            //});
+            Action action = () =>
+            {
+                CreatedNomenclature.Category = (CategoriesComboBox.SelectedItem as ComboBoxItem).Content.ToString();
+                CreatedNomenclature.BaseUnit = (BaseUnitComboBox.SelectedItem as ComboBoxItem).Content.ToString();
+                if (ComboBoxCountry.SelectedItem != null)
+                {
+                    CreatedNomenclature.CountryOfOrigin = (ComboBoxCountry.SelectedItem as ComboBoxItem).Content.ToString();
+                }
+                CreatedNomenclature.Description = DescriptionTextBox.Text;
+            };
+            Dispatcher.Invoke(action);
+            result = DataBaseRequest.CreateNewNomenclature(CurrentCryptConnectionString, CreatedNomenclature, GetAdditionalUnitsDataTable(), GetPropertyValueDataTable(), GetImagesDataTable(), GetBarcodesDataTable());
+            
             return result;
         }
 
-
-        ArrayList GetAdditionalUnitsArray()
+        private async void AfterCreatedMethod()
         {
-            ArrayList List = new ArrayList();
-
-            foreach (AdditionalUnitsUC AUUC in AddUnitsStackPanel.Children)
+            if (ClearAllValues() == true)
             {
-                if (AUUC.Readiness == true)
+                await Task.Delay(1200);
+                ResultVisibility = Visibility.Hidden;
+                NomenNameTextBox.Focus();
+                if (NotCloseCheckBox.IsChecked == false)
                 {
-                    AdditionalUnitsClass AU = new AdditionalUnitsClass();
-                    AU.ID = Guid.NewGuid();
-                    AU.NomenclatureID = CreatedNomenclatureID;
-                    AU.UnitID = GetUnitID((AUUC.UnitsComboBox.SelectedItem as ComboBoxItem).Content.ToString());
-                    AU.Quantity = AUUC.Quantity;
-                    AU.UnitWeight = AUUC.Weight;
-                    List.Add(AU);
+                    CCND(); // Закрыть форму
                 }
             }
-            return List;
         }
 
-        ArrayList GetPropertyValueArray()
+        private bool ClearAllValues()
         {
-            ArrayList List = new ArrayList();
-
-            foreach (NomenPropertyUC NPUC in AddPropertiesStackPanel.Children)
+            try
             {
-                if (NPUC.Readiness == true)
+                NomenNameTextBox.Clear();
+                CategoriesComboBox.SelectedItem = null;
+                ArticleTextBox.Clear();
+                BaseUnitComboBox.SelectedItem = null;
+                TextBoxBaseWeight.Clear();
+                ComboBoxCountry.SelectedItem = null;
+                DescriptionTextBox.Clear();
+
+                AddUnitsStackPanel.Children.Clear();
+                AddPropertiesStackPanel.Children.Clear();
+                BarcodesWrapPanel.Children.Clear();
+                BarcodeUnitsComboBox.SelectedItem = null;
+                BarcodeTypesComboBox.SelectedItem = null;
+                BarcodeTextBox.Clear();
+                CreatedNomenclatureImageWrapPanel.Children.Clear();
+
+                CreateNomenclatureTabControl.SelectedIndex = 0;
+
+                return true;
+            }
+            catch
+            {
+                return false;
+
+            }
+        }
+
+
+        private DataTable GetAdditionalUnitsDataTable()
+        {
+            DataTable AAUDT = new DataTable();
+            AAUDT.Columns.Add(new DataColumn("ID", typeof(Guid)));
+            AAUDT.Columns.Add(new DataColumn("NomenclatureID", typeof(Guid)));
+            AAUDT.Columns.Add(new DataColumn("UnitID", typeof(Guid)));
+            AAUDT.Columns.Add(new DataColumn("Quantity", typeof(double)));
+            AAUDT.Columns.Add(new DataColumn("UnitWeight", typeof(double)));
+            Action action = () =>
+            {
+                foreach (AdditionalUnitsUC AUUC in AddUnitsStackPanel.Children)
                 {
-                    NomenclaturePropertyValuesClass NPVC = new NomenclaturePropertyValuesClass();
-                    NPVC.ID = Guid.NewGuid();
-                    //NPVC.PropertyName = (NPUC.PropertyComboBox.SelectedItem as ComboBoxItem).Content.ToString();
-                    //NPVC.ValueName = (NPUC.ValueComboBox.SelectedItem as ComboBoxItem).Content.ToString();
-                    NPVC.ValuesID = GetPropertyValueID((NPUC.PropertyComboBox.SelectedItem as ComboBoxItem).Content.ToString(), (NPUC.ValueComboBox.SelectedItem as ComboBoxItem).Content.ToString());
-                    NPVC.NomenclatureID = CreatedNomenclatureID;
-                    List.Add(NPVC);
+                    AAUDT.Rows.Add(AUUC.ID, AUUC.NomenclatureID, GetUnitID(AUUC.AddUnitName), AUUC.Quantity, AUUC.Weight);
                 }
-            }
-
-            return List;
+            };
+            Dispatcher.Invoke(action);
+            return AAUDT;
         }
-
-        ArrayList GetImagesArray()
+        private DataTable GetPropertyValueDataTable()
         {
-            ArrayList List = new ArrayList();
-            foreach (NomenclatureImageUC NIUC in CreatedNomenclatureImageWrapPanel.Children)
+            DataTable PVDT = new DataTable();
+            PVDT.Columns.Add(new DataColumn("ID", typeof(Guid)));
+            PVDT.Columns.Add(new DataColumn("ValuesID", typeof(Guid)));
+            PVDT.Columns.Add(new DataColumn("NomenclatureID", typeof(Guid)));
+            Action action = () =>
             {
-                NomenclatureImageClass NIC = new NomenclatureImageClass();
-                NIC.ID = Guid.NewGuid();
-                NIC.NomenclatureID = CreatedNomenclatureID;
-                NIC.ImageArray = NIUC.ImageByte;
-                NIC.MainImage = (bool)NIUC.IsChecked;
-                List.Add(NIC);
-            }
-
-            return List;
-        }
-
-        ArrayList GetBarcodesArray()
-        {
-            ArrayList List = new ArrayList();
-            foreach (BarcodeUC BUC in BarcodesWrapPanel.Children)
-            {
-                if (BUC.Readiness == true)
+                foreach (NomenPropertyUC NPUC in AddPropertiesStackPanel.Children)
                 {
-                    NomenclatureBarcodesClass NBC = new NomenclatureBarcodesClass();
-                    NBC.ID = Guid.NewGuid();
-                    NBC.NomenclatureID = CreatedNomenclatureID;
-                    NBC.BarcodeTypeID = GetBarcodeTypeID(BUC.BarcodeType);
-                    NBC.Barcode = BUC.Barcode;
-                    NBC.UnitID = GetUnitID(BUC.UnitName);
-                    List.Add(NBC);
+                    if (NPUC.Readiness == true)
+                    {
+                        PVDT.Rows.Add(NPUC.ID, GetPropertyValueID((NPUC.PropertyComboBox.SelectedItem as ComboBoxItem).Content.ToString(), (NPUC.ValueComboBox.SelectedItem as ComboBoxItem).Content.ToString()), createdNomenclatureID);
+
+                    }
                 }
-            }
-            return List;
+            };
+            Dispatcher.Invoke(action);
+            return PVDT;
+        }
+        private DataTable GetImagesDataTable()
+        {
+            DataTable IDT = new DataTable();
+            IDT.Columns.Add(new DataColumn("ID", typeof(Guid)));
+            IDT.Columns.Add(new DataColumn("NomenclatureID", typeof(Guid)));
+            IDT.Columns.Add(new DataColumn("NomenclatureImage", typeof(Byte[])));
+            IDT.Columns.Add(new DataColumn("MainImage", typeof(bool)));
+            Action action = () =>
+            {
+                foreach (NomenclatureImageUC NIUC in CreatedNomenclatureImageWrapPanel.Children)
+                {
+                    IDT.Rows.Add(Guid.NewGuid(), CreatedNomenclatureID, NIUC.ImageByte, (bool)NIUC.IsChecked);
+                }
+            };
+            Dispatcher.Invoke(action);
+            return IDT;
+        }
+        private DataTable GetBarcodesDataTable()
+        {
+            DataTable BDT = new DataTable();
+            BDT.Columns.Add(new DataColumn("ID", typeof(Guid)));
+            BDT.Columns.Add(new DataColumn("NomenclatureID", typeof(Guid)));
+            BDT.Columns.Add(new DataColumn("BarcodeTypeID", typeof(Guid)));
+            BDT.Columns.Add(new DataColumn("Barcode", typeof(string)));
+            BDT.Columns.Add(new DataColumn("UnitID", typeof(Guid)));
+            Action action = () =>
+            {
+                foreach (BarcodeUC BUC in BarcodesWrapPanel.Children)
+                {
+                    if (BUC.Readiness == true)
+                    {
+                        BDT.Rows.Add(Guid.NewGuid(), CreatedNomenclatureID, GetBarcodeTypeID(BUC.BarcodeType), BUC.Barcode, GetUnitID(BUC.UnitName));
+
+                    }
+                }
+            };
+            Dispatcher.Invoke(action);
+            return BDT;
         }
 
         private Guid GetUnitID(string UnitName)
@@ -1508,6 +1478,37 @@ namespace ControlSystemsLibrary.Controls
         {
             return DataBaseRequest.GetNomenclaturePropertyValueID(CurrentCryptConnectionString, PropertyName, ValueName);
         }
+
+
+
+
+        private Visibility resultVisibility = Visibility.Hidden;
+        public Visibility ResultVisibility
+        {
+            get => resultVisibility;
+            set
+            {
+                resultVisibility = value;
+                OnPropertyChanged();
+                if(value == Visibility.Visible)
+                {
+                    AfterCreatedMethod();
+                }
+            }
+        }
+
+        private string resultText = "";
+        public string ResultText
+        {
+            get => resultText;
+            set
+            {
+                resultText = value;
+                OnPropertyChanged();
+            }
+        }
+
+
     }
 
 

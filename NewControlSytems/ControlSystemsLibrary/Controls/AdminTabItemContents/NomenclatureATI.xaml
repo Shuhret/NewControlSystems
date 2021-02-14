@@ -324,7 +324,7 @@
                                 </Canvas>
                             </Viewbox>
                         </Button>
-                        <Button Style="{DynamicResource ButtonStyle-001}" BorderThickness="1,1,0,1" Margin="5,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Foreground="White" Width="28" Padding="11,1" Cursor="Hand" ToolTip="Изменить">
+                        <Button Style="{DynamicResource ButtonStyle-001}" BorderThickness="1,1,0,1" Margin="5,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Foreground="White" Width="28" Padding="11,1" Cursor="Hand" ToolTip="Изменить" Click="EditNomenclatureButtonClick">
                             <Button.Background>
                                 <SolidColorBrush Color="{DynamicResource Blue-001}"/>
                             </Button.Background>

@@ -16,6 +16,7 @@ using System.Windows.Media;
 namespace ControlSystemsLibrary.Controls.AdminTabItemContents
 {
     public delegate void CloseCreateNomenclatureDelegate();
+    public delegate void ShowCreatedNomenclatureDelegate(NomenclatureClass CreatedNomenclature);
     public partial class NomenclatureATI : UserControl, INotifyPropertyChanged
     {
 
@@ -134,8 +135,9 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
 
         bool FirstBoot = true;
 
+
         // События----------------------------------------------------------------------------------------------------------------------------
-         
+
 
         private void SearchRow()
         {
@@ -185,9 +187,16 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
         {
             if (FirstBoot == true)
             {
+                AllNomenclaturesCollection.CollectionChanged += AllNomenclaturesCollection_CollectionChanged;
                 LoadAllNomenclatures();
+                
                 FirstBoot = false;
             }
+        }
+
+        private void AllNomenclaturesCollection_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            MessageBox.Show("Коллекция изменилась");
         }
 
         private void Row_DoubleClick(object sender, MouseButtonEventArgs e)
@@ -353,6 +362,7 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
 
         async void LoadAllNomenclatures()
         {
+            AllNomenclaturesCollection.Clear();
             await Task.Run(() => AllNomenclaturesCollection = DataBaseRequest.GetAllNomenclatures(CurrentCryptConnectionString));
             LoadShowNomenclatures();
             DataGridNomenclatures.ItemsSource = ShowNomenclaturesCollection;
@@ -373,6 +383,31 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
             SearchedText = "";
             SelectDataGridRow();
         }
+
+        void LoadAllNomenclatures(NomenclatureClass CreatedNomenclature)
+        {
+            AllNomenclaturesCollection.Clear();
+            AllNomenclaturesCollection = DataBaseRequest.GetAllNomenclatures(CurrentCryptConnectionString);
+            LoadShowNomenclatures(CreatedNomenclature);
+        }
+
+        void LoadShowNomenclatures(NomenclatureClass CreatedNomenclature)
+        {
+            ShowNomenclaturesCollection.Clear();
+            foreach (NomenclatureClass NC in AllNomenclaturesCollection)
+            {
+                if (NC.GroupID == CurrentGroupID)
+                {
+                    ShowNomenclaturesCollection.Add(NC);
+                }
+                if(NC.ID == CreatedNomenclature.ID)
+                {
+                    SelectedItem = NC;
+                }
+            }
+            SelectDataGridRow();
+        }
+
 
         void SelectDataGridRow()
         {
@@ -559,7 +594,8 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
         private void CreateNomenclatureButtonClick(object sender, RoutedEventArgs e)
         {
             CloseCreateNomenclatureDelegate CCND = CloseCreateNomenclature;
-            CreateNemenclatureUC = new CreateNomenclature(CurrentCryptConnectionString, true, CCND, CurrentGroupID);
+            ShowCreatedNomenclatureDelegate SCND = AddCreatedNomenclatureToCollection;
+            CreateNemenclatureUC = new CreateNomenclature(CurrentCryptConnectionString, true, CCND, SCND, CurrentGroupID);
         }
 
         private void CloseCreateNomenclature()
@@ -567,6 +603,13 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
             CreateNemenclatureUC = null;
             SelectDataGridRow();
         }
+
+        private void AddCreatedNomenclatureToCollection(NomenclatureClass CreatedNomenclature)
+        {
+            
+            LoadAllNomenclatures(CreatedNomenclature);
+        }
+
 
         #endregion :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -576,5 +619,22 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
             SearchedText = "";
         }
 
+        private void EditNomenclatureButtonClick(object sender, RoutedEventArgs e)
+        {
+            if (DataGridNomenclatures.SelectedItem != null)
+            {
+                SelectedItem = DataGridNomenclatures.SelectedItem as NomenclatureClass;
+                if (SelectedItem.GroupNomen == true)
+                {
+                    CloseCreateNomenclatureDelegate CCND = CloseCreateNomenclature;
+                    ShowCreatedNomenclatureDelegate SCND = AddCreatedNomenclatureToCollection;
+                    CreateNemenclatureUC = new CreateNomenclature(CurrentCryptConnectionString, false, CCND, SCND, SelectedItem);
+                }
+                else
+                {
+
+                }
+            }
+        }
     }
 }
