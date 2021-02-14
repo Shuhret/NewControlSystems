@@ -57,6 +57,19 @@ namespace ControlSystemsLibrary.Controls
                 Deleted(this, e);
         }
 
+
+        private Guid id;
+        public Guid ID
+        {
+            get => id;
+            set
+            {
+                id = value;
+                OnPropertyChanged();
+            }
+        }
+
+
         //NomenImage
         private BitmapImage nomenImage;
         public BitmapImage Image

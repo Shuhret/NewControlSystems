@@ -97,6 +97,7 @@
     <Compile Include="Services\DataBaseRequest.cs" />
     <Compile Include="Services\GetColor.cs" />
     <Compile Include="Services\GetIcons.cs" />
+    <Compile Include="Services\ImageByte.cs" />
     <Compile Include="Services\Strings.cs" />
     <Compile Include="Services\XmlClass.cs" />
     <Compile Include="Views\Administrator.xaml.cs">

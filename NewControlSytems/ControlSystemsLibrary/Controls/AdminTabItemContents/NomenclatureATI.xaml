@@ -65,7 +65,7 @@
         </Style>
 
         <Style TargetType="DataGridCell">
-            
+
             <Style.Setters>
                 <!--<Setter Property="Background">
                     <Setter.Value>
@@ -282,7 +282,7 @@
                     <StackPanel Orientation="Horizontal">
                         <Button Style="{DynamicResource ButtonStyle-001}" BorderThickness="0,1" Click="CreateNomenclatureButtonClick" Foreground="White" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Padding="11,1" Cursor="Hand" ToolTip="Создать новую номенклатуру" Width="28">
                             <Button.Background>
-                                <SolidColorBrush Color="{DynamicResource Blue-001}"/>
+                                <SolidColorBrush Color="{DynamicResource Purpure-002}"/>
                             </Button.Background>
                             <Button.BorderBrush>
                                 <SolidColorBrush Color="White"/>
@@ -297,7 +297,7 @@
                         </Button>
                         <Button Style="{DynamicResource ButtonStyle-001}" BorderThickness="1,1,0,1" Margin="5,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Foreground="White" Width="28" Padding="10,1" Cursor="Hand" ToolTip="Создать новую группу">
                             <Button.Background>
-                                <SolidColorBrush Color="{DynamicResource Blue-001}"/>
+                                <SolidColorBrush Color="{DynamicResource Purpure-002}"/>
                             </Button.Background>
                             <Button.BorderBrush>
                                 <SolidColorBrush Color="{DynamicResource Light-005}"/>
@@ -326,7 +326,7 @@
                         </Button>
                         <Button Style="{DynamicResource ButtonStyle-001}" BorderThickness="1,1,0,1" Margin="5,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Foreground="White" Width="28" Padding="11,1" Cursor="Hand" ToolTip="Изменить" Click="EditNomenclatureButtonClick">
                             <Button.Background>
-                                <SolidColorBrush Color="{DynamicResource Blue-001}"/>
+                                <SolidColorBrush Color="{DynamicResource Purpure-002}"/>
                             </Button.Background>
                             <Button.BorderBrush>
                                 <SolidColorBrush Color="{DynamicResource Light-005}"/>
@@ -350,7 +350,7 @@
                         </Button>
                         <Button Style="{DynamicResource ButtonStyle-001}" BorderThickness="1" Margin="5,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Foreground="White" Width="28" Padding="11,1" Cursor="Hand" ToolTip="Поиск номенклатуры или группы везде">
                             <Button.Background>
-                                <SolidColorBrush Color="{DynamicResource Blue-001}"/>
+                                <SolidColorBrush Color="{DynamicResource Purpure-002}"/>
                             </Button.Background>
                             <Button.BorderBrush>
                                 <SolidColorBrush Color="{DynamicResource Light-005}"/>
@@ -373,7 +373,7 @@
                         </Button>
                         <Button Style="{DynamicResource ButtonStyle-001}" BorderThickness="1,1,0,1" Margin="5,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Foreground="White" Width="28" Padding="10,1" Cursor="Hand" ToolTip="Вырезать">
                             <Button.Background>
-                                <SolidColorBrush Color="{DynamicResource Blue-001}"/>
+                                <SolidColorBrush Color="{DynamicResource Purpure-002}"/>
                             </Button.Background>
                             <Button.BorderBrush>
                                 <SolidColorBrush Color="{DynamicResource Light-005}"/>
@@ -402,7 +402,7 @@
                         </Button>
                         <Button Style="{DynamicResource ButtonStyle-001}" BorderThickness="1,1,0,1" Margin="5,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Foreground="White" Width="28" Padding="10,1" IsEnabled="False" Cursor="Hand" ToolTip="Вставить">
                             <Button.Background>
-                                <SolidColorBrush Color="{DynamicResource Blue-001}"/>
+                                <SolidColorBrush Color="{DynamicResource Purpure-002}"/>
                             </Button.Background>
                             <Button.BorderBrush>
                                 <SolidColorBrush Color="{DynamicResource Light-005}"/>
@@ -431,7 +431,7 @@
                         </Button>
                         <Button Style="{DynamicResource ButtonStyle-001}" BorderThickness="1" Margin="5,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Foreground="White" Width="28" Padding="11,1" IsEnabled="False" Cursor="Hand" ToolTip="Выбранные">
                             <Button.Background>
-                                <SolidColorBrush Color="{DynamicResource Blue-001}"/>
+                                <SolidColorBrush Color="{DynamicResource Purpure-002}"/>
                             </Button.Background>
                             <Button.BorderBrush>
                                 <SolidColorBrush Color="{DynamicResource Light-005}"/>
@@ -568,7 +568,7 @@
 
                         <!--Столбец Артикул-->
                         <DataGridTextColumn Header="Артикул" Width="2*" MinWidth="70" IsReadOnly="True" Binding="{Binding Article}" CanUserResize="False"/>
-                        
+
                         <!--Категория-->
                         <DataGridTextColumn Width="2*" Header="Категория" IsReadOnly="True" Binding="{Binding Category}" CanUserResize="False"/>
 

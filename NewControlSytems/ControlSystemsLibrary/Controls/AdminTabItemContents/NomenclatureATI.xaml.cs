@@ -187,17 +187,12 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
         {
             if (FirstBoot == true)
             {
-                AllNomenclaturesCollection.CollectionChanged += AllNomenclaturesCollection_CollectionChanged;
                 LoadAllNomenclatures();
                 
                 FirstBoot = false;
             }
         }
 
-        private void AllNomenclaturesCollection_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-        {
-            MessageBox.Show("Коллекция изменилась");
-        }
 
         private void Row_DoubleClick(object sender, MouseButtonEventArgs e)
         {

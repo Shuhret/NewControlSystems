@@ -1,4 +1,5 @@
 ﻿using ControlSystemsLibrary.Services;
+using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
@@ -30,6 +31,17 @@ namespace ControlSystemsLibrary.Controls
         public BarcodeUC()
         {
             InitializeComponent();
+        }
+
+        private Guid id;
+        public Guid ID
+        {
+            get => id;
+            set
+            {
+                id = value;
+                OnPropertyChanged();
+            }
         }
 
         private SolidColorBrush textColor = GetColor.Get("Blue-004");

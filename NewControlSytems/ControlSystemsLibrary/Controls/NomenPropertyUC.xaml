@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ControlSystemsLibrary.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="30" d:DesignWidth="606" Height="30" Loaded="NPUC_Loaded">
+             d:DesignHeight="30" d:DesignWidth="606" Height="30">
 
     <UserControl.Resources>
         <Storyboard x:Key="ReadinessFalse">

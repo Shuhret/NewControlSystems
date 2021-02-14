@@ -51,7 +51,7 @@
                                     </Canvas>
                                 </Canvas>
                             </Viewbox>
-                            <TextBlock FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" FontSize="14.667" VerticalAlignment="Center" Margin="10,0,0,0" Text="Создание новой номенклатуры">
+                            <TextBlock Text="{Binding HeaderText, ElementName=CN, UpdateSourceTrigger=PropertyChanged}" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" FontSize="14.667" VerticalAlignment="Center" Margin="10,0,0,0">
                                 <TextBlock.Foreground>
                                     <SolidColorBrush Color="{DynamicResource Blue-003}"/>
                                 </TextBlock.Foreground>

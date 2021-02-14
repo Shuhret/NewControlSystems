@@ -70,15 +70,5 @@ namespace ControlSystemsLibrary.Controls
                 ((StackPanel)Parent).Children.Remove(this);
         }
 
-        bool FirstLoaded = true;
-        private void NPUC_Loaded(object sender, RoutedEventArgs e)
-        {
-            ID = Guid.NewGuid();
-            if (FirstLoaded == true)
-            {
-                PropertyComboBox.IsDropDownOpen = true;
-                FirstLoaded = false;
-            }
-        }
     }
 }

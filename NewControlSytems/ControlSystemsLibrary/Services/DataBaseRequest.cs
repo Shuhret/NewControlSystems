@@ -214,7 +214,6 @@ namespace ControlSystemsLibrary.Services
             return ValueID;
         }
 
-
         //---Метод: Возвращает из базы данных Страны происхождения-------------------------------------------------------
         public static ArrayList GetCountry(string Connectionstring)
         {
@@ -352,9 +351,6 @@ namespace ControlSystemsLibrary.Services
             return list;
         }
 
-
-
-
         //---Метод: Создание новой номенклатуры (Основные данные + штрих-код базовой единицы) (ХП)---------------------------------------------------------------------
         public static bool CreateNewNomenclature(string Connectionstring, NomenclatureClass Nomen, DataTable AdditionalUnitsDataTable, DataTable PropertyValueDataTable, DataTable ImagesDataTable, DataTable BarcodesDataTable)
         {
@@ -438,145 +434,140 @@ namespace ControlSystemsLibrary.Services
             }
         }
 
+        public static List<AdditionalUnits> GetEditableNomenclatureAddedUnits(string Connectionstring, Guid EditableNomenclatureID)
+        {
+            List<AdditionalUnits> list = new List<AdditionalUnits>();
+            using (SqlConnection connect = new SqlConnection(Cryption.Decrypt(Connectionstring)))
+            {
+                try
+                {
+                    connect.Open();
+                    SqlCommand command = new SqlCommand("GetEditableNomenclatureAddedUnits", connect);
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    SqlParameter Param0 = new SqlParameter { ParameterName = "@ID", Value = EditableNomenclatureID }; //---Передаваемый параметр
+                    command.Parameters.Add(Param0);
+
+                    SqlDataReader reading = command.ExecuteReader();
+
+                    while (reading.Read())
+                    {
+                        AdditionalUnits AUC = new AdditionalUnits();
+                        AUC.ID = new Guid(reading.GetValue(0).ToString());
+                        AUC.UnitName = reading.GetValue(1).ToString();
+                        AUC.Quantity = Double.Parse(reading.GetValue(2).ToString());
+                        AUC.UnitWeight = Double.Parse(reading.GetValue(3).ToString());
+
+                        list.Add(AUC);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Ошибка в методе: DataBaseRequest.GetEditableNomenclatureAddedUnits" + "\n" + ex.Message, "Хуёво!");
+                }
+            }
+            return list;
+        }
+
+        public static List<NomenclaturePropertyValues> GetEditableNomenclaturePropertiesAndValues(string Connectionstring, Guid EditableNomenclatureID)
+        {
+            List<NomenclaturePropertyValues> list = new List<NomenclaturePropertyValues>();
+
+            using (SqlConnection connect = new SqlConnection(Cryption.Decrypt(Connectionstring)))
+            {
+                try
+                {
+                    connect.Open();
+                    SqlCommand command = new SqlCommand("GetEditableNomenclaturePropertiesAndValues", connect);
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    SqlParameter Param0 = new SqlParameter { ParameterName = "@NomenclatureID", Value = EditableNomenclatureID }; //---Передаваемый параметр
+                    command.Parameters.Add(Param0);
+
+                    SqlDataReader reading = command.ExecuteReader();
+
+                    while (reading.Read())
+                    {
+                        NomenclaturePropertyValues NPV = new NomenclaturePropertyValues();
+                        NPV.ID = (Guid)reading.GetValue(0);
+                        NPV.PropertyName = reading.GetValue(1).ToString();
+                        NPV.ValueName = reading.GetValue(2).ToString();
+
+                        list.Add(NPV);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Ошибка в методе: DataBaseRequest.GetEditableNomenclaturePropertiesAndValues" + "\n" + ex.Message, "Хуёво!");
+                }
+            }
+            return list;
+        }
+
+        // Метод: Возвращает Штрих-код базовой единицы
+        public static List<NomenclatureBarcodes> GetEditableNomenclatureBarcode(string Connectionstring, Guid NomenclatureID)
+        {
+            List<NomenclatureBarcodes> list = new List<NomenclatureBarcodes>();
+
+            using (SqlConnection connect = new SqlConnection(Cryption.Decrypt(Connectionstring)))
+            {
+                try
+                {
+                    connect.Open();
+                    SqlCommand command = new SqlCommand("GetEditableNomenclatureBarcodes", connect);
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    SqlParameter Param0 = new SqlParameter { ParameterName = "@NomenclatureID", Value = NomenclatureID }; //---Передаваемый параметр
+                    command.Parameters.Add(Param0);
+
+                    SqlDataReader reading = command.ExecuteReader();
+
+                    while (reading.Read())
+                    {
+                        NomenclatureBarcodes NB = new NomenclatureBarcodes();
+                        NB.ID = (Guid)reading.GetValue(0);
+                        NB.UnitName = reading.GetValue(1).ToString();
+                        NB.BarcodeType = reading.GetValue(2).ToString();
+                        NB.Barcode = reading.GetValue(3).ToString();
+                        list.Add(NB);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Ошибка в методе: DataBaseRequest.GetEditableNomenclatureBarcode" + "\n" + ex.Message, "Хуёво!");
+                }
+            }
+            return list;
+        }
+
+
+        public static List<NomenclatureImageClass> GetEditableNomenclatureImages(string Connectionstring, Guid NomenclatureID)
+        {
+            List<NomenclatureImageClass> list = new List<NomenclatureImageClass>();
+            using (SqlConnection connect = new SqlConnection(Cryption.Decrypt(Connectionstring)))
+            {
+                connect.Open();
+                SqlCommand command = new SqlCommand("GetEditableNomenclatureImages", connect);
+                command.CommandType = CommandType.StoredProcedure;
+
+                SqlParameter Param0 = new SqlParameter { ParameterName = "@NomenclatureID", Value = NomenclatureID }; //---Передаваемый параметр
+                command.Parameters.Add(Param0);
+                SqlDataReader reading = command.ExecuteReader();
+
+                while (reading.Read())
+                {
+                    NomenclatureImageClass NI = new NomenclatureImageClass();
+                    NI.ID = (Guid)reading.GetValue(0);
+                    NI.ImageArray = (byte[])reading.GetValue(1);
+                    NI.MainImage = (bool)reading.GetValue(2);
+                    list.Add(NI);
+                }
+            }
+            return list;
+        }
 
 
 
-
-
-
-
-
-
-
-
-
-
-        ////---Метод: Создание новой номенклатуры (Дополнительные единицы измерения + штрих-коды)(ХП)---------------------------------------------------------------------
-        //public static bool CreateAdditionalUnits(AdditionalUnitsClass AUC)
-        //{
-        //    bool ok = false;
-        //    using (SqlConnection connect = new SqlConnection(Cryption.Decrypt(XmlClass.GetSelectedConnectionString())))
-        //    {
-        //        try
-        //        {
-        //            connect.Open();
-        //            SqlCommand command = new SqlCommand("CreateAdditionalUnits", connect);
-        //            command.CommandType = CommandType.StoredProcedure;
-
-        //            SqlParameter Param0 = new SqlParameter { ParameterName = "@ID", Value = AUC.ID };// Новый ID //---Передаваемый параметр
-        //            command.Parameters.Add(Param0);
-
-        //            SqlParameter Param1 = new SqlParameter { ParameterName = "@NomenclatureID", Value = AUC.NomenclatureID };// Новый ID //---Передаваемый параметр
-        //            command.Parameters.Add(Param1);
-
-        //            SqlParameter Param2 = new SqlParameter { ParameterName = "@UnitName", Value = AUC.AddUnitName }; //---Передаваемый параметр
-        //            command.Parameters.Add(Param2);
-
-
-        //            SqlParameter Param3 = new SqlParameter { ParameterName = "@BarcodeType", Value = AUC.BarcodeType }; //---Передаваемый параметр
-        //            command.Parameters.Add(Param3);
-
-        //            SqlParameter Param4 = new SqlParameter { ParameterName = "@Barcode", Value = AUC.Barcode }; //---Передаваемый параметр
-        //            command.Parameters.Add(Param4);
-
-
-        //            SqlParameter Param5 = new SqlParameter { ParameterName = "@Quantity", Value = AUC.Quantity }; //---Передаваемый параметр
-        //            command.Parameters.Add(Param5);
-
-        //            SqlParameter Param6 = new SqlParameter { ParameterName = "@Weight", Value = AUC.Weight }; //---Передаваемый параметр
-        //            command.Parameters.Add(Param6);
-
-
-        //            command.Parameters.Add("@Result", SqlDbType.Bit).Direction = ParameterDirection.Output; // Выходной параметр
-
-        //            command.ExecuteNonQuery();
-
-        //            ok = (bool)command.Parameters["@Result"].Value;
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            MessageBox.Show(ex.Message, "DataBaseRequest.CreateAdditionalUnits");
-        //        }
-        //        return ok;
-        //    }
-        //}
-
-
-        ////---Метод: Создание новой номенклатуры (Свойства и значения) (ХП)---------------------------------------------------------------------
-        //public static bool CreateNomenProperties(NomenPropertyClass NPC)
-        //{
-        //    bool ok = false;
-        //    using (SqlConnection connect = new SqlConnection(Crypt.Decrypt(XmlClass.GetSelectedConnectionString())))
-        //    {
-        //        try
-        //        {
-        //            connect.Open();
-        //            SqlCommand command = new SqlCommand("CreateNomenProperties", connect);
-        //            command.CommandType = CommandType.StoredProcedure;
-
-        //            SqlParameter Param0 = new SqlParameter { ParameterName = "@NomenclatureID", Value = NPC.ID };// Новый ID //---Передаваемый параметр
-        //            command.Parameters.Add(Param0);
-
-        //            SqlParameter Param1 = new SqlParameter { ParameterName = "@ValueName", Value = NPC.ValueName }; //---Передаваемый параметр
-        //            command.Parameters.Add(Param1);
-
-        //            SqlParameter Param2 = new SqlParameter { ParameterName = "@PropertyName", Value = NPC.PropertyName }; //---Передаваемый параметр
-        //            command.Parameters.Add(Param2);
-
-
-        //            command.Parameters.Add("@Result", SqlDbType.Bit).Direction = ParameterDirection.Output; // Выходной параметр
-
-        //            command.ExecuteNonQuery();
-
-        //            ok = (bool)command.Parameters["@Result"].Value;
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            MessageBox.Show(ex.Message, "DataBaseRequest.CreateNomenProperties");
-        //        }
-        //        return ok;
-        //    }
-        //}
-
-
-        ////---Метод: Создание новой номенклатуры (изображения) (ХП)---------------------------------------------------------------------
-        //public static bool CreateNomenImages(Guid NomenclatureID, byte[] imageData, string Description, bool MainImage)
-        //{
-        //    bool ok = false;
-        //    using (SqlConnection connect = new SqlConnection(Crypt.Decrypt(XmlClass.GetSelectedConnectionString())))
-        //    {
-        //        try
-        //        {
-        //            connect.Open();
-        //            SqlCommand command = new SqlCommand("CreateNomenImages", connect);
-        //            command.CommandType = CommandType.StoredProcedure;
-
-        //            SqlParameter Param0 = new SqlParameter { ParameterName = "@NomenclatureID", Value = NomenclatureID };// Новый ID //---Передаваемый параметр
-        //            command.Parameters.Add(Param0);
-
-        //            SqlParameter Param1 = new SqlParameter { ParameterName = "@Image", Value = imageData };// Новый ID //---Передаваемый параметр
-        //            command.Parameters.Add(Param1);
-
-        //            SqlParameter Param2 = new SqlParameter { ParameterName = "@Description", Value = Description }; //---Передаваемый параметр
-        //            command.Parameters.Add(Param2);
-
-        //            SqlParameter Param3 = new SqlParameter { ParameterName = "@MainImage", Value = MainImage }; //---Передаваемый параметр
-        //            command.Parameters.Add(Param3);
-
-
-        //            command.Parameters.Add("@Result", SqlDbType.Bit).Direction = ParameterDirection.Output; // Выходной параметр
-
-        //            command.ExecuteNonQuery();
-
-        //            ok = (bool)command.Parameters["@Result"].Value;
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            MessageBox.Show(ex.Message, "DataBaseRequest.CreateNomenProperties");
-        //        }
-        //        return ok;
-        //    }
-        //}
 
 
         ////---Метод: Создание новой группы номенклатуры (ХП)---------------------------------------------------------------------
@@ -685,211 +676,13 @@ namespace ControlSystemsLibrary.Services
 
 
 
-        //public static ObservableCollection<NomenclatureClass> GetAllMainNomenclatures(Guid GroupID)
-        //{
-        //    ObservableCollection<NomenclatureClass> list = new ObservableCollection<NomenclatureClass>();
-        //    using (SqlConnection connect = new SqlConnection(Cryption.Decrypt(XmlClass.GetSelectedConnectionString())))
-        //    {
-        //        try
-        //        {
-        //            connect.Open();
-        //            SqlCommand command = new SqlCommand("GetAllMainNomenclatures", connect);
-        //            command.CommandType = CommandType.StoredProcedure;
 
-        //            SqlParameter Param0 = new SqlParameter { ParameterName = "@GroupID", Value = GroupID }; //---Передаваемый параметр
-        //            command.Parameters.Add(Param0);
 
-        //            SqlDataReader reading = command.ExecuteReader();
 
-        //            while (reading.Read())
-        //            {
-        //                NomenclatureClass NC = new NomenclatureClass();
-        //                NC.ID = (Guid)reading.GetValue(0);
-        //                NC.GroupID = (Guid)reading.GetValue(1);
-        //                NC.GroupNomen = (bool)reading.GetValue(2);
 
-        //                NC.Name = reading.GetValue(4).ToString();
 
-        //                if (NC.GroupNomen == true)
-        //                {
-        //                    NC.Article = reading.GetValue(3).ToString();
-        //                    NC.BaseUnit = reading.GetValue(5).ToString();
-        //                    NC.WeightBaseUnit = Convert.ToDouble(reading.GetValue(6));
-        //                    NC.BarcodeType = reading.GetValue(7).ToString();
-        //                    NC.Barcode = reading.GetValue(8).ToString();
-        //                    NC.CountryOfOrigin = reading.GetValue(9).ToString();
-        //                    NC.Description = reading.GetValue(10).ToString();
-        //                    NC.Aksia = (bool)reading.GetValue(11);
-        //                    NC.Focus = (bool)reading.GetValue(12);
-        //                    NC.New = (bool)reading.GetValue(13);
-        //                }
 
-        //                list.Add(NC);
-        //            }
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            MessageBox.Show("Ошибка в методе: DataBaseRequest.GetAllMainNomenclatures" + "\n" + ex.Message, "Хуёво!");
-        //        }
-        //    }
-        //    return list;
-        //}
 
-        //public static ObservableCollection<NomenclatureClass> GetAllNomenclaturesBack(ref Guid GroupID, ref Guid ID)
-        //{
-        //    ObservableCollection<NomenclatureClass> list = new ObservableCollection<NomenclatureClass>();
-        //    using (SqlConnection connect = new SqlConnection(Cryption.Decrypt(XmlClass.GetSelectedConnectionString())))
-        //    {
-        //        try
-        //        {
-        //            connect.Open();
-        //            SqlCommand command = new SqlCommand("GetAllNomenclaturesBack", connect);
-        //            command.CommandType = CommandType.StoredProcedure;
-
-        //            SqlParameter Param0 = new SqlParameter { ParameterName = "@GroupID", Value = GroupID }; //---Передаваемый параметр
-        //            command.Parameters.Add(Param0);
-
-        //            SqlDataReader reading = command.ExecuteReader();
-
-        //            while (reading.Read())
-        //            {
-        //                NomenclatureClass NC = new NomenclatureClass();
-        //                NC.ID = (Guid)reading.GetValue(0);
-        //                NC.GroupID = (Guid)reading.GetValue(1);
-        //                NC.GroupNomen = (bool)reading.GetValue(2);
-
-        //                NC.Name = reading.GetValue(4).ToString();
-
-        //                if (NC.GroupNomen == true)
-        //                {
-        //                    NC.Article = reading.GetValue(3).ToString();
-        //                    NC.BaseUnit = reading.GetValue(5).ToString();
-        //                    NC.WeightBaseUnit = Convert.ToDouble(reading.GetValue(6));
-        //                    NC.BarcodeType = reading.GetValue(7).ToString();
-        //                    NC.Barcode = reading.GetValue(8).ToString();
-        //                    NC.CountryOfOrigin = reading.GetValue(9).ToString();
-        //                    NC.Description = reading.GetValue(10).ToString();
-        //                    NC.Aksia = (bool)reading.GetValue(11);
-        //                    NC.Focus = (bool)reading.GetValue(12);
-        //                    NC.New = (bool)reading.GetValue(13);
-        //                }
-        //                list.Add(NC);
-        //                GroupID = (Guid)reading.GetValue(14);
-        //                ID = (Guid)reading.GetValue(15);
-        //            }
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            MessageBox.Show("Ошибка в методе: DataBaseRequest.GetAllNomenclatures" + "\n" + ex.Message, "Хуёво!");
-        //        }
-        //    }
-        //    return list;
-        //}
-
-        //public static BindingList<AdditionalUnitsClass> GetEditableNomenclatureAddedUnits(Guid EditableNomenclatureID)
-        //{
-        //    BindingList<AdditionalUnitsClass> list = new BindingList<AdditionalUnitsClass>();
-
-        //    using (SqlConnection connect = new SqlConnection(Crypt.Decrypt(XmlClass.GetSelectedConnectionString())))
-        //    {
-        //        try
-        //        {
-        //            connect.Open();
-        //            SqlCommand command = new SqlCommand("GetEditableNomenclatureAddedUnits", connect);
-        //            command.CommandType = CommandType.StoredProcedure;
-
-        //            SqlParameter Param0 = new SqlParameter { ParameterName = "@ID", Value = EditableNomenclatureID }; //---Передаваемый параметр
-        //            command.Parameters.Add(Param0);
-
-        //            SqlDataReader reading = command.ExecuteReader();
-
-        //            while (reading.Read())
-        //            {
-        //                AdditionalUnitsClass AUC = new AdditionalUnitsClass();
-        //                AUC.ID = new Guid(reading.GetValue(0).ToString());
-        //                AUC.NomenclatureID = new Guid(reading.GetValue(1).ToString());
-        //                AUC.AddUnitName = reading.GetValue(2).ToString();
-        //                AUC.Quantity = Double.Parse(reading.GetValue(3).ToString());
-        //                AUC.Weight = Double.Parse(reading.GetValue(4).ToString());
-        //                AUC.BarcodeType = reading.GetValue(5).ToString();
-        //                AUC.Barcode = reading.GetValue(6).ToString();
-        //                list.Add(AUC);
-        //            }
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            MessageBox.Show("Ошибка в методе: DataBaseRequest.GetEditableNomenclatureAddedUnits" + "\n" + ex.Message, "Хуёво!");
-        //        }
-        //    }
-        //    return list;
-        //}
-
-        //// Метод: Возвращает Штрих-код базовой единицы
-        //public static NomenclatureClass GetBaseBarcode(Guid NomenclatureID)
-        //{
-        //    NomenclatureClass NC = new NomenclatureClass();
-
-        //    using (SqlConnection connect = new SqlConnection(Crypt.Decrypt(XmlClass.GetSelectedConnectionString())))
-        //    {
-        //        try
-        //        {
-        //            connect.Open();
-        //            SqlCommand command = new SqlCommand("GetBaseBarcode", connect);
-        //            command.CommandType = CommandType.StoredProcedure;
-
-        //            SqlParameter Param0 = new SqlParameter { ParameterName = "@NomenclatureID", Value = NomenclatureID }; //---Передаваемый параметр
-        //            command.Parameters.Add(Param0);
-
-        //            SqlDataReader reading = command.ExecuteReader();
-
-        //            while (reading.Read())
-        //            {
-        //                NC.BaseUnit = reading.GetValue(0).ToString();
-        //                NC.BarcodeType = reading.GetValue(1).ToString();
-        //                NC.Barcode = reading.GetValue(2).ToString();
-        //            }
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            MessageBox.Show("Ошибка в методе: DataBaseRequest.GetBaseBarcode" + "\n" + ex.Message, "Хуёво!");
-        //        }
-        //    }
-        //    return NC;
-        //}
-
-        //public static BindingList<NomenPropertyClass> GetEditableNomenclaturePropertiesAndValues(Guid EditableNomenclatureID)
-        //{
-        //    BindingList<NomenPropertyClass> list = new BindingList<NomenPropertyClass>();
-
-        //    using (SqlConnection connect = new SqlConnection(Crypt.Decrypt(XmlClass.GetSelectedConnectionString())))
-        //    {
-        //        try
-        //        {
-        //            connect.Open();
-        //            SqlCommand command = new SqlCommand("GetEditableNomenclaturePropertiesAndValues", connect);
-        //            command.CommandType = CommandType.StoredProcedure;
-
-        //            SqlParameter Param0 = new SqlParameter { ParameterName = "@NomenclatureID", Value = EditableNomenclatureID }; //---Передаваемый параметр
-        //            command.Parameters.Add(Param0);
-
-        //            SqlDataReader reading = command.ExecuteReader();
-
-        //            while (reading.Read())
-        //            {
-        //                NomenPropertyClass NPC = new NomenPropertyClass();
-        //                NPC.PropertyName = reading.GetValue(0).ToString();
-        //                NPC.ValueName = reading.GetValue(1).ToString();
-
-        //                list.Add(NPC);
-        //            }
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            MessageBox.Show("Ошибка в методе: DataBaseRequest.GetEditableNomenclaturePropertiesAndValues" + "\n" + ex.Message, "Хуёво!");
-        //        }
-        //    }
-        //    return list;
-        //}
 
         //public static BindingList<NomenclatureImageClass> GetNomenclatureImages(Guid NomenclatureID)
         //{
