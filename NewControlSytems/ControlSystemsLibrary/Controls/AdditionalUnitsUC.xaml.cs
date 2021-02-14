@@ -377,16 +377,6 @@ namespace ControlSystemsLibrary.Controls
             }
         }
 
-        bool FirstLoaded = true;
-        private void AUUC_Loaded(object sender, RoutedEventArgs e)
-        {
-            UnitsComboBox.Focus();
-            if (FirstLoaded)
-            {
-                UnitsComboBox.IsDropDownOpen = true;
-                FirstLoaded = false;
-            }
-        }
-
+        
     }
 }

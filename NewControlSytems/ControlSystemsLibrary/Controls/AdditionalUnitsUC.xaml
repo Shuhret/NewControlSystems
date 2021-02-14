@@ -7,7 +7,7 @@
              xmlns:local="clr-namespace:ControlSystemsLibrary.Controls"
              mc:Ignorable="d" 
              x:Name="AUUC"
-             d:DesignHeight="30" d:DesignWidth="606" Height="30" Loaded="AUUC_Loaded">
+             d:DesignHeight="30" d:DesignWidth="606" Height="30">
 
 
     <UserControl.Resources>
@@ -43,7 +43,7 @@
                     <SolidColorBrush Color="{DynamicResource Light-005}"/>
                 </Rectangle.Fill>
             </Rectangle>
-            <TextBox x:Name="QuantityTextBox" x:FieldModifier="public" Text="{Binding QuantityText, ElementName=AUUC, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" BorderThickness="0" BorderBrush="Transparent" Margin="0" VerticalContentAlignment="Center" Padding="9,1,1,1" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Background="{x:Null}" GotFocus="TextBoxGotFocus" LostFocus="TextBoxLostFocus" PreviewTextInput="DigitText_PreviewTextInput" KeyDown="TextBox_KeyDown">
+            <TextBox x:Name="QuantityTextBox" x:FieldModifier="public" Text="{Binding QuantityText, ElementName=AUUC, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Grid.Column="1" BorderThickness="0" BorderBrush="Transparent" Margin="0" VerticalContentAlignment="Center" Padding="9,1,1,1" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Background="{x:Null}" GotFocus="TextBoxGotFocus" LostFocus="TextBoxLostFocus" PreviewTextInput="DigitText_PreviewTextInput" KeyDown="TextBox_KeyDown">
                 <TextBox.Foreground>
                     <SolidColorBrush Color="{DynamicResource Blue-004}"/>
                 </TextBox.Foreground>

@@ -540,7 +540,6 @@ namespace ControlSystemsLibrary.Services
             return list;
         }
 
-
         public static List<NomenclatureImageClass> GetEditableNomenclatureImages(string Connectionstring, Guid NomenclatureID)
         {
             List<NomenclatureImageClass> list = new List<NomenclatureImageClass>();
@@ -566,6 +565,87 @@ namespace ControlSystemsLibrary.Services
             return list;
         }
 
+        public static bool EditNomenclature(string Connectionstring, NomenclatureClass Nomen, DataTable AdditionalUnitsDataTable, DataTable PropertyValueDataTable, DataTable ImagesDataTable, DataTable BarcodesDataTable)
+        {
+            string message = "";
+            bool ok = false;
+
+            using (SqlConnection connect = new SqlConnection(Cryption.Decrypt(Connectionstring)))
+            {
+                try
+                {
+                    connect.Open();
+                    SqlCommand command = new SqlCommand("EditNomenclature", connect);
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    SqlParameter paramID = command.Parameters.AddWithValue("@ID", Nomen.ID); // Передаваемый параметр "ID номенклатуры"
+                    paramID.SqlDbType = SqlDbType.UniqueIdentifier;
+
+                    SqlParameter paramGroupID = command.Parameters.AddWithValue("@GroupID", Nomen.GroupID); // Передаваемый параметр "ID группы номенклатуры"
+                    paramGroupID.SqlDbType = SqlDbType.UniqueIdentifier;
+
+                    SqlParameter paramAricle = command.Parameters.AddWithValue("@Aricle", Nomen.Article);  // Передаваемый параметр "Артикул"
+                    paramAricle.SqlDbType = SqlDbType.NVarChar;
+                    paramAricle.Size = 50;
+
+                    SqlParameter paramNomenclatureName = command.Parameters.AddWithValue("@NomenclatureName", Nomen.Name); // Передаваемый параметр "Наименование"
+                    paramNomenclatureName.SqlDbType = SqlDbType.NVarChar;
+                    paramNomenclatureName.Size = 100;
+
+                    SqlParameter paramBaseUnitName = command.Parameters.AddWithValue("@BaseUnitName", Nomen.BaseUnit); // Передаваемый параметр "Базовая единица"
+                    paramBaseUnitName.SqlDbType = SqlDbType.NVarChar;
+                    paramBaseUnitName.Size = 50;
+
+                    SqlParameter paramCountryOfOriginName = command.Parameters.AddWithValue("@CountryOfOriginName", Nomen.CountryOfOrigin); // Передаваемый параметр "Страна происхождения"
+                    paramCountryOfOriginName.SqlDbType = SqlDbType.NVarChar;
+                    paramCountryOfOriginName.Size = 50;
+
+                    SqlParameter paramCategory = command.Parameters.AddWithValue("@Category", Nomen.Category); // Передаваемый параметр "Категория"
+                    paramCategory.SqlDbType = SqlDbType.NVarChar;
+                    paramCategory.Size = 50;
+
+                    SqlParameter paramBaseUnitWeight = command.Parameters.AddWithValue("@BaseUnitWeight", Nomen.WeightBaseUnit); // Передаваемый параметр "Вес базовой единицы"
+                    paramBaseUnitWeight.SqlDbType = SqlDbType.Decimal;
+                    paramBaseUnitWeight.Precision = 18;
+                    paramBaseUnitWeight.Scale = 3;
+
+                    SqlParameter paramDescription = command.Parameters.AddWithValue("@Description", Nomen.Description); // Передаваемый параметр "Описание"
+                    paramDescription.SqlDbType = SqlDbType.NVarChar;
+                    paramDescription.Size = 500;
+
+
+                    SqlParameter ParamAdditionalUnits = new SqlParameter { ParameterName = "@AdditionalUnits", Value = AdditionalUnitsDataTable }; // Передаваемый табличный параметр (Дополнительные единицы)
+                    ParamAdditionalUnits.SqlDbType = SqlDbType.Structured;
+                    command.Parameters.Add(ParamAdditionalUnits);
+
+                    SqlParameter ParamPropertyValues = new SqlParameter { ParameterName = "@PropertyValues", Value = PropertyValueDataTable }; // Передаваемый табличный параметр (Свойства и значения)
+                    ParamPropertyValues.SqlDbType = SqlDbType.Structured;
+                    command.Parameters.Add(ParamPropertyValues);
+
+                    SqlParameter ParamImages = new SqlParameter { ParameterName = "@Images", Value = ImagesDataTable }; // Передаваемый табличный параметр (Изображения)
+                    ParamImages.SqlDbType = SqlDbType.Structured;
+                    command.Parameters.Add(ParamImages);
+
+                    SqlParameter ParamBarcodes = new SqlParameter { ParameterName = "@Barcodes", Value = BarcodesDataTable }; // Передаваемый табличный параметр (Штрих-коды)
+                    ParamBarcodes.SqlDbType = SqlDbType.Structured;
+                    command.Parameters.Add(ParamBarcodes);
+
+
+                    command.Parameters.Add("@Result", SqlDbType.Bit).Direction = ParameterDirection.Output; // Выходной параметр (Результат 1 или 0)
+                    command.Parameters.Add("@Message", SqlDbType.NVarChar, -1).Direction = ParameterDirection.Output; // Выходной параметр (Сообщение об ошибке)
+
+                    command.ExecuteNonQuery(); // Выполнение запроса
+
+                    ok = (bool)command.Parameters["@Result"].Value;
+                    message = command.Parameters["@Message"].Value.ToString();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message + "\nSQL Server: " + message, "DataBaseRequest.CreateNewNomenclature");
+                }
+                return ok;
+            }
+        }
 
 
 

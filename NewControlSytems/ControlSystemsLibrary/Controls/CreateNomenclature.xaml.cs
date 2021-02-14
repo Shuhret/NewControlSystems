@@ -172,8 +172,11 @@ namespace ControlSystemsLibrary.Controls
             }
             set
             {
-                baseUnitWeightText = value;
-                OnPropertyChanged();
+                if (baseUnitWeightText != value)
+                {
+                    baseUnitWeightText = value;
+                    OnPropertyChanged();
+                }
             }
         }
 
@@ -315,13 +318,13 @@ namespace ControlSystemsLibrary.Controls
                     Action action = () =>
                     {
                         EditModeMethod();
+                        LoadEditableNomenclatureAddedUnits();
+                        LoadEditableNomenclaturePropertyValues();
+                        LoadEditableNomenclatureBarcodes();
+                        LoadEditableNomenclatureImages();
                     };
                     Dispatcher.Invoke(action);
                 });
-                LoadEditableNomenclatureAddedUnits();
-                LoadEditableNomenclaturePropertyValues();
-                LoadEditableNomenclatureBarcodes();
-                LoadEditableNomenclatureImages();
             }
         }
 
@@ -347,6 +350,8 @@ namespace ControlSystemsLibrary.Controls
             ArticleTextBox.Text = EditableNomenclature.Article;
             TextBoxBaseWeight.Text = EditableNomenclature.WeightBaseUnit.ToString();
             DescriptionTextBox.Text = EditableNomenclature.Description;
+            TextBoxBaseWeight.Text = EditableNomenclature.WeightBaseUnit.ToString();
+            TextBoxBaseWeight.Focus();
             NomenNameTextBox.Focus();
             NomenNameTextBox.SelectionStart = NomenNameTextBox.Text.Length;
             NomenNameTextBox.SelectionLength = NomenNameTextBox.Text.Length;
@@ -389,7 +394,6 @@ namespace ControlSystemsLibrary.Controls
                         {
                             BaseUnitWeight = num2;
                             //string.Format("{0:0.000}", 25.657446842);
-
                             BaseUnitWeightText = string.Format("{0:0.000}", BaseUnitWeight) + " кг";
                         }
                         else
@@ -405,6 +409,7 @@ namespace ControlSystemsLibrary.Controls
                 }
             }
         }
+
 
         // Событие: PreviewTextInput (Для введенияв TextBox только цифр) ---------------------------------------------------------------------
         private void DigitText_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -547,6 +552,7 @@ namespace ControlSystemsLibrary.Controls
             {
                 CountryOfOrigin = ((sender as ComboBox).SelectedItem as ComboBoxItem).Content.ToString();
                 DescriptionTextBox.Focus();
+                DescriptionTextBox.SelectionLength = DescriptionTextBox.Text.Length;
             }
         }
 
@@ -574,6 +580,7 @@ namespace ControlSystemsLibrary.Controls
                 LoadAddUnitsToComboBox(ref AUUC);
 
                 AddUnitsStackPanel.Children.Add(AUUC);
+                AUUC.UnitsComboBox.IsDropDownOpen = true;
                 (AddUnitsStackPanel.Parent as ScrollViewer).ScrollToEnd();
             }
         }
@@ -1156,6 +1163,7 @@ namespace ControlSystemsLibrary.Controls
                 Category = ((sender as ComboBox).SelectedItem as ComboBoxItem).Content.ToString();
                 CheckMainValues();
                 ArticleTextBox.Focus();
+                ArticleTextBox.SelectionLength = ArticleTextBox.Text.Length;
             }
         }
 
@@ -1377,12 +1385,17 @@ namespace ControlSystemsLibrary.Controls
             }
             else
             {
+                if (await Task.Run(() => EditNomenclatureDB()) == true)
+                {
+                    ResultVisibility = Visibility.Visible;
+                    SCND(EditableNomenclature);
+                }
             }
         }
 
         private bool CreateNewNomenclatureDB(NomenclatureClass CreatedNomenclature)
         {
-            bool result;
+            bool result = false;
 
             CreatedNomenclature.ID = CreatedNomenclatureID;
             CreatedNomenclature.GroupID = CurrentGroupID;
@@ -1401,11 +1414,32 @@ namespace ControlSystemsLibrary.Controls
                 CreatedNomenclature.Description = DescriptionTextBox.Text;
             };
             Dispatcher.Invoke(action);
-            result = DataBaseRequest.CreateNewNomenclature(CurrentCryptConnectionString, CreatedNomenclature, GetAdditionalUnitsDataTable(), GetPropertyValueDataTable(), GetImagesDataTable(), GetBarcodesDataTable());
+            result = DataBaseRequest.CreateNewNomenclature(CurrentCryptConnectionString, CreatedNomenclature, GetAdditionalUnitsDataTable(CreatedNomenclatureID), GetPropertyValueDataTable(CreatedNomenclatureID), GetImagesDataTable(CreatedNomenclatureID), GetBarcodesDataTable(CreatedNomenclatureID));
 
             return result;
         }
 
+        private bool EditNomenclatureDB()
+        {
+            bool result = false;
+            EditableNomenclature.Article = Article;
+            EditableNomenclature.Name = NomenclatureName;
+            EditableNomenclature.GroupNomen = true;
+            EditableNomenclature.WeightBaseUnit = BaseUnitWeight;
+            Action action = () =>
+            {
+                EditableNomenclature.Category = (CategoriesComboBox.SelectedItem as ComboBoxItem).Content.ToString();
+                EditableNomenclature.BaseUnit = (BaseUnitComboBox.SelectedItem as ComboBoxItem).Content.ToString();
+                if (ComboBoxCountry.SelectedItem != null)
+                {
+                    EditableNomenclature.CountryOfOrigin = (ComboBoxCountry.SelectedItem as ComboBoxItem).Content.ToString();
+                }
+                EditableNomenclature.Description = DescriptionTextBox.Text;
+            };
+            Dispatcher.Invoke(action);
+            result = DataBaseRequest.EditNomenclature(CurrentCryptConnectionString, EditableNomenclature, GetAdditionalUnitsDataTable(EditableNomenclature.ID), GetPropertyValueDataTable(EditableNomenclature.ID), GetImagesDataTable(EditableNomenclature.ID), GetBarcodesDataTable(EditableNomenclature.ID));
+            return result;
+        }
         private async void AfterCreatedMethod()
         {
             if (ClearAllValues() == true)
@@ -1452,7 +1486,7 @@ namespace ControlSystemsLibrary.Controls
         }
 
 
-        private DataTable GetAdditionalUnitsDataTable()
+        private DataTable GetAdditionalUnitsDataTable(Guid NomenclatureID)
         {
             DataTable AAUDT = new DataTable();
             AAUDT.Columns.Add(new DataColumn("ID", typeof(Guid)));
@@ -1464,13 +1498,13 @@ namespace ControlSystemsLibrary.Controls
             {
                 foreach (AdditionalUnitsUC AUUC in AddUnitsStackPanel.Children)
                 {
-                    AAUDT.Rows.Add(AUUC.ID, AUUC.NomenclatureID, GetUnitID(AUUC.AddUnitName), AUUC.Quantity, AUUC.Weight);
+                    AAUDT.Rows.Add(AUUC.ID, NomenclatureID, GetUnitID(AUUC.AddUnitName), AUUC.Quantity, AUUC.Weight);
                 }
             };
             Dispatcher.Invoke(action);
             return AAUDT;
         }
-        private DataTable GetPropertyValueDataTable()
+        private DataTable GetPropertyValueDataTable(Guid NomenclatureID)
         {
             DataTable PVDT = new DataTable();
             PVDT.Columns.Add(new DataColumn("ID", typeof(Guid)));
@@ -1482,7 +1516,7 @@ namespace ControlSystemsLibrary.Controls
                 {
                     if (NPUC.Readiness == true)
                     {
-                        PVDT.Rows.Add(NPUC.ID, GetPropertyValueID((NPUC.PropertyComboBox.SelectedItem as ComboBoxItem).Content.ToString(), (NPUC.ValueComboBox.SelectedItem as ComboBoxItem).Content.ToString()), createdNomenclatureID);
+                        PVDT.Rows.Add(NPUC.ID, GetPropertyValueID((NPUC.PropertyComboBox.SelectedItem as ComboBoxItem).Content.ToString(), (NPUC.ValueComboBox.SelectedItem as ComboBoxItem).Content.ToString()), NomenclatureID);
 
                     }
                 }
@@ -1490,7 +1524,7 @@ namespace ControlSystemsLibrary.Controls
             Dispatcher.Invoke(action);
             return PVDT;
         }
-        private DataTable GetImagesDataTable()
+        private DataTable GetImagesDataTable(Guid NomenclatureID)
         {
             DataTable IDT = new DataTable();
             IDT.Columns.Add(new DataColumn("ID", typeof(Guid)));
@@ -1501,13 +1535,13 @@ namespace ControlSystemsLibrary.Controls
             {
                 foreach (NomenclatureImageUC NIUC in CreatedNomenclatureImageWrapPanel.Children)
                 {
-                    IDT.Rows.Add(Guid.NewGuid(), CreatedNomenclatureID, NIUC.ImageByte, (bool)NIUC.IsChecked);
+                    IDT.Rows.Add(Guid.NewGuid(), NomenclatureID, NIUC.ImageByte, (bool)NIUC.IsChecked);
                 }
             };
             Dispatcher.Invoke(action);
             return IDT;
         }
-        private DataTable GetBarcodesDataTable()
+        private DataTable GetBarcodesDataTable(Guid NomenclatureID)
         {
             DataTable BDT = new DataTable();
             BDT.Columns.Add(new DataColumn("ID", typeof(Guid)));
@@ -1521,7 +1555,7 @@ namespace ControlSystemsLibrary.Controls
                 {
                     if (BUC.Readiness == true)
                     {
-                        BDT.Rows.Add(Guid.NewGuid(), CreatedNomenclatureID, GetBarcodeTypeID(BUC.BarcodeType), BUC.Barcode, GetUnitID(BUC.UnitName));
+                        BDT.Rows.Add(Guid.NewGuid(), NomenclatureID, GetBarcodeTypeID(BUC.BarcodeType), BUC.Barcode, GetUnitID(BUC.UnitName));
 
                     }
                 }
@@ -1587,17 +1621,17 @@ namespace ControlSystemsLibrary.Controls
             {
                 AdditionalUnitsUC AUUC = new AdditionalUnitsUC
                 {
+                    Readiness = true,
                     ID = AU.ID,
                     NomenclatureID = EditableNomenclature.ID,
                     BaseUnitName = EditableNomenclature.BaseUnit,
+                    BaseUnitWeight = EditableNomenclature.WeightBaseUnit,
                     AddUnitName = AU.UnitName,
                     Quantity = AU.Quantity,
                     Weight = AU.UnitWeight
                 };
+
                 LoadAddUnitsToComboBox(ref AUUC);
-                AUUC.UnitsComboBox.SelectionChanged += AdditionalUnitsComboBox_SelectionChanged;
-                AUUC.DeleteButton.Click += AdditionalUnitsDeleteButton_Click;
-                AUUC.ReadinessChanged += AUUC_ReadinessChanged;
 
                 foreach (ComboBoxItem CBI in AUUC.UnitsComboBox.Items)
                 {
@@ -1607,12 +1641,15 @@ namespace ControlSystemsLibrary.Controls
                         break;
                     }
                 }
+
+                AUUC.UnitsComboBox.SelectionChanged += AdditionalUnitsComboBox_SelectionChanged;
+                AUUC.DeleteButton.Click += AdditionalUnitsDeleteButton_Click;
+                AUUC.ReadinessChanged += AUUC_ReadinessChanged;
                 AddUnitsStackPanel.Children.Add(AUUC);
 
             }
             (AddUnitsStackPanel.Parent as ScrollViewer).ScrollToEnd();
         }
-
         private async void LoadEditableNomenclaturePropertyValues()
         {
             List<NomenclaturePropertyValues> list = new List<NomenclaturePropertyValues>();
@@ -1621,6 +1658,7 @@ namespace ControlSystemsLibrary.Controls
             {
                 NomenPropertyUC NPUC = new NomenPropertyUC
                 {
+                    Readiness = true,
                     ID = NPV.ID
                 };
                 NPUC.PropertyComboBox.SelectionChanged += PropertyComboBox_SelectionChanged;
@@ -1644,7 +1682,6 @@ namespace ControlSystemsLibrary.Controls
             }
             (AddUnitsStackPanel.Parent as ScrollViewer).ScrollToEnd();
         }
-
         private async void LoadEditableNomenclatureBarcodes()
         {
             List<NomenclatureBarcodes> list = new List<NomenclatureBarcodes>();
@@ -1653,6 +1690,7 @@ namespace ControlSystemsLibrary.Controls
             {
                 BarcodeUC BUC = new BarcodeUC
                 {
+                    Readiness = true,
                     ID = NB.ID,
                     UnitName = NB.UnitName,
                     BarcodeType = NB.BarcodeType,
