@@ -650,75 +650,71 @@ namespace ControlSystemsLibrary.Services
 
 
 
-        ////---Метод: Создание новой группы номенклатуры (ХП)---------------------------------------------------------------------
-        //public static bool CreateNomenclatureGroup(NomenclatureClass NC)
-        //{
-        //    bool ok = false;
-        //    using (SqlConnection connect = new SqlConnection(Crypt.Decrypt(XmlClass.GetSelectedConnectionString())))
-        //    {
-        //        try
-        //        {
-        //            connect.Open();
-        //            SqlCommand command = new SqlCommand("CreateNomenclatureGroup", connect);
-        //            command.CommandType = CommandType.StoredProcedure;
+        //---Метод: Создание новой группы номенклатуры (ХП)---------------------------------------------------------------------
+        public static bool CreateNomenclatureGroup(string Connectionstring, NomenclatureClass NC)
+        {
+            bool ok = false;
+            using (SqlConnection connect = new SqlConnection(Cryption.Decrypt(Connectionstring)))
+            {
+                try
+                {
+                    connect.Open();
+                    SqlCommand command = new SqlCommand("CreateNomenclatureGroup", connect);
+                    command.CommandType = CommandType.StoredProcedure;
 
-        //            SqlParameter Param0 = new SqlParameter { ParameterName = "@ID", Value = NC.ID };// Новый ID //---Передаваемый параметр
-        //            command.Parameters.Add(Param0);
+                    SqlParameter Param0 = new SqlParameter { ParameterName = "@ID", Value = NC.ID };// Новый ID //---Передаваемый параметр
+                    command.Parameters.Add(Param0);
 
-        //            SqlParameter Param1 = new SqlParameter { ParameterName = "@GroupID", Value = NC.GroupID }; //---Передаваемый параметр
-        //            command.Parameters.Add(Param1);
+                    SqlParameter Param1 = new SqlParameter { ParameterName = "@GroupID", Value = NC.GroupID }; //---Передаваемый параметр
+                    command.Parameters.Add(Param1);
 
-        //            SqlParameter Param2 = new SqlParameter { ParameterName = "@GroupName", Value = NC.Name }; //---Передаваемый параметр
-        //            command.Parameters.Add(Param2);
+                    SqlParameter Param2 = new SqlParameter { ParameterName = "@GroupName", Value = NC.Name }; //---Передаваемый параметр
+                    command.Parameters.Add(Param2);
 
-        //            SqlParameter Param3 = new SqlParameter { ParameterName = "@GroupNonen", Value = NC.GroupNomen }; //---Передаваемый параметр
-        //            command.Parameters.Add(Param3);
+                    command.Parameters.Add("@Result", SqlDbType.Bit).Direction = ParameterDirection.Output; // Выходной параметр
 
+                    command.ExecuteNonQuery();
 
-        //            command.Parameters.Add("@Result", SqlDbType.Bit).Direction = ParameterDirection.Output; // Выходной параметр
+                    ok = (bool)command.Parameters["@Result"].Value;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "DataBaseRequest.CreateNomenclatureGroup");
+                }
+                return ok;
+            }
+        }
 
-        //            command.ExecuteNonQuery();
+        //---Метод: Изменение группы номенклатуры (ХП)---------------------------------------------------------------------
+        public static bool UpdateNomenclatureGroup(string Connectionstring, NomenclatureClass NC)
+        {
+            bool ok = false;
+            using (SqlConnection connect = new SqlConnection(Cryption.Decrypt(Connectionstring)))
+            {
+                try
+                {
+                    connect.Open();
+                    SqlCommand command = new SqlCommand("UpdateNomenclatureGroup", connect);
+                    command.CommandType = CommandType.StoredProcedure;
 
-        //            ok = (bool)command.Parameters["@Result"].Value;
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            MessageBox.Show(ex.Message, "DataBaseRequest.CreateNomenclatureGroup");
-        //        }
-        //        return ok;
-        //    }
-        //}
+                    SqlParameter Param0 = new SqlParameter { ParameterName = "@ID", Value = NC.ID };// Новый ID //---Передаваемый параметр
+                    command.Parameters.Add(Param0);
+                    SqlParameter Param2 = new SqlParameter { ParameterName = "@GroupName", Value = NC.Name }; //---Передаваемый параметр
+                    command.Parameters.Add(Param2);
 
-        ////---Метод: Изменение группы номенклатуры (ХП)---------------------------------------------------------------------
-        //public static bool UpdateNomenclatureGroup(NomenclatureClass NC)
-        //{
-        //    bool ok = false;
-        //    using (SqlConnection connect = new SqlConnection(Crypt.Decrypt(XmlClass.GetSelectedConnectionString())))
-        //    {
-        //        try
-        //        {
-        //            connect.Open();
-        //            SqlCommand command = new SqlCommand("UpdateNomenclatureGroup", connect);
-        //            command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.Add("@Result", SqlDbType.Bit).Direction = ParameterDirection.Output; // Выходной параметр
 
-        //            SqlParameter Param0 = new SqlParameter { ParameterName = "@ID", Value = NC.ID };// Новый ID //---Передаваемый параметр
-        //            command.Parameters.Add(Param0);
-        //            SqlParameter Param2 = new SqlParameter { ParameterName = "@GroupName", Value = NC.Name }; //---Передаваемый параметр
-        //            command.Parameters.Add(Param2);
+                    command.ExecuteNonQuery();
 
-        //            command.Parameters.Add("@Result", SqlDbType.Bit).Direction = ParameterDirection.Output; // Выходной параметр
-
-        //            command.ExecuteNonQuery();
-
-        //            ok = (bool)command.Parameters["@Result"].Value;
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            MessageBox.Show(ex.Message, "DataBaseRequest.UpdateNomenclatureGroup");
-        //        }
-        //        return ok;
-        //    }
-        //}
+                    ok = (bool)command.Parameters["@Result"].Value;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "DataBaseRequest.UpdateNomenclatureGroup");
+                }
+                return ok;
+            }
+        }
 
 
         //---Метод: Вырезать/Вставить (ХП)---------------------------------------------------------------------

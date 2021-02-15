@@ -123,7 +123,7 @@
                                                 <Border.Background>
                                                     <SolidColorBrush Color="{DynamicResource Light-001}"/>
                                                 </Border.Background>
-                                                <TextBox x:Name="NomenNameTextBox" MaxLength="100" Text="{Binding NomenclatureName, ElementName=CN, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Center" Padding="5,1,1,1" KeyDown="TextBox_KeyDown" TextChanged="TextBoxes_TextChanged" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" FontSize="12.5">
+                                                <TextBox x:Name="NomenNameTextBox" MaxLength="100" Text="{Binding NomenclatureName, ElementName=CN, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Center" Padding="5,1,1,1" KeyDown="TextBox_KeyDown" TextChanged="TextBoxes_TextChanged" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" FontSize="12">
                                                     <TextBox.Foreground>
                                                         <SolidColorBrush Color="{DynamicResource Blue-004}"/>
                                                     </TextBox.Foreground>
@@ -154,7 +154,7 @@
                                                 <Border.Background>
                                                     <SolidColorBrush Color="{DynamicResource Light-001}"/>
                                                 </Border.Background>
-                                                <ComboBox x:Name="CategoriesComboBox" Style="{DynamicResource ComboBoxStyle1}" Background="Transparent" BorderThickness="0" SelectionChanged="CategoriesComboBox_SelectionChanged" VerticalContentAlignment="Center" Padding="10,3,4,3" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" FontSize="12.5">
+                                                <ComboBox x:Name="CategoriesComboBox" Style="{DynamicResource ComboBoxStyle1}" Background="Transparent" BorderThickness="0" SelectionChanged="CategoriesComboBox_SelectionChanged" VerticalContentAlignment="Center" Padding="10,3,4,3" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" FontSize="12">
                                                     <ComboBox.BorderBrush>
                                                         <SolidColorBrush Color="{DynamicResource Light-004}"/>
                                                     </ComboBox.BorderBrush>
@@ -177,7 +177,7 @@
                                                 <Border.Background>
                                                     <SolidColorBrush Color="{DynamicResource Light-001}"/>
                                                 </Border.Background>
-                                                <TextBox x:Name="ArticleTextBox" MaxLength="50" Text="{Binding Article, ElementName=CN, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Center" Padding="5,1,1,1" KeyDown="TextBox_KeyDown" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" FontSize="12.5">
+                                                <TextBox x:Name="ArticleTextBox" MaxLength="50" Text="{Binding Article, ElementName=CN, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Center" Padding="5,1,1,1" KeyDown="TextBox_KeyDown" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" FontSize="12">
                                                     <TextBox.Foreground>
                                                         <SolidColorBrush Color="{DynamicResource Blue-004}"/>
                                                     </TextBox.Foreground>
@@ -208,7 +208,7 @@
                                                 <Border.Background>
                                                     <SolidColorBrush Color="{DynamicResource Light-001}"/>
                                                 </Border.Background>
-                                                <ComboBox x:Name="BaseUnitComboBox" Style="{DynamicResource ComboBoxStyle1}" Background="Transparent" BorderThickness="0" SelectionChanged="BaseUnitNameComboBoxSelectionChanged" VerticalContentAlignment="Center" Padding="10,3,4,3" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" FontSize="12.5">
+                                                <ComboBox x:Name="BaseUnitComboBox" Style="{DynamicResource ComboBoxStyle1}" Background="Transparent" BorderThickness="0" SelectionChanged="BaseUnitNameComboBoxSelectionChanged" VerticalContentAlignment="Center" Padding="10,3,4,3" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" FontSize="12">
                                                     <ComboBox.BorderBrush>
                                                         <SolidColorBrush Color="{DynamicResource Light-004}"/>
                                                     </ComboBox.BorderBrush>
@@ -231,7 +231,7 @@
                                                 <Border.Background>
                                                     <SolidColorBrush Color="{DynamicResource Light-001}"/>
                                                 </Border.Background>
-                                                <TextBox x:Name="TextBoxBaseWeight" Text="{Binding BaseUnitWeightText, ElementName=CN, UpdateSourceTrigger=PropertyChanged}"  Background="Transparent" BorderThickness="0" VerticalContentAlignment="Center" Padding="5,1,1,1" KeyDown="TextBox_KeyDown" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" GotFocus="TextBoxBaseWeight_GotFocus" LostFocus="TextBoxBaseWeight_LostFocus" PreviewTextInput="DigitText_PreviewTextInput" TextChanged="TextBoxes_TextChanged" FontSize="12.5">
+                                                <TextBox x:Name="TextBoxBaseWeight" Text="{Binding BaseUnitWeightText, ElementName=CN, UpdateSourceTrigger=PropertyChanged}"  Background="Transparent" BorderThickness="0" VerticalContentAlignment="Center" Padding="5,1,1,1" KeyDown="TextBox_KeyDown" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" GotFocus="TextBoxBaseWeight_GotFocus" LostFocus="TextBoxBaseWeight_LostFocus" PreviewTextInput="DigitText_PreviewTextInput" TextChanged="TextBoxes_TextChanged" FontSize="12">
                                                     <TextBox.Foreground>
                                                         <SolidColorBrush Color="{DynamicResource Blue-004}"/>
                                                     </TextBox.Foreground>
@@ -251,7 +251,7 @@
                                                 <Border.Background>
                                                     <SolidColorBrush Color="{DynamicResource Light-001}"/>
                                                 </Border.Background>
-                                                <ComboBox x:Name="ComboBoxCountry" Style="{DynamicResource ComboBoxStyle1}" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Center" Padding="10,3,4,3" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" SelectionChanged="ComboBoxCountry_SelectionChanged" FontSize="12.5">
+                                                <ComboBox x:Name="ComboBoxCountry" Style="{DynamicResource ComboBoxStyle1}" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Center" Padding="10,3,4,3" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" SelectionChanged="ComboBoxCountry_SelectionChanged" FontSize="12">
                                                     <ComboBox.BorderBrush>
                                                         <SolidColorBrush Color="{DynamicResource Light-004}"/>
                                                     </ComboBox.BorderBrush>
@@ -275,7 +275,7 @@
                                     <Border.Background>
                                         <SolidColorBrush Color="{DynamicResource Light-001}"/>
                                     </Border.Background>
-                                    <TextBox x:Name="DescriptionTextBox" Text="{Binding Description, ElementName=CN, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" AcceptsReturn="True" Background="Transparent" BorderThickness="0" Padding="10,5" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" FontSize="12.5">
+                                    <TextBox x:Name="DescriptionTextBox" Text="{Binding Description, ElementName=CN, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" AcceptsReturn="True" Background="Transparent" BorderThickness="0" Padding="10,5" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" FontSize="12">
                                         <TextBox.Foreground>
                                             <SolidColorBrush Color="{DynamicResource Blue-004}"/>
                                         </TextBox.Foreground>

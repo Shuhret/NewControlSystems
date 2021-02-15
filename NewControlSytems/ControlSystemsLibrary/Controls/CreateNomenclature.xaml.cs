@@ -1715,7 +1715,9 @@ namespace ControlSystemsLibrary.Controls
                     Image = ImageByte.ByteArrayToImage(NIC.ImageArray),
                     ImageByte = NIC.ImageArray,
                     IsChecked = NIC.MainImage
+
                 };
+                NIUC.Deleted += ImageDeleteClick;
                 CreatedNomenclatureImageWrapPanel.Children.Add(NIUC);
             }
             (AddUnitsStackPanel.Parent as ScrollViewer).ScrollToEnd();

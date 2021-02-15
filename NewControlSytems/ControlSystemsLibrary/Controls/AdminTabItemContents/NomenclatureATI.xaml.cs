@@ -17,6 +17,10 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
 {
     public delegate void CloseCreateNomenclatureDelegate();
     public delegate void ShowCreatedNomenclatureDelegate(NomenclatureClass CreatedNomenclature);
+
+    public delegate void CloseCreateNomenclatureGroupDelegate();
+    public delegate void ShowCreatedNomenclatureGroupDelegate(NomenclatureClass CreatedNomenclature);
+
     public partial class NomenclatureATI : UserControl, INotifyPropertyChanged
     {
 
@@ -347,6 +351,10 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
                     SearchedText += e.Text;
                     e.Handled = true;
                 }
+                else
+                {
+                    SearchedText = "";
+                }
             }
         }
 
@@ -537,8 +545,7 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
             if (ID == new Guid("00000000-0000-0000-0000-000000000000"))
                 LB.Foreground = GetColor.Get("Blue-004");
             else
-                LB.Foreground = GetColor.Get("Dark-002");
-            LB.Background = new SolidColorBrush(Colors.White);
+                LB.Foreground = GetColor.Get("Dark-001");
             LB.Content = ContentText;
             LB.ID = ID;
             LB.Click += LinqButton_Click;
@@ -601,7 +608,6 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
 
         private void AddCreatedNomenclatureToCollection(NomenclatureClass CreatedNomenclature)
         {
-            
             LoadAllNomenclatures(CreatedNomenclature);
         }
 
@@ -627,9 +633,23 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
                 }
                 else
                 {
-
+                    CloseCreateNomenclatureGroupDelegate CCNGD = CloseCreateNomenclature;
+                    ShowCreatedNomenclatureGroupDelegate SCNGD = AddCreatedNomenclatureToCollection;
+                    CreateNemenclatureUC = new CreateNomenclatureGroup(CurrentCryptConnectionString, false, CCNGD, SCNGD, SelectedItem);
                 }
             }
+        }
+
+        private void CreateNomenclatureGroupButton_Click(object sender, RoutedEventArgs e)
+        {
+            CloseCreateNomenclatureGroupDelegate CCNGD = CloseCreateNomenclature;
+            ShowCreatedNomenclatureGroupDelegate SCNGD = AddCreatedNomenclatureToCollection;
+            CreateNemenclatureUC = new CreateNomenclatureGroup(CurrentCryptConnectionString, true, CCNGD, SCNGD, CurrentGroupID);
+        }
+
+        private void Nom_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            SearchedText = "";
         }
     }
 }

@@ -5,11 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ControlSystemsLibrary.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" Style="{DynamicResource LinqButtonStyle}">
+             d:DesignHeight="450" d:DesignWidth="800" Style="{DynamicResource LinqButtonStyle}" Margin="0,0,2,0">
     <Button.Resources>
         <Style x:Key="LinqButtonStyle" TargetType="{x:Type Button}">
             <Setter Property="FontFamily" Value="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed"/>
             <Setter Property="FontSize" Value="13"/>
+            
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
@@ -24,11 +25,26 @@
                         <Grid>
                             <Border x:Name="border" Background="Transparent" Cursor="Hand">
                                 <Grid>
-                                    <Rectangle x:Name="rectangle" Fill="{TemplateBinding Background}" Opacity="1" Visibility="Hidden" RadiusY="2" RadiusX="2"/>
-                                    <Border Padding="3,0,5,0">
+                                    <Rectangle Margin="1" RadiusY="1.469" RadiusX="1.469">
+                                        <Rectangle.Fill>
+                                            <SolidColorBrush Color="{DynamicResource Light-001}"/>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                    <Rectangle x:Name="rectangle" Opacity="1" Visibility="Hidden" RadiusY="2" RadiusX="2">
+                                        <Rectangle.Fill>
+                                            <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                                                <GradientStop Color="White" Offset="0.5"/>
+                                                <GradientStop Color="{DynamicResource Light-003}" Offset="1"/>
+                                            </LinearGradientBrush>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                    <Border Padding="6,3.5,6,3.5" BorderThickness="1" CornerRadius="2">
+                                        <Border.BorderBrush>
+                                            <SolidColorBrush Color="{DynamicResource Light-004}"/>
+                                        </Border.BorderBrush>
                                         <StackPanel x:Name="stackPanel" Orientation="Horizontal" Opacity="1">
                                             <ContentPresenter HorizontalAlignment="Center" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="Center"/>
-                                            <TextBlock Text="\" RenderOptions.BitmapScalingMode="Fant" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{TemplateBinding Foreground}" Margin="3,1,0,0" FontFamily="Arial" FontWeight="Bold" FontSize="12"/>
+                                            <!--<TextBlock Text="\" RenderOptions.BitmapScalingMode="Fant" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{TemplateBinding Foreground}" Margin="3,1,0,0" FontFamily="Arial" FontWeight="Bold" FontSize="12"/>-->
                                         </StackPanel>
                                     </Border>
                                 </Grid>

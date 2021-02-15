@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:ControlSystemsLibrary.Controls.AdminTabItemContents" xmlns:controls="clr-namespace:ControlSystemsLibrary.Controls"
              mc:Ignorable="d" 
              x:Name="Nom"
-             d:DesignHeight="900" d:DesignWidth="1440" TextOptions.TextFormattingMode="Ideal" PreviewKeyDown="Nom_PreviewKeyDown">
+             d:DesignHeight="900" d:DesignWidth="1440" TextOptions.TextFormattingMode="Ideal" PreviewKeyDown="Nom_PreviewKeyDown" MouseLeftButtonDown="Nom_MouseLeftButtonDown">
     <UserControl.Resources>
         <!--Стиль DataGrid-->
         <!--#region DataGrid-->
@@ -36,11 +36,7 @@
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <!--<Setter Property="HorizontalContentAlignment" Value="Center"/>-->
             <Setter Property="Padding" Value="10,0,0,0"/>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="ToolTip" Value="Кликните два раза для выхода из текущей группы"/>
-                </Trigger>
-            </Style.Triggers>
+
         </Style>
 
         <Style TargetType="DataGridRow">
@@ -271,7 +267,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <Border Margin="10" BorderThickness="1" VerticalAlignment="Center" Height="25">
+            <Border Margin="10" BorderThickness="1" VerticalAlignment="Center">
                 <Grid Margin="0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto"/>
@@ -279,10 +275,13 @@
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="120"/>
                     </Grid.ColumnDefinitions>
-                    <StackPanel Orientation="Horizontal">
-                        <Button Style="{DynamicResource ButtonStyle-001}" BorderThickness="0,1" Click="CreateNomenclatureButtonClick" Foreground="White" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Padding="11,1" Cursor="Hand" ToolTip="Создать новую номенклатуру" Width="28">
+                    <StackPanel Orientation="Horizontal" Height="25">
+                        <Button Style="{DynamicResource ButtonStyle-001}" BorderThickness="0,1" Click="CreateNomenclatureButtonClick" Foreground="White" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Padding="11,1" Cursor="Hand" ToolTip="Создать новую номенклатуру" Width="30">
                             <Button.Background>
-                                <SolidColorBrush Color="{DynamicResource Purpure-002}"/>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FF00A2DE" Offset="1"/>
+                                    <GradientStop Color="{DynamicResource Blue-001}"/>
+                                </LinearGradientBrush>
                             </Button.Background>
                             <Button.BorderBrush>
                                 <SolidColorBrush Color="White"/>
@@ -295,9 +294,12 @@
                                 </Canvas>
                             </Viewbox>
                         </Button>
-                        <Button Style="{DynamicResource ButtonStyle-001}" BorderThickness="1,1,0,1" Margin="5,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Foreground="White" Width="28" Padding="10,1" Cursor="Hand" ToolTip="Создать новую группу">
+                        <Button x:Name="CreateNomenclatureGroupButton" Style="{DynamicResource ButtonStyle-001}" BorderThickness="1,1,0,1" Margin="5,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Foreground="White" Width="30" Padding="10,1" Cursor="Hand" ToolTip="Создать новую группу" Click="CreateNomenclatureGroupButton_Click">
                             <Button.Background>
-                                <SolidColorBrush Color="{DynamicResource Purpure-002}"/>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FF00A2DE" Offset="1"/>
+                                    <GradientStop Color="{DynamicResource Blue-001}"/>
+                                </LinearGradientBrush>
                             </Button.Background>
                             <Button.BorderBrush>
                                 <SolidColorBrush Color="{DynamicResource Light-005}"/>
@@ -324,9 +326,12 @@
                                 </Canvas>
                             </Viewbox>
                         </Button>
-                        <Button Style="{DynamicResource ButtonStyle-001}" BorderThickness="1,1,0,1" Margin="5,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Foreground="White" Width="28" Padding="11,1" Cursor="Hand" ToolTip="Изменить" Click="EditNomenclatureButtonClick">
+                        <Button Style="{DynamicResource ButtonStyle-001}" BorderThickness="1,1,0,1" Margin="5,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Foreground="White" Width="30" Padding="11,1" Cursor="Hand" ToolTip="Изменить" Click="EditNomenclatureButtonClick">
                             <Button.Background>
-                                <SolidColorBrush Color="{DynamicResource Purpure-002}"/>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FF00A2DE" Offset="1"/>
+                                    <GradientStop Color="{DynamicResource Blue-001}"/>
+                                </LinearGradientBrush>
                             </Button.Background>
                             <Button.BorderBrush>
                                 <SolidColorBrush Color="{DynamicResource Light-005}"/>
@@ -334,23 +339,17 @@
                             <Viewbox Width="13">
                                 <Canvas HorizontalAlignment="Left" Height="30" UseLayoutRounding="False" VerticalAlignment="Top" Width="30">
                                     <Canvas Height="30" Canvas.Left="0" Canvas.Top="0" Width="30">
-                                        <Path Data="F1M0,20.4222L0.196,29.8322L9.578,30.0002L25.094,14.5122L15.516,4.9062z M5.294,22.3542L17.028,10.6192L19.381,12.9722L7.646,24.7072z" Height="25.094" Canvas.Left="0" Stretch="Fill" Canvas.Top="4.906" Width="25.094">
-                                            <Path.Fill>
-                                                <SolidColorBrush Color="White"/>
-                                            </Path.Fill>
-                                        </Path>
-                                        <Path Data="F1M23.1611,0.00489999999999924C26.7741,0.172899999999999,29.8271,3.2259,29.9951,6.8669C30.0511,8.3509,29.6311,9.6669,28.8471,10.7319L26.3541,13.2519L16.7761,3.6459L19.2681,1.1529C20.3331,0.368899999999999,21.6771,-0.0511000000000008,23.1611,0.00489999999999924" Height="13.252" Canvas.Left="16.776" Stretch="Fill" Canvas.Top="0" Width="13.224">
-                                            <Path.Fill>
-                                                <SolidColorBrush Color="White"/>
-                                            </Path.Fill>
-                                        </Path>
+                                        <Path Canvas.Top="0" Fill="White" Data="M17.027999,10.619 L5.2939987,22.354 7.645999,24.707001 19.380999,12.972 z M15.515999,4.906 L25.093999,14.512 9.5779991,30 0.19599915,29.831999 0,20.421999 z M22.884439,1.502485E-05 C22.976062,-0.00017658683 23.068266,0.0014640426 23.161016,0.0049641476 26.774025,0.17296452 29.827034,3.2259727 29.995033,6.8669828 30.051034,8.3509863 29.631032,9.6669901 28.84703,10.731994 L26.354023,13.252 16.775999,3.645974 19.268006,1.152967 C20.266445,0.41796521 21.5101,0.0028859236 22.884439,1.502485E-05 z" Height="30" Stretch="Fill" Width="30"/>
                                     </Canvas>
                                 </Canvas>
                             </Viewbox>
                         </Button>
-                        <Button Style="{DynamicResource ButtonStyle-001}" BorderThickness="1" Margin="5,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Foreground="White" Width="28" Padding="11,1" Cursor="Hand" ToolTip="Поиск номенклатуры или группы везде">
+                        <Button Style="{DynamicResource ButtonStyle-001}" BorderThickness="1" Margin="5,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Foreground="White" Width="30" Padding="11,1" Cursor="Hand" ToolTip="Поиск номенклатуры или группы везде">
                             <Button.Background>
-                                <SolidColorBrush Color="{DynamicResource Purpure-002}"/>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FF00A2DE" Offset="1"/>
+                                    <GradientStop Color="{DynamicResource Blue-001}"/>
+                                </LinearGradientBrush>
                             </Button.Background>
                             <Button.BorderBrush>
                                 <SolidColorBrush Color="{DynamicResource Light-005}"/>
@@ -371,9 +370,12 @@
                                 </Canvas>
                             </Viewbox>
                         </Button>
-                        <Button Style="{DynamicResource ButtonStyle-001}" BorderThickness="1,1,0,1" Margin="5,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Foreground="White" Width="28" Padding="10,1" Cursor="Hand" ToolTip="Вырезать">
+                        <Button Style="{DynamicResource ButtonStyle-001}" BorderThickness="1,1,0,1" Margin="5,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Foreground="White" Width="30" Padding="10,1" Cursor="Hand" ToolTip="Вырезать">
                             <Button.Background>
-                                <SolidColorBrush Color="{DynamicResource Purpure-002}"/>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FF00A2DE" Offset="1"/>
+                                    <GradientStop Color="{DynamicResource Blue-001}"/>
+                                </LinearGradientBrush>
                             </Button.Background>
                             <Button.BorderBrush>
                                 <SolidColorBrush Color="{DynamicResource Light-005}"/>
@@ -400,9 +402,12 @@
                                 </Canvas>
                             </Viewbox>
                         </Button>
-                        <Button Style="{DynamicResource ButtonStyle-001}" BorderThickness="1,1,0,1" Margin="5,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Foreground="White" Width="28" Padding="10,1" IsEnabled="False" Cursor="Hand" ToolTip="Вставить">
+                        <Button Style="{DynamicResource ButtonStyle-001}" BorderThickness="1,1,0,1" Margin="5,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Foreground="White" Width="30" Padding="10,1" IsEnabled="False" Cursor="Hand" ToolTip="Вставить">
                             <Button.Background>
-                                <SolidColorBrush Color="{DynamicResource Purpure-002}"/>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FF00A2DE" Offset="1"/>
+                                    <GradientStop Color="{DynamicResource Blue-001}"/>
+                                </LinearGradientBrush>
                             </Button.Background>
                             <Button.BorderBrush>
                                 <SolidColorBrush Color="{DynamicResource Light-005}"/>
@@ -429,9 +434,12 @@
                                 </Canvas>
                             </Viewbox>
                         </Button>
-                        <Button Style="{DynamicResource ButtonStyle-001}" BorderThickness="1" Margin="5,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Foreground="White" Width="28" Padding="11,1" IsEnabled="False" Cursor="Hand" ToolTip="Выбранные">
+                        <Button Style="{DynamicResource ButtonStyle-001}" BorderThickness="1" Margin="5,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Foreground="White" Width="30" Padding="11,1" IsEnabled="False" Cursor="Hand" ToolTip="Выбранные">
                             <Button.Background>
-                                <SolidColorBrush Color="{DynamicResource Purpure-002}"/>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FF00A2DE" Offset="1"/>
+                                    <GradientStop Color="{DynamicResource Blue-001}"/>
+                                </LinearGradientBrush>
                             </Button.Background>
                             <Button.BorderBrush>
                                 <SolidColorBrush Color="{DynamicResource Light-005}"/>
@@ -461,7 +469,7 @@
                     </StackPanel>
                     <Border Margin="0" Grid.Column="1">
                         <StackPanel Orientation="Horizontal">
-                            <Viewbox Margin="0,0,5,0">
+                            <Viewbox Margin="0,0,5,0" Height="25" Visibility="Collapsed">
                                 <Canvas HorizontalAlignment="Left" Height="50" UseLayoutRounding="False" VerticalAlignment="Top" Width="50">
                                     <Canvas x:Name="Слой_17" Height="46.615" Canvas.Left="0" Canvas.Top="1.693" Width="50">
                                         <Path Data="M45.5176,48.3076L4.4816,48.3076C4.3616,48.3076,4.2616,48.2276,4.2616,48.1076L0.00160000000000338,20.0906C-0.017399999999995,19.9506,0.101600000000005,19.8306,0.242600000000003,19.8306L49.7576,19.8306C49.9166,19.8306,50.0176,19.9506,49.9966,20.0906L45.7576,48.1076C45.7386,48.2276,45.6376,48.3076,45.5176,48.3076" Fill="#FFFFDA99" Height="28.477" Canvas.Left="0" Stretch="Fill" Canvas.Top="18.138" Width="50"/>
@@ -502,7 +510,7 @@
                 <Border.BorderBrush>
                     <SolidColorBrush Color="{DynamicResource Light-003}"/>
                 </Border.BorderBrush>
-                <DataGrid x:Name="DataGridNomenclatures" CanUserReorderColumns="False" IsSynchronizedWithCurrentItem = "true" VerticalScrollBarVisibility="Auto"  Style="{DynamicResource NomenDG}" BorderThickness="0"  AutoGenerateColumns="False"  CanUserAddRows="False" Loaded="DataGridNomenclatures_Loaded" PreviewKeyDown="DataGridNomenclatures_PreviewKeyDown" Background="{x:Null}" Margin="10,0,10,10" PreviewTextInput="DataGridNomenclatures_PreviewTextInput" MouseLeftButtonDown="DataGridNomenclatures_MouseLeftButtonDown">
+                <DataGrid x:Name="DataGridNomenclatures" VerticalScrollBarVisibility="Visible" CanUserReorderColumns="False" IsSynchronizedWithCurrentItem = "true"  Style="{DynamicResource NomenDG}" BorderThickness="0"  AutoGenerateColumns="False"  CanUserAddRows="False" Loaded="DataGridNomenclatures_Loaded" PreviewKeyDown="DataGridNomenclatures_PreviewKeyDown" Background="{x:Null}" Margin="10,5,0,10" PreviewTextInput="DataGridNomenclatures_PreviewTextInput" MouseLeftButtonDown="DataGridNomenclatures_MouseLeftButtonDown">
                     <DataGrid.BorderBrush>
                         <SolidColorBrush Color="{DynamicResource Light-005}"/>
                     </DataGrid.BorderBrush>
@@ -547,7 +555,7 @@
 
 
                         <!--Столбец Иконка-->
-                        <DataGridTemplateColumn Width="auto" IsReadOnly="True" CanUserResize="False">
+                        <DataGridTemplateColumn Width="30" IsReadOnly="True" CanUserResize="False">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="0,0,4,0">

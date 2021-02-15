@@ -80,6 +80,9 @@
     <Compile Include="Controls\CreateNomenclature.xaml.cs">
       <DependentUpon>CreateNomenclature.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\CreateNomenclatureGroup.xaml.cs">
+      <DependentUpon>CreateNomenclatureGroup.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\LinqButton.xaml.cs">
       <DependentUpon>LinqButton.xaml</DependentUpon>
     </Compile>
@@ -134,6 +137,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\CreateNomenclature.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\CreateNomenclatureGroup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
