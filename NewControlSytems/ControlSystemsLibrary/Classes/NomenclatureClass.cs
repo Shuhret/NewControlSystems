@@ -260,6 +260,25 @@ namespace ControlSystemsLibrary.Classes
         }
 
 
+        private bool mainCutElement = false;
+        public bool MainCutElement
+        {
+            get => mainCutElement;
+            set
+            {
+                mainCutElement = value;
+                OnPropertyChanged();
+                if(value == true)
+                {
+                    CutIconOpacity = 1;
+                }
+                else
+                {
+                    CutIconOpacity = 0.5;
+                }
+            }
+        }
+
         // Вырезано
         private bool cutOut = false;
         public bool CutOut
@@ -276,7 +295,6 @@ namespace ControlSystemsLibrary.Classes
             }
         }
 
-
         // Видимость вырезано
         private Visibility cutIconVisibility = Visibility.Collapsed;
         public Visibility CutIconVisibility
@@ -289,6 +307,17 @@ namespace ControlSystemsLibrary.Classes
             }
         }
 
+
+        private double cutIconOpacity = 0.5;
+        public double CutIconOpacity
+        {
+            get => cutIconOpacity;
+            set
+            {
+                cutIconOpacity = value;
+                OnPropertyChanged();
+            }
+        }
 
 
         void SetIcons()

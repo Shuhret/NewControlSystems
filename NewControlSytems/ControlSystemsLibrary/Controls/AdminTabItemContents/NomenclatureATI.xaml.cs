@@ -338,6 +338,36 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
                 SearchedText = "";
                 e.Handled = true;
             }
+            // Ctrl + Down ↓
+            if (e.Key == Key.Down && e.KeyboardDevice.Modifiers == ModifierKeys.Control)
+            {
+                SelectedItem = null;
+                if (DataGridNomenclatures.SelectedItem != null)
+                {
+                    NomenclatureClass NC = DataGridNomenclatures.SelectedItem as NomenclatureClass;
+                    if (NC.GroupNomen == false)
+                    {
+                        CurrentGroupID = NC.ID;
+                    }
+                }
+                SearchedText = "";
+                e.Handled = true;
+            }
+            // Ctrl + Up ↑
+            if (e.Key == Key.Up && e.KeyboardDevice.Modifiers == ModifierKeys.Control)
+            {
+                foreach (NomenclatureClass NC in AllNomenclaturesCollection)
+                {
+                    if (NC.ID == CurrentGroupID)
+                    {
+                        SelectedItem = NC;
+                        CurrentGroupID = NC.GroupID;
+                        break;
+                    }
+                }
+                SearchedText = "";
+                e.Handled = true;
+            }
 
 
         }
@@ -545,7 +575,7 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
             if (ID == new Guid("00000000-0000-0000-0000-000000000000"))
                 LB.Foreground = GetColor.Get("Blue-004");
             else
-                LB.Foreground = GetColor.Get("Dark-001");
+                LB.Foreground = GetColor.Get("Dark-002");
             LB.Content = ContentText;
             LB.ID = ID;
             LB.Click += LinqButton_Click;
@@ -651,5 +681,149 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
         {
             SearchedText = "";
         }
+
+
+
+
+
+
+        private void CutButtonClick(object sender, RoutedEventArgs e)
+        {
+            CutSelectedItems();
+        }
+
+        private void CutSelectedItems()
+        {
+            foreach(NomenclatureClass NC in DataGridNomenclatures.SelectedItems)
+            {
+                if (NC.CutOut == false)
+                {
+                    NC.CutOut = true;
+
+                    foreach (NomenclatureClass NCList in AllNomenclaturesCollection)
+                    {
+                        if (NC.ID == NCList.ID)
+                        {
+                            NCList.CutOut = true;
+                        }
+                    }
+                    if (NC.GroupNomen == false) // Если это группа
+                    {
+                        if (CheckChildrenExist(NC) == true)
+                        {
+                            CutSelectedItemsChildren(NC);
+                            SetMainCutElement();
+                        }
+                        else
+                        {
+                            NC.MainCutElement = true;
+                        }
+                    }
+                    else
+                    {
+                        NC.MainCutElement = true;
+                    }
+                }
+                else if(NC.MainCutElement == true)
+                {
+                    NC.CutOut = false;
+                    if(CheckChildrenExist(NC) == true)
+                    {
+                        CancelCutChildren(NC);
+                    }
+                }
+            }
+        }
+
+
+        private void CancelCutChildren(NomenclatureClass item)
+        {
+            foreach (NomenclatureClass NCList in AllNomenclaturesCollection)
+            {
+                if(NCList.GroupID == item.ID)
+                {
+                    NCList.CutOut = false;
+                    NCList.MainCutElement = false;
+                    if(NCList.GroupNomen == false)
+                    {
+                        CancelCutChildren(NCList);
+                    }
+                }
+            }
+        }
+
+
+        private bool CheckChildrenExist(NomenclatureClass item)
+        {
+            bool flag = false;
+            foreach (NomenclatureClass NCList in AllNomenclaturesCollection)
+            {
+                if(NCList.GroupID == item.ID)
+                {
+                    NCList.MainCutElement = false;
+                    flag =  true;
+                }
+            }
+            return flag;
+        }
+
+        private void CutSelectedItemsChildren(NomenclatureClass item)
+        {
+            foreach (NomenclatureClass NCList in AllNomenclaturesCollection)
+            {
+                if(NCList.GroupID == item.ID)
+                {
+                    NCList.CutOut = true;
+                    if(NCList.GroupNomen == false)
+                    {
+                        CutSelectedItemsChildren(NCList);
+                    }
+                }
+            }
+        }
+
+        private void SetMainCutElement()
+        {
+            foreach (NomenclatureClass NCList in AllNomenclaturesCollection)
+            {
+                if(NCList.CutOut == true)
+                {
+                    SetMainCutElementParrent(NCList);
+                }
+            }
+        }
+
+        private void SetMainCutElementParrent(NomenclatureClass item)
+        {
+            foreach (NomenclatureClass NCList in AllNomenclaturesCollection)
+            {
+                if(NCList.ID == item.GroupID) // Если это родительская группа
+                {
+                    
+                    if(CheckCutElementParrent(NCList) == true)
+                    {
+                        SetMainCutElementParrent(NCList);
+                    }
+                    else
+                    {
+                        NCList.MainCutElement = true;
+                    }
+                }
+            }
+        }
+
+        private bool CheckCutElementParrent(NomenclatureClass item)
+        {
+            foreach (NomenclatureClass NCList in AllNomenclaturesCollection)
+            {
+                if(NCList.ID == item.GroupID && NCList.ID != new Guid("00000000-0000-0000-0000-000000000000") && NCList.CutOut == true)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        
     }
 }

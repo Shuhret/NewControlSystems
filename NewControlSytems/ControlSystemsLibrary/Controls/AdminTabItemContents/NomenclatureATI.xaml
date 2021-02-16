@@ -370,7 +370,7 @@
                                 </Canvas>
                             </Viewbox>
                         </Button>
-                        <Button Style="{DynamicResource ButtonStyle-001}" BorderThickness="1,1,0,1" Margin="5,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Foreground="White" Width="30" Padding="10,1" Cursor="Hand" ToolTip="Вырезать">
+                        <Button x:Name="CutButton" Style="{DynamicResource ButtonStyle-001}" BorderThickness="1,1,0,1" Margin="5,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Foreground="White" Width="30" Padding="10,1" Cursor="Hand" ToolTip="Вырезать" Click="CutButtonClick">
                             <Button.Background>
                                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                     <GradientStop Color="#FF00A2DE" Offset="1"/>
@@ -560,7 +560,7 @@
                                 <DataTemplate>
                                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="0,0,4,0">
                                         <ContentControl Margin="0,0,0,0" Content="{Binding Icon}" Width="16" Height="16"/>
-                                        <Rectangle Height="2" VerticalAlignment="Bottom" Visibility="{Binding CutIconVisibility}" Margin="0,2,0,0">
+                                        <Rectangle Height="2" VerticalAlignment="Bottom" Visibility="{Binding CutIconVisibility}" Opacity="{Binding CutIconOpacity}" Margin="0,2,0,0">
                                             <Rectangle.Fill>
                                                 <SolidColorBrush Color="{DynamicResource Red-001}"/>
                                             </Rectangle.Fill>
