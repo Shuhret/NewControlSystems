@@ -337,7 +337,11 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
                 }
                 e.Handled = true;
             }
-
+            if(e.Key == Key.Space && e.KeyboardDevice.Modifiers == ModifierKeys.Control)
+            {
+                SelectToSpace();
+                e.Handled = true;
+            }
         }
 
         private void Nom_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -428,6 +432,7 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
             }
             SearchedText = "";
             SelectDataGridRow();
+            CheckedMainCheckBox();
         }
 
         void LoadAllNomenclatures(NomenclatureClass CreatedNomenclature)
@@ -712,8 +717,8 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
 
         private void CutButtonClick(object sender, RoutedEventArgs e)
         {
+            ClearSelected();
             CutSelectedItems();
-           
         }
 
         private void CutSelectedItems()
@@ -967,6 +972,9 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
         }
 
 
+
+
+
         // Событие: Клик на Теги (Акция, Фокус и Новинка) ------------------------------------------------------------------------------------
         private void UpdateTagsClick(object sender, RoutedEventArgs e)
         {
@@ -1000,6 +1008,278 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
                 }
             }
             return flag;
+        }
+
+
+
+
+
+
+
+
+        private int selectedElementsCount = 0;
+        public int SelectedElementsCount
+        {
+            get => selectedElementsCount;
+            set
+            {
+                selectedElementsCount = value;
+                OnPropertyChanged();
+                if(value > 0)
+                {
+                    SelectedVisibility = Visibility.Visible;
+                }
+                else
+                {
+                    SelectedVisibility = Visibility.Collapsed;
+                }
+            }
+        }
+
+        private Visibility selectedVisibility = Visibility.Collapsed;
+        public Visibility SelectedVisibility
+        {
+            get => selectedVisibility;
+            set
+            {
+                selectedVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool UpdateSelected = true;
+
+        private void Select(object sender, RoutedEventArgs e)
+        {
+            if (UpdateSelected == true)
+            {
+                ClearCutList();
+                CheckBox checkbox = sender as CheckBox;
+                CheckedSelected(checkbox);
+                SetSelectedElementsCount();
+            }
+        }
+
+        private void SelectToSpace()
+        {
+            if (DataGridNomenclatures.SelectedItem != null)
+            {
+                NomenclatureClass NC = DataGridNomenclatures.SelectedItem as NomenclatureClass;
+                if (NC.Selected == true || NC.Selected == null)
+                {
+                    NC.Selected = false;
+                }
+                else
+                {
+                    NC.Selected = true;
+                }
+            }
+        }
+
+        private void CheckedSelected(CheckBox checkbox)
+        {
+            if (UpdateSelected == true)
+            {
+                if (checkbox.Name == "MainSelectorCheckBox")
+                {
+                    CheckedAllDataGridItems(checkbox.IsChecked);
+                }
+                else
+                {
+                    NomenclatureClass NC = checkbox.DataContext as NomenclatureClass;
+                    NC.Selected = checkbox.IsChecked;
+                    CheckedChildren(NC);
+                    CheckedParent(NC);
+                    CheckedMainCheckBox();
+                }
+            }
+            
+        }
+
+        private void CheckedAllDataGridItems(bool? Checked)
+        {
+            foreach(NomenclatureClass DGItems in DataGridNomenclatures.Items)
+            {
+                foreach(NomenclatureClass NC in AllNomenclaturesCollection)
+                {
+                    if(DGItems.ID == NC.ID)
+                    {
+                        DGItems.Selected = Checked;
+                        NC.Selected = Checked;
+                        if(NC.GroupNomen == false && (Checked == true || Checked == false))
+                        {
+                            CheckedChildren(NC);
+                        }
+                    }
+                }
+            }
+        }
+
+        private void CheckedChildren(NomenclatureClass Group)
+        {
+            foreach (NomenclatureClass NC in AllNomenclaturesCollection)
+            {
+                if(NC.GroupID == Group.ID)
+                {
+                    NC.Selected = Group.Selected;
+                    if(NC.GroupNomen == false)
+                    {
+                        CheckedChildren(NC);
+                    }
+                }
+            }
+        }
+
+        private void CheckedParent(NomenclatureClass Item)
+        {
+            UpdateSelected = false;
+            if (Item.GroupID != new Guid("00000000-0000-0000-0000-000000000000"))
+            {
+                foreach (NomenclatureClass NC in AllNomenclaturesCollection)
+                {
+                    if(NC.ID == Item.GroupID)
+                    {
+                        if(GetChildrenCount(NC) == GetSelectedChildrenCount(NC))
+                        {
+                            NC.Selected = true;
+                        }
+                        if (GetChildrenCount(NC) > GetSelectedChildrenCount(NC))
+                        {
+                            NC.Selected = null;
+                        }
+                        if (GetSelectedChildrenCount(NC) == 0)
+                        {
+                            NC.Selected = false;
+                        }
+                        if(GetSelectedNullChildrenCount(NC) > 0)
+                        {
+                            NC.Selected = null;
+                        }
+                        if(NC.GroupID != new Guid("00000000-0000-0000-0000-000000000000"))
+                        {
+                            CheckedParent(NC);
+                        }
+
+                    }
+                }
+            }
+            UpdateSelected = true;
+        }
+
+        private void CheckedMainCheckBox()
+        {
+            UpdateSelected = false;
+            if (DataGridNomenclatures.Items.Count == GetSelectedDataGridItemsCount())
+            {
+                MainSelectorCheckBox.IsChecked = true;
+            }
+            if (DataGridNomenclatures.Items.Count > GetSelectedDataGridItemsCount())
+            {
+                MainSelectorCheckBox.IsChecked = null;
+            }
+            if (DataGridNomenclatures.Items.Count == 0)
+            {
+                MainSelectorCheckBox.IsChecked = false;
+            }
+            if (GetSelectedDataGridItemsCount() == 0)
+            {
+                MainSelectorCheckBox.IsChecked = false;
+            }
+            if(GetSelectedNullDataGridItemsCount() > 0)
+            {
+                MainSelectorCheckBox.IsChecked = null;
+            }
+            UpdateSelected = true;
+        }
+
+
+        private int GetSelectedChildrenCount(NomenclatureClass Group)
+        {
+            int count = 0;
+            foreach (NomenclatureClass NC in AllNomenclaturesCollection)
+            {
+                if(NC.GroupID == Group.ID && NC.Selected == true)
+                {
+                    count++;
+                }
+            }
+            return count;
+        }
+        private int GetChildrenCount(NomenclatureClass Group)
+        {
+            int count = 0;
+            foreach (NomenclatureClass NC in AllNomenclaturesCollection)
+            {
+                if (NC.GroupID == Group.ID)
+                {
+                    count++;
+                }
+            }
+            return count;
+        }
+        private int GetSelectedNullChildrenCount(NomenclatureClass Group)
+        {
+            int count = 0;
+            foreach (NomenclatureClass NC in AllNomenclaturesCollection)
+            {
+                if (NC.GroupID == Group.ID && NC.Selected == null)
+                {
+                    count++;
+                }
+            }
+            return count;
+        }
+
+
+        private int GetSelectedDataGridItemsCount()
+        {
+            int count = 0;
+            foreach (NomenclatureClass DGItems in DataGridNomenclatures.Items)
+            {
+                if(DGItems.Selected == true)
+                {
+                    count++;
+                }
+            }
+            return count;
+        }
+        private int GetSelectedNullDataGridItemsCount()
+        {
+            int count = 0;
+            foreach (NomenclatureClass DGItems in DataGridNomenclatures.Items)
+            {
+                if (DGItems.Selected == null)
+                {
+                    count++;
+                }
+            }
+            return count;
+        }
+
+        private void SetSelectedElementsCount()
+        {
+            SelectedElementsCount = 0;
+            foreach (NomenclatureClass NC in AllNomenclaturesCollection)
+            {
+                if (NC.Selected == true && NC.GroupNomen == true)
+                {
+                    SelectedElementsCount++;
+                }
+            }
+        }
+        private void ClearSelected()
+        {
+            MainSelectorCheckBox.IsChecked = false;
+            foreach (NomenclatureClass NC in AllNomenclaturesCollection)
+            {
+                NC.Selected = false;
+            }
+            SelectedElementsCount = 0;
+        }
+
+        private void CheckBoxClick(object sender, RoutedEventArgs e)
+        {
+            e.Handled = false;
         }
     }
 }

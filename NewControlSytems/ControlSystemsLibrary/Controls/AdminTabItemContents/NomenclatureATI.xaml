@@ -276,7 +276,7 @@
                         <ColumnDefinition Width="120"/>
                     </Grid.ColumnDefinitions>
                     <StackPanel Orientation="Horizontal" Height="25">
-                        
+
                         <Button Style="{DynamicResource ButtonStyle-001}" BorderThickness="0,1" Click="CreateNomenclatureButtonClick" Foreground="White" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Padding="11,1" Cursor="Hand" ToolTip="Создать новую номенклатуру" Width="30">
                             <Button.Background>
                                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -374,7 +374,6 @@
                         <Button x:Name="CutButton" Style="{DynamicResource ButtonStyle-001}" BorderThickness="1,1,0,1" Margin="5,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Foreground="White" MinWidth="30" Width="auto" Padding="10,1" Cursor="Hand" ToolTip="Вырезать" Click="CutButtonClick">
                             <Button.ContextMenu >
                                 <ContextMenu>
-                                    <MenuItem Header="Открыть список вырезанных" />
                                     <MenuItem Header="Очистить список вырезанных" Click="ClearCutList_Click"/>
                                 </ContextMenu>
                             </Button.ContextMenu>
@@ -395,14 +394,14 @@
                                         </Canvas>
                                     </Canvas>
                                 </Viewbox>
-                                <TextBlock Text="{Binding CutElementsCout, UpdateSourceTrigger=PropertyChanged, ElementName=Nom}" Visibility="{Binding CutElementsCoutVisibility, ElementName=Nom, UpdateSourceTrigger=PropertyChanged}" Margin="2,0,1,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" Foreground="White"/>
+                                <TextBlock Text="{Binding CutElementsCout, UpdateSourceTrigger=PropertyChanged, ElementName=Nom}" Visibility="{Binding CutElementsCoutVisibility, ElementName=Nom, UpdateSourceTrigger=PropertyChanged}" Margin="2,0,1,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Foreground="White"/>
                             </StackPanel>
                         </Button>
                         <Button x:Name="PasteButton" Visibility="{Binding CutElementsCoutVisibility, ElementName=Nom, UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource ButtonStyle-001}" BorderThickness="1,1,0,1" Margin="5,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Foreground="White" Width="30" Padding="10,1" Cursor="Hand" ToolTip="Вставить" Click="PasteButtonClick">
                             <Button.Background>
                                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                    <GradientStop Color="#FF00A2DE" Offset="1"/>
-                                    <GradientStop Color="{DynamicResource Blue-001}"/>
+                                    <GradientStop Color="#FFEE6C75" Offset="1"/>
+                                    <GradientStop Color="{DynamicResource Red-001}"/>
                                 </LinearGradientBrush>
                             </Button.Background>
                             <Button.BorderBrush>
@@ -430,32 +429,27 @@
                                 </Canvas>
                             </Viewbox>
                         </Button>
-                        <Button Style="{DynamicResource ButtonStyle-001}" BorderThickness="1" Margin="5,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Foreground="White" Width="30" Padding="11,1" IsEnabled="False" Cursor="Hand" ToolTip="Выбранные">
+                        <Button Style="{DynamicResource ButtonStyle-001}" Visibility="{Binding SelectedVisibility, ElementName=Nom, UpdateSourceTrigger=PropertyChanged}" BorderThickness="1" Margin="5,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Foreground="White" Width="30" Padding="11,1" Cursor="Hand" ToolTip="Выбранные">
                             <Button.Background>
                                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                    <GradientStop Color="#FF00A2DE" Offset="1"/>
-                                    <GradientStop Color="{DynamicResource Blue-001}"/>
+                                    <GradientStop Color="#FFA0BD63" Offset="1"/>
+                                    <GradientStop Color="{DynamicResource Green-001}"/>
                                 </LinearGradientBrush>
                             </Button.Background>
                             <Button.BorderBrush>
                                 <SolidColorBrush Color="{DynamicResource Light-005}"/>
                             </Button.BorderBrush>
-                            <Viewbox Width="13">
-                                <Canvas HorizontalAlignment="Left" Height="70" UseLayoutRounding="False" VerticalAlignment="Top" Width="70">
-                                    <Canvas Height="70" Canvas.Left="7.713" Canvas.Top="0" Width="54.58">
-                                        <Path Data="F1M60.4209,1.9419C57.8319,-0.647099999999996,53.6709,-0.647099999999996,51.1739,1.9419L28.0569,24.9669L18.9019,15.7199C16.3129,13.2229,12.1519,13.2229,9.6549,15.7199C7.06590000000001,18.3089,7.06590000000001,22.4699,9.6549,24.9669L23.4329,38.8379C26.0229,41.3339,30.1839,41.3339,32.6799,38.8379L60.4209,11.1889C62.9179,8.59990000000001,62.9179,4.4389,60.4209,1.9419" Height="40.71" Canvas.Left="0" Stretch="Fill" Canvas.Top="0" Width="54.58">
-                                            <Path.Fill>
-                                                <SolidColorBrush Color="White"/>
-                                            </Path.Fill>
-                                        </Path>
-                                        <Path Data="F1M60.4209,31.1626C57.8319,28.6656,53.6709,28.6656,51.1739,31.1626L28.0569,54.2806L18.9019,45.0336C16.3129,42.4446,12.1519,42.4446,9.6549,45.0336C7.06590000000001,47.5296,7.06590000000001,51.6906,9.6549,54.2806L23.4329,68.0586C26.0229,70.6476,30.1839,70.6476,32.6799,68.0586L60.4209,40.4096C62.9179,37.8206,62.9179,33.7516,60.4209,31.1626" Height="40.711" Canvas.Left="0" Stretch="Fill" Canvas.Top="29.29" Width="54.58">
-                                            <Path.Fill>
-                                                <SolidColorBrush Color="White"/>
-                                            </Path.Fill>
-                                        </Path>
+                            <StackPanel Orientation="Horizontal">
+                                <Viewbox Width="13">
+                                    <Canvas HorizontalAlignment="Left" Height="70" UseLayoutRounding="False" VerticalAlignment="Top" Width="70">
+                                        <Canvas Height="70" Canvas.Left="7.713" Canvas.Top="0" Width="54.58">
+                                            <Path Data="F1M60.4209,1.9419C57.8319,-0.647099999999996,53.6709,-0.647099999999996,51.1739,1.9419L28.0569,24.9669L18.9019,15.7199C16.3129,13.2229,12.1519,13.2229,9.6549,15.7199C7.06590000000001,18.3089,7.06590000000001,22.4699,9.6549,24.9669L23.4329,38.8379C26.0229,41.3339,30.1839,41.3339,32.6799,38.8379L60.4209,11.1889C62.9179,8.59990000000001,62.9179,4.4389,60.4209,1.9419" Height="40.71" Canvas.Left="0" Stretch="Fill" Canvas.Top="0" Width="54.58" Fill="White"/>
+                                            <Path Data="F1M60.4209,31.1626C57.8319,28.6656,53.6709,28.6656,51.1739,31.1626L28.0569,54.2806L18.9019,45.0336C16.3129,42.4446,12.1519,42.4446,9.6549,45.0336C7.06590000000001,47.5296,7.06590000000001,51.6906,9.6549,54.2806L23.4329,68.0586C26.0229,70.6476,30.1839,70.6476,32.6799,68.0586L60.4209,40.4096C62.9179,37.8206,62.9179,33.7516,60.4209,31.1626" Height="40.711" Canvas.Left="0" Stretch="Fill" Canvas.Top="29.29" Width="54.58" Fill="White"/>
+                                        </Canvas>
                                     </Canvas>
-                                </Canvas>
-                            </Viewbox>
+                                </Viewbox>
+                                <TextBlock Text="{Binding SelectedElementsCount, UpdateSourceTrigger=PropertyChanged, ElementName=Nom}" Margin="3,0,2,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Foreground="White"/>
+                            </StackPanel>
                         </Button>
                         <Rectangle Width="1" Margin="10,3" RadiusY="0.5" RadiusX="0.5">
                             <Rectangle.Fill>
@@ -518,7 +512,7 @@
                         <DataGridTemplateColumn Width="40"  MinWidth="40" CanUserResize="False">
 
                             <DataGridTemplateColumn.Header>
-                                <CheckBox x:Name="MainSelectorCheckBox" Style="{DynamicResource NoTextCircleCheckBoxStyle}" BorderThickness="1" Width="17" Height="17" Cursor="Hand" Margin="5,0,0,0" >
+                                <CheckBox x:Name="MainSelectorCheckBox" Click="CheckBoxClick" Checked="Select" Unchecked="Select" Style="{DynamicResource NoTextCircleCheckBoxStyle}" BorderThickness="1" Width="17" Height="17" Cursor="Hand" Margin="5,0,0,0" >
                                     <CheckBox.Background>
                                         <SolidColorBrush Color="{DynamicResource Blue-004}"/>
                                     </CheckBox.Background>
@@ -533,7 +527,7 @@
 
                             <DataGridTemplateColumn.CellTemplate >
                                 <DataTemplate >
-                                    <CheckBox IsChecked="{Binding Selected, UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource NoTextCircleCheckBoxStyle}" BorderThickness="1" Width="15" Height="15" Cursor="Hand">
+                                    <CheckBox IsChecked="{Binding Selected, UpdateSourceTrigger=PropertyChanged}" Click="CheckBoxClick" Checked="Select" Unchecked="Select" Style="{DynamicResource NoTextCircleCheckBoxStyle}" BorderThickness="1" Width="15" Height="15" Cursor="Hand">
                                         <CheckBox.Background>
                                             <SolidColorBrush Color="{DynamicResource Blue-004}"/>
                                         </CheckBox.Background>
