@@ -81,7 +81,7 @@
                                 <Rectangle x:Name="rectangle" Fill="White" Opacity="0" RadiusY="1.062" RadiusX="1.062" Margin="0"/>
                                 <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                                 <Rectangle x:Name="rectangle_Copy" Fill="White" Opacity="0" RadiusY="1.062" RadiusX="1.062" Margin="0"/>
-                                <Rectangle x:Name="rectangle_Copy1" Fill="{x:Null}" Opacity="1" RadiusY="0.042" RadiusX="0.042" Margin="1" Stroke="White" Visibility="Hidden"/>
+                                <Rectangle x:Name="rectangle_Copy1" Opacity="0.1" Fill="{x:Null}" RadiusY="0.042" RadiusX="0.042" Margin="1" Stroke="White" Visibility="Hidden"/>
                             </Grid>
                         </Border>
                     </Grid>

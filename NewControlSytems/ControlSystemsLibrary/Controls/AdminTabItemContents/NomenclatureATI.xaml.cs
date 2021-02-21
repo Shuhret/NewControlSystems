@@ -46,7 +46,7 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
             InitializeComponent();
         }
 
-       
+
 
         #region Заполнение таблицы и навигация ===============================================================================================
 
@@ -322,6 +322,19 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
             if (e.Key == Key.N && e.KeyboardDevice.Modifiers == ModifierKeys.Control)
             {
                 CreateNomenclatureButtonClick(null, null);
+                e.Handled = true;
+            }
+            if (e.Key == Key.X && e.KeyboardDevice.Modifiers == ModifierKeys.Control)
+            {
+                CutSelectedItems();
+                e.Handled = true;
+            }
+            if(e.Key == Key.V && e.KeyboardDevice.Modifiers == ModifierKeys.Control)
+            {
+                if (CutElementsCoutVisibility == Visibility.Visible)
+                {
+                    Paste();
+                }
                 e.Handled = true;
             }
 
@@ -601,6 +614,7 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
             }
         }
 
+
         private UserControl createNemenclatureUC = null;
         public UserControl CreateNemenclatureUC
         {
@@ -623,8 +637,13 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
             }
         }
 
+
         private void CreateNomenclatureButtonClick(object sender, RoutedEventArgs e)
         {
+            if(DataGridNomenclatures.SelectedItem != null)
+            {
+                SelectedItem = DataGridNomenclatures.SelectedItem as NomenclatureClass;
+            }
             CloseCreateNomenclatureDelegate CCND = CloseCreateNomenclature;
             ShowCreatedNomenclatureDelegate SCND = AddCreatedNomenclatureToCollection;
             CreateNemenclatureUC = new CreateNomenclature(CurrentCryptConnectionString, true, CCND, SCND, CurrentGroupID);
@@ -672,6 +691,10 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
 
         private void CreateNomenclatureGroupButton_Click(object sender, RoutedEventArgs e)
         {
+            if (DataGridNomenclatures.SelectedItem != null)
+            {
+                SelectedItem = DataGridNomenclatures.SelectedItem as NomenclatureClass;
+            }
             CloseCreateNomenclatureGroupDelegate CCNGD = CloseCreateNomenclature;
             ShowCreatedNomenclatureGroupDelegate SCNGD = AddCreatedNomenclatureToCollection;
             CreateNemenclatureUC = new CreateNomenclatureGroup(CurrentCryptConnectionString, true, CCNGD, SCNGD, CurrentGroupID);
@@ -690,6 +713,7 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
         private void CutButtonClick(object sender, RoutedEventArgs e)
         {
             CutSelectedItems();
+           
         }
 
         private void CutSelectedItems()
@@ -699,7 +723,6 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
                 if (NC.CutOut == false)
                 {
                     NC.CutOut = true;
-
                     foreach (NomenclatureClass NCList in AllNomenclaturesCollection)
                     {
                         if (NC.ID == NCList.ID)
@@ -733,8 +756,8 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
                     }
                 }
             }
+            CheckCutElementsCout();
         }
-
 
         private void CancelCutChildren(NomenclatureClass item)
         {
@@ -751,7 +774,6 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
                 }
             }
         }
-
 
         private bool CheckChildrenExist(NomenclatureClass item)
         {
@@ -799,12 +821,11 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
             {
                 if(NCList.ID == item.GroupID) // Если это родительская группа
                 {
-                    
-                    if(CheckCutElementParrent(NCList) == true)
+                    if (CheckCutElementParrent(NCList) == true)
                     {
                         SetMainCutElementParrent(NCList);
                     }
-                    else
+                    else if (NCList.CutOut == true)
                     {
                         NCList.MainCutElement = true;
                     }
@@ -824,6 +845,161 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
             return false;
         }
 
-        
+        private int cutElementsCout = 0;
+        public int CutElementsCout
+        {
+            get => cutElementsCout;
+            set
+            {
+                cutElementsCout = value;
+                OnPropertyChanged();
+                if(value > 0)
+                {
+                    CutElementsCoutVisibility = Visibility.Visible;
+                }
+                else
+                {
+                    CutElementsCoutVisibility = Visibility.Collapsed;
+                }
+            }
+        }
+
+        private Visibility cutElementsCoutVisibility = Visibility.Collapsed;
+        public Visibility CutElementsCoutVisibility
+        {
+            get => cutElementsCoutVisibility;
+            set
+            {
+                cutElementsCoutVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private void CheckCutElementsCout()
+        {
+            int count = 0;
+            foreach(NomenclatureClass NC in AllNomenclaturesCollection)
+            {
+                if(NC.CutOut == true)
+                {
+                    count++;
+                }
+            }
+            CutElementsCout = count;
+        }
+
+        private void ClearCutList_Click(object sender, RoutedEventArgs e)
+        {
+            ClearCutList();
+        }
+
+        private void ClearCutList()
+        {
+            foreach (NomenclatureClass NC in AllNomenclaturesCollection)
+            {
+                NC.CutOut = false;
+                NC.MainCutElement = false;
+            }
+            CheckCutElementsCout();
+        }
+
+        private void PasteButtonClick(object sender, RoutedEventArgs e)
+        {
+            Paste();
+        }
+
+        private void Paste()
+        {
+            bool flag = false;
+            if (CheckCuttingCurrentGroup() == true)
+            {
+                foreach (NomenclatureClass NC in AllNomenclaturesCollection)
+                {
+                    if (NC.MainCutElement == true)
+                    {
+                        if (ChangeNomenclatureGroupIDIntoDataBase(NC) == true)
+                        {
+                            NC.GroupID = CurrentGroupID;
+                            NC.CutOut = false;
+                            NC.MainCutElement = false;
+                            SelectedItem = NC;
+                            flag = true;
+                        }
+                        else
+                        {
+                            flag = false;
+                        }
+                    }
+                }
+                if (flag == true)
+                {
+                    LoadShowNomenclatures();
+                    ClearCutList();
+                }
+            }
+        }
+
+        private bool CheckCuttingCurrentGroup()
+        {
+            foreach (NomenclatureClass NC in AllNomenclaturesCollection)
+            {
+                if(NC.ID == CurrentGroupID)
+                {
+                    if(NC.CutOut == true)
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        private bool ChangeNomenclatureGroupIDIntoDataBase(NomenclatureClass PasteElement)
+        {
+            if (PasteElement.GroupID != CurrentGroupID)
+            {
+                return DataBaseRequest.ChangeNomenclatureGroupID(CurrentCryptConnectionString, PasteElement.ID, CurrentGroupID);
+            }
+            else
+            {
+                return true; 
+            }
+        }
+
+
+        // Событие: Клик на Теги (Акция, Фокус и Новинка) ------------------------------------------------------------------------------------
+        private void UpdateTagsClick(object sender, RoutedEventArgs e)
+        {
+            UpdateTagsIntoDataBase(sender);
+        }
+
+        private bool UpdateTagsIntoDataBase(object sender)
+        {
+            bool flag = false;
+            if (sender is CheckBox)
+            {
+                CheckBox ch = sender as CheckBox;
+                NomenclatureClass item = ch.DataContext as NomenclatureClass;
+                switch (ch.Name)
+                {
+                    case "TagAksia":
+                        {
+                            flag =  DataBaseRequest.UpdateTagAksia(CurrentCryptConnectionString, item);
+                            break;
+                        }
+                    case "TagFocus":
+                        {
+                            flag = DataBaseRequest.UpdateTagFocus(CurrentCryptConnectionString, item);
+                            break;
+                        }
+                    case "TagNew":
+                        {
+                            flag = DataBaseRequest.UpdateTagNew(CurrentCryptConnectionString, item);
+                            break;
+                        }
+                }
+            }
+            return flag;
+        }
     }
 }

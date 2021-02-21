@@ -718,90 +718,36 @@ namespace ControlSystemsLibrary.Services
 
 
         //---Метод: Вырезать/Вставить (ХП)---------------------------------------------------------------------
-        //public static bool UpdateGroupID(string Connectionstring, Guid ID, Guid GroupID)
-        //{
-        //    bool ok = false;
-        //    using (SqlConnection connect = new SqlConnection(Cryption.Decrypt(Connectionstring)))
-        //    {
-        //        try
-        //        {
-        //            connect.Open();
-        //            SqlCommand command = new SqlCommand("UpdateGroupID", connect);
-        //            command.CommandType = CommandType.StoredProcedure;
+        public static bool ChangeNomenclatureGroupID(string Connectionstring, Guid ID, Guid NewGroupID)
+        {
+            bool ok = false;
+            using (SqlConnection connect = new SqlConnection(Cryption.Decrypt(Connectionstring)))
+            {
+                try
+                {
+                    connect.Open();
+                    SqlCommand command = new SqlCommand("ChangeNomenclatureGroupID", connect);
+                    command.CommandType = CommandType.StoredProcedure;
 
-        //            SqlParameter Param0 = new SqlParameter { ParameterName = "@ID", Value = ID };
-        //            command.Parameters.Add(Param0);
-        //            SqlParameter Param1 = new SqlParameter { ParameterName = "@GroupID", Value = GroupID };
-        //            command.Parameters.Add(Param1);
+                    SqlParameter Param0 = new SqlParameter { ParameterName = "@ID", Value = ID };
+                    command.Parameters.Add(Param0);
 
-        //            command.Parameters.Add("@Result", SqlDbType.Bit).Direction = ParameterDirection.Output;
+                    SqlParameter Param1 = new SqlParameter { ParameterName = "@GroupID", Value = NewGroupID };
+                    command.Parameters.Add(Param1);
 
-        //            command.ExecuteNonQuery();
+                    command.Parameters.Add("@Result", SqlDbType.Bit).Direction = ParameterDirection.Output;
 
-        //            ok = (bool)command.Parameters["@Result"].Value;
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            MessageBox.Show(ex.Message, "DataBaseRequest.UpdateGroupID");
-        //        }
-        //        return ok;
-        //    }
-        //}
+                    command.ExecuteNonQuery();
 
-
-
-
-
-
-
-
-
-
-
-
-
-        //public static BindingList<NomenclatureImageClass> GetNomenclatureImages(Guid NomenclatureID)
-        //{
-        //    BindingList<NomenclatureImageClass> NICList = new BindingList<NomenclatureImageClass>();
-
-        //    using (SqlConnection connect = new SqlConnection(Crypt.Decrypt(XmlClass.GetSelectedConnectionString())))
-        //    {
-        //        try
-        //        {
-        //            connect.Open();
-        //            SqlCommand command = new SqlCommand("GetNomenclatureImages", connect);
-        //            command.CommandType = CommandType.StoredProcedure;
-
-        //            SqlParameter Param0 = new SqlParameter { ParameterName = "@NomenclatureID", Value = NomenclatureID }; //---Передаваемый параметр
-        //            command.Parameters.Add(Param0);
-
-        //            SqlDataReader reading = command.ExecuteReader();
-
-        //            while (reading.Read())
-        //            {
-        //                NomenclatureImageClass NIC = new NomenclatureImageClass();
-
-        //                NIC.ImageData = (byte[])reading.GetValue(0);
-        //                NIC.Description = reading.GetValue(1).ToString();
-        //                NIC.MainImage = (bool)reading.GetValue(2);
-
-        //                NICList.Add(NIC);
-        //            }
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            MessageBox.Show("Ошибка в методе: DataBaseRequest.GetNomenclatureImages" + "\n" + ex.Message, "Хуёво!");
-        //        }
-        //    }
-        //    return NICList;
-        //}
-
-
-
-
-
-
-
+                    ok = (bool)command.Parameters["@Result"].Value;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "DataBaseRequest.UpdateGroupID");
+                }
+                return ok;
+            }
+        }
 
 
 
