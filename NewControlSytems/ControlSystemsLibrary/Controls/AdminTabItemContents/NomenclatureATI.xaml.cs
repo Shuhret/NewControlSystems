@@ -21,6 +21,8 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
     public delegate void CloseCreateNomenclatureGroupDelegate();
     public delegate void ShowCreatedNomenclatureGroupDelegate(NomenclatureClass CreatedNomenclature);
 
+    public delegate void CloseSelectedItemsDelegate();
+    public delegate void CheckedSelectedItemParentDelegate(NomenclatureClass Item);
     public partial class NomenclatureATI : UserControl, INotifyPropertyChanged
     {
 
@@ -197,7 +199,6 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
             }
         }
 
-
         private void Row_DoubleClick(object sender, MouseButtonEventArgs e)
         {
             SelectedItem = null;
@@ -337,11 +338,16 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
                 }
                 e.Handled = true;
             }
-            if(e.Key == Key.Space && e.KeyboardDevice.Modifiers == ModifierKeys.Control)
+        }
+        private void DataGridRow_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            // Если нажато: Пробел
+            if (e.Key == Key.Space)
             {
-                SelectToSpace();
+                SelectedToSpace();
                 e.Handled = true;
             }
+
         }
 
         private void Nom_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -967,7 +973,7 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
             }
             else
             {
-                return true; 
+                return false; 
             }
         }
 
@@ -1056,23 +1062,7 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
                 ClearCutList();
                 CheckBox checkbox = sender as CheckBox;
                 CheckedSelected(checkbox);
-                SetSelectedElementsCount();
-            }
-        }
-
-        private void SelectToSpace()
-        {
-            if (DataGridNomenclatures.SelectedItem != null)
-            {
-                NomenclatureClass NC = DataGridNomenclatures.SelectedItem as NomenclatureClass;
-                if (NC.Selected == true || NC.Selected == null)
-                {
-                    NC.Selected = false;
-                }
-                else
-                {
-                    NC.Selected = true;
-                }
+                //SetSelectedElementsCount();
             }
         }
 
@@ -1090,10 +1080,8 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
                     NC.Selected = checkbox.IsChecked;
                     CheckedChildren(NC);
                     CheckedParent(NC);
-                    CheckedMainCheckBox();
                 }
             }
-            
         }
 
         private void CheckedAllDataGridItems(bool? Checked)
@@ -1163,6 +1151,8 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
                     }
                 }
             }
+            CheckedMainCheckBox();
+            SetSelectedElementsCount();
             UpdateSelected = true;
         }
 
@@ -1280,6 +1270,33 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
         private void CheckBoxClick(object sender, RoutedEventArgs e)
         {
             e.Handled = false;
+        }
+
+
+        private void SelectedToSpace()
+        {
+            if (DataGridNomenclatures.SelectedItems != null)
+            {
+                foreach (NomenclatureClass NC in DataGridNomenclatures.SelectedItems)
+                {
+                    if (NC.Selected == null || NC.Selected == true)
+                        NC.Selected = false;
+                    else if (NC.Selected == false)
+                        NC.Selected = true;
+                }
+            }
+        }
+
+        private void SelectedItemsButton_Click(object sender, RoutedEventArgs e)
+        {
+            CloseSelectedItemsDelegate CSID = CloseSelectedItems;
+            CheckedSelectedItemParentDelegate CSIPD = CheckedParent;
+            CreateNemenclatureUC = new SelectedNomenclatures(AllNomenclaturesCollection, CSID, CSIPD);
+        }
+
+        private void CloseSelectedItems()
+        {
+            CreateNemenclatureUC = null;
         }
     }
 }

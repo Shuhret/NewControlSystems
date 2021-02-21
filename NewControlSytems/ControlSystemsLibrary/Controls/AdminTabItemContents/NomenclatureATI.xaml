@@ -41,7 +41,7 @@
 
         <Style TargetType="DataGridRow">
             <EventSetter Event="MouseDoubleClick" Handler="Row_DoubleClick"/>
-            <!--<EventSetter Event="PreviewKeyDown" Handler="DataGridRow_PreviewKeyDown"/>-->
+            <EventSetter Event="PreviewKeyDown" Handler="DataGridRow_PreviewKeyDown"/>
 
             <Setter Property="Background" Value="White"/>
 
@@ -429,7 +429,7 @@
                                 </Canvas>
                             </Viewbox>
                         </Button>
-                        <Button Style="{DynamicResource ButtonStyle-001}" Visibility="{Binding SelectedVisibility, ElementName=Nom, UpdateSourceTrigger=PropertyChanged}" BorderThickness="1" Margin="5,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Foreground="White" Width="30" Padding="11,1" Cursor="Hand" ToolTip="Выбранные">
+                        <Button x:Name="SelectedItemsButton" Style="{DynamicResource ButtonStyle-001}" Visibility="{Binding SelectedVisibility, ElementName=Nom, UpdateSourceTrigger=PropertyChanged}" BorderThickness="1" Margin="5,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Foreground="White" Width="30" Padding="11,1" Cursor="Hand" ToolTip="Выбранные" Click="SelectedItemsButton_Click">
                             <Button.Background>
                                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                     <GradientStop Color="#FFA0BD63" Offset="1"/>

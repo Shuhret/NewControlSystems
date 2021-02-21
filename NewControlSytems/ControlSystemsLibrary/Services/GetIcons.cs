@@ -14,12 +14,10 @@ namespace ControlSystemsLibrary.Services
         // Метод: Возвращает иконку для вкладки
         public static object GetIcon(string IconName)
         {
-            object obj;
-            XmlReader xmlReader;
-            obj = Application.Current.FindResource(IconName) as object;
+            object obj = Application.Current.FindResource(IconName) as object;
             string savedButton = XamlWriter.Save(obj);
             StringReader stringReader = new StringReader(savedButton);
-            xmlReader = XmlReader.Create(stringReader);
+            XmlReader xmlReader = XmlReader.Create(stringReader);
             return (object)XamlReader.Load(xmlReader);
         }
     }

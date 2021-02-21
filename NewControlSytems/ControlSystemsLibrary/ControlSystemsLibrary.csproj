@@ -95,6 +95,9 @@
     <Compile Include="Controls\NomenPropertyUC.xaml.cs">
       <DependentUpon>NomenPropertyUC.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\SelectedNomenclatures.xaml.cs">
+      <DependentUpon>SelectedNomenclatures.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Services\BarCodes.cs" />
     <Compile Include="Services\Cryption.cs" />
     <Compile Include="Services\DataBaseRequest.cs" />
@@ -157,6 +160,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\NomenPropertyUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\SelectedNomenclatures.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
