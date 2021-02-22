@@ -263,60 +263,47 @@ namespace ControlSystemsLibrary.Controls
 
         private void DigitText_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            double result;
-            string str = e.Text;
-            bool дробь = false;
+            double num;
+            string text = e.Text;
+            bool flag = false;
+
+            if (text != "." && text != ",")
+            {
+                if (!double.TryParse(text, out num))
+                {
+                    e.Handled = true;
+                }
+            }
 
             foreach (char ch in ((TextBox)sender).Text)
             {
                 if (ch == ',')
                 {
-                    дробь = true;
+                    flag = true;
                     break;
                 }
             }
 
-            if (((TextBox)sender).Text.Length == 0 && (str == "0"))
+            if ((text == "." || text == ",") && flag == true)
+            {
+                e.Handled = true;
+            }
+
+            if ((((TextBox)sender).Text.Length == 0) && ((text == ",") || (text == ".")))
             {
                 ((TextBox)sender).Text = "0,";
                 ((TextBox)sender).SelectionStart = ((TextBox)sender).Text.Length;
-                ((TextBox)sender).SelectionLength = 0;
-
-                дробь = true;
+                //flag = true;
                 e.Handled = true;
             }
-
-            if (((TextBox)sender).Text.Length == 0 && (str == ",") || (str == "."))
+            else if (((text == ",") || (text == ".")) && flag == false)
             {
-                ((TextBox)sender).Text = "0,";
-
+                (sender as TextBox).Text += ",";
+                //text = ",";
+                //flag = true;
                 ((TextBox)sender).SelectionStart = ((TextBox)sender).Text.Length;
-                ((TextBox)sender).SelectionLength = 0;
-
-                дробь = true;
                 e.Handled = true;
             }
-            else if (str == "," && !дробь)
-            {
-                ((TextBox)sender).Text += ",";
-                str = ",";
-                дробь = true;
-                ((TextBox)sender).SelectionStart = ((TextBox)sender).Text.Length;
-                ((TextBox)sender).SelectionLength = 0;
-
-                e.Handled = true;
-            }
-
-            if ((str == "." || str == ",") && дробь)
-            {
-                e.Handled = true;
-            }
-
-            if ((!(double.TryParse(str, out result) || str == ".")))
-            {
-                e.Handled = true;
-            }
-
         }
 
         private void CheckReadiness()

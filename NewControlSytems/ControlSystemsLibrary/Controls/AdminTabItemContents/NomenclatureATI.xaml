@@ -387,10 +387,12 @@
                                 <SolidColorBrush Color="{DynamicResource Light-005}"/>
                             </Button.BorderBrush>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0">
-                                <Viewbox Width="16">
+                                <Viewbox Width="14">
                                     <Canvas HorizontalAlignment="Left" Height="30" UseLayoutRounding="False" VerticalAlignment="Top" Width="30">
-                                        <Canvas Height="29.034" Canvas.Left="0" Canvas.Top="0.483" Width="30">
-                                            <Path Data="M7.9468,13.0332C7.9468,14.5932,6.6838,15.8552,5.1258,15.8552C3.5668,15.8552,2.3038,14.5932,2.3038,13.0332C2.3038,11.4752,3.5668,10.2122,5.1258,10.2122C6.6838,10.2122,7.9468,11.4752,7.9468,13.0332 M4.7968,18.1492C4.7858,18.1472,4.7758,18.1472,4.7658,18.1462z M14.1468,21.7202C12.6728,21.2162,11.0688,22.0022,10.5648,23.4762C10.0588,24.9512,10.8448,26.5552,12.3198,27.0592C13.7938,27.5642,15.3978,26.7782,15.9038,25.3042C16.4068,23.8292,15.6208,22.2252,14.1468,21.7202 M8.2878,23.0452C8.2848,23.0542,8.2818,23.0652,8.2798,23.0752z M12.0948,11.9202L14.7068,4.2832C15.5098,1.9362,18.3668,-0.1448,20.7138,0.658200000000001C20.9488,0.740200000000002,21.0738,0.997200000000001,20.9948,1.2322L17.3378,11.9202z M10.2508,13.0332C10.2508,13.0852,10.2508,13.1372,10.2488,13.1892L11.1418,13.1892L11.6598,13.1892L16.9028,13.1892L18.6398,13.1892L29.5488,13.1892C29.7968,13.1892,29.9998,13.3912,29.9998,13.6392C29.9998,16.1192,27.1078,18.1492,24.6278,18.1492L15.2048,18.1492L14.7458,19.4922C14.7948,19.5092,14.8438,19.5242,14.8928,19.5402C16.2318,19.9992,17.2588,20.9572,17.8358,22.1352C18.4128,23.3122,18.5408,24.7112,18.0838,26.0502C17.6258,27.3882,16.6668,28.4162,15.4888,28.9932C14.3108,29.5702,12.9128,29.6972,11.5738,29.2392C10.2348,28.7812,9.2078,27.8242,8.6328,26.6452C8.1038,25.5692,7.9508,24.3072,8.2798,23.0752L8.2768,23.0762L8.2878,23.0452C8.3168,22.9392,8.3488,22.8362,8.3838,22.7302C8.4208,22.6262,8.4598,22.5232,8.5008,22.4232L9.9628,18.1492L5.4538,18.1492C5.3458,18.1562,5.2368,18.1592,5.1258,18.1592C5.0148,18.1592,4.9058,18.1562,4.7968,18.1492L4.7628,18.1492L4.7658,18.1462C3.4948,18.0582,2.3498,17.5062,1.5018,16.6572C0.5748,15.7302,-0.000200000000000422,14.4492,-0.000200000000000422,13.0332C-0.000200000000000422,11.6192,0.5748,10.3382,1.5018,9.4092C2.4288,8.4822,3.7108,7.9082,5.1258,7.9082C6.5418,7.9082,7.8218,8.4822,8.7498,9.4092C9.6768,10.3382,10.2508,11.6192,10.2508,13.0332" Fill="White" Height="29.034" Canvas.Left="0" Stretch="Fill" Canvas.Top="0" Width="30"/>
+                                        <Canvas Height="28.573" Canvas.Left="1.89" Canvas.Top="0.713" Width="26.221">
+                                            <Path Data="F1M4.8096,10.9461L9.1466,10.9461L9.1466,18.5711L20.8536,18.5711L20.8536,10.9461L25.1626,10.9461L14.9856,0.713100000000001z" Fill="White" Height="17.858" Canvas.Left="2.92" Stretch="Fill" Canvas.Top="0" Width="20.353"/>
+                                            <Path Data="M20.854,24.354L9.147,24.354L9.147,20.64L20.854,20.64z" Fill="White" Height="3.714" Canvas.Left="7.257" Stretch="Fill" Canvas.Top="19.927" Width="11.707"/>
+                                            <Path Data="F1M1.89,29.286L28.111,29.286L28.111,26.509L1.89,26.509z" Fill="White" Height="2.777" Canvas.Left="0" Stretch="Fill" Canvas.Top="25.796" Width="26.221"/>
                                         </Canvas>
                                     </Canvas>
                                 </Viewbox>
@@ -430,21 +432,10 @@
                             </Viewbox>
                         </Button>
                         <Button x:Name="SelectedItemsButton" Style="{DynamicResource ButtonStyle-001}" Visibility="{Binding SelectedVisibility, ElementName=Nom, UpdateSourceTrigger=PropertyChanged}" BorderThickness="1" Margin="5,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Foreground="White" MinWidth="30" Width="auto" Padding="11,1" Cursor="Hand" ToolTip="Выбранные" Click="SelectedItemsButton_Click">
-                            <Button.ContextMenu >
-                                <ContextMenu>
-                                    <MenuItem Header="Открыть список выбранных"/>
-                                    <MenuItem Header="Остатки на складах"/>
-                                    <MenuItem Header="Изменить свойства и значения"/>
-                                    <MenuItem Header="Изменить метки"/>
-                                    <MenuItem Header="Анализ продаж"/>
-                                    <MenuItem Header="Поместить в документ"/>
-                                    <MenuItem Header="Блокировать"/>
-                                </ContextMenu>
-                            </Button.ContextMenu>
                             <Button.Background>
                                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                    <GradientStop Color="#FFA0BD63" Offset="1"/>
-                                    <GradientStop Color="{DynamicResource Green-001}"/>
+                                    <GradientStop Color="#FFEE6C75" Offset="1"/>
+                                    <GradientStop Color="{DynamicResource Red-001}"/>
                                 </LinearGradientBrush>
                             </Button.Background>
                             <Button.BorderBrush>
@@ -595,9 +586,9 @@
                             <DataGridTemplateColumn.CellTemplate  >
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal" Visibility="{Binding TagVisibility}">
-                                        <CheckBox x:Name="TagAksia" Style="{DynamicResource GiftCheckBoxStyle}" Margin="0,0,25,0" Cursor="Hand" Checked="UpdateTagsClick" Unchecked="UpdateTagsClick" IsChecked="{Binding Aksia, UpdateSourceTrigger=PropertyChanged}"/>
-                                        <CheckBox x:Name="TagFocus" Style="{DynamicResource FocusCheckBoxStyle}" Margin="0,0,25,0" Cursor="Hand" Checked="UpdateTagsClick" Unchecked="UpdateTagsClick" IsChecked="{Binding Focus, UpdateSourceTrigger=PropertyChanged}"/>
-                                        <CheckBox x:Name="TagNew" Style="{DynamicResource NewCheckBoxStyle}" Margin="0,0,35,0" Cursor="Hand" Checked="UpdateTagsClick" Unchecked="UpdateTagsClick"  IsChecked="{Binding New, UpdateSourceTrigger=PropertyChanged}"/>
+                                        <CheckBox x:Name="TagAksia" Style="{DynamicResource GiftCheckBoxStyle}" Margin="0,0,20,0" Cursor="Hand" Checked="UpdateTagsClick" Unchecked="UpdateTagsClick" IsChecked="{Binding Aksia, UpdateSourceTrigger=PropertyChanged}"/>
+                                        <CheckBox x:Name="TagFocus" Style="{DynamicResource FocusCheckBoxStyle}" Margin="0,0,20,0" Cursor="Hand" Checked="UpdateTagsClick" Unchecked="UpdateTagsClick" IsChecked="{Binding Focus, UpdateSourceTrigger=PropertyChanged}"/>
+                                        <CheckBox x:Name="TagNew" Style="{DynamicResource NewCheckBoxStyle}" Margin="0,0,30,0" Cursor="Hand" Checked="UpdateTagsClick" Unchecked="UpdateTagsClick"  IsChecked="{Binding New, UpdateSourceTrigger=PropertyChanged}"/>
                                     </StackPanel>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>

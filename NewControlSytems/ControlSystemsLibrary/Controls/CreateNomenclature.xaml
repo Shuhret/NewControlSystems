@@ -96,7 +96,7 @@
                             <Grid Margin="10,0,0,0">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="auto"/>
-                                    <RowDefinition Height="24" />
+                                    <RowDefinition Height="27" />
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
                                 <StackPanel>
@@ -131,7 +131,7 @@
                                             </Border>
                                         </StackPanel>
                                     </Grid>
-                                    <Grid Margin="0,10,0,0">
+                                    <Grid Margin="0,15,0,0">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="1*"/>
                                             <ColumnDefinition Width="5"/>
@@ -154,14 +154,36 @@
                                                 <Border.Background>
                                                     <SolidColorBrush Color="{DynamicResource Light-001}"/>
                                                 </Border.Background>
-                                                <ComboBox x:Name="CategoriesComboBox" Style="{DynamicResource ComboBoxStyle1}" Background="Transparent" BorderThickness="0" SelectionChanged="CategoriesComboBox_SelectionChanged" VerticalContentAlignment="Center" Padding="10,3,4,3" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" FontSize="12">
-                                                    <ComboBox.BorderBrush>
-                                                        <SolidColorBrush Color="{DynamicResource Light-004}"/>
-                                                    </ComboBox.BorderBrush>
-                                                    <ComboBox.Foreground>
-                                                        <SolidColorBrush Color="{DynamicResource Blue-004}"/>
-                                                    </ComboBox.Foreground>
-                                                </ComboBox>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <ComboBox x:Name="CategoriesComboBox" Style="{DynamicResource ComboBoxStyle1}" Background="Transparent" BorderThickness="0" SelectionChanged="CategoriesComboBox_SelectionChanged" VerticalContentAlignment="Center" Padding="10,3,4,3" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" FontSize="12">
+                                                        <ComboBox.BorderBrush>
+                                                            <SolidColorBrush Color="{DynamicResource Light-004}"/>
+                                                        </ComboBox.BorderBrush>
+                                                        <ComboBox.Foreground>
+                                                            <SolidColorBrush Color="{DynamicResource Blue-004}"/>
+                                                        </ComboBox.Foreground>
+                                                    </ComboBox>
+                                                    <Button x:Name="AddCategoryButton" Style="{DynamicResource ButtonStyle-002}" Background="Transparent" BorderThickness="2" BorderBrush="{x:Null}" Padding="5,1" FontSize="12" Cursor="Hand" Margin="0" Width="30" Grid.Column="1">
+                                                        <Button.Foreground>
+                                                            <SolidColorBrush Color="{DynamicResource Blue-003}"/>
+                                                        </Button.Foreground>
+                                                        <Viewbox Height="8">
+                                                            <Canvas HorizontalAlignment="Left" Height="50" UseLayoutRounding="False" VerticalAlignment="Top" Width="50">
+                                                                <Canvas Height="50" Canvas.Left="0" Canvas.Top="0.001" Width="50">
+                                                                    <Path Data="F1M46.2461,21.2715C48.3491,21.2715,50.0001,22.9225,50.0001,25.0245C50.0001,27.0775,48.3491,28.7785,46.2461,28.7785L28.7781,28.7785L28.7781,46.2465C28.7781,48.3485,27.0771,50.0005,25.0251,50.0005C22.9231,50.0005,21.2711,48.3485,21.2711,46.2465L21.2711,28.7785L3.7541,28.7785C1.7021,28.7785,9.99999999962142E-05,27.0775,9.99999999962142E-05,25.0245C9.99999999962142E-05,22.9225,1.7021,21.2715,3.7541,21.2715L21.2711,21.2715L21.2711,3.7535C21.2711,1.7015,22.9231,0.000499999999998835,25.0251,0.000499999999998835C27.0771,0.000499999999998835,28.7781,1.7015,28.7781,3.7535L28.7781,21.2715z" Height="50" Canvas.Left="0" Stretch="Fill" Canvas.Top="0" Width="50">
+                                                                        <Path.Fill>
+                                                                            <SolidColorBrush Color="{DynamicResource Dark-001}"/>
+                                                                        </Path.Fill>
+                                                                    </Path>
+                                                                </Canvas>
+                                                            </Canvas>
+                                                        </Viewbox>
+                                                    </Button>
+                                                </Grid>
                                             </Border>
                                         </StackPanel>
                                         <StackPanel Grid.Column="4" Grid.ColumnSpan="3">
@@ -197,7 +219,7 @@
                                             </Border>
                                         </StackPanel>
                                     </Grid>
-                                    <Grid Margin="0,10,0,0">
+                                    <Grid Margin="0,15,0,0">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="1*"/>
                                             <ColumnDefinition Width="5"/>
@@ -220,14 +242,36 @@
                                                 <Border.Background>
                                                     <SolidColorBrush Color="{DynamicResource Light-001}"/>
                                                 </Border.Background>
-                                                <ComboBox x:Name="BaseUnitComboBox" Style="{DynamicResource ComboBoxStyle1}" Background="Transparent" BorderThickness="0" SelectionChanged="BaseUnitNameComboBoxSelectionChanged" VerticalContentAlignment="Center" Padding="10,3,4,3" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" FontSize="12">
-                                                    <ComboBox.BorderBrush>
-                                                        <SolidColorBrush Color="{DynamicResource Light-004}"/>
-                                                    </ComboBox.BorderBrush>
-                                                    <ComboBox.Foreground>
-                                                        <SolidColorBrush Color="{DynamicResource Blue-004}"/>
-                                                    </ComboBox.Foreground>
-                                                </ComboBox>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <ComboBox x:Name="BaseUnitComboBox" Style="{DynamicResource ComboBoxStyle1}" Background="Transparent" BorderThickness="0" SelectionChanged="BaseUnitNameComboBoxSelectionChanged" VerticalContentAlignment="Center" Padding="10,3,4,3" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" FontSize="12">
+                                                        <ComboBox.BorderBrush>
+                                                            <SolidColorBrush Color="{DynamicResource Light-004}"/>
+                                                        </ComboBox.BorderBrush>
+                                                        <ComboBox.Foreground>
+                                                            <SolidColorBrush Color="{DynamicResource Blue-004}"/>
+                                                        </ComboBox.Foreground>
+                                                    </ComboBox>
+                                                    <Button x:Name="AddCategoryButton_Copy" Style="{DynamicResource ButtonStyle-002}" Background="Transparent" BorderThickness="1,2,2,2" BorderBrush="{x:Null}" Padding="5,1" FontSize="12" Cursor="Hand" Margin="0" Width="30" Grid.Column="1">
+                                                        <Button.Foreground>
+                                                            <SolidColorBrush Color="{DynamicResource Blue-003}"/>
+                                                        </Button.Foreground>
+                                                        <Viewbox Height="8">
+                                                            <Canvas HorizontalAlignment="Left" Height="50" UseLayoutRounding="False" VerticalAlignment="Top" Width="50">
+                                                                <Canvas Height="50" Canvas.Left="0" Canvas.Top="0.001" Width="50">
+                                                                    <Path Data="F1M46.2461,21.2715C48.3491,21.2715,50.0001,22.9225,50.0001,25.0245C50.0001,27.0775,48.3491,28.7785,46.2461,28.7785L28.7781,28.7785L28.7781,46.2465C28.7781,48.3485,27.0771,50.0005,25.0251,50.0005C22.9231,50.0005,21.2711,48.3485,21.2711,46.2465L21.2711,28.7785L3.7541,28.7785C1.7021,28.7785,9.99999999962142E-05,27.0775,9.99999999962142E-05,25.0245C9.99999999962142E-05,22.9225,1.7021,21.2715,3.7541,21.2715L21.2711,21.2715L21.2711,3.7535C21.2711,1.7015,22.9231,0.000499999999998835,25.0251,0.000499999999998835C27.0771,0.000499999999998835,28.7781,1.7015,28.7781,3.7535L28.7781,21.2715z" Height="50" Canvas.Left="0" Stretch="Fill" Canvas.Top="0" Width="50">
+                                                                        <Path.Fill>
+                                                                            <SolidColorBrush Color="{DynamicResource Dark-001}"/>
+                                                                        </Path.Fill>
+                                                                    </Path>
+                                                                </Canvas>
+                                                            </Canvas>
+                                                        </Viewbox>
+                                                    </Button>
+                                                </Grid>
                                             </Border>
                                         </StackPanel>
                                         <StackPanel Grid.Column="2">
@@ -263,14 +307,36 @@
                                                 <Border.Background>
                                                     <SolidColorBrush Color="{DynamicResource Light-001}"/>
                                                 </Border.Background>
-                                                <ComboBox x:Name="ComboBoxCountry" Style="{DynamicResource ComboBoxStyle1}" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Center" Padding="10,3,4,3" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" SelectionChanged="ComboBoxCountry_SelectionChanged" FontSize="12">
-                                                    <ComboBox.BorderBrush>
-                                                        <SolidColorBrush Color="{DynamicResource Light-004}"/>
-                                                    </ComboBox.BorderBrush>
-                                                    <ComboBox.Foreground>
-                                                        <SolidColorBrush Color="{DynamicResource Blue-004}"/>
-                                                    </ComboBox.Foreground>
-                                                </ComboBox>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <ComboBox x:Name="ComboBoxCountry" Style="{DynamicResource ComboBoxStyle1}" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Center" Padding="10,3,4,3" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" SelectionChanged="ComboBoxCountry_SelectionChanged" FontSize="12">
+                                                        <ComboBox.BorderBrush>
+                                                            <SolidColorBrush Color="{DynamicResource Light-004}"/>
+                                                        </ComboBox.BorderBrush>
+                                                        <ComboBox.Foreground>
+                                                            <SolidColorBrush Color="{DynamicResource Blue-004}"/>
+                                                        </ComboBox.Foreground>
+                                                    </ComboBox>
+                                                    <Button x:Name="AddCountryButton" Style="{DynamicResource ButtonStyle-002}" Background="Transparent" BorderThickness="2" BorderBrush="{x:Null}" Padding="5,1" FontSize="12" Cursor="Hand" Margin="0" Grid.Column="1" Width="30">
+                                                        <Button.Foreground>
+                                                            <SolidColorBrush Color="{DynamicResource Blue-003}"/>
+                                                        </Button.Foreground>
+                                                        <Viewbox Height="8" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                                            <Canvas HorizontalAlignment="Left" Height="50" UseLayoutRounding="False" VerticalAlignment="Top" Width="50">
+                                                                <Canvas Height="50" Canvas.Left="0" Canvas.Top="0.001" Width="50">
+                                                                    <Path Data="F1M46.2461,21.2715C48.3491,21.2715,50.0001,22.9225,50.0001,25.0245C50.0001,27.0775,48.3491,28.7785,46.2461,28.7785L28.7781,28.7785L28.7781,46.2465C28.7781,48.3485,27.0771,50.0005,25.0251,50.0005C22.9231,50.0005,21.2711,48.3485,21.2711,46.2465L21.2711,28.7785L3.7541,28.7785C1.7021,28.7785,9.99999999962142E-05,27.0775,9.99999999962142E-05,25.0245C9.99999999962142E-05,22.9225,1.7021,21.2715,3.7541,21.2715L21.2711,21.2715L21.2711,3.7535C21.2711,1.7015,22.9231,0.000499999999998835,25.0251,0.000499999999998835C27.0771,0.000499999999998835,28.7781,1.7015,28.7781,3.7535L28.7781,21.2715z" Height="50" Canvas.Left="0" Stretch="Fill" Canvas.Top="0" Width="50">
+                                                                        <Path.Fill>
+                                                                            <SolidColorBrush Color="{DynamicResource Dark-001}"/>
+                                                                        </Path.Fill>
+                                                                    </Path>
+                                                                </Canvas>
+                                                            </Canvas>
+                                                        </Viewbox>
+                                                    </Button>
+                                                </Grid>
                                             </Border>
                                         </StackPanel>
                                     </Grid>

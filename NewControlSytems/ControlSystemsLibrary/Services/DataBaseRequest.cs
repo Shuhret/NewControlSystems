@@ -852,9 +852,9 @@ namespace ControlSystemsLibrary.Services
         }
 
 
-        public static bool UniquenessCheck(string Connectionstring, string Article)
+        public static int UniquenessCheck(string Connectionstring, string Article)
         {
-            bool ok = false;
+            int value = 0;
             using (SqlConnection connect = new SqlConnection(Cryption.Decrypt(Connectionstring)))
             {
                 try
@@ -869,19 +869,18 @@ namespace ControlSystemsLibrary.Services
                     int result = (int)command.ExecuteScalar();
 
                     if (result > 0)
-                        ok = false;
+                        value = 1;
                     else
                     {
-                        ok = true;
+                        value = 2;
                     }
-
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message.ToString());
                 }
             }
-            return ok;
+            return value;
         }
 
 

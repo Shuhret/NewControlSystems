@@ -370,7 +370,7 @@
                                     <DataGridTextColumn Header="Артикул" Width="2*" MinWidth="70" IsReadOnly="True" Binding="{Binding Article}" CanUserResize="False"/>
 
                                     <!--Категория-->
-                                    <DataGridTextColumn Width="2*" Header="Категория" IsReadOnly="True" Binding="{Binding Category}" CanUserResize="False"/>
+                                    <DataGridTextColumn Width="3*" Header="Категория" IsReadOnly="True" Binding="{Binding Category}" CanUserResize="False"/>
 
                                 </DataGrid.Columns>
 

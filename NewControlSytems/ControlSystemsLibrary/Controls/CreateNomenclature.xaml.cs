@@ -417,6 +417,18 @@ namespace ControlSystemsLibrary.Controls
             double num;
             string text = e.Text;
             bool flag = false;
+
+            if (text != "." && text != ",")
+            {
+                if (!double.TryParse(text, out num))
+                {
+                    e.Handled = true;
+                }
+            }
+
+
+
+
             foreach (char ch in ((TextBox)sender).Text)
             {
                 if (ch == ',')
@@ -425,41 +437,36 @@ namespace ControlSystemsLibrary.Controls
                     break;
                 }
             }
-            if ((((TextBox)sender).Text.Length == 0) && (text == "0"))
+
+            if((text == "." || text == ",") && flag == true)
+            {
+                e.Handled = true;
+            }
+
+            if ((((TextBox)sender).Text.Length == 0) && ((text == ",") || (text == ".")))
             {
                 ((TextBox)sender).Text = "0,";
                 ((TextBox)sender).SelectionStart = ((TextBox)sender).Text.Length;
-                ((TextBox)sender).SelectionLength = 0;
-                flag = true;
+                //flag = true;
                 e.Handled = true;
             }
-            if (((((TextBox)sender).Text.Length == 0) && (text == ",")) || (text == "."))
+            else if (((text == ",") || (text == ".")) && flag == false)
             {
-                ((TextBox)sender).Text = "0,";
+                (sender as TextBox).Text += ",";
+                //text = ",";
+                //flag = true;
                 ((TextBox)sender).SelectionStart = ((TextBox)sender).Text.Length;
-                ((TextBox)sender).SelectionLength = 0;
-                flag = true;
                 e.Handled = true;
             }
-            else if ((text == ",") && !flag)
-            {
-                TextBox box1 = (TextBox)sender;
-                box1.Text = box1.Text + ",";
-                text = ",";
-                flag = true;
-                ((TextBox)sender).SelectionStart = ((TextBox)sender).Text.Length;
-                ((TextBox)sender).SelectionLength = 0;
-                e.Handled = true;
-            }
-            if (((text == ".") || (text == ",")) & flag)
-            {
-                e.Handled = true;
-            }
-            if (!double.TryParse(text, out num) && !(text == "."))
-            {
-                e.Handled = true;
-            }
+
+
+
         }
+
+        
+
+
+
 
         // Событие: KeyDown (Для перехода на следующий элемент по нажатию Enter) -------------------------------------------------------------
         private void TextBox_KeyDown(object sender, KeyEventArgs e)
@@ -1725,20 +1732,31 @@ namespace ControlSystemsLibrary.Controls
 
         private void AutoGenerateArticleButton_Click(object sender, RoutedEventArgs e)
         {
-            AutoGenerateArticle();
+            if (CreateMode == true)
+            {
+                AutoGenerateArticle();
+            }
+            else
+            {
+                if (MessageBox.Show("Вы уверены что хотите изменить артикул?", "Предупреждение", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+                {
+                    AutoGenerateArticle();
+                }
+            }
         }
 
         private void AutoGenerateArticle()
         {
         Anew:
             string AutoGenereteArticle = GetGenerateArticle();
-            if (UniquenessCheck(AutoGenereteArticle))
+            int result = UniquenessCheck(AutoGenereteArticle);
+            if (result == 2)
             {
                 ArticleTextBox.Text = AutoGenereteArticle;
                 ArticleTextBox.Focus();
                 ArticleTextBox.SelectionStart = ArticleTextBox.Text.Length;
             }
-            else
+            else if(result == 1)
             {
                 goto Anew;
             }
@@ -1746,11 +1764,11 @@ namespace ControlSystemsLibrary.Controls
 
         private string GetGenerateArticle()
         {
-            string art = "CS-";
+            string art = "";
             Random Rand = new Random();
             for(int i = 0; i < 8;i++)
             {
-                if(i == 4 )
+                if(i == 2 || i == 5 )
                 {
                     art += '-';
                 }
@@ -1759,7 +1777,7 @@ namespace ControlSystemsLibrary.Controls
             return art;
         }
 
-        private bool UniquenessCheck(string text)
+        private int UniquenessCheck(string text)
         {
             return DataBaseRequest.UniquenessCheck(CurrentCryptConnectionString, text);
         }
