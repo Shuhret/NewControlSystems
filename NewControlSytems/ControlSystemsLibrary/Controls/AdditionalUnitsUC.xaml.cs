@@ -335,7 +335,9 @@ namespace ControlSystemsLibrary.Controls
         {
             if (Quantity > 0 && Weight > 0)
             {
-                if (Weight < (Quantity * BaseUnitWeight))
+                double d = (Quantity * BaseUnitWeight);
+                d = Math.Round(Convert.ToDouble(d), 3);
+                if (Weight < d)
                 {
                     WeightTextBox.Foreground = GetColor.Get("Red-001");
                 }

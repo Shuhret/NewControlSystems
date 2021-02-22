@@ -1722,6 +1722,53 @@ namespace ControlSystemsLibrary.Controls
             }
             (AddUnitsStackPanel.Parent as ScrollViewer).ScrollToEnd();
         }
+
+        private void AutoGenerateArticleButton_Click(object sender, RoutedEventArgs e)
+        {
+            AutoGenerateArticle();
+        }
+
+        private void AutoGenerateArticle()
+        {
+        Anew:
+            string AutoGenereteArticle = GetGenerateArticle();
+            if (UniquenessCheck(AutoGenereteArticle))
+            {
+                ArticleTextBox.Text = AutoGenereteArticle;
+                ArticleTextBox.Focus();
+                ArticleTextBox.SelectionStart = ArticleTextBox.Text.Length;
+            }
+            else
+            {
+                goto Anew;
+            }
+        }
+
+        private string GetGenerateArticle()
+        {
+            string art = "CS-";
+            Random Rand = new Random();
+            for(int i = 0; i < 8;i++)
+            {
+                if(i == 4 )
+                {
+                    art += '-';
+                }
+                art += Rand.Next(9);
+            }
+            return art;
+        }
+
+        private bool UniquenessCheck(string text)
+        {
+            return DataBaseRequest.UniquenessCheck(CurrentCryptConnectionString, text);
+        }
+
+        private void ArticleTextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if(ArticleTextBox.Text == "")
+            AutoGenerateArticle();
+        }
     }
 
 

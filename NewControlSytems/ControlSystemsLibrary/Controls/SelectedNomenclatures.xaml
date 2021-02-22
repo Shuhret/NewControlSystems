@@ -112,11 +112,7 @@
             <!-- Make the border and grid lines a little less imposing -->
 
 
-            <Setter Property="BorderBrush" Value="Red">
-                <!--<Setter.Value>
-                <SolidColorBrush Color="{DynamicResource Red-001}"/>
-            </Setter.Value>-->
-            </Setter>
+            <Setter Property="BorderBrush" Value="Red"/>
 
             <!--Цвет границ вокруг-->
             <Setter Property="BorderThickness" Value="0"/>
@@ -155,7 +151,7 @@
 
 
             <!--Метод выбора строки(целая строка или отдельная ячейка)-->
-            <Setter Property="CanUserSortColumns" Value="False"/>
+            <Setter Property="CanUserSortColumns" Value="True"/>
             <!--******************** Сортировка ******************** -->
             <!--Разрещение(Запрет) на фильрацию-->
             <Setter Property="ColumnWidth" Value="*"/>

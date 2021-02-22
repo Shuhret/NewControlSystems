@@ -852,6 +852,37 @@ namespace ControlSystemsLibrary.Services
         }
 
 
+        public static bool UniquenessCheck(string Connectionstring, string Article)
+        {
+            bool ok = false;
+            using (SqlConnection connect = new SqlConnection(Cryption.Decrypt(Connectionstring)))
+            {
+                try
+                {
+                    connect.Open();
+                    SqlCommand command = new SqlCommand("UniquenessCheck", connect);
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    SqlParameter Param1 = new SqlParameter { ParameterName = "@Article", Value = Article };
+                    command.Parameters.Add(Param1);
+
+                    int result = (int)command.ExecuteScalar();
+
+                    if (result > 0)
+                        ok = false;
+                    else
+                    {
+                        ok = true;
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message.ToString());
+                }
+            }
+            return ok;
+        }
 
 
 

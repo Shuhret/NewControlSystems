@@ -168,7 +168,7 @@
                         </Storyboard>
                     </ControlTemplate.Resources>
                     <Grid>
-                        <Border x:Name="border" ClipToBounds="True" CornerRadius="0" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Background="White">
+                        <Border x:Name="border" ClipToBounds="True" CornerRadius="0" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Background="White" Padding="{TemplateBinding Padding}">
                             <Grid>
                                 <Rectangle x:Name="rectangle_Copy1" Fill="{TemplateBinding Background}" Opacity="1" RadiusY="0" RadiusX="0" Margin="0"/>
                                 <Rectangle x:Name="rectangle" Fill="White" Opacity="0" RadiusY="0" RadiusX="0" Margin="0" d:IsHidden="True"/>

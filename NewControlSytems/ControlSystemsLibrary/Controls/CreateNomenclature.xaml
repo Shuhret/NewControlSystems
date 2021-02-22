@@ -177,11 +177,23 @@
                                                 <Border.Background>
                                                     <SolidColorBrush Color="{DynamicResource Light-001}"/>
                                                 </Border.Background>
-                                                <TextBox x:Name="ArticleTextBox" MaxLength="50" Text="{Binding Article, ElementName=CN, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Center" Padding="5,1,1,1" KeyDown="TextBox_KeyDown" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" FontSize="12">
-                                                    <TextBox.Foreground>
-                                                        <SolidColorBrush Color="{DynamicResource Blue-004}"/>
-                                                    </TextBox.Foreground>
-                                                </TextBox>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBox x:Name="ArticleTextBox" MaxLength="50" Text="{Binding Article, ElementName=CN, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Center" Padding="5,1,1,1" KeyDown="TextBox_KeyDown" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" FontSize="12" Grid.ColumnSpan="2" GotFocus="ArticleTextBox_GotFocus">
+                                                        <TextBox.Foreground>
+                                                            <SolidColorBrush Color="{DynamicResource Blue-004}"/>
+                                                        </TextBox.Foreground>
+                                                    </TextBox>
+                                                    <Button x:Name="AutoGenerateArticleButton" Content="AUTO" Grid.Column="2" Style="{DynamicResource ButtonStyle-002}" Background="Transparent" BorderThickness="1,2,2,2" BorderBrush="{x:Null}" Padding="5,1" FontSize="12" Cursor="Hand" Click="AutoGenerateArticleButton_Click">
+                                                        <Button.Foreground>
+                                                            <SolidColorBrush Color="{DynamicResource Blue-003}"/>
+                                                        </Button.Foreground>
+
+                                                    </Button>
+                                                </Grid>
                                             </Border>
                                         </StackPanel>
                                     </Grid>

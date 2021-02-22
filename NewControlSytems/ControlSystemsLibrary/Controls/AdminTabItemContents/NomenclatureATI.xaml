@@ -429,7 +429,18 @@
                                 </Canvas>
                             </Viewbox>
                         </Button>
-                        <Button x:Name="SelectedItemsButton" Style="{DynamicResource ButtonStyle-001}" Visibility="{Binding SelectedVisibility, ElementName=Nom, UpdateSourceTrigger=PropertyChanged}" BorderThickness="1" Margin="5,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Foreground="White" Width="30" Padding="11,1" Cursor="Hand" ToolTip="Выбранные" Click="SelectedItemsButton_Click">
+                        <Button x:Name="SelectedItemsButton" Style="{DynamicResource ButtonStyle-001}" Visibility="{Binding SelectedVisibility, ElementName=Nom, UpdateSourceTrigger=PropertyChanged}" BorderThickness="1" Margin="5,0,0,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Foreground="White" MinWidth="30" Width="auto" Padding="11,1" Cursor="Hand" ToolTip="Выбранные" Click="SelectedItemsButton_Click">
+                            <Button.ContextMenu >
+                                <ContextMenu>
+                                    <MenuItem Header="Открыть список выбранных"/>
+                                    <MenuItem Header="Остатки на складах"/>
+                                    <MenuItem Header="Изменить свойства и значения"/>
+                                    <MenuItem Header="Изменить метки"/>
+                                    <MenuItem Header="Анализ продаж"/>
+                                    <MenuItem Header="Поместить в документ"/>
+                                    <MenuItem Header="Блокировать"/>
+                                </ContextMenu>
+                            </Button.ContextMenu>
                             <Button.Background>
                                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                     <GradientStop Color="#FFA0BD63" Offset="1"/>
@@ -439,7 +450,7 @@
                             <Button.BorderBrush>
                                 <SolidColorBrush Color="{DynamicResource Light-005}"/>
                             </Button.BorderBrush>
-                            <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Horizontal" Margin="5,0">
                                 <Viewbox Width="13">
                                     <Canvas HorizontalAlignment="Left" Height="70" UseLayoutRounding="False" VerticalAlignment="Top" Width="70">
                                         <Canvas Height="70" Canvas.Left="7.713" Canvas.Top="0" Width="54.58">
