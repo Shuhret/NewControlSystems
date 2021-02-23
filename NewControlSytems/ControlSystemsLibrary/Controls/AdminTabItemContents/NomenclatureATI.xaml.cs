@@ -193,11 +193,14 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
         {
             if (FirstBoot == true)
             {
+                LoadMainNomenclatures();
                 LoadAllNomenclatures();
-                
                 FirstBoot = false;
             }
         }
+
+
+
 
         private void Row_DoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -339,6 +342,7 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
                 e.Handled = true;
             }
         }
+
         private void DataGridRow_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             // Если нажато: Пробел
@@ -415,15 +419,21 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
 
         // Методы ----------------------------------------------------------------------------------------------------------------------------
 
+        private async void LoadMainNomenclatures()
+        {
+            await Task.Run(() => ShowNomenclaturesCollection = DataBaseRequest.GetMainNomenclatures(CurrentCryptConnectionString));
+            DataGridNomenclatures.ItemsSource = ShowNomenclaturesCollection;
+            AddLinqButton();
+        }
 
         async void LoadAllNomenclatures()
         {
             AllNomenclaturesCollection.Clear();
             await Task.Run(() => AllNomenclaturesCollection = DataBaseRequest.GetAllNomenclatures(CurrentCryptConnectionString));
-            LoadShowNomenclatures();
-            DataGridNomenclatures.ItemsSource = ShowNomenclaturesCollection;
-            SearchedText = "";
-            AddLinqButton();
+            //LoadShowNomenclatures();
+            //DataGridNomenclatures.ItemsSource = ShowNomenclaturesCollection;
+            //SearchedText = "";
+            //AddLinqButton();
         }
 
         void LoadShowNomenclatures()

@@ -338,7 +338,7 @@
                             <Border.BorderBrush>
                                 <SolidColorBrush Color="{DynamicResource Light-005}"/>
                             </Border.BorderBrush>
-                            <DataGrid x:Name="DataGridSelectedItems" VerticalScrollBarVisibility="Visible" CanUserReorderColumns="False" IsSynchronizedWithCurrentItem = "true"  Style="{DynamicResource NomenDG}" BorderThickness="0"  AutoGenerateColumns="False"  CanUserAddRows="False" Background="{x:Null}" Margin="10,5,0,10" Loaded="DataGridSelectedItems_Loaded">
+                            <DataGrid x:Name="DataGridSelectedItems" VerticalScrollBarVisibility="Visible" CanUserReorderColumns="True" IsSynchronizedWithCurrentItem = "true"  Style="{DynamicResource NomenDG}" BorderThickness="0"  AutoGenerateColumns="False"  CanUserAddRows="False" Background="{x:Null}" Margin="10,5,0,10" Loaded="DataGridSelectedItems_Loaded">
                                 <DataGrid.BorderBrush>
                                     <SolidColorBrush Color="{DynamicResource Light-005}"/>
                                 </DataGrid.BorderBrush>
@@ -364,13 +364,13 @@
 
 
                                     <!--Столбец Название-->
-                                    <DataGridTextColumn Header="Наименование" Width="5*" Binding="{Binding Name}"  IsReadOnly="True" CanUserResize="False"/>
+                                    <DataGridTextColumn Header="Наименование" Width="5*" Binding="{Binding Name}"  IsReadOnly="True" CanUserResize="True"/>
 
                                     <!--Столбец Артикул-->
-                                    <DataGridTextColumn Header="Артикул" Width="2*" MinWidth="70" IsReadOnly="True" Binding="{Binding Article}" CanUserResize="False"/>
+                                    <DataGridTextColumn Header="Артикул" Width="2*" MinWidth="70" IsReadOnly="True" Binding="{Binding Article}" CanUserResize="True"/>
 
                                     <!--Категория-->
-                                    <DataGridTextColumn Width="3*" Header="Категория" IsReadOnly="True" Binding="{Binding Category}" CanUserResize="False"/>
+                                    <DataGridTextColumn Width="3*" Header="Категория" IsReadOnly="True" Binding="{Binding Category}" CanUserResize="True"/>
 
                                 </DataGrid.Columns>
 

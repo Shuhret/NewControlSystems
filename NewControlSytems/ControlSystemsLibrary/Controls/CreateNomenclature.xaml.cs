@@ -1738,7 +1738,7 @@ namespace ControlSystemsLibrary.Controls
             }
             else
             {
-                if (MessageBox.Show("Вы уверены что хотите изменить артикул?", "Предупреждение", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+                if (MessageBox.Show("Вы уверены что хотите изменить артикул?", "Внимание!", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
                 {
                     AutoGenerateArticle();
                 }

@@ -80,6 +80,51 @@ namespace ControlSystemsLibrary.Services
             return UserInterfaceName;
         }
 
+        public static ObservableCollection<NomenclatureClass> GetMainNomenclatures(string Connectionstring)
+        {
+            ObservableCollection<NomenclatureClass> list = new ObservableCollection<NomenclatureClass>();
+            using (SqlConnection connect = new SqlConnection(Cryption.Decrypt(Connectionstring)))
+            {
+                try
+                {
+                    connect.Open();
+                    SqlCommand command = new SqlCommand("GetMainNomenclatures", connect);
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    SqlDataReader reading = command.ExecuteReader();
+
+                    while (reading.Read())
+                    {
+                        NomenclatureClass NC = new NomenclatureClass();
+                        NC.ID = (Guid)reading.GetValue(0);
+                        NC.GroupID = (Guid)reading.GetValue(1);
+                        NC.GroupNomen = (bool)reading.GetValue(2);
+                        NC.Name = reading.GetValue(3).ToString();
+
+                        if (NC.GroupNomen == true)
+                        {
+                            NC.Category = reading.GetValue(4).ToString();
+                            NC.Article = reading.GetValue(5).ToString();
+                            NC.BaseUnit = reading.GetValue(6).ToString();
+                            NC.WeightBaseUnit = Convert.ToDouble(reading.GetValue(7));
+                            NC.CountryOfOrigin = reading.GetValue(8).ToString();
+                            NC.Description = reading.GetValue(9).ToString();
+                            NC.Aksia = (bool)reading.GetValue(10);
+                            NC.Focus = (bool)reading.GetValue(11);
+                            NC.New = (bool)reading.GetValue(12);
+                        }
+                        list.Add(NC);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Ошибка в методе: DataBaseRequest.GetMainNomenclatures" + "\n" + ex.Message, "Хуёво!");
+                }
+            }
+            return list;
+        }
+
+
         public static ObservableCollection<NomenclatureClass> GetAllNomenclatures(string Connectionstring)
         {
             ObservableCollection<NomenclatureClass> list = new ObservableCollection<NomenclatureClass>();
