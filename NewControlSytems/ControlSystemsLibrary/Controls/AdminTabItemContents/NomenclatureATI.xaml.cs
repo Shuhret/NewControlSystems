@@ -651,7 +651,10 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
 
         private void CreateNomenclatureButtonClick(object sender, RoutedEventArgs e)
         {
-            if(DataGridNomenclatures.SelectedItem != null)
+            ClearSelected();
+            ClearCutList();
+
+            if (DataGridNomenclatures.SelectedItem != null)
             {
                 SelectedItem = DataGridNomenclatures.SelectedItem as NomenclatureClass;
             }
@@ -682,6 +685,8 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
 
         private void EditNomenclatureButtonClick(object sender, RoutedEventArgs e)
         {
+            ClearSelected();
+            ClearCutList();
             if (DataGridNomenclatures.SelectedItem != null)
             {
                 SelectedItem = DataGridNomenclatures.SelectedItem as NomenclatureClass;
@@ -702,6 +707,8 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
 
         private void CreateNomenclatureGroupButton_Click(object sender, RoutedEventArgs e)
         {
+            ClearSelected();
+            ClearCutList();
             if (DataGridNomenclatures.SelectedItem != null)
             {
                 SelectedItem = DataGridNomenclatures.SelectedItem as NomenclatureClass;

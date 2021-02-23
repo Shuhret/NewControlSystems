@@ -1766,15 +1766,18 @@ namespace ControlSystemsLibrary.Controls
         {
             string art = "";
             Random Rand = new Random();
-            for(int i = 0; i < 8;i++)
+            for(int i = 0; i < 5; i++)
             {
-                if(i == 2 || i == 5 )
-                {
-                    art += '-';
-                }
                 art += Rand.Next(9);
             }
-            return art;
+            art += "-";
+            String consonants = "AEIOUYBCDFGHJKLMNPQRSTVWXZ";
+            for (int i = 0; i < 2; i++)
+            {
+                art += consonants[Rand.Next(consonants.Length)].ToString();
+            }
+
+                return art;
         }
 
         private int UniquenessCheck(string text)
