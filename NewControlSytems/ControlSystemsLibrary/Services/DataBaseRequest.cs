@@ -928,9 +928,114 @@ namespace ControlSystemsLibrary.Services
             return value;
         }
 
+        public static bool CreateNomenclatureCategory(string Connectionstring, string Category)
+        {
+            bool ok = false;
+            string message = "";
+            using (SqlConnection connect = new SqlConnection(Cryption.Decrypt(Connectionstring)))
+            {
+                try
+                {
+                    connect.Open();
+                    SqlCommand command = new SqlCommand("CreateNomenclatureCategory", connect);
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    SqlParameter Param0 = new SqlParameter { ParameterName = "@Category", Value = Category };
+                    command.Parameters.Add(Param0);
+
+                    command.Parameters.Add("@Result", SqlDbType.Bit).Direction = ParameterDirection.Output;
+                    command.Parameters.Add("@Message", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
+
+                    command.ExecuteNonQuery();
+
+                    ok = (bool)command.Parameters["@Result"].Value;
+                    message = command.Parameters["@Message"].Value.ToString();
+
+                    if(message != "" && ok == false)
+                    {
+                        MessageBox.Show(message, "Внимание!");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "DataBaseRequest.CreateNomenclatureCategory");
+                }
+                return ok;
+            }
+        }
 
 
+        public static bool CreateUnit(string Connectionstring, string UnitName)
+        {
+            bool ok = false;
+            string message = "";
+            using (SqlConnection connect = new SqlConnection(Cryption.Decrypt(Connectionstring)))
+            {
+                try
+                {
+                    connect.Open();
+                    SqlCommand command = new SqlCommand("CreateUnit", connect);
+                    command.CommandType = CommandType.StoredProcedure;
 
+                    SqlParameter Param0 = new SqlParameter { ParameterName = "@Unit", Value = UnitName };
+                    command.Parameters.Add(Param0);
+
+                    command.Parameters.Add("@Result", SqlDbType.Bit).Direction = ParameterDirection.Output;
+                    command.Parameters.Add("@Message", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
+
+                    command.ExecuteNonQuery();
+
+                    ok = (bool)command.Parameters["@Result"].Value;
+                    message = command.Parameters["@Message"].Value.ToString();
+
+                    if (message != "" && ok == false)
+                    {
+                        MessageBox.Show(message, "Внимание!");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "DataBaseRequest.CreateUnit");
+                }
+                return ok;
+            }
+        }
+
+        public static bool CreateCountry(string Connectionstring, string CountryName)
+        {
+            bool ok = false;
+            string message = "";
+            using (SqlConnection connect = new SqlConnection(Cryption.Decrypt(Connectionstring)))
+            {
+                try
+                {
+                    connect.Open();
+                    SqlCommand command = new SqlCommand("CreateCountry", connect);
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    SqlParameter Param0 = new SqlParameter { ParameterName = "@Country", Value = CountryName };
+                    command.Parameters.Add(Param0);
+
+                    command.Parameters.Add("@Result", SqlDbType.Bit).Direction = ParameterDirection.Output;
+                    command.Parameters.Add("@Message", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
+
+                    command.ExecuteNonQuery();
+
+                    ok = (bool)command.Parameters["@Result"].Value;
+                    message = command.Parameters["@Message"].Value.ToString();
+
+                    if (message != "" && ok == false)
+                    {
+                        MessageBox.Show(message, "Внимание!");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "DataBaseRequest.CreateUnit");
+                }
+                return ok;
+            }
+        }
 
 
 
@@ -1070,6 +1175,8 @@ namespace ControlSystemsLibrary.Services
                 return ok;
             }
         }
+
+
 
 
 

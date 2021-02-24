@@ -255,6 +255,8 @@ namespace ControlSystemsLibrary.Controls
         }
 
 
+
+
         private bool addBarcodeButtonEnable = false;
         public bool AddBarcodeButtonEnable
         {
@@ -276,6 +278,8 @@ namespace ControlSystemsLibrary.Controls
                 OnPropertyChanged();
             }
         }
+
+
 
         #endregion :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -1017,11 +1021,11 @@ namespace ControlSystemsLibrary.Controls
                 NomenPropertyUC NPUC = ((propertyComboBox.Parent as Grid).Parent as Border).Parent as NomenPropertyUC;
 
                 LoadValuesInComboBox(ref valueComboBox, (propertyComboBox.SelectedItem as ComboBoxItem).Content.ToString());
-                if (CreateMode)
+                if (NPUC.Readiness == false)
                 {
-                    SetPropertyesReadiness();
-                    valueComboBox.Focus();
                     valueComboBox.IsDropDownOpen = true;
+                    valueComboBox.Focus();
+                    SetPropertyesReadiness();
                 }
             }
         }
@@ -1790,7 +1794,387 @@ namespace ControlSystemsLibrary.Controls
             if(ArticleTextBox.Text == "")
             AutoGenerateArticle();
         }
+
+
+
+
+
+        private Visibility addGridVisibility = Visibility.Collapsed;
+        public Visibility AddGridVisibility
+        {
+            get => addGridVisibility;
+            set
+            {
+                addGridVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string addHeaderText = "";
+        public string AddHeaderText
+        {
+            get => addHeaderText;
+            set
+            {
+                addHeaderText = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string addText = "";
+        public string CreatedAddText
+        {
+            get => addText;
+            set
+            {
+                addText = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool addButtonEnabled = false;
+        public bool AddButtonEnabled
+        {
+            get => addButtonEnabled;
+            set
+            {
+                addButtonEnabled = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private async void AddButtonClick(object sender, RoutedEventArgs e)
+        {
+            Button butt = sender as Button;
+            switch(butt.Name)
+            {
+                case "AddCategoryButton": 
+                    {
+                        AddGridVisibility = Visibility.Visible;
+                        AddHeaderText = "Список категорий";
+                        CreatedAddText = "Категория";
+                        await Task.Run(() => LoadAddCategories());
+                    }
+                    break;
+                case "AddUnitButton": 
+                    {
+                        AddGridVisibility = Visibility.Visible;
+                        AddHeaderText = "Список единиц измерений";
+                        CreatedAddText = "Единица измерения";
+                        await Task.Run(() => LoadAddUnits());
+                    } 
+                    break;
+                case "AddCountryButton": 
+                    {
+                        AddGridVisibility = Visibility.Visible;
+                        AddHeaderText = "Список стран";
+                        CreatedAddText = "Страна";
+                        await Task.Run(() => LoadAddCountry());
+                    } 
+                    break;
+            }
+            CreateTextBox.Focus();
+        }
+
+        private void AddClear()
+        {
+            CreateTextBox.Clear();
+            AddListBox.Items.Clear();
+            AddHeaderText = "";
+            CreatedAddText = "";
+        }
+
+        private void CloseAddButton_Click(object sender, RoutedEventArgs e)
+        {
+            AddClear();
+            AddGridVisibility = Visibility.Collapsed;
+        }
+
+        private void LoadAddCategories()
+        {
+            ArrayList units = new ArrayList();
+            units = DataBaseRequest.GetAllNomenclatureCategories(CurrentCryptConnectionString);
+            Action action = () =>
+            {
+                AddListBox.Items.Clear();
+                foreach (object obj2 in units)
+                {
+                    ListBoxItem newItem = new ListBoxItem
+                    {
+                        Height = 25,
+                        Foreground = GetColor.Get("Blue-004"),
+                        Padding = new Thickness(10.0, 0.0, 0.0, 0.0)
+                    };
+                    newItem.MouseDoubleClick += CategoriesItem_MouseDoubleClick;
+                    newItem.Content = obj2.ToString();
+                    AddListBox.Items.Add(newItem);
+                }
+            };
+            Dispatcher.Invoke(action);
+        }
+
+
+        private void LoadAddUnits()
+        {
+            ArrayList units = new ArrayList();
+            units = DataBaseRequest.GetUnitsName(CurrentCryptConnectionString);
+            Action action = () =>
+            {
+                AddListBox.Items.Clear();
+                foreach (object obj2 in units)
+                {
+                    ListBoxItem newItem = new ListBoxItem
+                    {
+                        Height = 25,
+                        Foreground = GetColor.Get("Blue-004"),
+                        Padding = new Thickness(10.0, 0.0, 0.0, 0.0)
+                    };
+                    newItem.MouseDoubleClick += UnitsItem_MouseDoubleClick;
+                    newItem.Content = obj2.ToString();
+                    AddListBox.Items.Add(newItem);
+                }
+            };
+            Dispatcher.Invoke(action);
+        }
+
+
+        private void LoadAddCountry()
+        {
+            ArrayList units = new ArrayList();
+            units = DataBaseRequest.GetCountry(CurrentCryptConnectionString);
+            Action action = () =>
+            {
+                AddListBox.Items.Clear();
+                foreach (object obj2 in units)
+                {
+                    ListBoxItem newItem = new ListBoxItem
+                    {
+                        Height = 25,
+                        Foreground = GetColor.Get("Blue-004"),
+                        Padding = new Thickness(10.0, 0.0, 0.0, 0.0)
+                    };
+                    newItem.MouseDoubleClick += CountryItem_MouseDoubleClick;
+                    newItem.Content = obj2.ToString();
+                    AddListBox.Items.Add(newItem);
+                }
+            };
+            Dispatcher.Invoke(action);
+        }
+
+
+        private void CategoriesItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if(sender is ListBoxItem)
+            {
+                ListBoxItem LBI = sender as ListBoxItem;
+                foreach (ComboBoxItem CBI in CategoriesComboBox.Items)
+                {
+                    if (CBI.Content.ToString() == LBI.Content.ToString())
+                        CategoriesComboBox.SelectedItem = CBI;
+                }
+            }
+            AddClear();
+            AddGridVisibility = Visibility.Collapsed;
+        }
+        private void UnitsItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is ListBoxItem)
+            {
+                ListBoxItem LBI = sender as ListBoxItem;
+                foreach (ComboBoxItem CBI in BaseUnitComboBox.Items)
+                {
+                    if (CBI.Content.ToString() == LBI.Content.ToString())
+                        BaseUnitComboBox.SelectedItem = CBI;
+                }
+            }
+            AddClear();
+            AddGridVisibility = Visibility.Collapsed;
+        }
+        private void CountryItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is ListBoxItem)
+            {
+                ListBoxItem LBI = sender as ListBoxItem;
+                foreach (ComboBoxItem CBI in ComboBoxCountry.Items)
+                {
+                    if (CBI.Content.ToString() == LBI.Content.ToString())
+                        ComboBoxCountry.SelectedItem = CBI;
+                }
+            }
+            AddClear();
+            AddGridVisibility = Visibility.Collapsed;
+        }
+
+        private async void CreateAndAddButton_Click(object sender, RoutedEventArgs e)
+        {
+            AddButtonEnabled = false;
+            switch (CreatedAddText)
+            {
+                case "Категория":
+                    {
+                        if(await Task.Run(() => AddCategory()) == true)
+                        {
+                            await Task.Run(() => LoadAddCategories());
+                            foreach(ListBoxItem LBI in AddListBox.Items)
+                            {
+                                if(LBI.Content.ToString() == CreateTextBox.Text)
+                                {
+                                    AddListBox.SelectedItem = LBI;
+                                    break;
+                                }
+                            }
+                            await Task.Run(() =>
+                            {
+                                Action action = () =>
+                                {
+                                    LoadCategories();
+                                    foreach(ComboBoxItem CBI in CategoriesComboBox.Items)
+                                    {
+                                        if (CBI.Content.ToString() == CreateTextBox.Text)
+                                            CategoriesComboBox.SelectedItem = CBI;
+                                    }
+                                };
+                                Dispatcher.Invoke(action);
+                            });
+                            CreateTextBox.Text = "";
+                            CreateTextBox.Focus();
+                            AddButtonEnabled = true;
+                        }
+                    }
+                    break;
+                case "Единица измерения":
+                    {
+                        if (await Task.Run(() => AddUnit()) == true)
+                        {
+                            await Task.Run(() => LoadAddUnits());
+                            foreach (ListBoxItem LBI in AddListBox.Items)
+                            {
+                                if (LBI.Content.ToString() == CreateTextBox.Text)
+                                {
+                                    AddListBox.SelectedItem = LBI;
+                                    break;
+                                }
+                            }
+                            await Task.Run(() =>
+                            {
+                                Action action = () =>
+                                {
+                                    LoadUnits();
+                                    foreach (ComboBoxItem CBI in BaseUnitComboBox.Items)
+                                    {
+                                        if (CBI.Content.ToString() == CreateTextBox.Text)
+                                            BaseUnitComboBox.SelectedItem = CBI;
+                                    }
+                                };
+                                Dispatcher.Invoke(action);
+                            });
+                            CreateTextBox.Text = "";
+                            CreateTextBox.Focus();
+                            AddButtonEnabled = true;
+                        }
+                    }
+                    break;
+                case "Страна":
+                    {
+                        if (await Task.Run(() => AddCountry()) == true)
+                        {
+                            await Task.Run(() => LoadAddCountry());
+                            foreach (ListBoxItem LBI in AddListBox.Items)
+                            {
+                                if (LBI.Content.ToString() == CreateTextBox.Text)
+                                {
+                                    AddListBox.SelectedItem = LBI;
+                                    break;
+                                }
+                            }
+                            await Task.Run(() =>
+                            {
+                                Action action = () =>
+                                {
+                                    LoadCountry();
+                                    foreach (ComboBoxItem CBI in ComboBoxCountry.Items)
+                                    {
+                                        if (CBI.Content.ToString() == CreateTextBox.Text)
+                                            ComboBoxCountry.SelectedItem = CBI;
+                                    }
+                                };
+                                Dispatcher.Invoke(action);
+                            });
+                            CreateTextBox.Text = "";
+                            CreateTextBox.Focus();
+                            AddButtonEnabled = true;
+                        }
+                    }
+                    break;
+            }
+            //CreateNomenclatureCategory()
+        }
+
+        private void CreateTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if((sender as TextBox).Text != "" && (sender as TextBox).Text != null)
+            {
+                AddButtonEnabled = true;
+            }
+            else
+            {
+                AddButtonEnabled = false;
+            }
+        }
+
+        private bool AddCategory()
+        {
+            bool flag = false;
+            Action action = () =>
+            {
+                flag = DataBaseRequest.CreateNomenclatureCategory(CurrentCryptConnectionString, CreateTextBox.Text);
+            };
+            Dispatcher.Invoke(action);
+            return flag;
+        }
+
+        private bool AddUnit()
+        {
+            bool flag = false;
+            Action action = () =>
+            {
+                flag = DataBaseRequest.CreateUnit(CurrentCryptConnectionString, CreateTextBox.Text);
+            };
+            Dispatcher.Invoke(action);
+            return flag;
+        }
+
+        private bool AddCountry()
+        {
+            bool flag = false;
+            Action action = () =>
+            {
+                flag = DataBaseRequest.CreateCountry(CurrentCryptConnectionString, CreateTextBox.Text);
+            };
+            Dispatcher.Invoke(action);
+            return flag;
+        }
+
+        
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

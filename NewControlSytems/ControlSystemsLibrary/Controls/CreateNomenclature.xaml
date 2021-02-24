@@ -167,7 +167,7 @@
                                                             <SolidColorBrush Color="{DynamicResource Blue-004}"/>
                                                         </ComboBox.Foreground>
                                                     </ComboBox>
-                                                    <Button x:Name="AddCategoryButton" Style="{DynamicResource ButtonStyle-002}" Background="Transparent" BorderThickness="2" BorderBrush="{x:Null}" Padding="5,1" FontSize="12" Cursor="Hand" Margin="0" Width="30" Grid.Column="1">
+                                                    <Button x:Name="AddCategoryButton" Style="{DynamicResource ButtonStyle-002}" Background="Transparent" BorderThickness="2" BorderBrush="{x:Null}" Padding="5,1" FontSize="12" Cursor="Hand" Margin="0" Width="30" Grid.Column="1" Click="AddButtonClick">
                                                         <Button.Foreground>
                                                             <SolidColorBrush Color="{DynamicResource Blue-003}"/>
                                                         </Button.Foreground>
@@ -255,7 +255,7 @@
                                                             <SolidColorBrush Color="{DynamicResource Blue-004}"/>
                                                         </ComboBox.Foreground>
                                                     </ComboBox>
-                                                    <Button x:Name="AddCategoryButton_Copy" Style="{DynamicResource ButtonStyle-002}" Background="Transparent" BorderThickness="1,2,2,2" BorderBrush="{x:Null}" Padding="5,1" FontSize="12" Cursor="Hand" Margin="0" Width="30" Grid.Column="1">
+                                                    <Button x:Name="AddUnitButton" Style="{DynamicResource ButtonStyle-002}" Background="Transparent" BorderThickness="1,2,2,2" BorderBrush="{x:Null}" Padding="5,1" FontSize="12" Cursor="Hand" Margin="0" Width="30" Grid.Column="1" Click="AddButtonClick">
                                                         <Button.Foreground>
                                                             <SolidColorBrush Color="{DynamicResource Blue-003}"/>
                                                         </Button.Foreground>
@@ -320,7 +320,7 @@
                                                             <SolidColorBrush Color="{DynamicResource Blue-004}"/>
                                                         </ComboBox.Foreground>
                                                     </ComboBox>
-                                                    <Button x:Name="AddCountryButton" Style="{DynamicResource ButtonStyle-002}" Background="Transparent" BorderThickness="2" BorderBrush="{x:Null}" Padding="5,1" FontSize="12" Cursor="Hand" Margin="0" Grid.Column="1" Width="30">
+                                                    <Button x:Name="AddCountryButton" Style="{DynamicResource ButtonStyle-002}" Background="Transparent" BorderThickness="2" BorderBrush="{x:Null}" Padding="5,1" FontSize="12" Cursor="Hand" Margin="0" Grid.Column="1" Width="30" Click="AddButtonClick">
                                                         <Button.Foreground>
                                                             <SolidColorBrush Color="{DynamicResource Blue-003}"/>
                                                         </Button.Foreground>
@@ -688,9 +688,106 @@
                                     </Grid>
                                 </Border>
                             </Grid>
-
                         </TabItem>
                     </TabControl>
+                    <Grid x:Name="AddGrid" Visibility="{Binding AddGridVisibility, ElementName=CN, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Background="White" Margin="0,10,0,0" d:IsHidden="True">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="5*"/>
+                            <ColumnDefinition Width="5*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Margin="20,0,0,0" BorderThickness="0,0,1,0" Padding="0,0,20,0">
+                            <Border.BorderBrush>
+                                <SolidColorBrush Color="{DynamicResource Light-005}"/>
+                            </Border.BorderBrush>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Border BorderThickness="0,0,0,1">
+                                    <Border.BorderBrush>
+                                        <SolidColorBrush Color="{DynamicResource Blue-003}"/>
+                                    </Border.BorderBrush>
+                                    <TextBlock Text="{Binding AddHeaderText, ElementName=CN, UpdateSourceTrigger=PropertyChanged}" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" FontSize="13" VerticalAlignment="Center">
+                                        <TextBlock.Foreground>
+                                            <SolidColorBrush Color="{DynamicResource Dark-003}"/>
+                                        </TextBlock.Foreground>
+                                    </TextBlock>
+                                </Border>
+                                <Border BorderThickness="0,0,0,1" Grid.Row="1">
+                                    <Border.Background>
+                                        <SolidColorBrush Color="{DynamicResource Light-001}"/>
+                                    </Border.Background>
+                                    <ListBox x:Name="AddListBox" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Padding="2,5">
+                                        <ListBoxItem Height="30" Content="Tajikistan"/>
+                                        <ListBoxItem Height="30" Content="Tajikistan"/>
+                                        <ListBoxItem Height="30" Content="Tajikistan"/>
+                                        
+                                    </ListBox>
+                                </Border>
+                            </Grid>
+                        </Border>
+                        <Border Margin="20,0,0,0" BorderThickness="0,0,1,0" Padding="0,0,20,0" Grid.Column="1">
+                            <Border.BorderBrush>
+                                <SolidColorBrush Color="{DynamicResource Light-005}"/>
+                            </Border.BorderBrush>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Border BorderThickness="0,0,0,1">
+                                    <Border.BorderBrush>
+                                        <SolidColorBrush Color="{DynamicResource Blue-003}"/>
+                                    </Border.BorderBrush>
+                                    <TextBlock Text="Создать и добавить" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" FontSize="13" VerticalAlignment="Center">
+                                        <TextBlock.Foreground>
+                                            <SolidColorBrush Color="{DynamicResource Dark-003}"/>
+                                        </TextBlock.Foreground>
+                                    </TextBlock>
+                                </Border>
+                                <Border BorderThickness="0,0,0,1" Grid.Row="1">
+                                    <StackPanel Margin="0,50,0,0">
+                                        <TextBlock Text="{Binding CreatedAddText, ElementName=CN, UpdateSourceTrigger=PropertyChanged}" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" Margin="2,0,0,3">
+                                            <TextBlock.Foreground>
+                                                <SolidColorBrush Color="{DynamicResource Dark-002}"/>
+                                            </TextBlock.Foreground>
+                                        </TextBlock>
+                                        <Border Height="27" BorderThickness="0" Margin="0">
+                                            <Border.BorderBrush>
+                                                <SolidColorBrush Color="{DynamicResource Light-005}"/>
+                                            </Border.BorderBrush>
+                                            <Border.Background>
+                                                <SolidColorBrush Color="{DynamicResource Light-001}"/>
+                                            </Border.Background>
+                                            <TextBox x:Name="CreateTextBox" MaxLength="100" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Center" Padding="5,1,1,1" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" FontSize="12" TextChanged="CreateTextBox_TextChanged">
+                                                <TextBox.Foreground>
+                                                    <SolidColorBrush Color="{DynamicResource Blue-004}"/>
+                                                </TextBox.Foreground>
+                                            </TextBox>
+                                        </Border>
+                                        <Grid Height="32" Margin="0,10,0,0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="5*"/>
+                                                <ColumnDefinition Width="10"/>
+                                                <ColumnDefinition Width="5*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Button x:Name="CloseAddButton" Style="{DynamicResource ButtonStyle-001}" Foreground="White" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" BorderThickness="0" FontSize="13" Content="Закрыть" Click="CloseAddButton_Click">
+                                                <Button.Background>
+                                                    <SolidColorBrush Color="{DynamicResource Red-001}"/>
+                                                </Button.Background>
+                                            </Button>
+                                            <Button x:Name="CreateAndAddButton" IsEnabled="{Binding AddButtonEnabled, ElementName=CN, UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource ButtonStyle-001}" Foreground="White" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" BorderThickness="0" FontSize="13" Content="Добавить" Grid.Column="2" Click="CreateAndAddButton_Click">
+                                                <Button.Background>
+                                                    <SolidColorBrush Color="{DynamicResource Blue-001}"/>
+                                                </Button.Background>
+                                            </Button>
+                                        </Grid>
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
+                        </Border>
+                    </Grid>
                     <Grid Grid.Row="2" Margin="20,0" VerticalAlignment="Center">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>

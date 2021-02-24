@@ -141,6 +141,16 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
 
         bool FirstBoot = true;
 
+        private bool buttonsEnable = false;
+        public bool ButtonsEnable
+        {
+            get => buttonsEnable;
+            set
+            {
+                buttonsEnable = value;
+                OnPropertyChanged();
+            }
+        }
 
         // События----------------------------------------------------------------------------------------------------------------------------
 
@@ -189,15 +199,6 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
             }
         }
 
-        private void DataGridNomenclatures_Loaded(object sender, RoutedEventArgs e)
-        {
-            if (FirstBoot == true)
-            {
-                LoadMainNomenclatures();
-                LoadAllNomenclatures();
-                FirstBoot = false;
-            }
-        }
 
 
 
@@ -415,13 +416,24 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
             }
         }
 
+        private void DataGridNomenclatures_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (FirstBoot == true)
+            {
+                LoadMainNomenclatures();
+                LoadAllNomenclatures();
+                FirstBoot = false;
+            }
+        }
 
 
         // Методы ----------------------------------------------------------------------------------------------------------------------------
 
         private async void LoadMainNomenclatures()
         {
-            await Task.Run(() => ShowNomenclaturesCollection = DataBaseRequest.GetMainNomenclatures(CurrentCryptConnectionString));
+            await Task.Run(() => AllNomenclaturesCollection = DataBaseRequest.GetMainNomenclatures(CurrentCryptConnectionString));
+            
+            LoadShowNomenclatures();
             DataGridNomenclatures.ItemsSource = ShowNomenclaturesCollection;
             AddLinqButton();
         }
@@ -430,7 +442,8 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
         {
             AllNomenclaturesCollection.Clear();
             await Task.Run(() => AllNomenclaturesCollection = DataBaseRequest.GetAllNomenclatures(CurrentCryptConnectionString));
-            //LoadShowNomenclatures();
+            LoadShowNomenclatures();
+            ButtonsEnable = true;
             //DataGridNomenclatures.ItemsSource = ShowNomenclaturesCollection;
             //SearchedText = "";
             //AddLinqButton();
@@ -486,7 +499,6 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
                 DataGridNomenclatures.Columns[3].IsReadOnly = false;
                 DataGridNomenclatures.BeginEdit();
                 DataGridNomenclatures.Columns[3].IsReadOnly = true;
-
             }
             if (DataGridNomenclatures.Items.Count > 0 && SelectedItem == null)
             {
