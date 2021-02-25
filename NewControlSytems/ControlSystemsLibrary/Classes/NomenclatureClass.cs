@@ -162,13 +162,15 @@ namespace ControlSystemsLibrary.Classes
                 if (value > 0)
                 {
                     if (value < 1)
-                        WeightBaseUnitShow = (weightBaseUnit * 1000).ToString() + " гр";
+                        WeightBaseUnitShow = string.Format("{0:0.000}", (weightBaseUnit * 1000)) + " гр";
+                    //WeightBaseUnitShow = (weightBaseUnit * 1000).ToString() + " гр";
                     else
-                        WeightBaseUnitShow = value.ToString() + " кг";
+                        WeightBaseUnitShow = string.Format("{0:0.000}", value) + " кг";
+                    //WeightBaseUnitShow = value.ToString() + " кг";
                 }
             }
         }
-
+        
 
         // Вес Базовой Единицы для показа в DataGrid
         private string weightBaseUnitShow = "";

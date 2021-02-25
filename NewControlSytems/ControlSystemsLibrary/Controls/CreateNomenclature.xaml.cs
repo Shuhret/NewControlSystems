@@ -221,6 +221,8 @@ namespace ControlSystemsLibrary.Controls
             set
             {
                 readiness = value;
+                if (value == true)
+                    CreateButtonEnable = value;
                 OnPropertyChanged();
             }
         }
@@ -239,6 +241,23 @@ namespace ControlSystemsLibrary.Controls
                 OnPropertyChanged();
             }
         }
+
+        
+        private bool сreateButtonEnable;
+        public bool CreateButtonEnable
+        {
+            get
+            {
+                return сreateButtonEnable;
+            }
+            set
+            {
+                сreateButtonEnable = value;
+                OnPropertyChanged();
+            }
+        }
+
+
 
         private string headerText;
         public string HeaderText
@@ -961,8 +980,8 @@ namespace ControlSystemsLibrary.Controls
         }
 
 
-
         #endregion :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
 
         // Событие: Click (Для добавления нового свойства) -----------------------------------------------------------------------------------
         private void AddPropertyButton_Click(object sender, RoutedEventArgs e)
@@ -1378,6 +1397,7 @@ namespace ControlSystemsLibrary.Controls
         // Событие: Клик кнопки "СОЗДАТЬ"
         private async void CreateNomenclatureButton_Click(object sender, RoutedEventArgs e)
         {
+            CreateButtonEnable = false;
             RemoveReadinessFalseAddedUnits();
             RemoveReadinessFalseProperties();
             RemoveReadinessFalseBarcodes();

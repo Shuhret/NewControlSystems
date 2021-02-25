@@ -1298,7 +1298,7 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
 
         private void CheckBoxClick(object sender, RoutedEventArgs e)
         {
-            e.Handled = false;
+            e.Handled = true;
         }
 
 
