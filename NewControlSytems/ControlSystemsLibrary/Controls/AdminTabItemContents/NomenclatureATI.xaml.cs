@@ -1014,8 +1014,7 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
         // Событие: Клик на Теги (Акция, Фокус и Новинка) ------------------------------------------------------------------------------------
         private void UpdateTagsClick(object sender, RoutedEventArgs e)
         {
-            e.Handled = true;
-            //UpdateTagsIntoDataBase(sender);
+            UpdateTagsIntoDataBase(sender);
         }
 
         private bool UpdateTagsIntoDataBase(object sender)
