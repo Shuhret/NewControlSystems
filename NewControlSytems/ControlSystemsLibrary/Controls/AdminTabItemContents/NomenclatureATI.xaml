@@ -13,10 +13,8 @@
 
         <Style x:Key="ColumnHeaderStyle1" TargetType="DataGridColumnHeader">
             <EventSetter Event="MouseDoubleClick" Handler="DG_Header_DoubleClick"/>
-            <!--Стиль для области заголовка-->
             <Setter Property="Height" Value="40"/>
             <Setter Property="Background" Value="White"/>
-
             <Setter Property="BorderBrush">
                 <Setter.Value>
                     <SolidColorBrush Color="{DynamicResource Blue-003}"/>
@@ -34,28 +32,19 @@
             <Setter Property="DataGridColumnHeader.SeparatorBrush" Value="Yellow"/>
             <Setter Property="SeparatorVisibility" Value="Visible" />
             <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <!--<Setter Property="HorizontalContentAlignment" Value="Center"/>-->
             <Setter Property="Padding" Value="10,0,0,0"/>
-
         </Style>
 
         <Style TargetType="DataGridRow">
             <EventSetter Event="MouseDoubleClick" Handler="Row_DoubleClick"/>
             <EventSetter Event="PreviewKeyDown" Handler="DataGridRow_PreviewKeyDown"/>
-
             <Setter Property="Background" Value="White"/>
-
             <Style.Triggers>
                 <Trigger Property="IsSelected" Value="True">
                     <Setter Property="Background" Value="#FFFBFCFE"/>
                 </Trigger>
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="FontWeight"  Value="Bold" />
-                    <!--<Setter Property="Background" >
-                        <Setter.Value>
-                            <SolidColorBrush Color="{DynamicResource Light-001}"/>
-                        </Setter.Value>
-                    </Setter>-->
                 </Trigger>
             </Style.Triggers>
         </Style>
@@ -530,7 +519,7 @@
 
                             <DataGridTemplateColumn.CellTemplate >
                                 <DataTemplate >
-                                    <CheckBox IsChecked="{Binding Selected, UpdateSourceTrigger=PropertyChanged}" Click="CheckBoxClick" Checked="Select" Unchecked="Select" Style="{DynamicResource NoTextCircleCheckBoxStyle}" BorderThickness="1" Width="15" Height="15" Cursor="Hand">
+                                    <CheckBox IsChecked="{Binding Selected, UpdateSourceTrigger=PropertyChanged}" Checked="Select" Unchecked="Select" Style="{DynamicResource NoTextCircleCheckBoxStyle}" BorderThickness="1" Width="15" Height="15" Cursor="Hand" Click="CheckBoxClick">
                                         <CheckBox.Background>
                                             <SolidColorBrush Color="{DynamicResource Blue-004}"/>
                                         </CheckBox.Background>
@@ -587,9 +576,9 @@
                             <DataGridTemplateColumn.CellTemplate  >
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal" Visibility="{Binding TagVisibility}">
-                                        <CheckBox x:Name="TagAksia" Style="{DynamicResource GiftCheckBoxStyle}" Margin="0,0,20,0" Cursor="Hand" Checked="UpdateTagsClick" Unchecked="UpdateTagsClick" IsChecked="{Binding Aksia, UpdateSourceTrigger=PropertyChanged}"/>
-                                        <CheckBox x:Name="TagFocus" Style="{DynamicResource FocusCheckBoxStyle}" Margin="0,0,20,0" Cursor="Hand" Checked="UpdateTagsClick" Unchecked="UpdateTagsClick" IsChecked="{Binding Focus, UpdateSourceTrigger=PropertyChanged}"/>
-                                        <CheckBox x:Name="TagNew" Style="{DynamicResource NewCheckBoxStyle}" Margin="0,0,30,0" Cursor="Hand" Checked="UpdateTagsClick" Unchecked="UpdateTagsClick"  IsChecked="{Binding New, UpdateSourceTrigger=PropertyChanged}"/>
+                                        <CheckBox x:Name="TagAksia" Style="{DynamicResource GiftCheckBoxStyle}" Margin="0,0,20,0" Cursor="Hand" Click="UpdateTagsClick" IsChecked="{Binding Aksia, UpdateSourceTrigger=PropertyChanged}"/>
+                                        <CheckBox x:Name="TagFocus" Style="{DynamicResource FocusCheckBoxStyle}" Margin="0,0,20,0" Cursor="Hand" Click="UpdateTagsClick" IsChecked="{Binding Focus, UpdateSourceTrigger=PropertyChanged}"/>
+                                        <CheckBox x:Name="TagNew" Style="{DynamicResource NewCheckBoxStyle}" Margin="0,0,30,0" Cursor="Hand" Click="UpdateTagsClick"  IsChecked="{Binding New, UpdateSourceTrigger=PropertyChanged}"/>
                                     </StackPanel>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>

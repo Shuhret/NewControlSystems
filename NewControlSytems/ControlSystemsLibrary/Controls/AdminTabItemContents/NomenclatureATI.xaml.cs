@@ -9,6 +9,7 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -55,7 +56,6 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
         // Поля и свойства -------------------------------------------------------------------------------------------------------------------
 
         ObservableCollection<NomenclatureClass> AllNomenclaturesCollection = new ObservableCollection<NomenclatureClass>();
-
         ObservableCollection<NomenclatureClass> ShowNomenclaturesCollection = new ObservableCollection<NomenclatureClass>();
 
         private NomenclatureClass selectedItem;
@@ -216,9 +216,9 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
 
         private void DG_Header_DoubleClick(object sender, MouseButtonEventArgs e)
         {
-            foreach(NomenclatureClass NC in AllNomenclaturesCollection)
+            foreach (NomenclatureClass NC in AllNomenclaturesCollection)
             {
-                if(NC.ID == CurrentGroupID)
+                if (NC.ID == CurrentGroupID)
                 {
                     SelectedItem = NC;
                     CurrentGroupID = NC.GroupID;
@@ -422,8 +422,9 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
             {
                 LoadMainNomenclatures();
                 LoadAllNomenclatures();
-                FirstBoot = false;
             }
+            FirstBoot = false;
+
         }
 
 
@@ -790,7 +791,8 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
                 else if(NC.MainCutElement == true)
                 {
                     NC.CutOut = false;
-                    if(CheckChildrenExist(NC) == true)
+                    NC.MainCutElement = false;
+                    if (CheckChildrenExist(NC) == true)
                     {
                         CancelCutChildren(NC);
                     }
@@ -1009,38 +1011,35 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
 
 
 
-
         // Событие: Клик на Теги (Акция, Фокус и Новинка) ------------------------------------------------------------------------------------
         private void UpdateTagsClick(object sender, RoutedEventArgs e)
         {
-            UpdateTagsIntoDataBase(sender);
+            e.Handled = true;
+            //UpdateTagsIntoDataBase(sender);
         }
 
         private bool UpdateTagsIntoDataBase(object sender)
         {
             bool flag = false;
-            if (sender is CheckBox)
+            CheckBox ch = sender as CheckBox;
+            NomenclatureClass item = ch.DataContext as NomenclatureClass;
+            switch (ch.Name)
             {
-                CheckBox ch = sender as CheckBox;
-                NomenclatureClass item = ch.DataContext as NomenclatureClass;
-                switch (ch.Name)
-                {
-                    case "TagAksia":
-                        {
-                            flag =  DataBaseRequest.UpdateTagAksia(CurrentCryptConnectionString, item);
-                            break;
-                        }
-                    case "TagFocus":
-                        {
-                            flag = DataBaseRequest.UpdateTagFocus(CurrentCryptConnectionString, item);
-                            break;
-                        }
-                    case "TagNew":
-                        {
-                            flag = DataBaseRequest.UpdateTagNew(CurrentCryptConnectionString, item);
-                            break;
-                        }
-                }
+                case "TagAksia":
+                    {
+                        //flag =  DataBaseRequest.UpdateTagAksia(CurrentCryptConnectionString, item);
+                        break;
+                    }
+                case "TagFocus":
+                    {
+                        flag = DataBaseRequest.UpdateTagFocus(CurrentCryptConnectionString, item);
+                        break;
+                    }
+                case "TagNew":
+                    {
+                        flag = DataBaseRequest.UpdateTagNew(CurrentCryptConnectionString, item);
+                        break;
+                    }
             }
             return flag;
         }
@@ -1327,5 +1326,6 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
         {
             CreateNemenclatureUC = null;
         }
+
     }
 }
