@@ -8,8 +8,91 @@
              x:Name="Nom"
              d:DesignHeight="900" d:DesignWidth="1440" TextOptions.TextFormattingMode="Ideal" PreviewKeyDown="Nom_PreviewKeyDown" MouseLeftButtonDown="Nom_MouseLeftButtonDown">
     <UserControl.Resources>
-        <!--Стиль DataGrid-->
-        <!--#region DataGrid-->
+
+        <Style TargetType="{x:Type ContextMenu}">
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+            <Setter Property="OverridesDefaultStyle" Value="True" />
+            <Setter Property="Grid.IsSharedSizeScope" Value="true" />
+            <Setter Property="HasDropShadow" Value="True" />
+            <Setter Property="Foreground">
+                <Setter.Value>
+                    <SolidColorBrush Color="{DynamicResource Dark-001}"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ContextMenu}">
+                        <Border x:Name="Border" BorderThickness="1" Background="White">
+                            <Border.BorderBrush>
+                                <SolidColorBrush Color="{DynamicResource Light-005}" />
+                            </Border.BorderBrush>
+                            <StackPanel IsItemsHost="True"
+                      KeyboardNavigation.DirectionalNavigation="Cycle" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="HasDropShadow" Value="true">
+                                
+                                <Setter TargetName="Border" Property="Padding" Value="4" />
+                                <Setter TargetName="Border" Property="CornerRadius" Value="1" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <ContextMenu  x:Key="RowMenu">
+            <MenuItem Header="Карта номенклатуры" Click="MenuItem_Click" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" VerticalAlignment="Center">
+                <MenuItem.Icon>
+                    <Viewbox Width="13">
+                        <Canvas HorizontalAlignment="Left" Height="70" UseLayoutRounding="False" VerticalAlignment="Top" Width="70">
+                            <Canvas x:Name="Слой_9" Height="64.081" Canvas.Left="0" Canvas.Top="2.959" Width="70">
+                                <Path Data="M67.04,58.29L67.04,58.29L2.959,58.29C1.28700000000001,58.29,0,57.004,0,55.46C0,53.787,1.28700000000001,52.5,2.959,52.5L67.04,52.5C68.585,52.5,70,53.787,70,55.46C70,57.004,68.585,58.29,67.04,58.29 M67.04,46.71L67.04,46.71L2.959,46.71C1.28700000000001,46.71,0,45.423,0,43.75L0,5.919C0,4.246,1.28700000000001,2.959,2.959,2.959L67.04,2.959C68.585,2.959,70,4.246,70,5.919L70,43.75C70,45.423,68.585,46.71,67.04,46.71 M2.959,61.25L67.04,61.25C68.585,61.25,70,62.537,70,64.21C70,65.754,68.585,67.04,67.04,67.04L2.959,67.04C1.28700000000001,67.04,0,65.754,0,64.21C0,62.537,1.28700000000001,61.25,2.959,61.25" Height="64.081" Canvas.Left="0" Stretch="Fill" Canvas.Top="0" Width="70">
+                                    <Path.Fill>
+                                        <SolidColorBrush Color="{DynamicResource Blue-003}"/>
+                                    </Path.Fill>
+                                </Path>
+                            </Canvas>
+                        </Canvas>
+                    </Viewbox>
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="Изменить" Click="MenuItem_Click" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed">
+                <MenuItem.Icon>
+                    <Viewbox Width="13">
+                        <Canvas HorizontalAlignment="Left" Height="30" UseLayoutRounding="False" VerticalAlignment="Top" Width="30">
+                            <Canvas Height="30" Canvas.Left="0" Canvas.Top="0" Width="30">
+                                <Path Canvas.Top="0" Data="M17.027999,10.619 L5.2939987,22.354 7.645999,24.707001 19.380999,12.972 z M15.515999,4.906 L25.093999,14.512 9.5779991,30 0.19599915,29.831999 0,20.421999 z M22.884439,1.502485E-05 C22.976062,-0.00017658683 23.068266,0.0014640426 23.161016,0.0049641476 26.774025,0.17296452 29.827034,3.2259727 29.995033,6.8669828 30.051034,8.3509863 29.631032,9.6669901 28.84703,10.731994 L26.354023,13.252 16.775999,3.645974 19.268006,1.152967 C20.266445,0.41796521 21.5101,0.0028859236 22.884439,1.502485E-05 z" Height="30" Stretch="Fill" Width="30">
+                                    <Path.Fill>
+                                        <SolidColorBrush Color="{DynamicResource Blue-003}"/>
+                                    </Path.Fill>
+                                </Path>
+                            </Canvas>
+                        </Canvas>
+                    </Viewbox>
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="Удалить" Click="MenuItem_Click" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto Condensed" >
+                <MenuItem.Icon>
+                    <Viewbox x:Name="viewbox" Margin="0" Width="13" Height="13">
+                        <Canvas HorizontalAlignment="Left" Height="50" UseLayoutRounding="False" VerticalAlignment="Top" Width="50">
+                            <Canvas Height="50" Canvas.Left="4.688" Canvas.Top="0" Width="40.624">
+                                <Path Data="F1M21.875,3.125L28.125,3.125C28.988,3.125,29.687,3.825,29.687,4.687L29.687,6.25L20.313,6.25L20.313,4.687C20.313,3.825,21.012,3.125,21.875,3.125 M42.857,6.25L32.813,6.25L32.813,4.687C32.813,2.099,30.714,0,28.125,0L21.875,0C19.286,0,17.188,2.099,17.188,4.687L17.188,6.25L7.143,6.25C5.787,6.25,4.688,7.349,4.688,8.706L4.688,13.862C4.688,14.404,5.127,14.844,5.669,14.844L44.33,14.844C44.873,14.844,45.312,14.404,45.312,13.862L45.312,8.706C45.312,7.349,44.213,6.25,42.857,6.25" Height="14.844" Canvas.Left="0" Stretch="Fill" Canvas.Top="0" Width="40.624">
+                                    <Path.Fill>
+                                        <SolidColorBrush Color="{DynamicResource Red-001}"/>
+                                    </Path.Fill>
+                                </Path>
+                                <Path Data="F1M15.625,21.8662C15.625,20.9452,16.422,20.2102,17.364,20.3132C18.162,20.4012,18.75,21.1052,18.75,21.9072L18.75,42.1372C18.75,42.9402,18.162,43.6442,17.364,43.7312C16.422,43.8352,15.625,43.1002,15.625,42.1782z M23.437,21.8662C23.437,20.9452,24.234,20.2102,25.177,20.3132C25.974,20.4012,26.563,21.1052,26.563,21.9072L26.563,42.1372C26.563,42.9402,25.974,43.6442,25.177,43.7312C24.234,43.8352,23.437,43.1002,23.437,42.1782z M31.25,21.8662C31.25,20.9452,32.047,20.2102,32.989,20.3132C33.787,20.4012,34.375,21.1052,34.375,21.9072L34.375,42.1372C34.375,42.9402,33.787,43.6442,32.989,43.7312C32.047,43.8352,31.25,43.1002,31.25,42.1782z M7.613,17.9692C7.334,17.9692,7.112,18.2012,7.125,18.4802L8.415,45.5352C8.534,48.0392,10.59,50.0002,13.096,50.0002L36.824,50.0002C39.33,50.0002,41.387,48.0392,41.506,45.5352L42.795,18.4802C42.809,18.2012,42.586,17.9692,42.308,17.9692z" Height="32.031" Canvas.Left="2.436" Stretch="Fill" Canvas.Top="17.969" Width="35.671">
+                                    <Path.Fill>
+                                        <SolidColorBrush Color="{DynamicResource Red-001}"/>
+                                    </Path.Fill>
+                                </Path>
+                            </Canvas>
+                        </Canvas>
+                    </Viewbox>
+                </MenuItem.Icon>
+            </MenuItem>
+        </ContextMenu>
 
         <Style x:Key="ColumnHeaderStyle1" TargetType="DataGridColumnHeader">
             <EventSetter Event="MouseDoubleClick" Handler="DG_Header_DoubleClick"/>
@@ -38,6 +121,8 @@
         <Style TargetType="DataGridRow">
             <EventSetter Event="MouseDoubleClick" Handler="Row_DoubleClick"/>
             <EventSetter Event="PreviewKeyDown" Handler="DataGridRow_PreviewKeyDown"/>
+            <Setter Property="Opacity" Value="{Binding RowOpasity}"/>
+            <Setter Property="ContextMenu" Value="{StaticResource  RowMenu}"/>
             <Setter Property="Background" Value="White"/>
             <Style.Triggers>
                 <Trigger Property="IsSelected" Value="True">
@@ -397,26 +482,26 @@
                             </Button.BorderBrush>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0">
                                 <Viewbox Width="14">
-                                <Canvas HorizontalAlignment="Left" Height="30" UseLayoutRounding="False" VerticalAlignment="Top" Width="30">
-                                    <Canvas Height="28.573" Canvas.Left="1.89" Canvas.Top="0.713" Width="26.221">
-                                        <Path Data="M4.8096,14.1494L14.9856,24.3544L25.1626,14.1494L20.8536,14.1494L20.8536,6.4964L9.1466,6.4964L9.1466,14.1494z" Height="17.858" Canvas.Left="2.92" Stretch="Fill" Canvas.Top="5.783" Width="20.353">
-                                            <Path.Fill>
-                                                <SolidColorBrush Color="White"/>
-                                            </Path.Fill>
-                                        </Path>
-                                        <Path Data="F1M9.147,4.426L20.854,4.426L20.854,0.712999999999997L9.147,0.712999999999997z" Height="3.713" Canvas.Left="7.257" Stretch="Fill" Canvas.Top="0" Width="11.707">
-                                            <Path.Fill>
-                                                <SolidColorBrush Color="White"/>
-                                            </Path.Fill>
-                                        </Path>
-                                        <Path Data="F1M1.89,29.286L28.111,29.286L28.111,26.509L1.89,26.509z" Height="2.777" Canvas.Left="0" Stretch="Fill" Canvas.Top="25.796" Width="26.221">
-                                            <Path.Fill>
-                                                <SolidColorBrush Color="White"/>
-                                            </Path.Fill>
-                                        </Path>
+                                    <Canvas HorizontalAlignment="Left" Height="30" UseLayoutRounding="False" VerticalAlignment="Top" Width="30">
+                                        <Canvas Height="28.573" Canvas.Left="1.89" Canvas.Top="0.713" Width="26.221">
+                                            <Path Data="M4.8096,14.1494L14.9856,24.3544L25.1626,14.1494L20.8536,14.1494L20.8536,6.4964L9.1466,6.4964L9.1466,14.1494z" Height="17.858" Canvas.Left="2.92" Stretch="Fill" Canvas.Top="5.783" Width="20.353">
+                                                <Path.Fill>
+                                                    <SolidColorBrush Color="White"/>
+                                                </Path.Fill>
+                                            </Path>
+                                            <Path Data="F1M9.147,4.426L20.854,4.426L20.854,0.712999999999997L9.147,0.712999999999997z" Height="3.713" Canvas.Left="7.257" Stretch="Fill" Canvas.Top="0" Width="11.707">
+                                                <Path.Fill>
+                                                    <SolidColorBrush Color="White"/>
+                                                </Path.Fill>
+                                            </Path>
+                                            <Path Data="F1M1.89,29.286L28.111,29.286L28.111,26.509L1.89,26.509z" Height="2.777" Canvas.Left="0" Stretch="Fill" Canvas.Top="25.796" Width="26.221">
+                                                <Path.Fill>
+                                                    <SolidColorBrush Color="White"/>
+                                                </Path.Fill>
+                                            </Path>
+                                        </Canvas>
                                     </Canvas>
-                                </Canvas>
-                            </Viewbox>
+                                </Viewbox>
                                 <TextBlock Text="{Binding CutElementsCout, ElementName=Nom, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding CutElementsCoutVisibility, ElementName=Nom, UpdateSourceTrigger=PropertyChanged}" Margin="2,0,1,0" FontFamily="/ControlSystemsLibrary;component/Resources/Fonts/#Roboto" Foreground="White"/>
                             </StackPanel>
 

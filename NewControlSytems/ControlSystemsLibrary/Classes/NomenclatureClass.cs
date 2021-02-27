@@ -290,9 +290,26 @@ namespace ControlSystemsLibrary.Classes
             {
                 cutOut = value;
                 if (value == true)
+                {
                     CutIconVisibility = Visibility.Visible;
+                    RowOpasity = 0.7;
+                }
                 else
+                {
                     CutIconVisibility = Visibility.Collapsed;
+                    RowOpasity = 1.0;
+                }
+                OnPropertyChanged();
+            }
+        }
+
+        private double rowOpasity = 1;
+        public double RowOpasity
+        {
+            get => rowOpasity;
+            set
+            {
+                rowOpasity = value;
                 OnPropertyChanged();
             }
         }

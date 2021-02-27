@@ -1326,5 +1326,10 @@ namespace ControlSystemsLibrary.Controls.AdminTabItemContents
             CreateNemenclatureUC = null;
         }
 
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            MenuItem MI = sender as MenuItem;
+            MessageBox.Show(MI.DataContext.GetType().ToString());
+        }
     }
 }
